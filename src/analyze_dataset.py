@@ -54,25 +54,58 @@ def count_split(images_dir: Path, names: list[str]) -> dict:
     labels_dir = images_dir.parent / "labels"
     image_count = len([path for path in images_dir.glob("*") if path.suffix.lower() in IMAGE_EXTENSIONS]) if images_dir.is_dir() else 0
     label_files = sorted(labels_dir.glob("*.txt")) if labels_dir.is_dir() else []
+    image_stems = {path.stem for path in images_dir.glob("*") if path.suffix.lower() in IMAGE_EXTENSIONS} if images_dir.is_dir() else set()
+    label_stems = {path.stem for path in label_files}
 
     class_counts: Counter[str] = Counter()
     box_count = 0
+    invalid_label_line_count = 0
+    empty_label_file_count = 0
     for label_file in label_files:
-        with label_file.open("r", encoding="utf-8") as file:
-            for line in file:
-                parts = line.strip().split()
-                if len(parts) < 1:
-                    continue
-                class_id = int(float(parts[0]))
-                class_name = names[class_id] if class_id < len(names) else str(class_id)
-                class_counts[class_name] += 1
-                box_count += 1
+        text = label_file.read_text(encoding="utf-8").strip()
+        if not text:
+            empty_label_file_count += 1
+            continue
+
+        for line in text.splitlines():
+            parts = line.strip().split()
+            if len(parts) != 5:
+                invalid_label_line_count += 1
+                continue
+            try:
+                values = [float(part) for part in parts]
+            except ValueError:
+                invalid_label_line_count += 1
+                continue
+
+            class_value = values[0]
+            class_id = int(class_value)
+            x_center, y_center, box_width, box_height = values[1:]
+            if (
+                class_value != class_id
+                or class_id < 0
+                or class_id >= len(names)
+                or not 0 <= x_center <= 1
+                or not 0 <= y_center <= 1
+                or not 0 < box_width <= 1
+                or not 0 < box_height <= 1
+            ):
+                invalid_label_line_count += 1
+                continue
+
+            class_name = names[class_id]
+            class_counts[class_name] += 1
+            box_count += 1
 
     return {
         "images_dir": str(images_dir),
         "labels_dir": str(labels_dir),
         "image_count": image_count,
         "label_file_count": len(label_files),
+        "missing_label_count": len(image_stems - label_stems),
+        "orphan_label_count": len(label_stems - image_stems),
+        "empty_label_file_count": empty_label_file_count,
+        "invalid_label_line_count": invalid_label_line_count,
         "box_count": box_count,
         "class_counts": dict(class_counts),
     }
@@ -100,6 +133,10 @@ def main() -> None:
             "labels_dir": stats["labels_dir"],
             "image_count": stats["image_count"],
             "label_file_count": stats["label_file_count"],
+            "missing_label_count": stats["missing_label_count"],
+            "orphan_label_count": stats["orphan_label_count"],
+            "empty_label_file_count": stats["empty_label_file_count"],
+            "invalid_label_line_count": stats["invalid_label_line_count"],
             "box_count": stats["box_count"],
         }
         for class_name in names:

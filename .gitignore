@@ -24,6 +24,7 @@ dataset/train/
 dataset/valid/
 dataset/test/
 dataset/data.yaml
+dataset/label_backups/
 dataset/*.zip
 results/images/*
 results/videos/*
