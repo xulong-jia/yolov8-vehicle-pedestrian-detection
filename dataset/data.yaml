@@ -1,0 +1,13 @@
+train: train/images
+val: valid/images
+test: test/images
+
+nc: 6
+names: ['Bus', 'Car', 'Motorcycle', 'Person', 'Truck', 'mini-truck']
+
+roboflow:
+  workspace: nada-elokaby
+  project: vehicle-pedestrian-detection
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/nada-elokaby/vehicle-pedestrian-detection/dataset/1
