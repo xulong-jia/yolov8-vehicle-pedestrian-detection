@@ -2,7 +2,7 @@
 
 ## 项目简介
 
-本项目基于 YOLOv8 构建车辆与行人目标检测系统，目标是完成从数据集准备、模型训练、模型评估到图片和视频推理的完整可复现实验流程。当前阶段为 Day 1 项目初始化，只提供规范项目骨架和可运行脚本入口，不包含数据集、训练权重或实验指标。
+本项目基于 YOLOv8 构建车辆与行人目标检测系统，目标是完成从数据集准备、模型训练、模型评估到图片和视频推理的完整可复现实验流程。当前已完成项目初始化、数据集检查、异常 label 清洗和 Colab 10 epoch 快速训练验证。
 
 ## 技术栈
 
@@ -45,6 +45,7 @@ YOLOv8/
   notebooks/
   docs/
     screenshots/
+    colab_runs/
   README.md
   requirements.txt
   .gitignore
@@ -86,6 +87,12 @@ yolo checks
 python src/train.py --model yolov8n.pt --epochs 10 --imgsz 416
 ```
 
+Colab GPU 快速验证版本：
+
+```bash
+yolo detect train data=dataset/data.yaml model=yolov8n.pt epochs=10 imgsz=416 project=runs/detect name=yolov8n_416_10epochs device=0
+```
+
 正式实验版本：
 
 ```bash
@@ -121,10 +128,37 @@ python src/visualize_dataset.py --data dataset/data.yaml --split train --num-sam
 
 | 实验 | 模型 | imgsz | epochs | conf | Precision | Recall | mAP50 | mAP50-95 | 备注 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Smoke Test | YOLOv8n | 416 | 10 | 默认 | 0.786 | 0.749 | 0.797 | 0.511 | Colab Tesla T4 快速训练验证，不是最终正式模型 |
 | Exp1 | YOLOv8n | 416 | 30 | 0.25 | 待填 | 待填 | 待填 | 待填 | 快速基线 |
 | Exp2 | YOLOv8n | 640 | 50 | 0.25 | 待填 | 待填 | 待填 | 待填 | 正式模型 |
 | Exp3 | YOLOv8s | 640 | 50 | 0.25 | 待填 | 待填 | 待填 | 待填 | 对比模型 |
 | Exp4 | YOLOv8n | 640 | 50 | 0.50 | 待填 | 待填 | 待填 | 待填 | 阈值对比 |
+
+## Colab 10 Epoch Smoke Test
+
+该实验用于验证数据集、训练命令和 YOLOv8 训练流程可以跑通，不作为最终正式模型结论。
+
+- 模型：YOLOv8n
+- 输入尺寸：416
+- 训练轮数：10 epochs
+- 训练环境：Google Colab Tesla T4 GPU
+- 训练时间：0.098 hours
+- 结果文件：`docs/colab_runs/yolov8n_416_10epochs/`
+- 本地权重：`local_weights/yolov8n_416_10epochs/`，该目录不提交到 GitHub
+
+训练命令：
+
+```bash
+yolo detect train data=dataset/data.yaml model=yolov8n.pt epochs=10 imgsz=416 project=runs/detect name=yolov8n_416_10epochs device=0
+```
+
+指标：
+
+| Model | Precision | Recall | mAP50 | mAP50-95 |
+| --- | --- | --- | --- | --- |
+| YOLOv8n 416 10 epochs | 0.786 | 0.749 | 0.797 | 0.511 |
+
+简要分析：从本次 smoke test 的类别表现看，Motorcycle 和 Person 表现较好；mini-truck 表现较弱，可能与样本量、类别相似性或小目标有关。后续需要在正式 baseline 中继续结合混淆矩阵、PR 曲线和误检漏检样例分析。
 
 ## 后续计划
 
@@ -136,3 +170,4 @@ python src/visualize_dataset.py --data dataset/data.yaml --split train --num-sam
 - Day 5：完成图片推理结果保存。
 - Day 6：完成视频推理结果保存。
 - Day 7：补充实验对比、误检漏检分析、最终 README 和简历描述。
+- 下一步：运行 YOLOv8n 640x640 50 epoch baseline，作为正式基线模型。

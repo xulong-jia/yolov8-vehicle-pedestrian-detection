@@ -18,6 +18,7 @@ runs/
 *.pt
 *.onnx
 *.engine
+local_weights/
 
 # Local datasets and generated media
 dataset/train/
