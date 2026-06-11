@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+.venv/
+venv/
+env/
+
+# OS and editor
+.DS_Store
+.idea/
+.vscode/
+
+# YOLO / training outputs
+runs/
+*.pt
+*.onnx
+*.engine
+
+# Local datasets and generated media
+dataset/train/
+dataset/valid/
+dataset/test/
+dataset/data.yaml
+dataset/*.zip
+results/images/*
+results/videos/*
+results/metrics/*
+docs/screenshots/*
+
+# Keep skeleton placeholders
+!results/images/.gitkeep
+!results/videos/.gitkeep
+!results/metrics/.gitkeep
+!docs/screenshots/.gitkeep
+!notebooks/.gitkeep
