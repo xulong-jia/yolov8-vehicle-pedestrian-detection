@@ -24,8 +24,8 @@ local_weights/
 dataset/train/
 dataset/valid/
 dataset/test/
-dataset/data.yaml
 dataset/label_backups/
+dataset/*/labels.cache
 dataset/*.zip
 results/images/*
 results/videos/*

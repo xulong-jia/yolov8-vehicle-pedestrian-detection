@@ -18,7 +18,7 @@
 ## 目录结构
 
 ```text
-YOLOv8/
+yolov8-vehicle-pedestrian-detection/
   dataset/
     README.md
     data.yaml
