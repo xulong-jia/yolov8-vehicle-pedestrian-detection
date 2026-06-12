@@ -102,20 +102,30 @@ python src/train.py --model yolov8n.pt --epochs 50 --imgsz 640
 ## 评估命令
 
 ```bash
-python src/evaluate.py --model runs/detect/train/weights/best.pt --data dataset/data.yaml
+python src/evaluate.py --model local_weights/yolov8n_640_50epochs/best.pt --data dataset/data.yaml
 ```
 
 ## 图片推理命令
 
 ```bash
-python src/predict_image.py --source dataset/test/images --model runs/detect/train/weights/best.pt
+python src/predict_image.py --source dataset/test/images --model local_weights/yolov8n_640_50epochs/best.pt
 ```
 
 ## 视频推理命令
 
 ```bash
-python src/predict_video.py --source demo_video.mp4 --model runs/detect/train/weights/best.pt
+python src/predict_video.py --source demo_video.mp4 --model local_weights/yolov8n_640_50epochs/best.pt
 ```
+
+## 权重文件说明
+
+模型权重文件不上传 GitHub。评估和推理前，需要将正式 baseline 的 `best.pt` 放到：
+
+```text
+local_weights/yolov8n_640_50epochs/best.pt
+```
+
+GitHub 仓库只保存代码、配置、README 和展示结果图，不保存完整数据集、训练输出目录或 `.pt` 权重文件。
 
 ## 数据集检查命令
 
@@ -130,9 +140,6 @@ python src/visualize_dataset.py --data dataset/data.yaml --split train --num-sam
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Smoke Test | YOLOv8n | 416 | 10 | 默认 | 0.786 | 0.749 | 0.797 | 0.511 | Colab Tesla T4 快速训练验证，不是最终正式模型 |
 | Baseline | YOLOv8n | 640 | 50 | 默认 | 0.81981 | 0.82768 | 0.86422 | 0.59102 | Colab Tesla T4 正式 baseline |
-| Exp1 | YOLOv8n | 416 | 30 | 0.25 | 待填 | 待填 | 待填 | 待填 | 可选快速基线 |
-| Exp3 | YOLOv8s | 640 | 50 | 0.25 | 待填 | 待填 | 待填 | 待填 | 对比模型 |
-| Exp4 | YOLOv8n | 640 | 50 | 0.50 | 待填 | 待填 | 待填 | 待填 | 阈值对比 |
 
 ## Colab 10 Epoch Smoke Test
 
@@ -186,12 +193,9 @@ yolo detect train data=dataset/data.yaml model=yolov8n.pt epochs=50 imgsz=640 pr
 
 ## 后续计划
 
-- Day 2：下载 YOLOv8 格式数据集，检查 `data.yaml`、图片和标签是否匹配。
-- Day 2：统计 train/valid/test 图片数量和各类别标注框数量。
-- Day 2：生成标注可视化样例并保存到 `docs/screenshots/`。
-- Day 3：使用 YOLOv8n 跑通小规模训练，再进行正式训练。
 - Day 4：评估模型并记录 Precision、Recall、mAP50、mAP50-95。
 - Day 5：完成图片推理结果保存。
 - Day 6：完成视频推理结果保存。
 - Day 7：补充实验对比、误检漏检分析、最终 README 和简历描述。
-- 下一步：基于 YOLOv8n 640x640 50 epoch baseline 做图片推理、视频推理、误检漏检分析和可选对比实验。
+- 可选实验计划：YOLOv8n 416x416 30 epoch 快速基线、YOLOv8s 640x640 50 epoch 对比、YOLOv8n 640x640 不同置信度阈值对比。
+- 下一步：基于 YOLOv8n 640x640 50 epoch baseline 做图片推理、视频推理和误检漏检分析。
