@@ -2,7 +2,7 @@
 
 ## 项目简介
 
-本项目基于 YOLOv8 构建车辆与行人目标检测系统，目标是完成从数据集准备、模型训练、模型评估到图片和视频推理的完整可复现实验流程。当前已完成项目初始化、数据集检查、异常 label 清洗和 Colab 10 epoch 快速训练验证。
+本项目基于 YOLOv8 构建车辆与行人目标检测系统，目标是完成从数据集准备、模型训练、模型评估到图片和视频推理的完整可复现实验流程。当前已完成项目初始化、数据集检查、异常 label 清洗、Colab 10 epoch 快速训练验证和 YOLOv8n 640x640 50 epoch baseline。
 
 ## 技术栈
 
@@ -129,8 +129,8 @@ python src/visualize_dataset.py --data dataset/data.yaml --split train --num-sam
 | 实验 | 模型 | imgsz | epochs | conf | Precision | Recall | mAP50 | mAP50-95 | 备注 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Smoke Test | YOLOv8n | 416 | 10 | 默认 | 0.786 | 0.749 | 0.797 | 0.511 | Colab Tesla T4 快速训练验证，不是最终正式模型 |
-| Exp1 | YOLOv8n | 416 | 30 | 0.25 | 待填 | 待填 | 待填 | 待填 | 快速基线 |
-| Exp2 | YOLOv8n | 640 | 50 | 0.25 | 待填 | 待填 | 待填 | 待填 | 正式模型 |
+| Baseline | YOLOv8n | 640 | 50 | 默认 | 0.81981 | 0.82768 | 0.86422 | 0.59102 | Colab Tesla T4 正式 baseline |
+| Exp1 | YOLOv8n | 416 | 30 | 0.25 | 待填 | 待填 | 待填 | 待填 | 可选快速基线 |
 | Exp3 | YOLOv8s | 640 | 50 | 0.25 | 待填 | 待填 | 待填 | 待填 | 对比模型 |
 | Exp4 | YOLOv8n | 640 | 50 | 0.50 | 待填 | 待填 | 待填 | 待填 | 阈值对比 |
 
@@ -160,6 +160,30 @@ yolo detect train data=dataset/data.yaml model=yolov8n.pt epochs=10 imgsz=416 pr
 
 简要分析：从本次 smoke test 的类别表现看，Motorcycle 和 Person 表现较好；mini-truck 表现较弱，可能与样本量、类别相似性或小目标有关。后续需要在正式 baseline 中继续结合混淆矩阵、PR 曲线和误检漏检样例分析。
 
+## YOLOv8n 640x640 50 Epoch Baseline
+
+该实验作为当前正式 baseline，用于记录 YOLOv8n 在 640x640 输入尺寸和 50 epoch 设置下的性能。
+
+- 模型：YOLOv8n
+- 输入尺寸：640
+- 训练轮数：50 epochs
+- 训练环境：Google Colab Tesla T4 GPU
+- 训练时间：0.756 hours
+- 结果文件：`docs/colab_runs/yolov8n_640_50epochs/`
+- 本地权重：`local_weights/yolov8n_640_50epochs/`，该目录不提交到 GitHub
+
+训练命令：
+
+```bash
+yolo detect train data=dataset/data.yaml model=yolov8n.pt epochs=50 imgsz=640 project=runs name=yolov8n_640_50epochs device=0
+```
+
+指标：
+
+| Model | Precision | Recall | mAP50 | mAP50-95 |
+| --- | --- | --- | --- | --- |
+| YOLOv8n 640 50 epochs | 0.81981 | 0.82768 | 0.86422 | 0.59102 |
+
 ## 后续计划
 
 - Day 2：下载 YOLOv8 格式数据集，检查 `data.yaml`、图片和标签是否匹配。
@@ -170,4 +194,4 @@ yolo detect train data=dataset/data.yaml model=yolov8n.pt epochs=10 imgsz=416 pr
 - Day 5：完成图片推理结果保存。
 - Day 6：完成视频推理结果保存。
 - Day 7：补充实验对比、误检漏检分析、最终 README 和简历描述。
-- 下一步：运行 YOLOv8n 640x640 50 epoch baseline，作为正式基线模型。
+- 下一步：基于 YOLOv8n 640x640 50 epoch baseline 做图片推理、视频推理、误检漏检分析和可选对比实验。
