@@ -264,6 +264,32 @@ Day 6 的 50 张图片分析比 10 张样本更稳定，但仍属于定性误差
 - 拥挤或遮挡的 `Person` 场景存在漏检。
 - 该分析基于 10 张图片的小样本定性观察，不代表完整测试集指标。
 
+## Video Inference Demo
+
+本阶段使用外部公开视频素材完成 YOLOv8 视频推理 demo，用于展示模型在连续街景视频上的定性检测效果。
+
+- 使用模型：YOLOv8n 640x640 50 epoch baseline
+- 权重路径：`local_weights/yolov8n_640_50epochs/best.pt`
+- 视频来源：Pexels external video source
+- 视频来源记录：`local_videos/README.video_sources.md`
+- 推理环境：Google Colab GPU
+- 推理参数：`imgsz=640`，`conf=0.25`，`device=0`
+- 输出目录：`docs/video_demos/yolov8n_640_50epochs/`
+
+相关文件：
+
+- [Video inference summary](docs/video_demos/yolov8n_640_50epochs/video_inference_summary.md)
+- [Start frame](docs/video_demos/yolov8n_640_50epochs/frames/pexels_crosswalk_traffic_demo_start.jpg)
+- [Middle frame](docs/video_demos/yolov8n_640_50epochs/frames/pexels_crosswalk_traffic_demo_middle.jpg)
+- [End frame](docs/video_demos/yolov8n_640_50epochs/frames/pexels_crosswalk_traffic_demo_end.jpg)
+
+视频文件说明：
+
+- 原始视频不提交 GitHub。
+- 完整推理输出 AVI 约 404MB，保留本地，不提交 GitHub。
+- GitHub 只提交 summary 和关键帧截图。
+- 视频 demo 是定性展示，不代表完整测试集指标。
+
 ## 后续计划
 
 - Day 4：评估模型并记录 Precision、Recall、mAP50、mAP50-95。
