@@ -191,6 +191,36 @@ yolo detect train data=dataset/data.yaml model=yolov8n.pt epochs=50 imgsz=640 pr
 | --- | --- | --- | --- | --- |
 | YOLOv8n 640 50 epochs | 0.81981 | 0.82768 | 0.86422 | 0.59102 |
 
+## Inference and Error Analysis
+
+本阶段基于 YOLOv8n 640x640 50 epoch baseline 权重进行小批量图片推理和初版误检漏检分析。
+
+- 使用模型：YOLOv8n 640x640 50 epoch baseline
+- 权重路径：`local_weights/yolov8n_640_50epochs/best.pt`
+- 推理样本：从 `dataset/test/images` 使用固定随机种子 `42` 随机选择 10 张图片
+- 输出目录：`docs/predictions/yolov8n_640_50epochs/`
+
+输出目录包含：
+
+- 10 张预测可视化图片
+- `labels/` 预测标签
+- `selected_images.txt`
+- `inference_summary.md`
+- `error_analysis.csv`
+- `error_analysis.md`
+
+相关分析文件：
+
+- [Inference summary](docs/predictions/yolov8n_640_50epochs/inference_summary.md)
+- [Error analysis report](docs/predictions/yolov8n_640_50epochs/error_analysis.md)
+- [Error analysis CSV](docs/predictions/yolov8n_640_50epochs/error_analysis.csv)
+
+初步误差分析重点：
+
+- 密集车流中 `Car` / `Truck` / `mini-truck` 容易出现类别混淆。
+- 拥挤或遮挡的 `Person` 场景存在漏检。
+- 该分析基于 10 张图片的小样本定性观察，不代表完整测试集指标。
+
 ## 后续计划
 
 - Day 4：评估模型并记录 Precision、Recall、mAP50、mAP50-95。
