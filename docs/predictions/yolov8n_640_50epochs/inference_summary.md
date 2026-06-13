@@ -1,0 +1,26 @@
+# YOLOv8n 640x640 50 Epoch Baseline Image Inference
+
+- Model weights: `local_weights/yolov8n_640_50epochs/best.pt`
+- Data source: `dataset/test/images`
+- Selection method: 10 images randomly selected with seed `42`
+- Image count: 10
+- Output directory: `docs/predictions/yolov8n_640_50epochs/`
+- Runtime device: local Mac CPU (`device=cpu`; CUDA and MPS were not available in this environment)
+- Confidence threshold: `0.25`
+
+## Selected Images
+
+- `1c4915190a748798_jpg.rf.0c265452437e4c470eee04c6c8a24fc9.jpg`
+- `train_all_data-579-_jpg.rf.def4d2fd636b5555d589f4c811a318c8.jpg`
+- `train_all_data-384-_jpg.rf.38f6abd346046f3f733765041fccda76.jpg`
+- `train_all_data-426-_jpg.rf.948a4e4975dde76f075dfc6bb093a03a.jpg`
+- `train_all_data-453-_jpg.rf.4c2304c507aca33a59aaf5b10b827d01.jpg`
+- `train_all_data-216-_jpg.rf.78e2be2c9ec27d3ccf537dbfc1db5b13.jpg`
+- `adit_mp4-2159_jpg.rf.7b25c0dec528514c7a9ada98995d55f0.jpg`
+- `train_all_data-544-_jpg.rf.166f9aad86cbdf07a978dabf01a4f39c.jpg`
+- `adit_mp4-1696_jpg.rf.ceeb4a9d3bc8fd3cf40947ea4e97f388.jpg`
+- `0e568901d66ad81e46860b91cce2a7fe_jpg.rf.8c6f7ce142e9f3b3403d20c761ad1359.jpg`
+
+## Manual Error Analysis Suggestions
+
+Review each predicted image together with its matching source image and label file under `dataset/test/labels/`. For each case, record false positives, missed objects, small-object misses, duplicate boxes, low-confidence correct detections, and class confusion such as Car versus Truck or Truck versus mini-truck. Keep representative screenshots for the final README and Day 7 summary.
