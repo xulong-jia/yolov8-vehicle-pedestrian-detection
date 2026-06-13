@@ -32,6 +32,16 @@ results/videos/*
 results/metrics/*
 docs/screenshots/*
 
+# Local video sources and generated video demos
+local_videos/source/*.mp4
+local_videos/source/*.mov
+local_videos/source/*.avi
+local_videos/source/*.mkv
+docs/video_demos/**/*.mp4
+docs/video_demos/**/*.avi
+docs/video_demos/**/*.mov
+docs/video_demos/**/*.mkv
+
 # Keep skeleton placeholders
 !results/images/.gitkeep
 !results/videos/.gitkeep
