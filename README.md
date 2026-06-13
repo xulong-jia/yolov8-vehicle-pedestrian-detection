@@ -214,6 +214,22 @@ yolo detect train data=dataset/data.yaml model=yolov8n.pt epochs=50 imgsz=640 pr
 - [Inference summary](docs/predictions/yolov8n_640_50epochs/inference_summary.md)
 - [Error analysis report](docs/predictions/yolov8n_640_50epochs/error_analysis.md)
 - [Error analysis CSV](docs/predictions/yolov8n_640_50epochs/error_analysis.csv)
+- [Day 5 systematic error analysis report](docs/predictions/yolov8n_640_50epochs/day5_error_analysis_report.md)
+- [Day 5 error case summary CSV](docs/predictions/yolov8n_640_50epochs/error_case_summary.csv)
+- [Day 5 image-level error analysis CSV](docs/predictions/yolov8n_640_50epochs/image_level_error_analysis.csv)
+
+Day 5 系统误差分析基于 Day 4 的 10 张图片推理结果，对每张图片的 GT label 和 prediction label 做数量级对比，并整理出可用于 README 或项目报告的成功案例、误检候选、漏检候选和类别混淆候选。
+
+| Case type | Count |
+| --- | ---: |
+| likely_correct | 7 |
+| possible_false_positive | 2 |
+| possible_false_negative | 1 |
+| possible_class_confusion | 2 |
+| possible_duplicate_boxes | 0 |
+| crowded_scene | 4 |
+| small_object_difficulty | 0 |
+| needs_manual_review | 3 |
 
 初步误差分析重点：
 
