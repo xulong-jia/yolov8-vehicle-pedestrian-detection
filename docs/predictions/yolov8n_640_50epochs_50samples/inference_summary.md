@@ -1,0 +1,65 @@
+# YOLOv8n 640x640 50 Epoch Baseline - 50 Sample Image Inference
+
+- Model weights: `local_weights/yolov8n_640_50epochs/best.pt`
+- Data source: `dataset/test/images`
+- Ground-truth labels: `dataset/test/labels`
+- Selection method: 50 images randomly selected with seed `42`
+- Image count: 50
+- Output directory: `docs/predictions/yolov8n_640_50epochs_50samples/`
+- Runtime device: local Mac CPU (`device=cpu`; CUDA and MPS were not available)
+- Confidence threshold: `0.25`
+
+This is an expanded qualitative image-inference sample. It does not represent full test-set mAP, Precision, or Recall.
+
+## Selected Images
+
+- `1c4915190a748798_jpg.rf.0c265452437e4c470eee04c6c8a24fc9.jpg`
+- `train_all_data-579-_jpg.rf.def4d2fd636b5555d589f4c811a318c8.jpg`
+- `train_all_data-384-_jpg.rf.38f6abd346046f3f733765041fccda76.jpg`
+- `train_all_data-426-_jpg.rf.948a4e4975dde76f075dfc6bb093a03a.jpg`
+- `train_all_data-453-_jpg.rf.4c2304c507aca33a59aaf5b10b827d01.jpg`
+- `train_all_data-216-_jpg.rf.78e2be2c9ec27d3ccf537dbfc1db5b13.jpg`
+- `adit_mp4-2159_jpg.rf.7b25c0dec528514c7a9ada98995d55f0.jpg`
+- `train_all_data-544-_jpg.rf.166f9aad86cbdf07a978dabf01a4f39c.jpg`
+- `adit_mp4-1696_jpg.rf.ceeb4a9d3bc8fd3cf40947ea4e97f388.jpg`
+- `0e568901d66ad81e46860b91cce2a7fe_jpg.rf.8c6f7ce142e9f3b3403d20c761ad1359.jpg`
+- `train_all_data-446-_jpg.rf.7ba35aa2e02648bec031825387d61218.jpg`
+- `6300_png_jpg.rf.b04b367863e988eeb782cd40adfccfcc.jpg`
+- `train_all_data-4-_jpg.rf.a6aa7fe1ce82239acbe258937ba47e6a.jpg`
+- `23a2507b8bb31bd2a5c667f4f93deb60_jpg.rf.d585c589bb781165117a260f6fafffff.jpg`
+- `3J4A7819_frame_0241_png_jpg.rf.3311551b9def3991f886efd1718fc85d.jpg`
+- `train_all_data-76-_jpg.rf.9836117b1d78c2e79a4b56222f340e8d.jpg`
+- `24_jpg.rf.4d53df7f738ca765f5a09ae47142982b.jpg`
+- `train_all_data-531-_jpg.rf.2412ef7835f500725c2f374c30cbf266.jpg`
+- `train_all_data-556-_jpg.rf.4ed98bbd07e1cfccb906b968a53ac1b1.jpg`
+- `34910_png_jpg.rf.19d2a7325681540a581832591ad488aa.jpg`
+- `adit_mp4-205_jpg.rf.dd1e533fc256eb68f835e6bbdf38264d.jpg`
+- `train_all_data-452-_jpg.rf.47ba3b5cb80a216004d5dd27b33600de.jpg`
+- `siang_15112021_1_mp4-300_jpg.rf.7aaec814ddbfeb4535dce7820779a800.jpg`
+- `_-_-37-_png_jpg.rf.10052f3b542b82c1716ef1027ddbac52.jpg`
+- `3J4A7818_frame_0121_png_jpg.rf.93261cebf5e5c5192dc68531cf5c4cc6.jpg`
+- `_-_-1-_png_jpg.rf.67888eef9423ace7655b421270b80085.jpg`
+- `3J4A7817_frame_0046_png_jpg.rf.287a75c8cd266e1ebe80d6039df35d84.jpg`
+- `train_all_data-85-_jpg.rf.73404ec662ed26fec668f6a1485ce523.jpg`
+- `pagi_16112021_mp4-144_jpg.rf.925e75f18fcfa8cdcc0cfa0363dac438.jpg`
+- `ea3829da1bcc87ac_jpg.rf.7624b15ed6641b72a7e9cec61dc8d7a2.jpg`
+- `train_all_data-420-_jpg.rf.decc75d13fb3f37ea5c20532a53723a3.jpg`
+- `7826_frame_0004_png_jpg.rf.ff089c142ee5a68b17b23a20a4654c76.jpg`
+- `train_all_data-579-_jpg.rf.a80465d26b6be5a074a279862b88b726.jpg`
+- `3J4A7817_frame_0054_png_jpg.rf.66221feedeb5c28292591e3ff2350834.jpg`
+- `adit_mp4-861_jpg.rf.d3a9004777c0011fe6cd62c9c5b7628e.jpg`
+- `3J4A7818_frame_0180_png_jpg.rf.e31bbcce93bd2ad312810b2fa9df95af.jpg`
+- `siang_15112021_1_mp4-315_jpg.rf.a27856c1fe38cf822608bfa2b3848aac.jpg`
+- `val_all_data-4-_jpg.rf.e21b27b8fa0c5655597baad36f0ca3d6.jpg`
+- `03e8bc2333105e66_jpg.rf.47db733d08b4019199ac9d2c7c0fcf80.jpg`
+- `train_all_data-537-_jpg.rf.3e62a1e5dc1ee98c67d6d07eed5275f6.jpg`
+- `34460_png_jpg.rf.cffcafaa0dd2ab1e1206bd6e97ad62e5.jpg`
+- `train_all_data-516-_jpg.rf.7f22529632a59b16c5450f5b8f073bbf.jpg`
+- `train_all_data-591-_jpg.rf.ea6e1ed26a9542d8fb9aa0d945b45352.jpg`
+- `train_all_data-468-_jpg.rf.7a0d4050e29d97fd6f09a26b5f25b5bd.jpg`
+- `train_all_data-562-_jpg.rf.014ea068022dd96e21da9aae85c89b27.jpg`
+- `adit_mp4-2681_jpg.rf.d67b726ee41f513a805b2f4bc8883e58.jpg`
+- `7e2cd0a14b873f77_jpg.rf.ea5764fb820d1c3ff74abf7fdad60138.jpg`
+- `adit_mp4-85_jpg.rf.b479c2de3b701f0281b0896a911467df.jpg`
+- `3J4A7817_frame_0037_png_jpg.rf.779a263e0dfdab28099e2d2856cd96fd.jpg`
+- `train_all_data-427-_jpg.rf.f2a1511baf467bd6846e35d28e465e54.jpg`
