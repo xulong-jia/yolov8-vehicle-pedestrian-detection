@@ -191,6 +191,24 @@ yolo detect train data=dataset/data.yaml model=yolov8n.pt epochs=50 imgsz=640 pr
 | --- | --- | --- | --- | --- |
 | YOLOv8n 640 50 epochs | 0.81981 | 0.82768 | 0.86422 | 0.59102 |
 
+## Experiment Comparison
+
+当前项目补充了 YOLOv8n 与 YOLOv8s 的实验对比材料，用于最终报告和 PPT 中说明轻量 baseline 与更大模型之间的取舍。
+
+相关文件：
+
+- [Experiment comparison report](docs/experiment_comparison.md)
+- [Experiment comparison CSV](docs/experiment_comparison.csv)
+- [YOLOv8s 640x640 50 epochs summary](docs/experiments/yolov8s_640_50epochs/summary.md)
+
+对比说明：
+
+- YOLOv8n result is official test split validation.
+- YOLOv8s result is a validation split supplementary result.
+- This is not a strict same-split benchmark comparison.
+
+因此，YOLOv8s 的结果只能作为更大模型可能提升检测质量的补充证据，不能直接声明 YOLOv8s 在 official test split 上一定优于 YOLOv8n。若需要严格结论，需要使用 YOLOv8s `best.pt` 再运行 `split=test` validation。
+
 ## Inference and Error Analysis
 
 本阶段基于 YOLOv8n 640x640 50 epoch baseline 权重进行小批量图片推理和初版误检漏检分析。
@@ -264,6 +282,29 @@ Day 6 的 50 张图片分析比 10 张样本更稳定，但仍属于定性误差
 - 拥挤或遮挡的 `Person` 场景存在漏检。
 - 该分析基于 10 张图片的小样本定性观察，不代表完整测试集指标。
 
+## Qualitative Error Case Gallery
+
+基于 Day 6 50-sample inference，项目整理了一个轻量误差案例图库，用于最终报告和 PPT 展示。图库从已有预测结果图中选择 8 个代表案例，不复制原始 dataset 图片。
+
+覆盖的观察类型包括：
+
+- `likely_correct`
+- false positive candidate
+- false negative candidate
+- class confusion candidate
+- duplicate boxes candidate
+- crowded scene
+- small object difficulty
+- `mini-truck` / `Truck` / `Car` confusion candidate
+
+相关文件：
+
+- [Error case gallery README](docs/error_case_gallery/README.md)
+- [Error case gallery cases CSV](docs/error_case_gallery/cases.csv)
+- [Error case gallery images](docs/error_case_gallery/images/)
+
+该图库是定性分析材料，不代表 official metric evaluation。
+
 ## Video Inference Demo
 
 本阶段使用外部公开视频素材完成 YOLOv8 视频推理 demo，用于展示模型在连续街景视频上的定性检测效果。
@@ -289,6 +330,26 @@ Day 6 的 50 张图片分析比 10 张样本更稳定，但仍属于定性误差
 - 完整推理输出 AVI 约 404MB，保留本地，不提交 GitHub。
 - GitHub 只提交 summary 和关键帧截图。
 - 视频 demo 是定性展示，不代表完整测试集指标。
+
+## Interactive Streamlit Demo
+
+项目新增了一个本地 Streamlit 图片上传检测 demo，入口文件为 `app.py`。该 demo 用于单张图片的定性检测展示，不替代正式 validation 或 test split evaluation。
+
+- 默认权重路径：`local_weights/yolov8n_640_50epochs/best.pt`
+- 权重文件不提交 GitHub。
+- 用户可以在页面中修改模型路径并调节 confidence threshold。
+
+运行命令：
+
+```bash
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+相关文件：
+
+- [Streamlit app](app.py)
+- [Streamlit demo guide](docs/streamlit_demo.md)
 
 ## 后续计划
 
