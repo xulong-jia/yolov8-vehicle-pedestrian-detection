@@ -1,0 +1,9 @@
+case_type,count,example_images,notes
+likely_correct,7,1c4915190a748798_jpg.rf.0c265452437e4c470eee04c6c8a24fc9.jpg; train_all_data-579-_jpg.rf.def4d2fd636b5555d589f4c811a318c8.jpg; train_all_data-384-_jpg.rf.38f6abd346046f3f733765041fccda76.jpg,GT and prediction class counts match at image level; still inspect boxes manually.
+possible_false_positive,2,adit_mp4-2159_jpg.rf.7b25c0dec528514c7a9ada98995d55f0.jpg; adit_mp4-1696_jpg.rf.ceeb4a9d3bc8fd3cf40947ea4e97f388.jpg,Prediction count exceeds GT for at least one class; exact false positive location requires manual visual inspection.
+possible_false_negative,1,train_all_data-453-_jpg.rf.4c2304c507aca33a59aaf5b10b827d01.jpg,Prediction count is lower than GT for at least one class; exact missed object location requires manual visual inspection.
+possible_class_confusion,2,adit_mp4-2159_jpg.rf.7b25c0dec528514c7a9ada98995d55f0.jpg; adit_mp4-1696_jpg.rf.ceeb4a9d3bc8fd3cf40947ea4e97f388.jpg,"Class count shifts suggest possible confusion, especially Car / Truck / mini-truck."
+possible_duplicate_boxes,0,none,Not assigned from label-count evidence alone; duplicate boxes require visual inspection.
+crowded_scene,4,train_all_data-384-_jpg.rf.38f6abd346046f3f733765041fccda76.jpg; train_all_data-453-_jpg.rf.4c2304c507aca33a59aaf5b10b827d01.jpg; adit_mp4-2159_jpg.rf.7b25c0dec528514c7a9ada98995d55f0.jpg,Scene has multiple nearby objects or dense traffic/person layout.
+small_object_difficulty,0,none,Not assigned from label-count evidence alone; small-object status requires manual visual inspection.
+needs_manual_review,3,train_all_data-453-_jpg.rf.4c2304c507aca33a59aaf5b10b827d01.jpg; adit_mp4-2159_jpg.rf.7b25c0dec528514c7a9ada98995d55f0.jpg; adit_mp4-1696_jpg.rf.ceeb4a9d3bc8fd3cf40947ea4e97f388.jpg,Counts differ or case is flagged for qualitative review.
