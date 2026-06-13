@@ -231,6 +231,33 @@ Day 5 系统误差分析基于 Day 4 的 10 张图片推理结果，对每张图
 | small_object_difficulty | 0 |
 | needs_manual_review | 3 |
 
+Day 6 将图片推理样本从 10 张扩大到 50 张，继续使用固定随机种子 `42` 和同一 baseline 权重，形成更稳定的定性误差分析材料。
+
+- Day 6 输出目录：`docs/predictions/yolov8n_640_50epochs_50samples/`
+
+Day 6 分析文件：
+
+- [Day 6 inference summary](docs/predictions/yolov8n_640_50epochs_50samples/inference_summary.md)
+- [Day 6 50-sample error analysis report](docs/predictions/yolov8n_640_50epochs_50samples/day6_50sample_error_analysis_report.md)
+- [Day 6 error case summary CSV](docs/predictions/yolov8n_640_50epochs_50samples/error_case_summary.csv)
+- [Day 6 image-level error analysis CSV](docs/predictions/yolov8n_640_50epochs_50samples/image_level_error_analysis.csv)
+- [Day 6 selected images](docs/predictions/yolov8n_640_50epochs_50samples/selected_images.txt)
+
+Day 6 50 张样本统计：
+
+| Case type | Count |
+| --- | ---: |
+| likely_correct | 28 |
+| possible_false_positive | 16 |
+| possible_false_negative | 10 |
+| possible_class_confusion | 4 |
+| possible_duplicate_boxes | 14 |
+| crowded_scene | 22 |
+| small_object_difficulty | 15 |
+| needs_manual_review | 23 |
+
+Day 6 的 50 张图片分析比 10 张样本更稳定，但仍属于定性误差分析，不替代完整测试集 mAP、Precision 或 Recall。
+
 初步误差分析重点：
 
 - 密集车流中 `Car` / `Truck` / `mini-truck` 容易出现类别混淆。
