@@ -14,9 +14,9 @@
 - [x] Dataset label cleaning and validation / 数据集标签清洗与验证 — Priority: P0 — Status: Done — Output: `results/metrics/` — Commit: `78ed58e`
 - [x] YOLOv8n 416x416 10-epoch smoke test / YOLOv8n 416x416 10 轮快速验证 — Priority: P0 — Status: Done — Output: `docs/colab_runs/yolov8n_416_10epochs/` — Commit: `86d0f22`
 - [x] YOLOv8n 640x640 50-epoch baseline / YOLOv8n 640x640 50 轮基线实验 — Priority: P0 — Status: Done — Output: `docs/colab_runs/yolov8n_640_50epochs/` — Commit: `0e0abdc`
-- [x] YOLOv8n official test split validation / YOLOv8n 官方测试集验证 — Priority: P0 — Status: Done — Output: `docs/evaluation/yolov8n_640_50epochs_official/` — Commit: TBD
-- [x] Full test set inference / 完整测试集推理 — Priority: P0 — Status: Done — Output: `docs/predictions/yolov8n_640_50epochs_full_test/` — Commit: TBD
-- [x] Confidence threshold comparison / 置信度阈值对比 — Priority: P0 — Status: Done — Output: `docs/confidence_threshold_comparison/` — Commit: TBD
+- [x] YOLOv8n official test split validation / YOLOv8n 官方测试集验证 — Priority: P0 — Status: Done — Output: `Not currently tracked in repository; summary needs to be restored or recreated` / `当前仓库未跟踪，需要后续恢复或重建 summary` — Commit: TBD
+- [x] Full test set inference / 完整测试集推理 — Priority: P0 — Status: Done — Output: `Not currently tracked in repository; summary needs to be restored or recreated` / `当前仓库未跟踪，需要后续恢复或重建 summary` — Commit: TBD
+- [x] Confidence threshold comparison / 置信度阈值对比 — Priority: P0 — Status: Done — Output: `Not currently tracked in repository; summary needs to be restored or recreated` / `当前仓库未跟踪，需要后续恢复或重建 summary` — Commit: TBD
 - [x] Day 4 / Day 5 / Day 6 image inference and error analysis / Day 4 至 Day 6 图片推理与误差分析 — Priority: P0 — Status: Done — Output: `docs/predictions/yolov8n_640_50epochs/`, `docs/predictions/yolov8n_640_50epochs_50samples/` — Commit: `59a7f09`, `60f212c`, `8938a46`
 - [x] Video inference demo / 视频推理演示 — Priority: P1 — Status: Done — Output: `docs/video_demos/yolov8n_640_50epochs/` — Commit: `a53dd13`
 - [x] YOLOv8s supplementary experiment summary / YOLOv8s 补充实验总结 — Priority: P1 — Status: Done — Output: `docs/experiments/yolov8s_640_50epochs/summary.md` — Commit: `6bd40f5`
