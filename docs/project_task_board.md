@@ -40,8 +40,8 @@
 
 ## P0 — Engineering and Reproducibility / 工程化与可复现性
 
-- [ ] Add GitHub Actions Python syntax check / 添加 GitHub Actions Python 语法检查 — Priority: P0 — Status: Todo — Output: `.github/workflows/python-check.yml` — Commit: TBD
-- [ ] Add Makefile for common commands / 添加常用命令 Makefile — Priority: P0 — Status: Todo — Output: `Makefile` — Commit: TBD
+- [x] Add GitHub Actions Python syntax check / 添加 GitHub Actions Python 语法检查 — Priority: P0 — Status: Done — Output: `.github/workflows/python-check.yml` — Commit: TBD
+- [x] Add Makefile for common commands / 添加常用命令 Makefile — Priority: P0 — Status: Done — Output: `Makefile` — Commit: TBD
 
 ## P1 — Demo Improvements / 演示功能改进
 
