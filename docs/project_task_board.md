@@ -30,13 +30,13 @@
 - [x] Create model card / 创建模型卡 — Priority: P0 — Status: Done — Output: `docs/model_card.md` — Commit: `3a4affa`
 - [x] Create dataset card / 创建数据集卡 — Priority: P0 — Status: Done — Output: `docs/dataset_card.md` — Commit: `3a4affa`
 - [x] Create model weight policy / 创建模型权重管理策略 — Priority: P0 — Status: Done — Output: `docs/model_weight_policy.md` — Commit: `3a4affa`
-- [ ] Create project roadmap / 创建项目路线图 — Priority: P0 — Status: Todo — Output: `docs/project_roadmap.md` — Commit: TBD
-- [ ] Create report assets index / 创建报告素材索引 — Priority: P0 — Status: Todo — Output: `docs/report_assets.md` — Commit: TBD
+- [x] Create project roadmap / 创建项目路线图 — Priority: P0 — Status: Done — Output: `docs/project_roadmap.md` — Commit: TBD
+- [x] Create report assets index / 创建报告素材索引 — Priority: P0 — Status: Done — Output: `docs/report_assets.md` — Commit: TBD
 
 ## P0 — Evaluation and Analysis / 评估与分析
 
-- [ ] Create per-class failure analysis / 创建按类别失败分析 — Priority: P0 — Status: Todo — Output: `docs/per_class_failure_analysis.md` — Commit: TBD
-- [ ] Create confusion matrix interpretation / 创建混淆矩阵解读 — Priority: P0 — Status: Todo — Output: `docs/confusion_matrix_interpretation.md` — Commit: TBD
+- [x] Create per-class failure analysis / 创建按类别失败分析 — Priority: P0 — Status: Done — Output: `docs/per_class_failure_analysis.md` — Commit: TBD
+- [x] Create confusion matrix interpretation / 创建混淆矩阵解读 — Priority: P0 — Status: Done — Output: `docs/confusion_matrix_interpretation.md` — Commit: TBD
 
 ## P0 — Engineering and Reproducibility / 工程化与可复现性
 
