@@ -1,361 +1,357 @@
 # YOLOv8 Vehicle and Pedestrian Detection
 
-## 项目简介
+## Overview
 
-本项目基于 YOLOv8 构建车辆与行人目标检测系统，目标是完成从数据集准备、模型训练、模型评估到图片和视频推理的完整可复现实验流程。当前已完成项目初始化、数据集检查、异常 label 清洗、Colab 10 epoch 快速训练验证和 YOLOv8n 640x640 50 epoch baseline。
+This project is a YOLOv8-based vehicle and pedestrian detection system. It covers the full workflow from dataset preparation and label validation to model experiments, image/video inference demos, qualitative error analysis, local application demos, and deployment scaffolding.
 
-## 技术栈
+Current project scope includes:
 
-- Python
-- Ultralytics YOLOv8
-- OpenCV
-- NumPy
-- Matplotlib
-- Pandas
-- Roboflow
-- PyYAML
+- dataset preparation
+- label validation and cleaning
+- YOLOv8n / YOLOv8s experiments
+- image inference and video inference demo
+- qualitative error analysis
+- Streamlit image detection demo
+- batch prediction CLI
+- FastAPI scaffold
+- Docker scaffold
+- project documentation and safety policy
 
-## 目录结构
+## Key Features
+
+### Dataset and Label Validation
+
+- Roboflow YOLOv8 dataset format.
+- Six target classes:
+  - `Bus`
+  - `Car`
+  - `Motorcycle`
+  - `Person`
+  - `Truck`
+  - `mini-truck`
+- Dataset config: `dataset/data.yaml`.
+- Label quality checks and dataset analysis utilities.
+- Invalid polygon-like labels were converted or fixed during dataset cleaning.
+- Full dataset split folders are local-only and not tracked in Git.
+
+### Training and Evaluation
+
+Completed experiments and recorded results:
+
+1. YOLOv8n 416x416 10 epochs smoke test
+   - mAP50: 0.797
+   - mAP50-95: 0.511
+
+2. YOLOv8n 640x640 50 epochs baseline
+   - Precision: 0.81981
+   - Recall: 0.82768
+   - mAP50: 0.86422
+   - mAP50-95: 0.59102
+
+3. YOLOv8n official test split evaluation
+   - Precision: 0.841
+   - Recall: 0.816
+   - mAP50: 0.859
+   - mAP50-95: 0.582
+
+4. YOLOv8s 640x640 50 epochs supplementary validation result
+   - Precision: 0.839
+   - Recall: 0.841
+   - mAP50: 0.877
+   - mAP50-95: 0.604
+   - This is a validation split supplementary result, not a strict same-split test comparison.
+
+### Inference and Demo
+
+- Single-image prediction examples.
+- 50-sample image inference analysis.
+- Video inference demo with selected key frames.
+- Local Streamlit image detection demo.
+- Sample image selector from the error case gallery.
+- Image upload workflow.
+- Detection table with class, confidence, and bounding box coordinates.
+- Downloadable detection CSV.
+- Friendly error messages for missing weights, invalid images, model loading failures, and inference failures.
+
+### Error Analysis
+
+- Systematic qualitative error analysis.
+- Error case gallery with representative prediction images.
+- Error taxonomy for consistent review labels.
+- Hard examples list for future review.
+- Confidence threshold analysis.
+- Per-class failure analysis.
+- Confusion matrix interpretation.
+
+### Engineering Utilities
+
+- `configs/default.yaml` for default paths and inference settings.
+- `src/check_setup.py` for local setup checks.
+- `src/batch_predict.py` for batch image prediction CSV generation.
+- `Makefile` targets for common checks and commands.
+- GitHub Actions Python syntax check.
+- Pytest test scaffold for utility functions.
+- `requirements-dev.txt` for test/dev dependencies.
+- `requirements-api.txt` for FastAPI scaffold dependencies.
+
+### Deployment and Serving
+
+- Local deployment guide.
+- Model loading strategy.
+- FastAPI scaffold with health/config/model-status endpoints.
+- API usage documentation.
+- Dockerfile without model weights.
+- `.dockerignore` excluding weights, dataset splits, local outputs, runs, and videos.
+- Docker image is designed to exclude model weights and the full dataset.
+
+## Project Structure
 
 ```text
 yolov8-vehicle-pedestrian-detection/
+  app.py
+  configs/
+    default.yaml
   dataset/
-    README.md
     data.yaml
-    train/
-      images/
-      labels/
-    valid/
-      images/
-      labels/
-    test/
-      images/
-      labels/
+    train/                  # local-only, ignored
+    valid/                  # local-only, ignored
+    test/                   # local-only, ignored
+  docs/
+    colab_runs/
+    error_case_gallery/
+    predictions/
+    video_demos/
+    api_usage.md
+    deployment_guide.md
+    docker_deployment.md
+    model_loading_strategy.md
+    project_task_board.md
+  local_outputs/            # generated local outputs, ignored
+  local_weights/            # local model weights, ignored
   src/
-    train.py
+    analyze_dataset.py
+    api.py
+    batch_predict.py
+    check_setup.py
     evaluate.py
     predict_image.py
     predict_video.py
+    train.py
     visualize_dataset.py
-    analyze_dataset.py
-  results/
-    images/
-    videos/
-    metrics/
-  notebooks/
-  docs/
-    screenshots/
-    colab_runs/
+  tests/
+    __init__.py
+    test_batch_predict.py
+    test_check_setup.py
+  .dockerignore
+  .gitignore
+  Dockerfile
+  Makefile
   README.md
   requirements.txt
-  .gitignore
+  requirements-api.txt
+  requirements-dev.txt
 ```
 
-## 数据集说明
+## Quick Start
 
-数据集需要使用 YOLOv8 格式，建议从 Roboflow 选择公开车辆与行人检测数据集并导出为 YOLOv8 格式。数据集不提交到 Git 仓库，下载后放入 `dataset/` 目录。
-
-预期结构：
-
-```text
-dataset/
-  data.yaml
-  train/images/
-  train/labels/
-  valid/images/
-  valid/labels/
-  test/images/
-  test/labels/
-```
-
-`dataset/data.yaml` 必须包含 `names` 字段，用于说明类别名称。
-
-## 环境安装步骤
+### 1. Install Runtime Dependencies
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
 pip install -r requirements.txt
-yolo checks
 ```
 
-## 训练命令
+### 2. Prepare Model Weights
 
-快速跑通版本：
-
-```bash
-python src/train.py --model yolov8n.pt --epochs 10 --imgsz 416
-```
-
-Colab GPU 快速验证版本：
-
-```bash
-yolo detect train data=dataset/data.yaml model=yolov8n.pt epochs=10 imgsz=416 project=runs/detect name=yolov8n_416_10epochs device=0
-```
-
-正式实验版本：
-
-```bash
-python src/train.py --model yolov8n.pt --epochs 50 --imgsz 640
-```
-
-## 评估命令
-
-```bash
-python src/evaluate.py --model local_weights/yolov8n_640_50epochs/best.pt --data dataset/data.yaml
-```
-
-## 图片推理命令
-
-```bash
-python src/predict_image.py --source dataset/test/images --model local_weights/yolov8n_640_50epochs/best.pt
-```
-
-## 视频推理命令
-
-```bash
-python src/predict_video.py --source demo_video.mp4 --model local_weights/yolov8n_640_50epochs/best.pt
-```
-
-## 权重文件说明
-
-模型权重文件不上传 GitHub。评估和推理前，需要将正式 baseline 的 `best.pt` 放到：
+Model weights are not included in GitHub. Place the YOLOv8n baseline weight locally at:
 
 ```text
 local_weights/yolov8n_640_50epochs/best.pt
 ```
 
-GitHub 仓库只保存代码、配置、README 和展示结果图，不保存完整数据集、训练输出目录或 `.pt` 权重文件。
-
-## 数据集检查命令
+### 3. Run Setup Check
 
 ```bash
-python src/analyze_dataset.py --data dataset/data.yaml
-python src/visualize_dataset.py --data dataset/data.yaml --split train --num-samples 5
+python3 src/check_setup.py
 ```
 
-## 实验记录
-
-| 实验 | 模型 | imgsz | epochs | conf | Precision | Recall | mAP50 | mAP50-95 | 备注 |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Smoke Test | YOLOv8n | 416 | 10 | 默认 | 0.786 | 0.749 | 0.797 | 0.511 | Colab Tesla T4 快速训练验证，不是最终正式模型 |
-| Baseline | YOLOv8n | 640 | 50 | 默认 | 0.81981 | 0.82768 | 0.86422 | 0.59102 | Colab Tesla T4 正式 baseline |
-
-## Colab 10 Epoch Smoke Test
-
-该实验用于验证数据集、训练命令和 YOLOv8 训练流程可以跑通，不作为最终正式模型结论。
-
-- 模型：YOLOv8n
-- 输入尺寸：416
-- 训练轮数：10 epochs
-- 训练环境：Google Colab Tesla T4 GPU
-- 训练时间：0.098 hours
-- 结果文件：`docs/colab_runs/yolov8n_416_10epochs/`
-- 本地权重：`local_weights/yolov8n_416_10epochs/`，该目录不提交到 GitHub
-
-训练命令：
+### 4. Run Streamlit Demo
 
 ```bash
-yolo detect train data=dataset/data.yaml model=yolov8n.pt epochs=10 imgsz=416 project=runs/detect name=yolov8n_416_10epochs device=0
-```
-
-指标：
-
-| Model | Precision | Recall | mAP50 | mAP50-95 |
-| --- | --- | --- | --- | --- |
-| YOLOv8n 416 10 epochs | 0.786 | 0.749 | 0.797 | 0.511 |
-
-简要分析：从本次 smoke test 的类别表现看，Motorcycle 和 Person 表现较好；mini-truck 表现较弱，可能与样本量、类别相似性或小目标有关。后续需要在正式 baseline 中继续结合混淆矩阵、PR 曲线和误检漏检样例分析。
-
-## YOLOv8n 640x640 50 Epoch Baseline
-
-该实验作为当前正式 baseline，用于记录 YOLOv8n 在 640x640 输入尺寸和 50 epoch 设置下的性能。
-
-- 模型：YOLOv8n
-- 输入尺寸：640
-- 训练轮数：50 epochs
-- 训练环境：Google Colab Tesla T4 GPU
-- 训练时间：0.756 hours
-- 结果文件：`docs/colab_runs/yolov8n_640_50epochs/`
-- 本地权重：`local_weights/yolov8n_640_50epochs/`，该目录不提交到 GitHub
-
-训练命令：
-
-```bash
-yolo detect train data=dataset/data.yaml model=yolov8n.pt epochs=50 imgsz=640 project=runs name=yolov8n_640_50epochs device=0
-```
-
-指标：
-
-| Model | Precision | Recall | mAP50 | mAP50-95 |
-| --- | --- | --- | --- | --- |
-| YOLOv8n 640 50 epochs | 0.81981 | 0.82768 | 0.86422 | 0.59102 |
-
-## Experiment Comparison
-
-当前项目补充了 YOLOv8n 与 YOLOv8s 的实验对比材料，用于最终报告和 PPT 中说明轻量 baseline 与更大模型之间的取舍。
-
-相关文件：
-
-- [Experiment comparison report](docs/experiment_comparison.md)
-- [Experiment comparison CSV](docs/experiment_comparison.csv)
-- [YOLOv8s 640x640 50 epochs summary](docs/experiments/yolov8s_640_50epochs/summary.md)
-
-对比说明：
-
-- YOLOv8n result is official test split validation.
-- YOLOv8s result is a validation split supplementary result.
-- This is not a strict same-split benchmark comparison.
-
-因此，YOLOv8s 的结果只能作为更大模型可能提升检测质量的补充证据，不能直接声明 YOLOv8s 在 official test split 上一定优于 YOLOv8n。若需要严格结论，需要使用 YOLOv8s `best.pt` 再运行 `split=test` validation。
-
-## Inference and Error Analysis
-
-本阶段基于 YOLOv8n 640x640 50 epoch baseline 权重进行小批量图片推理和初版误检漏检分析。
-
-- 使用模型：YOLOv8n 640x640 50 epoch baseline
-- 权重路径：`local_weights/yolov8n_640_50epochs/best.pt`
-- 推理样本：从 `dataset/test/images` 使用固定随机种子 `42` 随机选择 10 张图片
-- 输出目录：`docs/predictions/yolov8n_640_50epochs/`
-
-输出目录包含：
-
-- 10 张预测可视化图片
-- `labels/` 预测标签
-- `selected_images.txt`
-- `inference_summary.md`
-- `error_analysis.csv`
-- `error_analysis.md`
-
-相关分析文件：
-
-- [Inference summary](docs/predictions/yolov8n_640_50epochs/inference_summary.md)
-- [Error analysis report](docs/predictions/yolov8n_640_50epochs/error_analysis.md)
-- [Error analysis CSV](docs/predictions/yolov8n_640_50epochs/error_analysis.csv)
-- [Day 5 systematic error analysis report](docs/predictions/yolov8n_640_50epochs/day5_error_analysis_report.md)
-- [Day 5 error case summary CSV](docs/predictions/yolov8n_640_50epochs/error_case_summary.csv)
-- [Day 5 image-level error analysis CSV](docs/predictions/yolov8n_640_50epochs/image_level_error_analysis.csv)
-
-Day 5 系统误差分析基于 Day 4 的 10 张图片推理结果，对每张图片的 GT label 和 prediction label 做数量级对比，并整理出可用于 README 或项目报告的成功案例、误检候选、漏检候选和类别混淆候选。
-
-| Case type | Count |
-| --- | ---: |
-| likely_correct | 7 |
-| possible_false_positive | 2 |
-| possible_false_negative | 1 |
-| possible_class_confusion | 2 |
-| possible_duplicate_boxes | 0 |
-| crowded_scene | 4 |
-| small_object_difficulty | 0 |
-| needs_manual_review | 3 |
-
-Day 6 将图片推理样本从 10 张扩大到 50 张，继续使用固定随机种子 `42` 和同一 baseline 权重，形成更稳定的定性误差分析材料。
-
-- Day 6 输出目录：`docs/predictions/yolov8n_640_50epochs_50samples/`
-
-Day 6 分析文件：
-
-- [Day 6 inference summary](docs/predictions/yolov8n_640_50epochs_50samples/inference_summary.md)
-- [Day 6 50-sample error analysis report](docs/predictions/yolov8n_640_50epochs_50samples/day6_50sample_error_analysis_report.md)
-- [Day 6 error case summary CSV](docs/predictions/yolov8n_640_50epochs_50samples/error_case_summary.csv)
-- [Day 6 image-level error analysis CSV](docs/predictions/yolov8n_640_50epochs_50samples/image_level_error_analysis.csv)
-- [Day 6 selected images](docs/predictions/yolov8n_640_50epochs_50samples/selected_images.txt)
-
-Day 6 50 张样本统计：
-
-| Case type | Count |
-| --- | ---: |
-| likely_correct | 28 |
-| possible_false_positive | 16 |
-| possible_false_negative | 10 |
-| possible_class_confusion | 4 |
-| possible_duplicate_boxes | 14 |
-| crowded_scene | 22 |
-| small_object_difficulty | 15 |
-| needs_manual_review | 23 |
-
-Day 6 的 50 张图片分析比 10 张样本更稳定，但仍属于定性误差分析，不替代完整测试集 mAP、Precision 或 Recall。
-
-初步误差分析重点：
-
-- 密集车流中 `Car` / `Truck` / `mini-truck` 容易出现类别混淆。
-- 拥挤或遮挡的 `Person` 场景存在漏检。
-- 该分析基于 10 张图片的小样本定性观察，不代表完整测试集指标。
-
-## Qualitative Error Case Gallery
-
-基于 Day 6 50-sample inference，项目整理了一个轻量误差案例图库，用于最终报告和 PPT 展示。图库从已有预测结果图中选择 8 个代表案例，不复制原始 dataset 图片。
-
-覆盖的观察类型包括：
-
-- `likely_correct`
-- false positive candidate
-- false negative candidate
-- class confusion candidate
-- duplicate boxes candidate
-- crowded scene
-- small object difficulty
-- `mini-truck` / `Truck` / `Car` confusion candidate
-
-相关文件：
-
-- [Error case gallery README](docs/error_case_gallery/README.md)
-- [Error case gallery cases CSV](docs/error_case_gallery/cases.csv)
-- [Error case gallery images](docs/error_case_gallery/images/)
-
-该图库是定性分析材料，不代表 official metric evaluation。
-
-## Video Inference Demo
-
-本阶段使用外部公开视频素材完成 YOLOv8 视频推理 demo，用于展示模型在连续街景视频上的定性检测效果。
-
-- 使用模型：YOLOv8n 640x640 50 epoch baseline
-- 权重路径：`local_weights/yolov8n_640_50epochs/best.pt`
-- 视频来源：Pexels external video source
-- 视频来源记录：`local_videos/README.video_sources.md`
-- 推理环境：Google Colab GPU
-- 推理参数：`imgsz=640`，`conf=0.25`，`device=0`
-- 输出目录：`docs/video_demos/yolov8n_640_50epochs/`
-
-相关文件：
-
-- [Video inference summary](docs/video_demos/yolov8n_640_50epochs/video_inference_summary.md)
-- [Start frame](docs/video_demos/yolov8n_640_50epochs/frames/pexels_crosswalk_traffic_demo_start.jpg)
-- [Middle frame](docs/video_demos/yolov8n_640_50epochs/frames/pexels_crosswalk_traffic_demo_middle.jpg)
-- [End frame](docs/video_demos/yolov8n_640_50epochs/frames/pexels_crosswalk_traffic_demo_end.jpg)
-
-视频文件说明：
-
-- 原始视频不提交 GitHub。
-- 完整推理输出 AVI 约 404MB，保留本地，不提交 GitHub。
-- GitHub 只提交 summary 和关键帧截图。
-- 视频 demo 是定性展示，不代表完整测试集指标。
-
-## Interactive Streamlit Demo
-
-项目新增了一个本地 Streamlit 图片上传检测 demo，入口文件为 `app.py`。该 demo 用于单张图片的定性检测展示，不替代正式 validation 或 test split evaluation。
-
-- 默认权重路径：`local_weights/yolov8n_640_50epochs/best.pt`
-- 权重文件不提交 GitHub。
-- 用户可以在页面中修改模型路径并调节 confidence threshold。
-
-运行命令：
-
-```bash
-pip install -r requirements.txt
 streamlit run app.py
 ```
 
-相关文件：
+or:
 
-- [Streamlit app](app.py)
+```bash
+make streamlit
+```
+
+### 5. Run Batch Prediction CLI
+
+Example command:
+
+```bash
+python3 src/batch_predict.py --model local_weights/yolov8n_640_50epochs/best.pt --source docs/error_case_gallery/images --output-csv local_outputs/batch_predictions/detections.csv
+```
+
+Notes:
+
+- `local_outputs/` is ignored by Git.
+- Large batch inference may benefit from GPU.
+- Small local checks can use CPU.
+
+### 6. Run FastAPI Scaffold
+
+Install API dependencies:
+
+```bash
+pip install -r requirements-api.txt
+```
+
+Run locally:
+
+```bash
+uvicorn src.api:app --host 0.0.0.0 --port 8000
+```
+
+Current API scope:
+
+- `/health`, `/config`, and `/model-status` are available scaffold endpoints.
+- `/predict` is a placeholder and does not run real inference.
+- No model is loaded at import time.
+
+### 7. Docker Scaffold
+
+Build example:
+
+```bash
+docker build -t yolov8-vehicle-pedestrian-demo .
+```
+
+Run example:
+
+```bash
+docker run --rm -p 8501:8501 -v /absolute/path/to/best.pt:/models/best.pt:ro yolov8-vehicle-pedestrian-demo
+```
+
+Do not copy weights into the Docker image. Mount weights at runtime.
+
+## Makefile Commands
+
+- `make check`: run Python syntax checks for the main app and scripts.
+- `make test`: run pytest tests under `tests/`.
+- `make api-check`: run syntax check for `src/api.py`.
+- `make streamlit`: start the local Streamlit demo.
+- `make status`: show short Git status.
+- `make danger-check`: check staged files for risky paths.
+- `make list-large-docs`: list large files under `docs/`.
+
+If pytest is not installed:
+
+```bash
+pip install -r requirements-dev.txt
+```
+
+## Results Summary
+
+| Experiment | Split | Image Size | Epochs | Precision | Recall | mAP50 | mAP50-95 | Notes |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| YOLOv8n smoke test | validation | 416 | 10 | 0.786 | 0.749 | 0.797 | 0.511 | Quick Colab smoke test |
+| YOLOv8n 640 baseline validation | validation | 640 | 50 | 0.81981 | 0.82768 | 0.86422 | 0.59102 | Main lightweight baseline |
+| YOLOv8n official test | test | 640 | 50 | 0.841 | 0.816 | 0.859 | 0.582 | Official test split evaluation |
+| YOLOv8s validation supplementary | validation | 640 | 50 | 0.839 | 0.841 | 0.877 | 0.604 | Supplementary result, not same-split benchmark |
+
+## Timeline by Date
+
+### 2026-06-11
+
+- Initialized project structure.
+- Added dataset YAML.
+- Validated and cleaned labels.
+- Added YOLOv8n smoke test results.
+
+### 2026-06-12
+
+- Added YOLOv8n 640 baseline results.
+- Cleaned project references.
+- Improved model weight path documentation.
+
+### 2026-06-13
+
+- Added image inference and error analysis.
+- Added video demo documentation and key frames.
+- Added YOLOv8s supplementary experiment summary.
+- Added experiment comparison.
+- Added error case gallery.
+- Added Streamlit demo.
+- Added project task board and governance docs.
+
+### 2026-06-14
+
+- Added P0/P1/P2 engineering documentation.
+- Added Streamlit CSV and sample image improvements.
+- Added error taxonomy, hard examples, and threshold analysis.
+- Added config file, setup check, and batch prediction CLI.
+- Added unit test scaffold and dependency split.
+- Added model loading strategy and local deployment guide.
+- Added Docker scaffold without model weights.
+- Added FastAPI scaffold and API documentation.
+
+## Documentation Index
+
+- [Model card](docs/model_card.md)
+- [Dataset card](docs/dataset_card.md)
+- [Model weight policy](docs/model_weight_policy.md)
+- [Project roadmap](docs/project_roadmap.md)
+- [Report assets index](docs/report_assets.md)
+- [Per-class failure analysis](docs/per_class_failure_analysis.md)
+- [Confusion matrix interpretation](docs/confusion_matrix_interpretation.md)
+- [Error taxonomy](docs/error_taxonomy.md)
+- [Hard examples](docs/hard_examples.md)
+- [Threshold analysis](docs/threshold_analysis.md)
 - [Streamlit demo guide](docs/streamlit_demo.md)
+- [Model loading strategy](docs/model_loading_strategy.md)
+- [Local deployment guide](docs/deployment_guide.md)
+- [Docker deployment guide](docs/docker_deployment.md)
+- [API usage guide](docs/api_usage.md)
+- [Project task board](docs/project_task_board.md)
 
-## 后续计划
+## Safety and Git Policy
 
-- Day 4：评估模型并记录 Precision、Recall、mAP50、mAP50-95。
-- Day 5：完成图片推理结果保存。
-- Day 6：完成视频推理结果保存。
-- Day 7：补充实验对比、误检漏检分析、最终 README 和简历描述。
-- 可选实验计划：YOLOv8n 416x416 30 epoch 快速基线、YOLOv8s 640x640 50 epoch 对比、YOLOv8n 640x640 不同置信度阈值对比。
-- 下一步：基于 YOLOv8n 640x640 50 epoch baseline 做图片推理、视频推理和误检漏检分析。
+Do not commit:
+
+- `local_weights/`
+- `*.pt`
+- `*.pth`
+- `*.onnx`
+- `dataset/train/`
+- `dataset/valid/`
+- `dataset/test/`
+- `runs/`
+- `local_outputs/`
+- `local_videos/`
+- `docs/video_demos/*.avi` or other large videos
+- `.venv/`
+
+Policy:
+
+- Model weights are local-only.
+- Full dataset splits are local-only.
+- Generated outputs are local-only.
+- GitHub contains code, docs, configs, summaries, and selected lightweight demo assets only.
+
+## Current Limitations
+
+- FastAPI `/predict` is currently a placeholder.
+- Docker scaffold has not been built or deployed as a verified production image.
+- YOLOv8s result is a supplementary validation result, not a strict same-split test benchmark.
+- Full model weights are not included in the repository.
+- Full dataset split folders are not included in the repository.
+
+## Next Steps
+
+- Implement a real FastAPI image inference endpoint.
+- Add API tests.
+- Add README badges if needed.
+- Add a final project report.
+- Optionally run GPU-based benchmarks for API or video inference.
