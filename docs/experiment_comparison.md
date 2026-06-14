@@ -66,3 +66,21 @@ YOLOv8s provides evidence that a larger model may improve detection quality, esp
 If more time is available, run YOLOv8s `split=test` validation using YOLOv8s `best.pt`.
 
 Since YOLOv8s `best.pt` is not currently preserved in GitHub, this would require keeping or downloading the weight after training, or retraining YOLOv8s on Google Colab GPU.
+
+## Strict Same-Split Test Comparison
+
+YOLOv8s now has official test split metrics from the retrained model. The strict same-split comparison is documented in [`docs/strict_model_comparison.md`](strict_model_comparison.md).
+
+| Model | Split | imgsz | Precision | Recall | mAP50 | mAP50-95 |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| YOLOv8n 640 50 epochs | test | 640 | 0.841 | 0.816 | 0.859 | 0.582 |
+| YOLOv8s 640 50 epochs retrain | test | 640 | 0.865 | 0.838 | 0.876 | 0.601 |
+
+Strict same-split deltas for YOLOv8s over YOLOv8n:
+
+- Precision: `+0.024`
+- Recall: `+0.022`
+- mAP50: `+0.017`
+- mAP50-95: `+0.019`
+
+The earlier YOLOv8s validation-only comparison remains as a historical supplementary result. The strict test split comparison should be used when discussing model-to-model performance on the aligned official test protocol.

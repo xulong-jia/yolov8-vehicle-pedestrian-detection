@@ -1,0 +1,3 @@
+model,split,imgsz,precision,recall,map50,map50_95,notes
+YOLOv8n 640 50 epochs,test,640,0.841,0.816,0.859,0.582,Official test split baseline
+YOLOv8s 640 50 epochs retrain,test,640,0.865,0.838,0.876,0.601,Official test split evaluation after retrain

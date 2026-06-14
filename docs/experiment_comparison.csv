@@ -1,3 +1,5 @@
 model,imgsz,epochs,split,images,instances,precision,recall,map50,map50_95,training_time_hours,model_size_mb,weight_committed,comparison_type,notes
 YOLOv8n,640,50,test,396,1642,0.841,0.816,0.859,0.582,,,No,official_test_validation,"Official test split validation using local_weights/yolov8n_640_50epochs/best.pt."
 YOLOv8s,640,50,val,791,3731,0.839,0.841,0.877,0.604,0.999,22.5,No,validation_training_result,"Validation split result from YOLOv8s training summary; supplementary comparison only because split differs from YOLOv8n official test validation."
+YOLOv8n,640,50,test,396,1642,0.841,0.816,0.859,0.582,,,No,strict_same_split_test,"Strict same-split official test baseline."
+YOLOv8s,640,50,test,396,1642,0.865,0.838,0.876,0.601,,,No,strict_same_split_test,"Official test split evaluation after YOLOv8s retrain."
