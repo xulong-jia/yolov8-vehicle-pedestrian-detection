@@ -1,0 +1,3 @@
+model,weight_path,device,imgsz,image_count,warmup_count,total_seconds,avg_ms,median_ms,p95_ms,min_ms,max_ms,fps,torch_version,ultralytics_version,notes
+YOLOv8n 640 50 epochs,local_weights/yolov8n_640_50epochs/best.pt,cuda:0,640,100,10,1.156165396002507,11.561653960025069,11.207850999880975,13.078767100273579,9.477555000103166,21.18755899982716,86.49281525442159,2.11.0+cu128,8.4.67,Custom YOLOv8n official test baseline weight
+YOLOv8s 640 50 epochs retrain,local_weights/yolov8s_640_50epochs/best.pt,cuda:0,640,100,10,1.5985251089991834,15.985251089991834,15.521947000024738,19.847418000313155,13.380237000092166,26.755192000109673,62.55766608671461,2.11.0+cu128,8.4.67,Custom YOLOv8s retrained weight

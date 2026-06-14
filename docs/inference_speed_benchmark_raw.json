@@ -1,0 +1,1968 @@
+{
+  "environment": {
+    "timestamp": "2026-06-14T10:26:32",
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.35",
+    "python_version": "3.12.13 (main, Mar  4 2026, 09:23:07) [GCC 11.4.0]",
+    "torch_version": "2.11.0+cu128",
+    "ultralytics_version": "8.4.67",
+    "cuda_available": true,
+    "device": "cuda:0",
+    "gpu_name": "Tesla T4",
+    "imgsz": 640,
+    "image_source": "dataset/test/images",
+    "image_count": 100,
+    "warmup_count": 10
+  },
+  "images": [
+    "dataset/test/images/-_png_jpg.rf.09f6995c447f33fc134a3175bde9f580.jpg",
+    "dataset/test/images/-_png_jpg.rf.0f038aa47e84ecb108f068f3a41b8587.jpg",
+    "dataset/test/images/-_png_jpg.rf.16696c4cee85795800b9c89c6095d13c.jpg",
+    "dataset/test/images/-_png_jpg.rf.246e25b1c0e577bc5357cfc5178c87ef.jpg",
+    "dataset/test/images/-_png_jpg.rf.48a907bdddb902497c184ffc90d46119.jpg",
+    "dataset/test/images/-_png_jpg.rf.4f267a2a4f1ebdb5d8a41edbea186edf.jpg",
+    "dataset/test/images/-_png_jpg.rf.5e7087bf778c74ad6df8c65cbeb2a280.jpg",
+    "dataset/test/images/-_png_jpg.rf.72c15e9584bd74dcaee8233b79d4f48a.jpg",
+    "dataset/test/images/-_png_jpg.rf.72c586896018c542d70e7d31945dbff2.jpg",
+    "dataset/test/images/-_png_jpg.rf.86beb1acde19343c064053a9d8c5bee1.jpg",
+    "dataset/test/images/-_png_jpg.rf.b5d4835ec48cb21ffd96f823cd534270.jpg",
+    "dataset/test/images/-_png_jpg.rf.be25c15b86ab145cecb5bcb9d1d24695.jpg",
+    "dataset/test/images/-_png_jpg.rf.c78a38d94dc72cd211366d40d3815114.jpg",
+    "dataset/test/images/-_png_jpg.rf.c8f5d98032a6e1c3006402d8e77c5f9c.jpg",
+    "dataset/test/images/-_png_jpg.rf.c8f7bfc9c47b7f23f125d201c41a1275.jpg",
+    "dataset/test/images/-_png_jpg.rf.ce8b6d11bbd14955a17744d99ce3fdf7.jpg",
+    "dataset/test/images/-_png_jpg.rf.d2afd1d903d033587ab2c597401d7096.jpg",
+    "dataset/test/images/-_png_jpg.rf.d7ea8c3f5565a3fbfd0696556f247048.jpg",
+    "dataset/test/images/-_png_jpg.rf.e230c17f27a6959e8ca110c276c164fd.jpg",
+    "dataset/test/images/-_png_jpg.rf.fba95d631df5233e32eb5c308325e430.jpg",
+    "dataset/test/images/000d2e3d33b18463_jpg.rf.4718ba878911b9cd1cfed077073d709e.jpg",
+    "dataset/test/images/00347f583cd63d8f_jpg.rf.2be1e09d5c869598978bbac49f2bed3f.jpg",
+    "dataset/test/images/01e46bab22dbe5b6_jpg.rf.350bdf1afc3e3b1c572348eca86b9155.jpg",
+    "dataset/test/images/01e46bab22dbe5b6_jpg.rf.cf2a0d78624b1bbf1556cb58802d3ab0.jpg",
+    "dataset/test/images/01f693ee3da9ced7_jpg.rf.b49cfde194c436ee74aa2afde09dc201.jpg",
+    "dataset/test/images/02b0b2cb54169767_jpg.rf.37574b6da3bdb4f1ef7ef91dcb4f3eea.jpg",
+    "dataset/test/images/038789965a8f7606_jpg.rf.b5371c9d8ce704e1cdeccb9a873caafc.jpg",
+    "dataset/test/images/03d55299d9f9bf52_jpg.rf.ccdc5b132bb0d6448545cdcfe30c3ee4.jpg",
+    "dataset/test/images/03dbe0e1735485d0_jpg.rf.1fdf407330d315b35e38bbbcf863511f.jpg",
+    "dataset/test/images/03e8bc2333105e66_jpg.rf.47db733d08b4019199ac9d2c7c0fcf80.jpg",
+    "dataset/test/images/0b9d3a9512856b70_jpg.rf.c70e97bc7ce2667f0b6b1760fc7fac23.jpg",
+    "dataset/test/images/0c135bdff969f253_jpg.rf.50d476ddabcca879c2fec8b9dae55570.jpg",
+    "dataset/test/images/0c291e6a916a1669_jpg.rf.6dcf80af5abc888be5a9f7972b9946ce.jpg",
+    "dataset/test/images/0df44ae71ebdbb85_jpg.rf.b50e79a41cda460066c6d92213ad1337.jpg",
+    "dataset/test/images/0e568901d66ad81e46860b91cce2a7fe_jpg.rf.8c6f7ce142e9f3b3403d20c761ad1359.jpg",
+    "dataset/test/images/0e568901d66ad81e46860b91cce2a7fe_jpg.rf.c6fc43d0fe5c37e1197ba341f964dea6.jpg",
+    "dataset/test/images/0e5e6eb1d9b2bd58_jpg.rf.4b0a5768cd3e5d5daf579f0017e16231.jpg",
+    "dataset/test/images/0e6e18101999c827_jpg.rf.a8f2b6ca6e0c83d245855202769ee5fe.jpg",
+    "dataset/test/images/0e6e18101999c827_jpg.rf.d8984301699a91079e868cf33299402e.jpg",
+    "dataset/test/images/1060_png_jpg.rf.add1db5a7ebf1f9bd6b74f5bfebe9937.jpg",
+    "dataset/test/images/11070_png_jpg.rf.8a8667b27bf4153370de03098ddb6353.jpg",
+    "dataset/test/images/1660_png_jpg.rf.6cb5b403fa465e37f296251834a93c05.jpg",
+    "dataset/test/images/18270_png_jpg.rf.d312a8bf19923bfe15df5b263c511e3b.jpg",
+    "dataset/test/images/1c4915190a748798_jpg.rf.0c265452437e4c470eee04c6c8a24fc9.jpg",
+    "dataset/test/images/1c4915190a748798_jpg.rf.fd0b3969b653111a42db823087db3c5a.jpg",
+    "dataset/test/images/1df4f97b8c8dd396_jpg.rf.d9da2b50e2de7de98da0270bac9d61a3.jpg",
+    "dataset/test/images/1f1d578fbebeb017_jpg.rf.41db189b5089a8ace9724fba39951925.jpg",
+    "dataset/test/images/1f6a6392ca0b7412_jpg.rf.019bd0b448b4c526e6d0879bfe4b57f8.jpg",
+    "dataset/test/images/1f6a6392ca0b7412_jpg.rf.5b435bd8ee1786aa9bf31eca8974aa63.jpg",
+    "dataset/test/images/20220802_103005_mp4-140_jpg.rf.9a468ff834cf9e125b52423c1f32b427.jpg",
+    "dataset/test/images/20570-Copy_png_jpg.rf.8090caf7e7a5938884857d923161ffb7.jpg",
+    "dataset/test/images/212_jpg.rf.cca728bf326b708e0f4d25272c8bda1a.jpg",
+    "dataset/test/images/227_jpg.rf.b6bc849a3403faaa059f24927aa5a85a.jpg",
+    "dataset/test/images/23a2507b8bb31bd2a5c667f4f93deb60_jpg.rf.d585c589bb781165117a260f6fafffff.jpg",
+    "dataset/test/images/242_jpg.rf.6dd0a2edcf70a0bef0f51148a728ca1e.jpg",
+    "dataset/test/images/24_jpg.rf.4d53df7f738ca765f5a09ae47142982b.jpg",
+    "dataset/test/images/2590_png_jpg.rf.d89712eb26e2b346636585895ff810a7.jpg",
+    "dataset/test/images/26960_png_jpg.rf.acf7ea38ac2da54cb2874586823c7d1c.jpg",
+    "dataset/test/images/27_jpg.rf.e1a240b624fe3925360ae391968a1a70.jpg",
+    "dataset/test/images/292_jpg.rf.7656790c737cac9e6155db96acd5e4f5.jpg",
+    "dataset/test/images/2_png_jpg.rf.34cdbe48f470d2429162476d34b30646.jpg",
+    "dataset/test/images/2a2314ced155167d_jpg.rf.194140cb46f7b387a8b0ee2177791327.jpg",
+    "dataset/test/images/2af3b509d8db5d7b_jpg.rf.7eea406fc90a5ae56087397aff97c95d.jpg",
+    "dataset/test/images/2ee0950c0c60184e_jpg.rf.f042e07bdc79bbd3737991865012efaa.jpg",
+    "dataset/test/images/2f2a2784f085dee1_jpg.rf.298486ae91fefe0dd1c879e657bef1f7.jpg",
+    "dataset/test/images/32350_png_jpg.rf.95b211bde166514ea22e0355dfc2b17d.jpg",
+    "dataset/test/images/34460_png_jpg.rf.cffcafaa0dd2ab1e1206bd6e97ad62e5.jpg",
+    "dataset/test/images/34700_png_jpg.rf.5f6bca3c42c487dec4be855a9731693d.jpg",
+    "dataset/test/images/34910_png_jpg.rf.19d2a7325681540a581832591ad488aa.jpg",
+    "dataset/test/images/371_jpg.rf.1c097ca3426bc3994bb229114b9527b7.jpg",
+    "dataset/test/images/3J4A7817_frame_0005_png_jpg.rf.db2e2c97dec56b3c5eea95f9db29e7a2.jpg",
+    "dataset/test/images/3J4A7817_frame_0031_png_jpg.rf.9278a788346d12c78c4a72ac541aee7d.jpg",
+    "dataset/test/images/3J4A7817_frame_0037_png_jpg.rf.779a263e0dfdab28099e2d2856cd96fd.jpg",
+    "dataset/test/images/3J4A7817_frame_0038_png_jpg.rf.a830a337d74e96623a3bb6aae37fd653.jpg",
+    "dataset/test/images/3J4A7817_frame_0044_png_jpg.rf.fbbaba56db55cf78146bf365bfc11fc7.jpg",
+    "dataset/test/images/3J4A7817_frame_0046_png_jpg.rf.287a75c8cd266e1ebe80d6039df35d84.jpg",
+    "dataset/test/images/3J4A7817_frame_0048_png_jpg.rf.f7cfcd3e249d7cf084f779e89df64d93.jpg",
+    "dataset/test/images/3J4A7817_frame_0054_png_jpg.rf.66221feedeb5c28292591e3ff2350834.jpg",
+    "dataset/test/images/3J4A7817_frame_0055_png_jpg.rf.e1392204dba18e7722f0849889cbd815.jpg",
+    "dataset/test/images/3J4A7818_frame_0013_png_jpg.rf.caeb05b0a3e50f8435e90171d7806ca4.jpg",
+    "dataset/test/images/3J4A7818_frame_0017_png_jpg.rf.4a1c14e0149dfa7f04098929a7a7b3a5.jpg",
+    "dataset/test/images/3J4A7818_frame_0019_png_jpg.rf.95c1b4917644fa633a4881115f724f1b.jpg",
+    "dataset/test/images/3J4A7818_frame_0037_png_jpg.rf.6f64e6cd1b700394430a9bcf89642a8b.jpg",
+    "dataset/test/images/3J4A7818_frame_0043_png_jpg.rf.4a2418ee0d57a88e70f3c67847c5364c.jpg",
+    "dataset/test/images/3J4A7818_frame_0067_png_jpg.rf.e18f73ff6226cd402097efc76dcc5dc3.jpg",
+    "dataset/test/images/3J4A7818_frame_0068_png_jpg.rf.ebbc9930e890da0f318a04841431b866.jpg",
+    "dataset/test/images/3J4A7818_frame_0070_png_jpg.rf.88b34ae9d8284930aa76b63e7323895d.jpg",
+    "dataset/test/images/3J4A7818_frame_0072_png_jpg.rf.bdd7432218c7b6e8b53acd8c62d850c9.jpg",
+    "dataset/test/images/3J4A7818_frame_0075_png_jpg.rf.5e1c6490a5004873f834465a73614e24.jpg",
+    "dataset/test/images/3J4A7818_frame_0092_png_jpg.rf.d807e73d696c66c90dc8e2aa58f2d3b4.jpg",
+    "dataset/test/images/3J4A7818_frame_0099_png_jpg.rf.d58d93109edc4d63c8da6a0a4289101f.jpg",
+    "dataset/test/images/3J4A7818_frame_0121_png_jpg.rf.93261cebf5e5c5192dc68531cf5c4cc6.jpg",
+    "dataset/test/images/3J4A7818_frame_0146_png_jpg.rf.6715c6101e740f63d2de4f5d0491f975.jpg",
+    "dataset/test/images/3J4A7818_frame_0146_png_jpg.rf.eb10df2ec1135550574882615be13b05.jpg",
+    "dataset/test/images/3J4A7818_frame_0152_png_jpg.rf.3614d230a93b4443995976360af238af.jpg",
+    "dataset/test/images/3J4A7818_frame_0153_png_jpg.rf.63a917ff6d7bf23d1dd3d81e987269dc.jpg",
+    "dataset/test/images/3J4A7818_frame_0159_png_jpg.rf.5095135b1289945b23ffc7dea80b7886.jpg",
+    "dataset/test/images/3J4A7818_frame_0180_png_jpg.rf.e31bbcce93bd2ad312810b2fa9df95af.jpg",
+    "dataset/test/images/3J4A7819_frame_0159_png_jpg.rf.1728a4723c21c6b9df48c733df5f279a.jpg",
+    "dataset/test/images/3J4A7819_frame_0241_png_jpg.rf.3311551b9def3991f886efd1718fc85d.jpg"
+  ],
+  "models": [
+    {
+      "model": "YOLOv8n 640 50 epochs",
+      "weight_path": "local_weights/yolov8n_640_50epochs/best.pt",
+      "aggregate": {
+        "model": "YOLOv8n 640 50 epochs",
+        "weight_path": "local_weights/yolov8n_640_50epochs/best.pt",
+        "device": "cuda:0",
+        "imgsz": 640,
+        "image_count": 100,
+        "warmup_count": 10,
+        "total_seconds": 1.156165396002507,
+        "avg_ms": 11.561653960025069,
+        "median_ms": 11.207850999880975,
+        "p95_ms": 13.078767100273579,
+        "min_ms": 9.477555000103166,
+        "max_ms": 21.18755899982716,
+        "fps": 86.49281525442159,
+        "torch_version": "2.11.0+cu128",
+        "ultralytics_version": "8.4.67",
+        "notes": "Custom YOLOv8n official test baseline weight"
+      },
+      "per_image": [
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.09f6995c447f33fc134a3175bde9f580.jpg",
+          "latency_ms": 11.59734800012302,
+          "ultralytics_speed": {
+            "preprocess": 1.302067000324314,
+            "inference": 7.233784000163723,
+            "postprocess": 1.190431999930297
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.0f038aa47e84ecb108f068f3a41b8587.jpg",
+          "latency_ms": 12.134179999975458,
+          "ultralytics_speed": {
+            "preprocess": 1.9045379999624856,
+            "inference": 7.157906999964325,
+            "postprocess": 1.1076339997089235
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.16696c4cee85795800b9c89c6095d13c.jpg",
+          "latency_ms": 12.351396999747521,
+          "ultralytics_speed": {
+            "preprocess": 1.3524350001716812,
+            "inference": 6.479842999851826,
+            "postprocess": 1.1484630003906204
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.246e25b1c0e577bc5357cfc5178c87ef.jpg",
+          "latency_ms": 10.902989999976853,
+          "ultralytics_speed": {
+            "preprocess": 1.3310839999576274,
+            "inference": 6.479389000105584,
+            "postprocess": 1.041341000018292
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.48a907bdddb902497c184ffc90d46119.jpg",
+          "latency_ms": 11.192344999926718,
+          "ultralytics_speed": {
+            "preprocess": 1.2780120000570605,
+            "inference": 6.485923000127514,
+            "postprocess": 1.0165200001210906
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.4f267a2a4f1ebdb5d8a41edbea186edf.jpg",
+          "latency_ms": 11.285309999948367,
+          "ultralytics_speed": {
+            "preprocess": 1.331029000084527,
+            "inference": 6.4890129997365875,
+            "postprocess": 1.0585230002106982
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.5e7087bf778c74ad6df8c65cbeb2a280.jpg",
+          "latency_ms": 10.90096900043136,
+          "ultralytics_speed": {
+            "preprocess": 1.2771299998348695,
+            "inference": 6.465426999966439,
+            "postprocess": 1.0519980000935902
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.72c15e9584bd74dcaee8233b79d4f48a.jpg",
+          "latency_ms": 12.094475000139937,
+          "ultralytics_speed": {
+            "preprocess": 1.319080000030226,
+            "inference": 6.506214000182808,
+            "postprocess": 1.01404699989871
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.72c586896018c542d70e7d31945dbff2.jpg",
+          "latency_ms": 10.992965999776061,
+          "ultralytics_speed": {
+            "preprocess": 1.347086999885505,
+            "inference": 6.492362999779289,
+            "postprocess": 1.0398249996796949
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.86beb1acde19343c064053a9d8c5bee1.jpg",
+          "latency_ms": 10.830358000021079,
+          "ultralytics_speed": {
+            "preprocess": 1.2662630001614161,
+            "inference": 6.487674999789306,
+            "postprocess": 1.1252450003667036
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.b5d4835ec48cb21ffd96f823cd534270.jpg",
+          "latency_ms": 10.930618999736907,
+          "ultralytics_speed": {
+            "preprocess": 1.3287299998410163,
+            "inference": 6.484931000159122,
+            "postprocess": 1.0077599999931408
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.be25c15b86ab145cecb5bcb9d1d24695.jpg",
+          "latency_ms": 12.271689000044717,
+          "ultralytics_speed": {
+            "preprocess": 1.3090989996271674,
+            "inference": 6.470454999998765,
+            "postprocess": 1.0262439996040484
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.c78a38d94dc72cd211366d40d3815114.jpg",
+          "latency_ms": 12.155673000052047,
+          "ultralytics_speed": {
+            "preprocess": 1.3376850001804996,
+            "inference": 6.486330999905476,
+            "postprocess": 1.024203000270063
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.c8f5d98032a6e1c3006402d8e77c5f9c.jpg",
+          "latency_ms": 11.731268000403361,
+          "ultralytics_speed": {
+            "preprocess": 1.2682870001299307,
+            "inference": 6.481775999873207,
+            "postprocess": 1.1121080001430528
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.c8f7bfc9c47b7f23f125d201c41a1275.jpg",
+          "latency_ms": 12.780659000327432,
+          "ultralytics_speed": {
+            "preprocess": 1.3587489997917146,
+            "inference": 6.518546999814134,
+            "postprocess": 1.120148000154586
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.ce8b6d11bbd14955a17744d99ce3fdf7.jpg",
+          "latency_ms": 11.203346999991481,
+          "ultralytics_speed": {
+            "preprocess": 1.3444270002764824,
+            "inference": 6.491805999758071,
+            "postprocess": 1.3080620001346688
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.d2afd1d903d033587ab2c597401d7096.jpg",
+          "latency_ms": 12.603128000137076,
+          "ultralytics_speed": {
+            "preprocess": 1.3819350001540442,
+            "inference": 6.504109999696084,
+            "postprocess": 1.190602999940893
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.d7ea8c3f5565a3fbfd0696556f247048.jpg",
+          "latency_ms": 12.622650000139402,
+          "ultralytics_speed": {
+            "preprocess": 1.3694030003534863,
+            "inference": 6.489352000244253,
+            "postprocess": 1.0746670000116865
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.e230c17f27a6959e8ca110c276c164fd.jpg",
+          "latency_ms": 10.904716000368353,
+          "ultralytics_speed": {
+            "preprocess": 1.2970559996574593,
+            "inference": 6.467928999882133,
+            "postprocess": 1.026255999931891
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.fba95d631df5233e32eb5c308325e430.jpg",
+          "latency_ms": 9.477555000103166,
+          "ultralytics_speed": {
+            "preprocess": 1.289188000100694,
+            "inference": 5.232668000189733,
+            "postprocess": 1.006540999696881
+          }
+        },
+        {
+          "image": "dataset/test/images/000d2e3d33b18463_jpg.rf.4718ba878911b9cd1cfed077073d709e.jpg",
+          "latency_ms": 9.701616000256763,
+          "ultralytics_speed": {
+            "preprocess": 1.2740520000988909,
+            "inference": 5.325700999947003,
+            "postprocess": 1.0119620001205476
+          }
+        },
+        {
+          "image": "dataset/test/images/00347f583cd63d8f_jpg.rf.2be1e09d5c869598978bbac49f2bed3f.jpg",
+          "latency_ms": 10.577815000033297,
+          "ultralytics_speed": {
+            "preprocess": 1.4110509996498877,
+            "inference": 5.235028999777569,
+            "postprocess": 1.4919479999662144
+          }
+        },
+        {
+          "image": "dataset/test/images/01e46bab22dbe5b6_jpg.rf.350bdf1afc3e3b1c572348eca86b9155.jpg",
+          "latency_ms": 21.18755899982716,
+          "ultralytics_speed": {
+            "preprocess": 1.8562180002845707,
+            "inference": 8.985678000044572,
+            "postprocess": 6.243103000088013
+          }
+        },
+        {
+          "image": "dataset/test/images/01e46bab22dbe5b6_jpg.rf.cf2a0d78624b1bbf1556cb58802d3ab0.jpg",
+          "latency_ms": 16.12050099993212,
+          "ultralytics_speed": {
+            "preprocess": 1.9335869997121335,
+            "inference": 6.763912999758759,
+            "postprocess": 2.063002999875607
+          }
+        },
+        {
+          "image": "dataset/test/images/01f693ee3da9ced7_jpg.rf.b49cfde194c436ee74aa2afde09dc201.jpg",
+          "latency_ms": 10.560293000253296,
+          "ultralytics_speed": {
+            "preprocess": 1.3657300000886607,
+            "inference": 5.577960000209714,
+            "postprocess": 1.0441940003147465
+          }
+        },
+        {
+          "image": "dataset/test/images/02b0b2cb54169767_jpg.rf.37574b6da3bdb4f1ef7ef91dcb4f3eea.jpg",
+          "latency_ms": 11.676784999963274,
+          "ultralytics_speed": {
+            "preprocess": 1.3728310000260535,
+            "inference": 5.325635999724909,
+            "postprocess": 1.0636260003593634
+          }
+        },
+        {
+          "image": "dataset/test/images/038789965a8f7606_jpg.rf.b5371c9d8ce704e1cdeccb9a873caafc.jpg",
+          "latency_ms": 9.91107900017596,
+          "ultralytics_speed": {
+            "preprocess": 1.2931780001963489,
+            "inference": 5.370937999941816,
+            "postprocess": 1.0179819996665174
+          }
+        },
+        {
+          "image": "dataset/test/images/03d55299d9f9bf52_jpg.rf.ccdc5b132bb0d6448545cdcfe30c3ee4.jpg",
+          "latency_ms": 10.95765600030063,
+          "ultralytics_speed": {
+            "preprocess": 1.3428799998109753,
+            "inference": 5.227799000294908,
+            "postprocess": 1.0195770000791526
+          }
+        },
+        {
+          "image": "dataset/test/images/03dbe0e1735485d0_jpg.rf.1fdf407330d315b35e38bbbcf863511f.jpg",
+          "latency_ms": 10.91501300015807,
+          "ultralytics_speed": {
+            "preprocess": 1.4344870000968513,
+            "inference": 5.302360999849043,
+            "postprocess": 1.0914040003626724
+          }
+        },
+        {
+          "image": "dataset/test/images/03e8bc2333105e66_jpg.rf.47db733d08b4019199ac9d2c7c0fcf80.jpg",
+          "latency_ms": 10.33793600026911,
+          "ultralytics_speed": {
+            "preprocess": 1.349315000425122,
+            "inference": 5.466817000069568,
+            "postprocess": 1.0035979998974653
+          }
+        },
+        {
+          "image": "dataset/test/images/0b9d3a9512856b70_jpg.rf.c70e97bc7ce2667f0b6b1760fc7fac23.jpg",
+          "latency_ms": 10.15993700002582,
+          "ultralytics_speed": {
+            "preprocess": 1.313363000008394,
+            "inference": 5.510806000074808,
+            "postprocess": 1.0453960003360407
+          }
+        },
+        {
+          "image": "dataset/test/images/0c135bdff969f253_jpg.rf.50d476ddabcca879c2fec8b9dae55570.jpg",
+          "latency_ms": 10.78110500020557,
+          "ultralytics_speed": {
+            "preprocess": 1.3392360001489578,
+            "inference": 5.397283000093012,
+            "postprocess": 1.0454459998072707
+          }
+        },
+        {
+          "image": "dataset/test/images/0c291e6a916a1669_jpg.rf.6dcf80af5abc888be5a9f7972b9946ce.jpg",
+          "latency_ms": 11.750381999718229,
+          "ultralytics_speed": {
+            "preprocess": 1.3436340000225755,
+            "inference": 5.557047999900533,
+            "postprocess": 1.111607999973785
+          }
+        },
+        {
+          "image": "dataset/test/images/0df44ae71ebdbb85_jpg.rf.b50e79a41cda460066c6d92213ad1337.jpg",
+          "latency_ms": 11.68828800018673,
+          "ultralytics_speed": {
+            "preprocess": 1.3496830001713533,
+            "inference": 5.627831999845512,
+            "postprocess": 1.1239870000281371
+          }
+        },
+        {
+          "image": "dataset/test/images/0e568901d66ad81e46860b91cce2a7fe_jpg.rf.8c6f7ce142e9f3b3403d20c761ad1359.jpg",
+          "latency_ms": 12.058311000146205,
+          "ultralytics_speed": {
+            "preprocess": 1.371388000279694,
+            "inference": 5.666140999892377,
+            "postprocess": 1.087913999981538
+          }
+        },
+        {
+          "image": "dataset/test/images/0e568901d66ad81e46860b91cce2a7fe_jpg.rf.c6fc43d0fe5c37e1197ba341f964dea6.jpg",
+          "latency_ms": 11.795002999861026,
+          "ultralytics_speed": {
+            "preprocess": 1.3996900001984613,
+            "inference": 5.5674179998277395,
+            "postprocess": 1.078403000065009
+          }
+        },
+        {
+          "image": "dataset/test/images/0e5e6eb1d9b2bd58_jpg.rf.4b0a5768cd3e5d5daf579f0017e16231.jpg",
+          "latency_ms": 11.951801000122941,
+          "ultralytics_speed": {
+            "preprocess": 1.3644880000356352,
+            "inference": 5.67071900013616,
+            "postprocess": 1.1163449999003205
+          }
+        },
+        {
+          "image": "dataset/test/images/0e6e18101999c827_jpg.rf.a8f2b6ca6e0c83d245855202769ee5fe.jpg",
+          "latency_ms": 10.903959999723156,
+          "ultralytics_speed": {
+            "preprocess": 1.3890909999645373,
+            "inference": 6.142501999875094,
+            "postprocess": 1.208553999731521
+          }
+        },
+        {
+          "image": "dataset/test/images/0e6e18101999c827_jpg.rf.d8984301699a91079e868cf33299402e.jpg",
+          "latency_ms": 11.913350999748218,
+          "ultralytics_speed": {
+            "preprocess": 1.4906209999026032,
+            "inference": 5.3505910000239965,
+            "postprocess": 1.0718220000853762
+          }
+        },
+        {
+          "image": "dataset/test/images/1060_png_jpg.rf.add1db5a7ebf1f9bd6b74f5bfebe9937.jpg",
+          "latency_ms": 10.562777999894024,
+          "ultralytics_speed": {
+            "preprocess": 1.3655500001732435,
+            "inference": 5.723728999782907,
+            "postprocess": 1.1043130002690305
+          }
+        },
+        {
+          "image": "dataset/test/images/11070_png_jpg.rf.8a8667b27bf4153370de03098ddb6353.jpg",
+          "latency_ms": 10.455927999828418,
+          "ultralytics_speed": {
+            "preprocess": 1.4412939999601804,
+            "inference": 5.41729899987331,
+            "postprocess": 1.2930950001646124
+          }
+        },
+        {
+          "image": "dataset/test/images/1660_png_jpg.rf.6cb5b403fa465e37f296251834a93c05.jpg",
+          "latency_ms": 10.960970000269299,
+          "ultralytics_speed": {
+            "preprocess": 1.3594759998341033,
+            "inference": 6.18656800043027,
+            "postprocess": 1.0677190002752468
+          }
+        },
+        {
+          "image": "dataset/test/images/18270_png_jpg.rf.d312a8bf19923bfe15df5b263c511e3b.jpg",
+          "latency_ms": 10.87900799984709,
+          "ultralytics_speed": {
+            "preprocess": 1.4039010002306895,
+            "inference": 6.1501059999500285,
+            "postprocess": 1.1993839998467593
+          }
+        },
+        {
+          "image": "dataset/test/images/1c4915190a748798_jpg.rf.0c265452437e4c470eee04c6c8a24fc9.jpg",
+          "latency_ms": 14.761838999675092,
+          "ultralytics_speed": {
+            "preprocess": 1.5752200001770689,
+            "inference": 6.988958999954775,
+            "postprocess": 1.313492999997834
+          }
+        },
+        {
+          "image": "dataset/test/images/1c4915190a748798_jpg.rf.fd0b3969b653111a42db823087db3c5a.jpg",
+          "latency_ms": 12.542980000034731,
+          "ultralytics_speed": {
+            "preprocess": 1.4175199999044708,
+            "inference": 5.697914999927889,
+            "postprocess": 1.2613779999810504
+          }
+        },
+        {
+          "image": "dataset/test/images/1df4f97b8c8dd396_jpg.rf.d9da2b50e2de7de98da0270bac9d61a3.jpg",
+          "latency_ms": 13.047653000285209,
+          "ultralytics_speed": {
+            "preprocess": 1.458236000416946,
+            "inference": 6.295219000094221,
+            "postprocess": 1.309802000378113
+          }
+        },
+        {
+          "image": "dataset/test/images/1f1d578fbebeb017_jpg.rf.41db189b5089a8ace9724fba39951925.jpg",
+          "latency_ms": 11.210443999971176,
+          "ultralytics_speed": {
+            "preprocess": 1.4352030002555693,
+            "inference": 5.915775000175927,
+            "postprocess": 1.1927900000046066
+          }
+        },
+        {
+          "image": "dataset/test/images/1f6a6392ca0b7412_jpg.rf.019bd0b448b4c526e6d0879bfe4b57f8.jpg",
+          "latency_ms": 11.675406999984261,
+          "ultralytics_speed": {
+            "preprocess": 1.521499999853404,
+            "inference": 5.935227000009036,
+            "postprocess": 1.666929999828426
+          }
+        },
+        {
+          "image": "dataset/test/images/1f6a6392ca0b7412_jpg.rf.5b435bd8ee1786aa9bf31eca8974aa63.jpg",
+          "latency_ms": 12.602196999978332,
+          "ultralytics_speed": {
+            "preprocess": 1.4657279998573358,
+            "inference": 5.915389999699983,
+            "postprocess": 1.1660719997053093
+          }
+        },
+        {
+          "image": "dataset/test/images/20220802_103005_mp4-140_jpg.rf.9a468ff834cf9e125b52423c1f32b427.jpg",
+          "latency_ms": 11.265840999840293,
+          "ultralytics_speed": {
+            "preprocess": 1.4035600001989224,
+            "inference": 6.274204999954236,
+            "postprocess": 1.2610059998223733
+          }
+        },
+        {
+          "image": "dataset/test/images/20570-Copy_png_jpg.rf.8090caf7e7a5938884857d923161ffb7.jpg",
+          "latency_ms": 10.582120999970357,
+          "ultralytics_speed": {
+            "preprocess": 1.4567640000677784,
+            "inference": 5.736947000059445,
+            "postprocess": 1.128985999912402
+          }
+        },
+        {
+          "image": "dataset/test/images/212_jpg.rf.cca728bf326b708e0f4d25272c8bda1a.jpg",
+          "latency_ms": 10.085164000429359,
+          "ultralytics_speed": {
+            "preprocess": 1.3949690001027193,
+            "inference": 5.48777699987113,
+            "postprocess": 1.1104029999842169
+          }
+        },
+        {
+          "image": "dataset/test/images/227_jpg.rf.b6bc849a3403faaa059f24927aa5a85a.jpg",
+          "latency_ms": 11.112543999843183,
+          "ultralytics_speed": {
+            "preprocess": 1.5575989996250428,
+            "inference": 6.210566999925504,
+            "postprocess": 1.1586040000111097
+          }
+        },
+        {
+          "image": "dataset/test/images/23a2507b8bb31bd2a5c667f4f93deb60_jpg.rf.d585c589bb781165117a260f6fafffff.jpg",
+          "latency_ms": 10.4896020002343,
+          "ultralytics_speed": {
+            "preprocess": 1.3684179998563195,
+            "inference": 5.611254000086774,
+            "postprocess": 1.2028969999846595
+          }
+        },
+        {
+          "image": "dataset/test/images/242_jpg.rf.6dd0a2edcf70a0bef0f51148a728ca1e.jpg",
+          "latency_ms": 10.160916000131692,
+          "ultralytics_speed": {
+            "preprocess": 1.3503370000762516,
+            "inference": 5.577361000177916,
+            "postprocess": 1.0846479999599978
+          }
+        },
+        {
+          "image": "dataset/test/images/24_jpg.rf.4d53df7f738ca765f5a09ae47142982b.jpg",
+          "latency_ms": 10.505793999982416,
+          "ultralytics_speed": {
+            "preprocess": 1.3636180001412868,
+            "inference": 5.5231490000551275,
+            "postprocess": 1.222707000124501
+          }
+        },
+        {
+          "image": "dataset/test/images/2590_png_jpg.rf.d89712eb26e2b346636585895ff810a7.jpg",
+          "latency_ms": 10.445659000197338,
+          "ultralytics_speed": {
+            "preprocess": 1.3421329999800946,
+            "inference": 5.619365000256948,
+            "postprocess": 1.1134369997307658
+          }
+        },
+        {
+          "image": "dataset/test/images/26960_png_jpg.rf.acf7ea38ac2da54cb2874586823c7d1c.jpg",
+          "latency_ms": 14.025338999999803,
+          "ultralytics_speed": {
+            "preprocess": 1.5969830001267837,
+            "inference": 8.359933000065212,
+            "postprocess": 1.575766999849293
+          }
+        },
+        {
+          "image": "dataset/test/images/27_jpg.rf.e1a240b624fe3925360ae391968a1a70.jpg",
+          "latency_ms": 12.830015999952593,
+          "ultralytics_speed": {
+            "preprocess": 1.6191169997910038,
+            "inference": 7.3870289998012595,
+            "postprocess": 1.286626999899454
+          }
+        },
+        {
+          "image": "dataset/test/images/292_jpg.rf.7656790c737cac9e6155db96acd5e4f5.jpg",
+          "latency_ms": 11.075837999669602,
+          "ultralytics_speed": {
+            "preprocess": 1.4085849998082267,
+            "inference": 6.049799999800598,
+            "postprocess": 1.3287189999573457
+          }
+        },
+        {
+          "image": "dataset/test/images/2_png_jpg.rf.34cdbe48f470d2429162476d34b30646.jpg",
+          "latency_ms": 11.596447999636439,
+          "ultralytics_speed": {
+            "preprocess": 1.4448020001509576,
+            "inference": 6.222403000265331,
+            "postprocess": 1.2795210000149382
+          }
+        },
+        {
+          "image": "dataset/test/images/2a2314ced155167d_jpg.rf.194140cb46f7b387a8b0ee2177791327.jpg",
+          "latency_ms": 13.669935000052647,
+          "ultralytics_speed": {
+            "preprocess": 1.6098379996947187,
+            "inference": 6.380106000051455,
+            "postprocess": 1.30872099998669
+          }
+        },
+        {
+          "image": "dataset/test/images/2af3b509d8db5d7b_jpg.rf.7eea406fc90a5ae56087397aff97c95d.jpg",
+          "latency_ms": 12.7463369999532,
+          "ultralytics_speed": {
+            "preprocess": 1.6401800003222888,
+            "inference": 6.2669270000697,
+            "postprocess": 0.5734359997404681
+          }
+        },
+        {
+          "image": "dataset/test/images/2ee0950c0c60184e_jpg.rf.f042e07bdc79bbd3737991865012efaa.jpg",
+          "latency_ms": 11.423556999943685,
+          "ultralytics_speed": {
+            "preprocess": 1.547105000099691,
+            "inference": 6.335564999972121,
+            "postprocess": 1.2157830001342518
+          }
+        },
+        {
+          "image": "dataset/test/images/2f2a2784f085dee1_jpg.rf.298486ae91fefe0dd1c879e657bef1f7.jpg",
+          "latency_ms": 12.25956700000097,
+          "ultralytics_speed": {
+            "preprocess": 1.4555230000041774,
+            "inference": 5.678528999851551,
+            "postprocess": 1.2646989998756908
+          }
+        },
+        {
+          "image": "dataset/test/images/32350_png_jpg.rf.95b211bde166514ea22e0355dfc2b17d.jpg",
+          "latency_ms": 11.480076999760058,
+          "ultralytics_speed": {
+            "preprocess": 1.450936000310321,
+            "inference": 6.035805999999866,
+            "postprocess": 1.2467120000110299
+          }
+        },
+        {
+          "image": "dataset/test/images/34460_png_jpg.rf.cffcafaa0dd2ab1e1206bd6e97ad62e5.jpg",
+          "latency_ms": 11.27693399985219,
+          "ultralytics_speed": {
+            "preprocess": 1.38628200011226,
+            "inference": 6.183734999922308,
+            "postprocess": 1.2019290002172056
+          }
+        },
+        {
+          "image": "dataset/test/images/34700_png_jpg.rf.5f6bca3c42c487dec4be855a9731693d.jpg",
+          "latency_ms": 11.049192999962543,
+          "ultralytics_speed": {
+            "preprocess": 1.4678239999739162,
+            "inference": 6.292616000337148,
+            "postprocess": 1.1875449999934062
+          }
+        },
+        {
+          "image": "dataset/test/images/34910_png_jpg.rf.19d2a7325681540a581832591ad488aa.jpg",
+          "latency_ms": 11.042312999961723,
+          "ultralytics_speed": {
+            "preprocess": 1.5283580000868824,
+            "inference": 5.831924000176514,
+            "postprocess": 1.1418710000725696
+          }
+        },
+        {
+          "image": "dataset/test/images/371_jpg.rf.1c097ca3426bc3994bb229114b9527b7.jpg",
+          "latency_ms": 11.205257999790774,
+          "ultralytics_speed": {
+            "preprocess": 1.4825839998593437,
+            "inference": 6.105138999828341,
+            "postprocess": 1.2641039998015913
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0005_png_jpg.rf.db2e2c97dec56b3c5eea95f9db29e7a2.jpg",
+          "latency_ms": 10.501261000172235,
+          "ultralytics_speed": {
+            "preprocess": 1.376351000089926,
+            "inference": 5.7401730000492535,
+            "postprocess": 1.235652000104892
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0031_png_jpg.rf.9278a788346d12c78c4a72ac541aee7d.jpg",
+          "latency_ms": 10.781747000237374,
+          "ultralytics_speed": {
+            "preprocess": 1.43408800022371,
+            "inference": 5.82021199988958,
+            "postprocess": 1.1627439998846967
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0037_png_jpg.rf.779a263e0dfdab28099e2d2856cd96fd.jpg",
+          "latency_ms": 12.50218000041059,
+          "ultralytics_speed": {
+            "preprocess": 1.613167999948928,
+            "inference": 6.069563999972161,
+            "postprocess": 1.1259689999860711
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0038_png_jpg.rf.a830a337d74e96623a3bb6aae37fd653.jpg",
+          "latency_ms": 12.291974000163464,
+          "ultralytics_speed": {
+            "preprocess": 1.5687400000388152,
+            "inference": 5.920461999721738,
+            "postprocess": 1.1256829998274043
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0044_png_jpg.rf.fbbaba56db55cf78146bf365bfc11fc7.jpg",
+          "latency_ms": 10.913931000231969,
+          "ultralytics_speed": {
+            "preprocess": 1.496691000284045,
+            "inference": 5.883369000002858,
+            "postprocess": 1.1896659998456016
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0046_png_jpg.rf.287a75c8cd266e1ebe80d6039df35d84.jpg",
+          "latency_ms": 11.34815300019909,
+          "ultralytics_speed": {
+            "preprocess": 1.4228740001271944,
+            "inference": 6.266858999879332,
+            "postprocess": 1.2539620001916774
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0048_png_jpg.rf.f7cfcd3e249d7cf084f779e89df64d93.jpg",
+          "latency_ms": 10.924884999894857,
+          "ultralytics_speed": {
+            "preprocess": 1.410712000051717,
+            "inference": 5.987260999972932,
+            "postprocess": 1.1671110000861518
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0054_png_jpg.rf.66221feedeb5c28292591e3ff2350834.jpg",
+          "latency_ms": 10.673723999843787,
+          "ultralytics_speed": {
+            "preprocess": 1.4389819998541498,
+            "inference": 5.865203999746882,
+            "postprocess": 1.1941660000047705
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0055_png_jpg.rf.e1392204dba18e7722f0849889cbd815.jpg",
+          "latency_ms": 12.3439259996303,
+          "ultralytics_speed": {
+            "preprocess": 1.4048150001144677,
+            "inference": 5.9262639997541555,
+            "postprocess": 1.2918410002384917
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0013_png_jpg.rf.caeb05b0a3e50f8435e90171d7806ca4.jpg",
+          "latency_ms": 10.852378999970824,
+          "ultralytics_speed": {
+            "preprocess": 1.3643509996654757,
+            "inference": 5.731703000037669,
+            "postprocess": 1.1690330002238625
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0017_png_jpg.rf.4a1c14e0149dfa7f04098929a7a7b3a5.jpg",
+          "latency_ms": 10.917018999862194,
+          "ultralytics_speed": {
+            "preprocess": 1.4729819999956817,
+            "inference": 5.85756800001036,
+            "postprocess": 1.135445000272739
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0019_png_jpg.rf.95c1b4917644fa633a4881115f724f1b.jpg",
+          "latency_ms": 12.200825000036275,
+          "ultralytics_speed": {
+            "preprocess": 1.4870939999127586,
+            "inference": 5.669301000125415,
+            "postprocess": 1.1001489997397584
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0037_png_jpg.rf.6f64e6cd1b700394430a9bcf89642a8b.jpg",
+          "latency_ms": 11.31049500008885,
+          "ultralytics_speed": {
+            "preprocess": 1.4087389999986044,
+            "inference": 5.855153000084101,
+            "postprocess": 1.2339009999777772
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0043_png_jpg.rf.4a2418ee0d57a88e70f3c67847c5364c.jpg",
+          "latency_ms": 11.08224000017799,
+          "ultralytics_speed": {
+            "preprocess": 1.3397470002018963,
+            "inference": 5.590472999756457,
+            "postprocess": 1.153694000095129
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0067_png_jpg.rf.e18f73ff6226cd402097efc76dcc5dc3.jpg",
+          "latency_ms": 10.825071999988722,
+          "ultralytics_speed": {
+            "preprocess": 1.3857160001862212,
+            "inference": 5.901951999931043,
+            "postprocess": 1.240465000137192
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0068_png_jpg.rf.ebbc9930e890da0f318a04841431b866.jpg",
+          "latency_ms": 10.995872999956191,
+          "ultralytics_speed": {
+            "preprocess": 1.331642999957694,
+            "inference": 6.236649000129546,
+            "postprocess": 1.1630480003077537
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0070_png_jpg.rf.88b34ae9d8284930aa76b63e7323895d.jpg",
+          "latency_ms": 10.617000999900483,
+          "ultralytics_speed": {
+            "preprocess": 1.3922759999331902,
+            "inference": 5.879102999642782,
+            "postprocess": 1.214142000208085
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0072_png_jpg.rf.bdd7432218c7b6e8b53acd8c62d850c9.jpg",
+          "latency_ms": 12.203415999920253,
+          "ultralytics_speed": {
+            "preprocess": 1.3976499999444059,
+            "inference": 5.644050000228162,
+            "postprocess": 1.184854999792151
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0075_png_jpg.rf.5e1c6490a5004873f834465a73614e24.jpg",
+          "latency_ms": 10.837252999863267,
+          "ultralytics_speed": {
+            "preprocess": 1.389082000059716,
+            "inference": 5.928500000209169,
+            "postprocess": 1.1771800000133226
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0092_png_jpg.rf.d807e73d696c66c90dc8e2aa58f2d3b4.jpg",
+          "latency_ms": 11.347445999945194,
+          "ultralytics_speed": {
+            "preprocess": 1.421810000010737,
+            "inference": 6.009467000239965,
+            "postprocess": 1.2081969998689601
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0099_png_jpg.rf.d58d93109edc4d63c8da6a0a4289101f.jpg",
+          "latency_ms": 11.0577249997732,
+          "ultralytics_speed": {
+            "preprocess": 1.476584000101866,
+            "inference": 5.893302999993466,
+            "postprocess": 1.2205349999021564
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0121_png_jpg.rf.93261cebf5e5c5192dc68531cf5c4cc6.jpg",
+          "latency_ms": 10.948708000341867,
+          "ultralytics_speed": {
+            "preprocess": 1.4741750001121545,
+            "inference": 5.9901190002165094,
+            "postprocess": 1.152318000094965
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0146_png_jpg.rf.6715c6101e740f63d2de4f5d0491f975.jpg",
+          "latency_ms": 11.938963000375225,
+          "ultralytics_speed": {
+            "preprocess": 1.4135209999039944,
+            "inference": 5.665797999881761,
+            "postprocess": 1.2328669999988051
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0146_png_jpg.rf.eb10df2ec1135550574882615be13b05.jpg",
+          "latency_ms": 10.997726999903534,
+          "ultralytics_speed": {
+            "preprocess": 1.536238999960915,
+            "inference": 5.941306000295299,
+            "postprocess": 1.1835559998871759
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0152_png_jpg.rf.3614d230a93b4443995976360af238af.jpg",
+          "latency_ms": 11.524843000188412,
+          "ultralytics_speed": {
+            "preprocess": 1.4202880001903395,
+            "inference": 5.704500999854645,
+            "postprocess": 1.23394999991433
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0153_png_jpg.rf.63a917ff6d7bf23d1dd3d81e987269dc.jpg",
+          "latency_ms": 12.134433000028366,
+          "ultralytics_speed": {
+            "preprocess": 1.3990649999868765,
+            "inference": 5.934742999670561,
+            "postprocess": 1.2381559999994352
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0159_png_jpg.rf.5095135b1289945b23ffc7dea80b7886.jpg",
+          "latency_ms": 12.32063699990249,
+          "ultralytics_speed": {
+            "preprocess": 1.549178999994183,
+            "inference": 5.921780999869952,
+            "postprocess": 1.1686289999488508
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0180_png_jpg.rf.e31bbcce93bd2ad312810b2fa9df95af.jpg",
+          "latency_ms": 12.113304000195058,
+          "ultralytics_speed": {
+            "preprocess": 1.4729549998264702,
+            "inference": 6.013602000166429,
+            "postprocess": 1.2248579996594344
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7819_frame_0159_png_jpg.rf.1728a4723c21c6b9df48c733df5f279a.jpg",
+          "latency_ms": 11.682174999805284,
+          "ultralytics_speed": {
+            "preprocess": 1.4590109999517153,
+            "inference": 6.376506999913545,
+            "postprocess": 1.1800379998021526
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7819_frame_0241_png_jpg.rf.3311551b9def3991f886efd1718fc85d.jpg",
+          "latency_ms": 11.036391000288859,
+          "ultralytics_speed": {
+            "preprocess": 1.4374239999597194,
+            "inference": 5.965908000234776,
+            "postprocess": 1.2818019999940589
+          }
+        }
+      ]
+    },
+    {
+      "model": "YOLOv8s 640 50 epochs retrain",
+      "weight_path": "local_weights/yolov8s_640_50epochs/best.pt",
+      "aggregate": {
+        "model": "YOLOv8s 640 50 epochs retrain",
+        "weight_path": "local_weights/yolov8s_640_50epochs/best.pt",
+        "device": "cuda:0",
+        "imgsz": 640,
+        "image_count": 100,
+        "warmup_count": 10,
+        "total_seconds": 1.5985251089991834,
+        "avg_ms": 15.985251089991834,
+        "median_ms": 15.521947000024738,
+        "p95_ms": 19.847418000313155,
+        "min_ms": 13.380237000092166,
+        "max_ms": 26.755192000109673,
+        "fps": 62.55766608671461,
+        "torch_version": "2.11.0+cu128",
+        "ultralytics_version": "8.4.67",
+        "notes": "Custom YOLOv8s retrained weight"
+      },
+      "per_image": [
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.09f6995c447f33fc134a3175bde9f580.jpg",
+          "latency_ms": 15.160587999616837,
+          "ultralytics_speed": {
+            "preprocess": 2.209841999956552,
+            "inference": 8.409879999817349,
+            "postprocess": 1.5049759999783419
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.0f038aa47e84ecb108f068f3a41b8587.jpg",
+          "latency_ms": 14.854137999918748,
+          "ultralytics_speed": {
+            "preprocess": 1.9691289999173023,
+            "inference": 8.389135000015813,
+            "postprocess": 1.615469000171288
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.16696c4cee85795800b9c89c6095d13c.jpg",
+          "latency_ms": 17.357151999931375,
+          "ultralytics_speed": {
+            "preprocess": 2.097770000091259,
+            "inference": 8.592166999733308,
+            "postprocess": 1.6623339997750008
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.246e25b1c0e577bc5357cfc5178c87ef.jpg",
+          "latency_ms": 15.440061999925092,
+          "ultralytics_speed": {
+            "preprocess": 2.344999999877473,
+            "inference": 8.415750000040134,
+            "postprocess": 1.6463039996779116
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.48a907bdddb902497c184ffc90d46119.jpg",
+          "latency_ms": 15.268888999798946,
+          "ultralytics_speed": {
+            "preprocess": 1.9059100000049511,
+            "inference": 8.39512900029149,
+            "postprocess": 1.5213709998533886
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.4f267a2a4f1ebdb5d8a41edbea186edf.jpg",
+          "latency_ms": 16.13759999963804,
+          "ultralytics_speed": {
+            "preprocess": 1.8805919999067555,
+            "inference": 8.675365999806672,
+            "postprocess": 1.7701530000522325
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.5e7087bf778c74ad6df8c65cbeb2a280.jpg",
+          "latency_ms": 16.33480000009513,
+          "ultralytics_speed": {
+            "preprocess": 1.9907969999621855,
+            "inference": 9.55656199994337,
+            "postprocess": 1.6254920001301798
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.72c15e9584bd74dcaee8233b79d4f48a.jpg",
+          "latency_ms": 17.02098699979615,
+          "ultralytics_speed": {
+            "preprocess": 1.9709640000655781,
+            "inference": 8.311161000165157,
+            "postprocess": 1.5688069997850107
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.72c586896018c542d70e7d31945dbff2.jpg",
+          "latency_ms": 15.028044000246155,
+          "ultralytics_speed": {
+            "preprocess": 1.9448119996923197,
+            "inference": 8.296956000322098,
+            "postprocess": 1.6205659999286581
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.86beb1acde19343c064053a9d8c5bee1.jpg",
+          "latency_ms": 14.380747000359406,
+          "ultralytics_speed": {
+            "preprocess": 1.9161750001330802,
+            "inference": 8.312098000260448,
+            "postprocess": 1.5089440003066557
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.b5d4835ec48cb21ffd96f823cd534270.jpg",
+          "latency_ms": 15.026003000002675,
+          "ultralytics_speed": {
+            "preprocess": 2.180503000090539,
+            "inference": 8.326323999881424,
+            "postprocess": 1.5115760002117895
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.be25c15b86ab145cecb5bcb9d1d24695.jpg",
+          "latency_ms": 17.037994000020262,
+          "ultralytics_speed": {
+            "preprocess": 1.9820779998553917,
+            "inference": 8.307415000217588,
+            "postprocess": 1.5679519997320313
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.c78a38d94dc72cd211366d40d3815114.jpg",
+          "latency_ms": 15.96655000003011,
+          "ultralytics_speed": {
+            "preprocess": 1.9654470002024027,
+            "inference": 7.691374999922118,
+            "postprocess": 1.532411999960459
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.c8f5d98032a6e1c3006402d8e77c5f9c.jpg",
+          "latency_ms": 15.364850999958435,
+          "ultralytics_speed": {
+            "preprocess": 1.9690739995894546,
+            "inference": 7.613876000050368,
+            "postprocess": 1.4977600003476255
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.c8f7bfc9c47b7f23f125d201c41a1275.jpg",
+          "latency_ms": 16.534352999769908,
+          "ultralytics_speed": {
+            "preprocess": 2.05035199996928,
+            "inference": 7.675197000025946,
+            "postprocess": 1.462852000258863
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.ce8b6d11bbd14955a17744d99ce3fdf7.jpg",
+          "latency_ms": 15.72039099983158,
+          "ultralytics_speed": {
+            "preprocess": 1.907071999994514,
+            "inference": 7.652686999790603,
+            "postprocess": 3.3190009999088943
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.d2afd1d903d033587ab2c597401d7096.jpg",
+          "latency_ms": 17.66052099992521,
+          "ultralytics_speed": {
+            "preprocess": 2.0403319999786618,
+            "inference": 7.9308509998554655,
+            "postprocess": 1.6807240003799961
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.d7ea8c3f5565a3fbfd0696556f247048.jpg",
+          "latency_ms": 16.45550600005663,
+          "ultralytics_speed": {
+            "preprocess": 2.2023920000719954,
+            "inference": 7.570443000076921,
+            "postprocess": 1.5102480001587537
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.e230c17f27a6959e8ca110c276c164fd.jpg",
+          "latency_ms": 14.009213000008458,
+          "ultralytics_speed": {
+            "preprocess": 1.9945819999520609,
+            "inference": 7.6602099998126505,
+            "postprocess": 1.5119819995561556
+          }
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.fba95d631df5233e32eb5c308325e430.jpg",
+          "latency_ms": 13.946218999990379,
+          "ultralytics_speed": {
+            "preprocess": 1.9048049998673378,
+            "inference": 7.754068999929586,
+            "postprocess": 1.5012139997452323
+          }
+        },
+        {
+          "image": "dataset/test/images/000d2e3d33b18463_jpg.rf.4718ba878911b9cd1cfed077073d709e.jpg",
+          "latency_ms": 14.382286999989446,
+          "ultralytics_speed": {
+            "preprocess": 1.991125000131433,
+            "inference": 7.933645999855798,
+            "postprocess": 1.5007510000941693
+          }
+        },
+        {
+          "image": "dataset/test/images/00347f583cd63d8f_jpg.rf.2be1e09d5c869598978bbac49f2bed3f.jpg",
+          "latency_ms": 14.215574999980163,
+          "ultralytics_speed": {
+            "preprocess": 1.927081999838265,
+            "inference": 7.6619840001512785,
+            "postprocess": 1.5379689998553658
+          }
+        },
+        {
+          "image": "dataset/test/images/01e46bab22dbe5b6_jpg.rf.350bdf1afc3e3b1c572348eca86b9155.jpg",
+          "latency_ms": 16.374465000353666,
+          "ultralytics_speed": {
+            "preprocess": 2.193823999732558,
+            "inference": 8.163666999735142,
+            "postprocess": 1.6291780002575251
+          }
+        },
+        {
+          "image": "dataset/test/images/01e46bab22dbe5b6_jpg.rf.cf2a0d78624b1bbf1556cb58802d3ab0.jpg",
+          "latency_ms": 16.69580199995835,
+          "ultralytics_speed": {
+            "preprocess": 2.0736589999614807,
+            "inference": 7.612290999986726,
+            "postprocess": 1.4945439997973153
+          }
+        },
+        {
+          "image": "dataset/test/images/01f693ee3da9ced7_jpg.rf.b49cfde194c436ee74aa2afde09dc201.jpg",
+          "latency_ms": 14.460122999935265,
+          "ultralytics_speed": {
+            "preprocess": 1.9111219999103923,
+            "inference": 7.602006000070105,
+            "postprocess": 1.4730980001331773
+          }
+        },
+        {
+          "image": "dataset/test/images/02b0b2cb54169767_jpg.rf.37574b6da3bdb4f1ef7ef91dcb4f3eea.jpg",
+          "latency_ms": 16.68126399999892,
+          "ultralytics_speed": {
+            "preprocess": 2.0293500001571374,
+            "inference": 7.722308999746019,
+            "postprocess": 1.4718350003022351
+          }
+        },
+        {
+          "image": "dataset/test/images/038789965a8f7606_jpg.rf.b5371c9d8ce704e1cdeccb9a873caafc.jpg",
+          "latency_ms": 14.19838299989351,
+          "ultralytics_speed": {
+            "preprocess": 1.9541239998943638,
+            "inference": 7.632694999756495,
+            "postprocess": 1.5053649999572372
+          }
+        },
+        {
+          "image": "dataset/test/images/03d55299d9f9bf52_jpg.rf.ccdc5b132bb0d6448545cdcfe30c3ee4.jpg",
+          "latency_ms": 16.420586000094772,
+          "ultralytics_speed": {
+            "preprocess": 1.9552229996406822,
+            "inference": 7.85476999999446,
+            "postprocess": 1.5874900000198977
+          }
+        },
+        {
+          "image": "dataset/test/images/03dbe0e1735485d0_jpg.rf.1fdf407330d315b35e38bbbcf863511f.jpg",
+          "latency_ms": 16.400940000039554,
+          "ultralytics_speed": {
+            "preprocess": 2.0252760000403214,
+            "inference": 8.259050999640749,
+            "postprocess": 1.4960869998503767
+          }
+        },
+        {
+          "image": "dataset/test/images/03e8bc2333105e66_jpg.rf.47db733d08b4019199ac9d2c7c0fcf80.jpg",
+          "latency_ms": 14.679664000141202,
+          "ultralytics_speed": {
+            "preprocess": 1.8884500000240223,
+            "inference": 7.6928090002184035,
+            "postprocess": 1.5163650000431517
+          }
+        },
+        {
+          "image": "dataset/test/images/0b9d3a9512856b70_jpg.rf.c70e97bc7ce2667f0b6b1760fc7fac23.jpg",
+          "latency_ms": 14.447362000282737,
+          "ultralytics_speed": {
+            "preprocess": 2.0502150000538677,
+            "inference": 7.498209000004863,
+            "postprocess": 1.5057189998515241
+          }
+        },
+        {
+          "image": "dataset/test/images/0c135bdff969f253_jpg.rf.50d476ddabcca879c2fec8b9dae55570.jpg",
+          "latency_ms": 15.538531999936822,
+          "ultralytics_speed": {
+            "preprocess": 1.95957100004307,
+            "inference": 7.527886999923794,
+            "postprocess": 1.477820000218344
+          }
+        },
+        {
+          "image": "dataset/test/images/0c291e6a916a1669_jpg.rf.6dcf80af5abc888be5a9f7972b9946ce.jpg",
+          "latency_ms": 17.938077000053454,
+          "ultralytics_speed": {
+            "preprocess": 2.0190990003357,
+            "inference": 7.875365000018064,
+            "postprocess": 2.7211759997953777
+          }
+        },
+        {
+          "image": "dataset/test/images/0df44ae71ebdbb85_jpg.rf.b50e79a41cda460066c6d92213ad1337.jpg",
+          "latency_ms": 18.78429899988987,
+          "ultralytics_speed": {
+            "preprocess": 2.0549770001707657,
+            "inference": 9.701232999759668,
+            "postprocess": 1.5433759999723407
+          }
+        },
+        {
+          "image": "dataset/test/images/0e568901d66ad81e46860b91cce2a7fe_jpg.rf.8c6f7ce142e9f3b3403d20c761ad1359.jpg",
+          "latency_ms": 18.99962899960883,
+          "ultralytics_speed": {
+            "preprocess": 2.380401000209531,
+            "inference": 9.493310999914684,
+            "postprocess": 1.607260000128008
+          }
+        },
+        {
+          "image": "dataset/test/images/0e568901d66ad81e46860b91cce2a7fe_jpg.rf.c6fc43d0fe5c37e1197ba341f964dea6.jpg",
+          "latency_ms": 16.690467999978864,
+          "ultralytics_speed": {
+            "preprocess": 2.005191000080231,
+            "inference": 7.502331000068807,
+            "postprocess": 1.6021709998312872
+          }
+        },
+        {
+          "image": "dataset/test/images/0e5e6eb1d9b2bd58_jpg.rf.4b0a5768cd3e5d5daf579f0017e16231.jpg",
+          "latency_ms": 17.243389000213938,
+          "ultralytics_speed": {
+            "preprocess": 2.1084309996695083,
+            "inference": 7.854977000079089,
+            "postprocess": 1.5104450003491365
+          }
+        },
+        {
+          "image": "dataset/test/images/0e6e18101999c827_jpg.rf.a8f2b6ca6e0c83d245855202769ee5fe.jpg",
+          "latency_ms": 14.384551000148349,
+          "ultralytics_speed": {
+            "preprocess": 1.9406339997658506,
+            "inference": 7.793220999701589,
+            "postprocess": 1.5439430003425514
+          }
+        },
+        {
+          "image": "dataset/test/images/0e6e18101999c827_jpg.rf.d8984301699a91079e868cf33299402e.jpg",
+          "latency_ms": 18.111384000349062,
+          "ultralytics_speed": {
+            "preprocess": 1.9727229996533424,
+            "inference": 8.118362999994133,
+            "postprocess": 2.0437600001059764
+          }
+        },
+        {
+          "image": "dataset/test/images/1060_png_jpg.rf.add1db5a7ebf1f9bd6b74f5bfebe9937.jpg",
+          "latency_ms": 19.83114900031069,
+          "ultralytics_speed": {
+            "preprocess": 2.3743499996271566,
+            "inference": 10.582879000139656,
+            "postprocess": 3.5927349999838043
+          }
+        },
+        {
+          "image": "dataset/test/images/11070_png_jpg.rf.8a8667b27bf4153370de03098ddb6353.jpg",
+          "latency_ms": 17.32994999974835,
+          "ultralytics_speed": {
+            "preprocess": 2.01343899971107,
+            "inference": 10.462830000051326,
+            "postprocess": 1.5814459998182429
+          }
+        },
+        {
+          "image": "dataset/test/images/1660_png_jpg.rf.6cb5b403fa465e37f296251834a93c05.jpg",
+          "latency_ms": 21.142480999969848,
+          "ultralytics_speed": {
+            "preprocess": 1.927552999859472,
+            "inference": 12.245370999607985,
+            "postprocess": 1.587584000390052
+          }
+        },
+        {
+          "image": "dataset/test/images/18270_png_jpg.rf.d312a8bf19923bfe15df5b263c511e3b.jpg",
+          "latency_ms": 16.977308000150515,
+          "ultralytics_speed": {
+            "preprocess": 4.058376000102726,
+            "inference": 7.7280229997995775,
+            "postprocess": 2.2561179998774605
+          }
+        },
+        {
+          "image": "dataset/test/images/1c4915190a748798_jpg.rf.0c265452437e4c470eee04c6c8a24fc9.jpg",
+          "latency_ms": 20.156529000360024,
+          "ultralytics_speed": {
+            "preprocess": 4.156667000188463,
+            "inference": 8.841776000281243,
+            "postprocess": 1.6039759998420777
+          }
+        },
+        {
+          "image": "dataset/test/images/1c4915190a748798_jpg.rf.fd0b3969b653111a42db823087db3c5a.jpg",
+          "latency_ms": 23.668963000091026,
+          "ultralytics_speed": {
+            "preprocess": 2.910904999680497,
+            "inference": 11.125957000331255,
+            "postprocess": 1.5643030001228908
+          }
+        },
+        {
+          "image": "dataset/test/images/1df4f97b8c8dd396_jpg.rf.d9da2b50e2de7de98da0270bac9d61a3.jpg",
+          "latency_ms": 26.755192000109673,
+          "ultralytics_speed": {
+            "preprocess": 2.844045000074402,
+            "inference": 12.147812999955931,
+            "postprocess": 3.4785860002557456
+          }
+        },
+        {
+          "image": "dataset/test/images/1f1d578fbebeb017_jpg.rf.41db189b5089a8ace9724fba39951925.jpg",
+          "latency_ms": 16.634412000257726,
+          "ultralytics_speed": {
+            "preprocess": 1.8871559996114229,
+            "inference": 9.998131999964244,
+            "postprocess": 1.599587999862706
+          }
+        },
+        {
+          "image": "dataset/test/images/1f6a6392ca0b7412_jpg.rf.019bd0b448b4c526e6d0879bfe4b57f8.jpg",
+          "latency_ms": 16.308113999912166,
+          "ultralytics_speed": {
+            "preprocess": 1.911033999931533,
+            "inference": 9.715976999814302,
+            "postprocess": 1.4821250001659791
+          }
+        },
+        {
+          "image": "dataset/test/images/1f6a6392ca0b7412_jpg.rf.5b435bd8ee1786aa9bf31eca8974aa63.jpg",
+          "latency_ms": 21.097953999742458,
+          "ultralytics_speed": {
+            "preprocess": 3.8786469999649853,
+            "inference": 8.604153000305814,
+            "postprocess": 1.3711110000258486
+          }
+        },
+        {
+          "image": "dataset/test/images/20220802_103005_mp4-140_jpg.rf.9a468ff834cf9e125b52423c1f32b427.jpg",
+          "latency_ms": 15.378053999938857,
+          "ultralytics_speed": {
+            "preprocess": 1.8086759996549517,
+            "inference": 7.607879000261164,
+            "postprocess": 1.4233930000955297
+          }
+        },
+        {
+          "image": "dataset/test/images/20570-Copy_png_jpg.rf.8090caf7e7a5938884857d923161ffb7.jpg",
+          "latency_ms": 13.95751600011863,
+          "ultralytics_speed": {
+            "preprocess": 1.8483069998183055,
+            "inference": 7.581133999792655,
+            "postprocess": 1.5739979999125353
+          }
+        },
+        {
+          "image": "dataset/test/images/212_jpg.rf.cca728bf326b708e0f4d25272c8bda1a.jpg",
+          "latency_ms": 13.380237000092166,
+          "ultralytics_speed": {
+            "preprocess": 1.790687000266189,
+            "inference": 7.660560000203986,
+            "postprocess": 1.4184999999997672
+          }
+        },
+        {
+          "image": "dataset/test/images/227_jpg.rf.b6bc849a3403faaa059f24927aa5a85a.jpg",
+          "latency_ms": 15.362467000159086,
+          "ultralytics_speed": {
+            "preprocess": 1.8733809997684148,
+            "inference": 8.578606000355649,
+            "postprocess": 2.0644960000026913
+          }
+        },
+        {
+          "image": "dataset/test/images/23a2507b8bb31bd2a5c667f4f93deb60_jpg.rf.d585c589bb781165117a260f6fafffff.jpg",
+          "latency_ms": 17.61649199988824,
+          "ultralytics_speed": {
+            "preprocess": 1.9710739998117788,
+            "inference": 9.85232899984112,
+            "postprocess": 1.7335649999949965
+          }
+        },
+        {
+          "image": "dataset/test/images/242_jpg.rf.6dd0a2edcf70a0bef0f51148a728ca1e.jpg",
+          "latency_ms": 13.81690800008073,
+          "ultralytics_speed": {
+            "preprocess": 1.865634000296268,
+            "inference": 7.661085000108869,
+            "postprocess": 1.479263999954128
+          }
+        },
+        {
+          "image": "dataset/test/images/24_jpg.rf.4d53df7f738ca765f5a09ae47142982b.jpg",
+          "latency_ms": 13.838350000241917,
+          "ultralytics_speed": {
+            "preprocess": 1.8546109999988403,
+            "inference": 7.606355999996595,
+            "postprocess": 1.3779020000583841
+          }
+        },
+        {
+          "image": "dataset/test/images/2590_png_jpg.rf.d89712eb26e2b346636585895ff810a7.jpg",
+          "latency_ms": 13.962127000013425,
+          "ultralytics_speed": {
+            "preprocess": 1.9434249998084852,
+            "inference": 7.532285000252159,
+            "postprocess": 1.4419089998227719
+          }
+        },
+        {
+          "image": "dataset/test/images/26960_png_jpg.rf.acf7ea38ac2da54cb2874586823c7d1c.jpg",
+          "latency_ms": 14.479110000138462,
+          "ultralytics_speed": {
+            "preprocess": 1.8207570001322892,
+            "inference": 8.38742399992043,
+            "postprocess": 1.3866130002497812
+          }
+        },
+        {
+          "image": "dataset/test/images/27_jpg.rf.e1a240b624fe3925360ae391968a1a70.jpg",
+          "latency_ms": 15.191335000054096,
+          "ultralytics_speed": {
+            "preprocess": 1.8072739999297482,
+            "inference": 8.630636999896524,
+            "postprocess": 1.3815839997732837
+          }
+        },
+        {
+          "image": "dataset/test/images/292_jpg.rf.7656790c737cac9e6155db96acd5e4f5.jpg",
+          "latency_ms": 14.82235599996784,
+          "ultralytics_speed": {
+            "preprocess": 1.7608029997973063,
+            "inference": 8.591789000092831,
+            "postprocess": 1.514339000095788
+          }
+        },
+        {
+          "image": "dataset/test/images/2_png_jpg.rf.34cdbe48f470d2429162476d34b30646.jpg",
+          "latency_ms": 15.505362000112655,
+          "ultralytics_speed": {
+            "preprocess": 2.0123870003772026,
+            "inference": 8.082805999947595,
+            "postprocess": 1.4855570002509921
+          }
+        },
+        {
+          "image": "dataset/test/images/2a2314ced155167d_jpg.rf.194140cb46f7b387a8b0ee2177791327.jpg",
+          "latency_ms": 17.783928999961063,
+          "ultralytics_speed": {
+            "preprocess": 1.9707639999069215,
+            "inference": 8.042383999963931,
+            "postprocess": 1.491850000093109
+          }
+        },
+        {
+          "image": "dataset/test/images/2af3b509d8db5d7b_jpg.rf.7eea406fc90a5ae56087397aff97c95d.jpg",
+          "latency_ms": 17.558237000230292,
+          "ultralytics_speed": {
+            "preprocess": 1.9198239997422206,
+            "inference": 7.981310000104713,
+            "postprocess": 1.4546610000252258
+          }
+        },
+        {
+          "image": "dataset/test/images/2ee0950c0c60184e_jpg.rf.f042e07bdc79bbd3737991865012efaa.jpg",
+          "latency_ms": 14.266359999965061,
+          "ultralytics_speed": {
+            "preprocess": 1.9043150000470632,
+            "inference": 7.782012000006944,
+            "postprocess": 1.5861100000620354
+          }
+        },
+        {
+          "image": "dataset/test/images/2f2a2784f085dee1_jpg.rf.298486ae91fefe0dd1c879e657bef1f7.jpg",
+          "latency_ms": 16.1081619999095,
+          "ultralytics_speed": {
+            "preprocess": 1.8375230001765885,
+            "inference": 7.644049000191444,
+            "postprocess": 1.3355730002331256
+          }
+        },
+        {
+          "image": "dataset/test/images/32350_png_jpg.rf.95b211bde166514ea22e0355dfc2b17d.jpg",
+          "latency_ms": 14.361127999563905,
+          "ultralytics_speed": {
+            "preprocess": 1.8698599997151177,
+            "inference": 7.522503000018332,
+            "postprocess": 1.5610700002071098
+          }
+        },
+        {
+          "image": "dataset/test/images/34460_png_jpg.rf.cffcafaa0dd2ab1e1206bd6e97ad62e5.jpg",
+          "latency_ms": 14.3365819999417,
+          "ultralytics_speed": {
+            "preprocess": 1.7630139996072103,
+            "inference": 7.904967999820656,
+            "postprocess": 1.480161000017688
+          }
+        },
+        {
+          "image": "dataset/test/images/34700_png_jpg.rf.5f6bca3c42c487dec4be855a9731693d.jpg",
+          "latency_ms": 13.713488999655965,
+          "ultralytics_speed": {
+            "preprocess": 1.8960470001729846,
+            "inference": 7.7732889999424515,
+            "postprocess": 1.4642029996139172
+          }
+        },
+        {
+          "image": "dataset/test/images/34910_png_jpg.rf.19d2a7325681540a581832591ad488aa.jpg",
+          "latency_ms": 14.646133000042028,
+          "ultralytics_speed": {
+            "preprocess": 1.8942179999612563,
+            "inference": 7.654615999854286,
+            "postprocess": 1.3522360000024491
+          }
+        },
+        {
+          "image": "dataset/test/images/371_jpg.rf.1c097ca3426bc3994bb229114b9527b7.jpg",
+          "latency_ms": 13.510083999790368,
+          "ultralytics_speed": {
+            "preprocess": 1.7838179996942927,
+            "inference": 7.648790000075678,
+            "postprocess": 1.3139809998392593
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0005_png_jpg.rf.db2e2c97dec56b3c5eea95f9db29e7a2.jpg",
+          "latency_ms": 13.534627999888471,
+          "ultralytics_speed": {
+            "preprocess": 1.8041879998236254,
+            "inference": 7.697028999700706,
+            "postprocess": 1.3610979999612027
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0031_png_jpg.rf.9278a788346d12c78c4a72ac541aee7d.jpg",
+          "latency_ms": 13.764690000243718,
+          "ultralytics_speed": {
+            "preprocess": 1.7340700001113873,
+            "inference": 7.659670000066399,
+            "postprocess": 1.4056129998607503
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0037_png_jpg.rf.779a263e0dfdab28099e2d2856cd96fd.jpg",
+          "latency_ms": 15.31606800017471,
+          "ultralytics_speed": {
+            "preprocess": 1.814643000216165,
+            "inference": 7.581514999856154,
+            "postprocess": 1.2962609998794505
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0038_png_jpg.rf.a830a337d74e96623a3bb6aae37fd653.jpg",
+          "latency_ms": 15.979316999619186,
+          "ultralytics_speed": {
+            "preprocess": 1.804155999707291,
+            "inference": 7.800420000421582,
+            "postprocess": 1.2837290000788926
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0044_png_jpg.rf.fbbaba56db55cf78146bf365bfc11fc7.jpg",
+          "latency_ms": 13.664920000337588,
+          "ultralytics_speed": {
+            "preprocess": 1.8292590002602083,
+            "inference": 7.705274000272766,
+            "postprocess": 1.3097050000396848
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0046_png_jpg.rf.287a75c8cd266e1ebe80d6039df35d84.jpg",
+          "latency_ms": 13.503350000064529,
+          "ultralytics_speed": {
+            "preprocess": 1.7967590001717326,
+            "inference": 7.641405999947892,
+            "postprocess": 1.3169870003366668
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0048_png_jpg.rf.f7cfcd3e249d7cf084f779e89df64d93.jpg",
+          "latency_ms": 13.842825000210723,
+          "ultralytics_speed": {
+            "preprocess": 1.96293599992714,
+            "inference": 7.750965000013821,
+            "postprocess": 1.3327430001481844
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0054_png_jpg.rf.66221feedeb5c28292591e3ff2350834.jpg",
+          "latency_ms": 16.494303999934345,
+          "ultralytics_speed": {
+            "preprocess": 1.862870000422845,
+            "inference": 9.993054999995366,
+            "postprocess": 1.6140279999490303
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0055_png_jpg.rf.e1392204dba18e7722f0849889cbd815.jpg",
+          "latency_ms": 18.232041999908688,
+          "ultralytics_speed": {
+            "preprocess": 1.8113810001523234,
+            "inference": 10.142596000150661,
+            "postprocess": 1.563136000186205
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0013_png_jpg.rf.caeb05b0a3e50f8435e90171d7806ca4.jpg",
+          "latency_ms": 16.2568230002762,
+          "ultralytics_speed": {
+            "preprocess": 1.8227700002171332,
+            "inference": 9.773255000254721,
+            "postprocess": 1.5421580001202528
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0017_png_jpg.rf.4a1c14e0149dfa7f04098929a7a7b3a5.jpg",
+          "latency_ms": 13.53546499967706,
+          "ultralytics_speed": {
+            "preprocess": 1.577986000029341,
+            "inference": 7.4831480001193995,
+            "postprocess": 1.5350759999819275
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0019_png_jpg.rf.95c1b4917644fa633a4881115f724f1b.jpg",
+          "latency_ms": 16.924875999848155,
+          "ultralytics_speed": {
+            "preprocess": 1.9692939999913506,
+            "inference": 8.492409000155021,
+            "postprocess": 1.6342330000043148
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0037_png_jpg.rf.6f64e6cd1b700394430a9bcf89642a8b.jpg",
+          "latency_ms": 16.75597099983861,
+          "ultralytics_speed": {
+            "preprocess": 1.8777420000333223,
+            "inference": 9.83274899999742,
+            "postprocess": 1.5924389999781852
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0043_png_jpg.rf.4a2418ee0d57a88e70f3c67847c5364c.jpg",
+          "latency_ms": 16.891308999674948,
+          "ultralytics_speed": {
+            "preprocess": 1.8426670003464096,
+            "inference": 9.5653090002088,
+            "postprocess": 1.4046960000086983
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0067_png_jpg.rf.e18f73ff6226cd402097efc76dcc5dc3.jpg",
+          "latency_ms": 14.919432000169763,
+          "ultralytics_speed": {
+            "preprocess": 1.8176220000896137,
+            "inference": 8.679759000187914,
+            "postprocess": 1.4816559996688738
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0068_png_jpg.rf.ebbc9930e890da0f318a04841431b866.jpg",
+          "latency_ms": 14.047602999653463,
+          "ultralytics_speed": {
+            "preprocess": 2.100676999816642,
+            "inference": 7.6372829998945235,
+            "postprocess": 1.491530999828683
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0070_png_jpg.rf.88b34ae9d8284930aa76b63e7323895d.jpg",
+          "latency_ms": 14.344442000037816,
+          "ultralytics_speed": {
+            "preprocess": 2.109188999838807,
+            "inference": 7.988910000221949,
+            "postprocess": 1.3895859997319349
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0072_png_jpg.rf.bdd7432218c7b6e8b53acd8c62d850c9.jpg",
+          "latency_ms": 19.610168000326667,
+          "ultralytics_speed": {
+            "preprocess": 1.850111999829096,
+            "inference": 10.92132700023285,
+            "postprocess": 1.6446459999315266
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0075_png_jpg.rf.5e1c6490a5004873f834465a73614e24.jpg",
+          "latency_ms": 16.54401899986624,
+          "ultralytics_speed": {
+            "preprocess": 1.9175239999640326,
+            "inference": 9.868932000244968,
+            "postprocess": 1.681119000295439
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0092_png_jpg.rf.d807e73d696c66c90dc8e2aa58f2d3b4.jpg",
+          "latency_ms": 15.088124999692809,
+          "ultralytics_speed": {
+            "preprocess": 1.8958729997393675,
+            "inference": 8.214749000217125,
+            "postprocess": 1.4590969999517256
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0099_png_jpg.rf.d58d93109edc4d63c8da6a0a4289101f.jpg",
+          "latency_ms": 14.019712999925105,
+          "ultralytics_speed": {
+            "preprocess": 1.9193739999536774,
+            "inference": 7.488341999760451,
+            "postprocess": 1.411948000168195
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0121_png_jpg.rf.93261cebf5e5c5192dc68531cf5c4cc6.jpg",
+          "latency_ms": 13.909888999933173,
+          "ultralytics_speed": {
+            "preprocess": 1.8979020001097524,
+            "inference": 7.844633000331669,
+            "postprocess": 1.3401480000538868
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0146_png_jpg.rf.6715c6101e740f63d2de4f5d0491f975.jpg",
+          "latency_ms": 17.734148999807076,
+          "ultralytics_speed": {
+            "preprocess": 1.8221849995825323,
+            "inference": 9.731679999731568,
+            "postprocess": 1.5025980001155403
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0146_png_jpg.rf.eb10df2ec1135550574882615be13b05.jpg",
+          "latency_ms": 13.40280000022176,
+          "ultralytics_speed": {
+            "preprocess": 1.5409480001835618,
+            "inference": 7.591283000238036,
+            "postprocess": 1.5376860001197201
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0152_png_jpg.rf.3614d230a93b4443995976360af238af.jpg",
+          "latency_ms": 16.28854799992041,
+          "ultralytics_speed": {
+            "preprocess": 2.1144769998500124,
+            "inference": 8.348590999958105,
+            "postprocess": 1.4846970002508897
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0153_png_jpg.rf.63a917ff6d7bf23d1dd3d81e987269dc.jpg",
+          "latency_ms": 15.747871999792551,
+          "ultralytics_speed": {
+            "preprocess": 1.842501999817614,
+            "inference": 7.682054999804677,
+            "postprocess": 1.408828999956313
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0159_png_jpg.rf.5095135b1289945b23ffc7dea80b7886.jpg",
+          "latency_ms": 15.948394000133703,
+          "ultralytics_speed": {
+            "preprocess": 1.784213000064483,
+            "inference": 7.635229999777948,
+            "postprocess": 1.375622000068688
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0180_png_jpg.rf.e31bbcce93bd2ad312810b2fa9df95af.jpg",
+          "latency_ms": 14.960525999867968,
+          "ultralytics_speed": {
+            "preprocess": 1.7343399999845133,
+            "inference": 7.58117699979266,
+            "postprocess": 1.3250990000415186
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7819_frame_0159_png_jpg.rf.1728a4723c21c6b9df48c733df5f279a.jpg",
+          "latency_ms": 15.194699999938166,
+          "ultralytics_speed": {
+            "preprocess": 1.8042289998447814,
+            "inference": 8.636219999971217,
+            "postprocess": 1.577225000346516
+          }
+        },
+        {
+          "image": "dataset/test/images/3J4A7819_frame_0241_png_jpg.rf.3311551b9def3991f886efd1718fc85d.jpg",
+          "latency_ms": 17.22028299991507,
+          "ultralytics_speed": {
+            "preprocess": 1.987695000025269,
+            "inference": 10.537913000007393,
+            "postprocess": 1.7560340002091834
+          }
+        }
+      ]
+    }
+  ]
+}
