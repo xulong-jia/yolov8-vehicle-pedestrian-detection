@@ -59,7 +59,7 @@
 
 - [x] Add local setup check script / 添加本地环境检查脚本 — Priority: P2 — Status: Done — Output: `src/check_setup.py` — Commit: `df2408c`
 - [x] Add batch prediction CLI / 添加批量预测命令行工具 — Priority: P2 — Status: Done — Output: `src/batch_predict.py` — Commit: `df2408c`
-- [ ] Add basic unit tests / 添加基础单元测试 — Priority: P2 — Status: Todo — Output: `tests/` — Commit: TBD
+- [x] Add basic unit tests / 添加基础单元测试 — Priority: P2 — Status: Done — Output: `tests/` — Commit: `b04aa5f`
 - [x] Add config file / 添加配置文件 — Priority: P2 — Status: Done — Output: `configs/default.yaml` — Commit: `df2408c`
 - [ ] Split dependencies if needed / 按需拆分依赖 — Priority: P2 — Status: Todo — Output: `requirements-demo.txt`, `requirements-dev.txt` — Commit: TBD
 
