@@ -74,8 +74,8 @@
 
 ## P3 — Optional Future Experiments / 可选未来实验
 
-- [ ] Run YOLOv8s official test split validation if weight is available / 在权重可用时运行 YOLOv8s 官方测试集验证 — Priority: P3 — Status: Optional — Output: `docs/evaluation/yolov8s_640_50epochs_official/` — Commit: TBD
-- [ ] Update strict YOLOv8n vs YOLOv8s same-split comparison / 更新 YOLOv8n 与 YOLOv8s 同测试集严格对比 — Priority: P3 — Status: Optional — Output: `docs/experiment_comparison.md`, `docs/experiment_comparison.csv` — Commit: TBD
+- [x] Run YOLOv8s official test split validation if weight is available / 在权重可用时运行 YOLOv8s 官方测试集验证 — Priority: P3 — Status: Done — Output: `docs/experiments/yolov8s_640_50epochs_retrain/`, `docs/evaluation/yolov8s_640_50epochs_official/` — Result: P `0.865`, R `0.838`, mAP50 `0.876`, mAP50-95 `0.601` — Commit: `e4d5adb`
+- [x] Update strict YOLOv8n vs YOLOv8s same-split comparison / 更新 YOLOv8n 与 YOLOv8s 同测试集严格对比 — Priority: P3 — Status: Done — Output: `docs/strict_model_comparison.md`, `docs/strict_model_comparison.csv`, `docs/experiment_comparison.md`, `docs/experiment_comparison.csv` — Result: Precision `+0.024`, Recall `+0.022`, mAP50 `+0.017`, mAP50-95 `+0.019` — Commit: `6c19def`
 - [ ] Image size ablation / 输入尺寸消融实验 — Priority: P3 — Status: Optional — Output: `docs/ablation_imgsz.md` — Commit: TBD
 - [ ] YOLOv8m experiment / YOLOv8m 实验 — Priority: P3 — Status: Optional — Output: `docs/experiments/yolov8m_*/` — Commit: TBD
 - [x] ONNX export guide without committing ONNX file / 创建 ONNX 导出指南且不提交 ONNX 文件 — Priority: P3 — Status: Done — Output: `docs/onnx_export.md` — Commit: `24ec863`
