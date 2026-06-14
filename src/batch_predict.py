@@ -6,9 +6,6 @@ import argparse
 import csv
 from pathlib import Path
 
-from PIL import Image
-from ultralytics import YOLO
-
 
 IMAGE_SUFFIXES = {".jpg", ".jpeg", ".png", ".bmp", ".webp"}
 DEFAULT_OUTPUT_DIR = "local_outputs/batch_predictions"
@@ -53,20 +50,24 @@ def short_error(exc: Exception, max_length: int = 180) -> str:
     return message if len(message) <= max_length else f"{message[:max_length]}..."
 
 
-def collect_images(source: Path) -> list[Path]:
+def is_image_file(path: Path) -> bool:
+    return path.is_file() and path.suffix.lower() in IMAGE_SUFFIXES
+
+
+def collect_image_paths(source: Path) -> list[Path]:
     if source.is_file():
-        if source.suffix.lower() not in IMAGE_SUFFIXES:
+        if not is_image_file(source):
             raise ValueError(f"Unsupported image file extension: {source}")
         return [source]
 
     if source.is_dir():
-        return sorted(
-            path
-            for path in source.rglob("*")
-            if path.is_file() and path.suffix.lower() in IMAGE_SUFFIXES
-        )
+        return sorted(path for path in source.rglob("*") if is_image_file(path))
 
     raise FileNotFoundError(f"Source not found: {source}")
+
+
+def collect_images(source: Path) -> list[Path]:
+    return collect_image_paths(source)
 
 
 def empty_detection_row(image_path: Path) -> dict[str, str]:
@@ -105,6 +106,8 @@ def detection_rows(image_path: Path, result) -> list[dict[str, str | int | float
 
 
 def save_annotated_image(result, image_path: Path, output_dir: Path) -> None:
+    from PIL import Image
+
     output_dir.mkdir(parents=True, exist_ok=True)
     annotated = result.plot()
     Image.fromarray(annotated).save(output_dir / image_path.name)
@@ -141,6 +144,8 @@ def main() -> int:
     output_csv.parent.mkdir(parents=True, exist_ok=True)
 
     try:
+        from ultralytics import YOLO
+
         model = YOLO(str(model_path))
     except Exception as exc:
         print(f"ERROR: Model loading failed: {short_error(exc)}")

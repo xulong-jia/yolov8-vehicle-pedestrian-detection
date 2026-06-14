@@ -84,6 +84,10 @@ def print_item(status: str, message: str) -> None:
     print(f"[{status}] {message}")
 
 
+def is_risk_path(path: str) -> bool:
+    return path.endswith(RISK_SUFFIXES) or path.startswith(RISK_PREFIXES)
+
+
 def git_tracked_risk_files() -> list[str]:
     try:
         result = subprocess.run(
@@ -98,7 +102,7 @@ def git_tracked_risk_files() -> list[str]:
 
     risk_files = []
     for line in result.stdout.splitlines():
-        if line.endswith(RISK_SUFFIXES) or line.startswith(RISK_PREFIXES):
+        if is_risk_path(line):
             risk_files.append(line)
     return risk_files
 
