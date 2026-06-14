@@ -77,7 +77,7 @@
 - [ ] Update strict YOLOv8n vs YOLOv8s same-split comparison / 更新 YOLOv8n 与 YOLOv8s 同测试集严格对比 — Priority: P3 — Status: Optional — Output: `docs/experiment_comparison.md`, `docs/experiment_comparison.csv` — Commit: TBD
 - [ ] Image size ablation / 输入尺寸消融实验 — Priority: P3 — Status: Optional — Output: `docs/ablation_imgsz.md` — Commit: TBD
 - [ ] YOLOv8m experiment / YOLOv8m 实验 — Priority: P3 — Status: Optional — Output: `docs/experiments/yolov8m_*/` — Commit: TBD
-- [ ] ONNX export guide without committing ONNX file / 创建 ONNX 导出指南且不提交 ONNX 文件 — Priority: P3 — Status: Optional — Output: `docs/onnx_export.md` — Commit: TBD
+- [x] ONNX export guide without committing ONNX file / 创建 ONNX 导出指南且不提交 ONNX 文件 — Priority: P3 — Status: Done — Output: `docs/onnx_export.md` — Commit: `24ec863`
 - [ ] Inference speed benchmark / 推理速度基准测试 — Priority: P3 — Status: Optional — Output: `docs/inference_speed_benchmark.md` — Commit: TBD
 
 ## Do Not Track in Git
