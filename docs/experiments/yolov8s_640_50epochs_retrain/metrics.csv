@@ -1,0 +1,2 @@
+experiment,split,imgsz,epochs,batch,precision,recall,map50,map50_95,run_dir,weights_path,notes
+yolov8s_640_50epochs_retrain,val,640,50,8,0.83909,0.84059,0.87705,0.60405,runs/detect/runs/detect/yolov8s_640_50epochs_retrain,local_weights/yolov8s_640_50epochs/best.pt,Validation result from training; not official test split evaluation.

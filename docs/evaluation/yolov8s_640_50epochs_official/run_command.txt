@@ -1,0 +1,10 @@
+yolo detect val \
+  model=local_weights/yolov8s_640_50epochs/best.pt \
+  data=dataset/data.yaml \
+  split=test \
+  imgsz=640 \
+  device=0 \
+  project=runs/detect \
+  name=val_yolov8s_640_50epochs_official \
+  plots=True \
+  save_json=False

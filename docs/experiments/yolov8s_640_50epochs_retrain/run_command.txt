@@ -1,0 +1,11 @@
+yolo detect train \
+  data=dataset/data.yaml \
+  model=yolov8s.pt \
+  epochs=50 \
+  imgsz=640 \
+  batch=8 \
+  workers=2 \
+  device=0 \
+  project=runs/detect \
+  name=yolov8s_640_50epochs_retrain \
+  plots=True

@@ -1,0 +1,2 @@
+experiment,split,imgsz,precision,recall,map50,map50_95,val_dir,weights_path,notes
+yolov8s_640_50epochs_official,test,640,0.865,0.838,0.876,0.601,runs/detect/runs/detect/val_yolov8s_640_50epochs_official,local_weights/yolov8s_640_50epochs/best.pt,Official test split evaluation for retrained YOLOv8s model.
