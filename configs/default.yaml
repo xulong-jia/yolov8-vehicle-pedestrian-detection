@@ -1,0 +1,21 @@
+project:
+  name: yolov8-vehicle-pedestrian-detection
+
+paths:
+  dataset_yaml: dataset/data.yaml
+  default_model: local_weights/yolov8n_640_50epochs/best.pt
+  sample_images_dir: docs/error_case_gallery/images
+  output_dir: local_outputs
+
+inference:
+  image_size: 640
+  confidence: 0.25
+  device: cpu
+
+classes:
+  - Bus
+  - Car
+  - Motorcycle
+  - Person
+  - Truck
+  - mini-truck

@@ -41,6 +41,7 @@ docs/video_demos/**/*.mp4
 docs/video_demos/**/*.avi
 docs/video_demos/**/*.mov
 docs/video_demos/**/*.mkv
+local_outputs/
 
 # Keep skeleton placeholders
 !results/images/.gitkeep
