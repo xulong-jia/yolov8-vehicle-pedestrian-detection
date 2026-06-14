@@ -79,7 +79,7 @@
 - [ ] Image size ablation / 输入尺寸消融实验 — Priority: P3 — Status: Optional — Output: `docs/ablation_imgsz.md` — Commit: TBD
 - [ ] YOLOv8m experiment / YOLOv8m 实验 — Priority: P3 — Status: Optional — Output: `docs/experiments/yolov8m_*/` — Commit: TBD
 - [x] ONNX export guide without committing ONNX file / 创建 ONNX 导出指南且不提交 ONNX 文件 — Priority: P3 — Status: Done — Output: `docs/onnx_export.md` — Commit: `24ec863`
-- [ ] Inference speed benchmark / 推理速度基准测试 — Priority: P3 — Status: Optional — Output: `docs/inference_speed_benchmark.md` — Commit: TBD
+- [x] Inference speed benchmark / 推理速度基准测试 — Priority: P3 — Status: Done — Output: `docs/inference_speed_benchmark.md`, `docs/inference_speed_benchmark.csv`, `docs/inference_speed_benchmark_raw.json` — Result: Colab Tesla T4, `cuda:0`, 100 measured images, 10 warmup images, imgsz 640; YOLOv8n 11.562 ms/image, 86.49 FPS; YOLOv8s 15.985 ms/image, 62.56 FPS; YOLOv8s latency ratio 1.383x — Commit: `b1a07d9`
 
 ## Do Not Track in Git
 
