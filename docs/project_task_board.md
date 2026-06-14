@@ -66,6 +66,7 @@
 ## P2 — Deployment and Serving / 部署与服务化
 
 - [x] Add FastAPI inference service / 添加 FastAPI 推理服务 — Priority: P2 — Status: Done — Output: `src/api.py` — Commit: `a7d7417`
+- [x] Implement real FastAPI image prediction endpoint / 实现真实 FastAPI 图片推理接口 — Priority: P2 — Status: Done — Output: `src/api.py`, `docs/api_usage.md`, `tests/test_api.py`, `requirements-api.txt`, `Makefile` — Commit: `15d3519`
 - [x] Add API documentation / 添加 API 文档 — Priority: P2 — Status: Done — Output: `docs/api_usage.md` — Commit: `a7d7417`
 - [x] Add local deployment guide / 添加本地部署指南 — Priority: P2 — Status: Done — Output: `docs/deployment_guide.md` — Commit: `13def7c`
 - [x] Add Dockerfile without weights / 添加不包含权重的 Dockerfile — Priority: P2 — Status: Done — Output: `Dockerfile`, `.dockerignore`, `docs/docker_deployment.md` — Commit: `7361e23`
