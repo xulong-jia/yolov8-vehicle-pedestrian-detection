@@ -27,6 +27,18 @@ Optional development and test dependencies:
 pip install -r requirements-dev.txt
 ```
 
+Optional FastAPI scaffold dependencies:
+
+```bash
+pip install -r requirements-api.txt
+```
+
+Dependency files are split by purpose:
+
+- `requirements.txt`: main demo and runtime dependencies
+- `requirements-dev.txt`: development and test dependencies
+- `requirements-api.txt`: FastAPI scaffold dependencies
+
 ## Model Weights
 
 Model weights are not included in GitHub.

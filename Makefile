@@ -1,7 +1,10 @@
-.PHONY: check test streamlit status danger-check list-large-docs
+.PHONY: check api-check test streamlit status danger-check list-large-docs
 
 check:
 	python3 -m py_compile app.py src/train.py src/evaluate.py src/predict_image.py src/predict_video.py src/visualize_dataset.py src/analyze_dataset.py
+
+api-check:
+	python3 -m py_compile src/api.py
 
 test:
 	python3 -m pytest tests
