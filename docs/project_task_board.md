@@ -51,9 +51,9 @@
 
 ## P1 — Additional Analysis / 补充分析
 
-- [ ] Create error taxonomy v2 / 创建错误类型体系 v2 — Priority: P1 — Status: Todo — Output: `docs/error_taxonomy.md` — Commit: TBD
-- [ ] Create hard examples list / 创建困难样本清单 — Priority: P1 — Status: Todo — Output: `docs/hard_examples.csv`, `docs/hard_examples.md` — Commit: TBD
-- [ ] Create threshold analysis report / 创建阈值分析报告 — Priority: P1 — Status: Todo — Output: `docs/threshold_analysis.md` — Commit: TBD
+- [x] Create error taxonomy v2 / 创建错误类型体系 v2 — Priority: P1 — Status: Done — Output: `docs/error_taxonomy.md` — Commit: `6d01ff1`
+- [x] Create hard examples list / 创建困难样本清单 — Priority: P1 — Status: Done — Output: `docs/hard_examples.csv`, `docs/hard_examples.md` — Commit: `6d01ff1`
+- [x] Create threshold analysis report / 创建阈值分析报告 — Priority: P1 — Status: Done — Output: `docs/threshold_analysis.md` — Commit: `6d01ff1`
 
 ## P2 — Engineering Extensions / 工程扩展
 
