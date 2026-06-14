@@ -68,7 +68,7 @@
 - [ ] Add FastAPI inference service / 添加 FastAPI 推理服务 — Priority: P2 — Status: Todo — Output: `api/main.py` — Commit: TBD
 - [ ] Add API documentation / 添加 API 文档 — Priority: P2 — Status: Todo — Output: `docs/api_reference.md` — Commit: TBD
 - [x] Add local deployment guide / 添加本地部署指南 — Priority: P2 — Status: Done — Output: `docs/deployment_guide.md` — Commit: `13def7c`
-- [ ] Add Dockerfile without weights / 添加不包含权重的 Dockerfile — Priority: P2 — Status: Todo — Output: `Dockerfile`, `.dockerignore` — Commit: TBD
+- [x] Add Dockerfile without weights / 添加不包含权重的 Dockerfile — Priority: P2 — Status: Done — Output: `Dockerfile`, `.dockerignore`, `docs/docker_deployment.md` — Commit: `7361e23`
 - [x] Create model loading strategy / 创建模型加载策略 — Priority: P2 — Status: Done — Output: `docs/model_loading_strategy.md` — Commit: `13def7c`
 
 ## P3 — Optional Future Experiments / 可选未来实验
