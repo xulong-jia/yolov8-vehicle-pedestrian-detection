@@ -13,27 +13,30 @@ The current completed baseline includes:
 - YOLOv8n 640 baseline
 - YOLOv8n official test split evaluation
 - YOLOv8s supplementary validation result
+- YOLOv8s official test split evaluation
+- strict YOLOv8n vs YOLOv8s same-split comparison
 - Streamlit scaffold and demo improvements
 - FastAPI scaffold
+- real FastAPI `/predict` image inference endpoint
 - Docker scaffold
 
-## Optional Experiments
+## Completed P3 Work
 
 ### YOLOv8s Official Test Split Validation
 
-- Goal: evaluate YOLOv8s on the official test split using the same metric protocol as YOLOv8n.
-- Prerequisites: YOLOv8s `best.pt` must be available locally or retrained.
-- Requires GPU: recommended.
-- Expected output docs: `docs/evaluation/yolov8s_640_50epochs_official/`.
-- Risk level: medium.
+- Status: completed.
+- Output docs: `docs/evaluation/yolov8s_640_50epochs_official/summary.md`.
+- Official test metrics: Precision `0.865`, Recall `0.838`, mAP50 `0.876`, mAP50-95 `0.601`.
+- Weights remain local-only and are not committed.
 
 ### Strict YOLOv8n vs YOLOv8s Same-Split Comparison
 
-- Goal: compare YOLOv8n and YOLOv8s under the same split and metric protocol.
-- Depends on YOLOv8s official test split validation.
-- No fair comparison should be claimed until same split and same metric protocol are available.
-- Requires GPU: indirectly yes.
-- Risk level: medium.
+- Status: completed.
+- Output docs: `docs/strict_model_comparison.md`.
+- Same-split delta for YOLOv8s over YOLOv8n: Precision `+0.024`, Recall `+0.022`, mAP50 `+0.017`, mAP50-95 `+0.019`.
+- No speed benchmark is included in this comparison.
+
+## Remaining Optional Experiments
 
 ### Image Size Ablation
 
@@ -64,14 +67,10 @@ The current completed baseline includes:
 
 ## Recommended Order
 
-1. ONNX export guide.
-2. Benchmark plan.
-3. YOLOv8s official test validation, only if weight is available.
-4. Strict model comparison.
-5. ONNX Runtime check.
-6. Speed benchmark.
-7. Image size ablation.
-8. YOLOv8m experiment.
+1. ONNX Runtime check.
+2. Speed benchmark.
+3. Image size ablation.
+4. YOLOv8m experiment.
 
 ## Stop Conditions
 
@@ -88,6 +87,8 @@ Do not continue an optional experiment when:
 - `docs/final_project_report.md`
 - `docs/project_task_board.md`
 - `docs/experiment_comparison.md`
+- `docs/strict_model_comparison.md`
+- `docs/evaluation/yolov8s_640_50epochs_official/summary.md`
 - `docs/onnx_export.md`
 - `docs/inference_speed_benchmark_plan.md`
 - `docs/model_weight_policy.md`

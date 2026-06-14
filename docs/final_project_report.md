@@ -4,7 +4,7 @@
 
 This project is a YOLOv8 vehicle and pedestrian detection project for multi-class object detection. It focuses on model training, evaluation, inference demos, qualitative error analysis, and engineering preparation for local deployment.
 
-The project has evolved from a baseline computer vision experiment into a more complete engineering-oriented repository with documented model behavior, safety policies, local demo tooling, CLI utilities, FastAPI scaffold, and Docker scaffold.
+The project has evolved from a baseline computer vision experiment into a more complete engineering-oriented repository with documented model behavior, safety policies, local demo tooling, CLI utilities, a real FastAPI image prediction endpoint, and Docker scaffold.
 
 ## 2. Dataset
 
@@ -53,14 +53,34 @@ Label validation and cleaning were performed. After cleaning, no invalid class I
 - mAP50: 0.859
 - mAP50-95: 0.582
 
-### YOLOv8s 640x640 50 Epoch Supplementary Validation
+### YOLOv8s 640x640 50 Epoch Retrain Validation
 
-- Precision: 0.839
-- Recall: 0.841
-- mAP50: 0.877
-- mAP50-95: 0.604
+- Precision: 0.83909
+- Recall: 0.84059
+- mAP50: 0.87705
+- mAP50-95: 0.60405
 
-This YOLOv8s result is a supplementary validation result. It is not a strict same-split test comparison against the YOLOv8n official test split result.
+This is the validation result from the YOLOv8s retraining run.
+
+### YOLOv8s 640x640 Official Test Split Evaluation
+
+- Precision: 0.865
+- Recall: 0.838
+- mAP50: 0.876
+- mAP50-95: 0.601
+
+This is the official test split evaluation for the retrained YOLOv8s model.
+
+### Strict Same-Split YOLOv8n vs YOLOv8s Comparison
+
+On the official test split, YOLOv8s improves over YOLOv8n by:
+
+- Precision: +0.024
+- Recall: +0.022
+- mAP50: +0.017
+- mAP50-95: +0.019
+
+The comparison uses the same dataset config, test split, and image size.
 
 ## 4. Inference and Demo Work
 
@@ -74,6 +94,7 @@ Demo work includes:
 - Streamlit image detection demo
 - sample image selector
 - upload mode
+- FastAPI real `/predict` image inference endpoint
 - detection table
 - CSV download
 - friendly error handling
@@ -124,7 +145,7 @@ Deployment and serving preparation includes:
 
 - local deployment guide
 - model loading strategy
-- FastAPI scaffold
+- FastAPI service with real `/predict` image inference endpoint
 - API usage documentation
 - Dockerfile without weights
 - `.dockerignore`
@@ -133,9 +154,10 @@ Model weights are mounted or provided locally. They are not committed to Git.
 
 Important limitations:
 
-- FastAPI `/predict` is currently a placeholder.
-- No real API inference endpoint is enabled by default.
+- FastAPI `/predict` accepts multipart image upload and returns JSON detections.
+- The YOLO model is lazy-loaded on the first prediction request.
 - No model is loaded at API import time.
+- Uploaded images and prediction outputs are not saved to the repository.
 - Docker scaffold has not been claimed as production deployment.
 - Docker image is designed not to include model weights or the full dataset.
 
@@ -154,20 +176,19 @@ GitHub tracks code, docs, configs, summaries, and selected lightweight demo asse
 ## 9. Current Limitations
 
 - No production API inference endpoint yet.
-- No official YOLOv8s test split evaluation yet.
-- No strict same-split YOLOv8n vs YOLOv8s benchmark yet.
+- No inference speed benchmark yet.
+- No image size ablation yet.
+- No YOLOv8m experiment yet.
 - No ONNX export yet.
 - No real Docker build/run validation yet.
-- Local weights and full dataset are not included in the repository.
+- Model weights and full dataset split folders are intentionally not committed.
 
 ## 10. Recommended Next Steps
 
-- Implement real FastAPI image inference endpoint.
-- Add API tests.
-- Run YOLOv8s official test split validation on GPU.
-- Run same-split model comparison.
-- Add ONNX export guide.
 - Add speed benchmark.
+- Run image size ablation if GPU resources are available.
+- Run YOLOv8m experiment if compute budget and tracking time are available.
+- Add ONNX Runtime check if ONNX export is performed locally.
 - Prepare presentation slides or portfolio summary.
 
 ## Related Documents

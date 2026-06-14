@@ -13,7 +13,7 @@ Current project scope includes:
 - qualitative error analysis
 - Streamlit image detection demo
 - batch prediction CLI
-- FastAPI scaffold
+- FastAPI real image prediction endpoint
 - Docker scaffold
 - project documentation and safety policy
 
@@ -54,12 +54,22 @@ Completed experiments and recorded results:
    - mAP50: 0.859
    - mAP50-95: 0.582
 
-4. YOLOv8s 640x640 50 epochs supplementary validation result
-   - Precision: 0.839
-   - Recall: 0.841
-   - mAP50: 0.877
-   - mAP50-95: 0.604
-   - This is a validation split supplementary result, not a strict same-split test comparison.
+4. YOLOv8s 640x640 50 epochs retrain validation
+   - Precision: 0.83909
+   - Recall: 0.84059
+   - mAP50: 0.87705
+   - mAP50-95: 0.60405
+
+5. YOLOv8s official test split evaluation
+   - Precision: 0.865
+   - Recall: 0.838
+   - mAP50: 0.876
+   - mAP50-95: 0.601
+
+6. Strict same-split YOLOv8n vs YOLOv8s comparison
+   - YOLOv8n official test: P 0.841, R 0.816, mAP50 0.859, mAP50-95 0.582
+   - YOLOv8s official test: P 0.865, R 0.838, mAP50 0.876, mAP50-95 0.601
+   - Delta: Precision +0.024, Recall +0.022, mAP50 +0.017, mAP50-95 +0.019
 
 ### Inference and Demo
 
@@ -98,7 +108,7 @@ Completed experiments and recorded results:
 
 - Local deployment guide.
 - Model loading strategy.
-- FastAPI scaffold with health/config/model-status endpoints.
+- FastAPI service with health/config/model-status endpoints and a real `/predict` image inference endpoint.
 - API usage documentation.
 - Dockerfile without model weights.
 - `.dockerignore` excluding weights, dataset splits, local outputs, runs, and videos.
@@ -200,7 +210,7 @@ Notes:
 - Large batch inference may benefit from GPU.
 - Small local checks can use CPU.
 
-### 6. Run FastAPI Scaffold
+### 6. Run FastAPI Service
 
 Install API dependencies:
 
@@ -216,8 +226,10 @@ uvicorn src.api:app --host 0.0.0.0 --port 8000
 
 Current API scope:
 
-- `/health`, `/config`, and `/model-status` are available scaffold endpoints.
-- `/predict` is a placeholder and does not run real inference.
+- `/health`, `/config`, and `/model-status` are available.
+- `/predict` accepts multipart image upload and returns JSON detections.
+- YOLO is lazy-loaded from `MODEL_PATH` or the configured default model path on the first prediction request.
+- Uploaded images and prediction outputs are not saved to the repository.
 - No model is loaded at import time.
 
 ### 7. Docker Scaffold
@@ -259,7 +271,13 @@ pip install -r requirements-dev.txt
 | YOLOv8n smoke test | validation | 416 | 10 | 0.786 | 0.749 | 0.797 | 0.511 | Quick Colab smoke test |
 | YOLOv8n 640 baseline validation | validation | 640 | 50 | 0.81981 | 0.82768 | 0.86422 | 0.59102 | Main lightweight baseline |
 | YOLOv8n official test | test | 640 | 50 | 0.841 | 0.816 | 0.859 | 0.582 | Official test split evaluation |
-| YOLOv8s validation supplementary | validation | 640 | 50 | 0.839 | 0.841 | 0.877 | 0.604 | Supplementary result, not same-split benchmark |
+| YOLOv8s retrain validation | validation | 640 | 50 | 0.83909 | 0.84059 | 0.87705 | 0.60405 | Retrain validation result |
+| YOLOv8s official test | test | 640 | 50 | 0.865 | 0.838 | 0.876 | 0.601 | Official test split evaluation |
+
+Strict same-split result:
+
+- YOLOv8s improves over YOLOv8n on the official test split by Precision `+0.024`, Recall `+0.022`, mAP50 `+0.017`, and mAP50-95 `+0.019`.
+- No inference speed benchmark is included in this comparison.
 
 ## Timeline by Date
 
@@ -296,6 +314,9 @@ pip install -r requirements-dev.txt
 - Added model loading strategy and local deployment guide.
 - Added Docker scaffold without model weights.
 - Added FastAPI scaffold and API documentation.
+- Implemented real FastAPI `/predict` image inference endpoint.
+- Added YOLOv8s retrain validation and official test split evaluation docs.
+- Added strict same-split YOLOv8n vs YOLOv8s comparison.
 
 ## Documentation Index
 
@@ -314,6 +335,9 @@ pip install -r requirements-dev.txt
 - [Local deployment guide](docs/deployment_guide.md)
 - [Docker deployment guide](docs/docker_deployment.md)
 - [API usage guide](docs/api_usage.md)
+- [YOLOv8s retrain summary](docs/experiments/yolov8s_640_50epochs_retrain/summary.md)
+- [YOLOv8s official test summary](docs/evaluation/yolov8s_640_50epochs_official/summary.md)
+- [Strict model comparison](docs/strict_model_comparison.md)
 - [Project task board](docs/project_task_board.md)
 
 ## Safety and Git Policy
@@ -342,16 +366,16 @@ Policy:
 
 ## Current Limitations
 
-- FastAPI `/predict` is currently a placeholder.
 - Docker scaffold has not been built or deployed as a verified production image.
-- YOLOv8s result is a supplementary validation result, not a strict same-split test benchmark.
+- No inference speed benchmark has been completed yet.
+- No image size ablation has been completed yet.
+- No YOLOv8m experiment has been completed yet.
 - Full model weights are not included in the repository.
 - Full dataset split folders are not included in the repository.
 
 ## Next Steps
 
-- Implement a real FastAPI image inference endpoint.
-- Add API tests.
 - Add README badges if needed.
-- Add a final project report.
-- Optionally run GPU-based benchmarks for API or video inference.
+- Update presentation or portfolio summary materials.
+- Optionally run controlled inference speed benchmark.
+- Optionally run image size ablation or YOLOv8m experiment if GPU resources and tracking time are available.

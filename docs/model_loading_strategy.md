@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document defines how this project should load YOLOv8 model weights for local demos, command-line tools, and future API or Docker deployment while keeping model weights out of Git.
+This document defines how this project should load YOLOv8 model weights for local demos, command-line tools, the FastAPI service, and future Docker deployment while keeping model weights out of Git.
 
 The core rule is simple: code and documentation can be tracked in Git, but trained model weights should remain local or be stored in external artifact storage.
 
@@ -20,18 +20,20 @@ This path is used as the default reference for local qualitative inference and d
 
 - Streamlit app uses a user-provided model path with the default local path prefilled.
 - Batch prediction CLI uses the `--model` argument.
-- Future FastAPI service may use an environment variable such as `MODEL_PATH`.
+- The current FastAPI service reads `MODEL_PATH` before falling back to the configured default model path.
+- The FastAPI service lazy-loads the YOLO model on the first prediction request.
+- Importing `src.api` should not immediately load model weights.
 - Future Docker deployment should mount weights as an external volume at runtime.
 
 ## Environment Variable Strategy
 
-Recommended future environment variable:
+Recommended environment variable:
 
 ```bash
 MODEL_PATH=/models/best.pt
 ```
 
-Future API or service code can read `MODEL_PATH` instead of hardcoding machine-specific paths.
+The FastAPI service can read `MODEL_PATH` instead of hardcoding machine-specific paths.
 
 Guidelines:
 
@@ -39,6 +41,7 @@ Guidelines:
 - Do not commit `.env` files containing private local paths.
 - Keep environment-specific model locations outside source code.
 - Validate that the path exists before starting inference.
+- Keep model weights local-only and out of Git.
 
 ## Docker / Volume Strategy
 
