@@ -45,9 +45,9 @@
 
 ## P1 — Demo Improvements / 演示功能改进
 
-- [ ] Add Streamlit sample image selector / 添加 Streamlit 样例图片选择器 — Priority: P1 — Status: Todo — Output: `app.py`, `docs/streamlit_demo.md` — Commit: TBD
-- [ ] Add downloadable prediction CSV in Streamlit / 添加 Streamlit 可下载预测结果 CSV — Priority: P1 — Status: Todo — Output: `app.py`, `docs/streamlit_demo.md` — Commit: TBD
-- [ ] Improve Streamlit error messages / 优化 Streamlit 错误提示 — Priority: P1 — Status: Todo — Output: `app.py` — Commit: TBD
+- [x] Add Streamlit sample image selector / 添加 Streamlit 样例图片选择器 — Priority: P1 — Status: Done — Output: `app.py`, `docs/streamlit_demo.md` — Commit: `ed042c0`
+- [x] Add downloadable prediction CSV in Streamlit / 添加 Streamlit 可下载预测结果 CSV — Priority: P1 — Status: Done — Output: `app.py`, `docs/streamlit_demo.md` — Commit: `ed042c0`
+- [x] Improve Streamlit error messages / 优化 Streamlit 错误提示 — Priority: P1 — Status: Done — Output: `app.py` — Commit: `ed042c0`
 
 ## P1 — Additional Analysis / 补充分析
 
