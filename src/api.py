@@ -1,12 +1,14 @@
-"""FastAPI scaffold for future YOLOv8 inference service."""
+"""FastAPI service for local YOLOv8 image inference."""
 
 from __future__ import annotations
 
+from io import BytesIO
 import os
 from pathlib import Path
 from typing import Any
 
-from fastapi import FastAPI, HTTPException, status
+from fastapi import FastAPI, File, HTTPException, UploadFile, status
+from PIL import Image, UnidentifiedImageError
 
 
 SERVICE_NAME = "yolov8-vehicle-pedestrian-api"
@@ -60,6 +62,12 @@ def get_default_model_path(config: dict[str, Any] | None = None) -> str:
     return str(get_config_value(config, "paths", "default_model", FALLBACK_MODEL_PATH))
 
 
+def get_model_path(config: dict[str, Any] | None = None) -> str:
+    """Return the effective model path without loading the model."""
+
+    return get_effective_model_path(config)
+
+
 def get_effective_model_path(config: dict[str, Any] | None = None) -> str:
     return os.environ.get("MODEL_PATH") or get_default_model_path(config)
 
@@ -80,7 +88,7 @@ def get_inference_config(config: dict[str, Any] | None = None) -> dict[str, Any]
 
 
 def get_or_load_model(model_path: str) -> Any:
-    """Lazy model loader reserved for a future real inference endpoint."""
+    """Load and cache a YOLO model only when inference is requested."""
 
     global _model, _model_path
     if _model is not None and _model_path == model_path:
@@ -100,6 +108,120 @@ def get_or_load_model(model_path: str) -> Any:
 
     _model_path = model_path
     return _model
+
+
+def load_image_from_bytes(data: bytes) -> Image.Image:
+    """Decode uploaded image bytes into a RGB PIL image."""
+
+    if not data:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Uploaded image is empty.",
+        )
+
+    try:
+        image = Image.open(BytesIO(data))
+        image.load()
+    except (UnidentifiedImageError, OSError) as exc:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Unsupported or corrupted image.",
+        ) from exc
+
+    return image.convert("RGB")
+
+
+def _to_scalar(value: Any) -> Any:
+    if hasattr(value, "item"):
+        return value.item()
+    return value
+
+
+def _to_list(value: Any) -> list[Any]:
+    if hasattr(value, "tolist"):
+        result = value.tolist()
+        return result if isinstance(result, list) else [result]
+    if isinstance(value, tuple):
+        return list(value)
+    if isinstance(value, list):
+        return value
+    return [value]
+
+
+def _class_name(class_names: dict[Any, str] | list[str] | tuple[str, ...], class_id: int) -> str:
+    if isinstance(class_names, dict):
+        return str(class_names.get(class_id, class_names.get(str(class_id), class_id)))
+    if 0 <= class_id < len(class_names):
+        return str(class_names[class_id])
+    return str(class_id)
+
+
+def format_detections(
+    result: Any,
+    class_names: dict[Any, str] | list[str] | tuple[str, ...],
+) -> list[dict[str, Any]]:
+    """Convert a YOLO result object into API response detections."""
+
+    boxes = getattr(result, "boxes", None)
+    if boxes is None:
+        return []
+
+    xyxy_values = _to_list(getattr(boxes, "xyxy", []))
+    cls_values = _to_list(getattr(boxes, "cls", []))
+    conf_values = _to_list(getattr(boxes, "conf", []))
+
+    detections: list[dict[str, Any]] = []
+    for xyxy, cls_value, conf_value in zip(xyxy_values, cls_values, conf_values):
+        coords = _to_list(xyxy)
+        if len(coords) < 4:
+            continue
+
+        class_id = int(_to_scalar(cls_value))
+        detections.append(
+            {
+                "class_id": class_id,
+                "class_name": _class_name(class_names, class_id),
+                "confidence": float(_to_scalar(conf_value)),
+                "bbox": {
+                    "xmin": float(_to_scalar(coords[0])),
+                    "ymin": float(_to_scalar(coords[1])),
+                    "xmax": float(_to_scalar(coords[2])),
+                    "ymax": float(_to_scalar(coords[3])),
+                },
+            }
+        )
+
+    return detections
+
+
+def resolve_inference_options(
+    config: dict[str, Any],
+    conf: float | None,
+    imgsz: int | None,
+    device: str | None,
+) -> tuple[float, int, str]:
+    defaults = get_inference_config(config)
+    confidence = float(defaults["confidence"] if conf is None else conf)
+    image_size = int(defaults["image_size"] if imgsz is None else imgsz)
+    inference_device = str(defaults["device"] if device is None else device)
+
+    if not 0.0 <= confidence <= 1.0:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="conf must be between 0.0 and 1.0.",
+        )
+    if image_size <= 0:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="imgsz must be a positive integer.",
+        )
+    if not inference_device.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="device must not be empty.",
+        )
+
+    return confidence, image_size, inference_device
 
 
 def create_app() -> FastAPI:
@@ -123,14 +245,70 @@ def create_app() -> FastAPI:
         }
 
     @app.post("/predict")
-    def predict() -> None:
-        raise HTTPException(
-            status_code=status.HTTP_501_NOT_IMPLEMENTED,
-            detail=(
-                "Prediction endpoint scaffolded but real inference is intentionally "
-                "disabled in this version."
-            ),
+    async def predict(
+        file: UploadFile = File(...),
+        conf: float | None = None,
+        imgsz: int | None = None,
+        device: str | None = None,
+    ) -> dict[str, Any]:
+        config = load_config()
+        confidence, image_size, inference_device = resolve_inference_options(
+            config, conf, imgsz, device
         )
+        model_path = get_model_path(config)
+        if not Path(model_path).is_file():
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=(
+                    f"Model weight not found at {model_path}. Provide MODEL_PATH or "
+                    f"place best.pt at {FALLBACK_MODEL_PATH}."
+                ),
+            )
+
+        try:
+            image = load_image_from_bytes(await file.read())
+        finally:
+            await file.close()
+
+        try:
+            model = get_or_load_model(model_path)
+        except RuntimeError as exc:
+            detail = short_error(exc)
+            status_code = (
+                status.HTTP_500_INTERNAL_SERVER_ERROR
+                if "ultralytics is required" in detail
+                else status.HTTP_400_BAD_REQUEST
+            )
+            raise HTTPException(status_code=status_code, detail=detail) from exc
+
+        try:
+            results = model(
+                image,
+                imgsz=image_size,
+                conf=confidence,
+                device=inference_device,
+                verbose=False,
+            )
+        except Exception as exc:
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail=f"Inference failed: {short_error(exc)}",
+            ) from exc
+
+        result = results[0] if results else None
+        class_names = getattr(model, "names", None) or getattr(result, "names", {}) or {}
+        detections = format_detections(result, class_names) if result is not None else []
+
+        return {
+            "image_name": file.filename or "uploaded_image",
+            "image_size": {"width": image.width, "height": image.height},
+            "model_path": model_path,
+            "confidence_threshold": confidence,
+            "image_size_requested": image_size,
+            "device": inference_device,
+            "num_detections": len(detections),
+            "detections": detections,
+        }
 
     return app
 
