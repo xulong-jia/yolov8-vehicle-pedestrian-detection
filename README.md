@@ -288,6 +288,19 @@ Inference speed benchmark:
 - YOLOv8s latency ratio vs YOLOv8n: `1.383x`
 - Details: [Inference speed benchmark](docs/inference_speed_benchmark.md)
 
+ONNX Runtime benchmark/check:
+
+- Runtime: ONNX Runtime `1.26.0`
+- Provider: `CUDAExecutionProvider,CPUExecutionProvider`
+- Hardware: Google Colab Tesla T4
+- Image size: 640
+- Protocol: 100 measured images, 10 warmup images
+- YOLOv8n ONNX Runtime: `10.994 ms/image`, `90.96 FPS`
+- YOLOv8s ONNX Runtime: `13.657 ms/image`, `73.22 FPS`
+- Output check: shape `[[1, 10, 8400]]`, finite `True`, non-empty `True`
+- Details: [ONNX Runtime benchmark](docs/onnx_runtime_benchmark.md)
+- No ONNX files are committed, and this is not ONNX Runtime mAP/NMS evaluation.
+
 ## Timeline by Date
 
 ### 2026-06-11
@@ -327,6 +340,7 @@ Inference speed benchmark:
 - Added YOLOv8s retrain validation and official test split evaluation docs.
 - Added strict same-split YOLOv8n vs YOLOv8s comparison.
 - Added Colab T4 inference speed benchmark.
+- Added ONNX Runtime benchmark/check documentation.
 
 ## Documentation Index
 
@@ -349,6 +363,7 @@ Inference speed benchmark:
 - [YOLOv8s official test summary](docs/evaluation/yolov8s_640_50epochs_official/summary.md)
 - [Strict model comparison](docs/strict_model_comparison.md)
 - [Inference speed benchmark](docs/inference_speed_benchmark.md)
+- [ONNX Runtime benchmark](docs/onnx_runtime_benchmark.md)
 - [Project task board](docs/project_task_board.md)
 
 ## Safety and Git Policy
@@ -380,8 +395,9 @@ Policy:
 - Docker scaffold has not been built or deployed as a verified production image.
 - No image size ablation has been completed yet.
 - No YOLOv8m experiment has been completed yet.
-- No ONNX Runtime benchmark has been completed yet.
+- No ONNX Runtime mAP/NMS evaluation has been completed.
 - Full model weights are not included in the repository.
+- ONNX files are not included in the repository.
 - Full dataset split folders are not included in the repository.
 
 ## Next Steps
@@ -389,4 +405,4 @@ Policy:
 - Add README badges if needed.
 - Update presentation or portfolio summary materials.
 - Optionally run image size ablation or YOLOv8m experiment if GPU resources and tracking time are available.
-- Optionally run ONNX Runtime benchmark if ONNX export is performed locally.
+- Optionally run ONNX Runtime mAP/NMS evaluation only if a separate evaluation protocol is defined.

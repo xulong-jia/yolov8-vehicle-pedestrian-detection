@@ -92,6 +92,18 @@ Inference speed benchmark was completed on Google Colab Tesla T4 with CUDA devic
 
 Reference: [Inference speed benchmark](inference_speed_benchmark.md)
 
+### ONNX Runtime Benchmark / Check
+
+ONNX Runtime benchmark/check was completed on Google Colab Tesla T4. It used ONNX Runtime 1.26.0 with provider `CUDAExecutionProvider,CPUExecutionProvider`, image size 640, 100 measured images, and 10 warmup images.
+
+- YOLOv8n ONNX Runtime: 10.994 ms/image, 90.96 FPS.
+- YOLOv8s ONNX Runtime: 13.657 ms/image, 73.22 FPS.
+- Output check: shape `[[1, 10, 8400]]`, finite `True`, non-empty `True`.
+- No ONNX files are committed.
+- No ONNX Runtime mAP/NMS evaluation was run.
+
+Reference: [ONNX Runtime benchmark](onnx_runtime_benchmark.md)
+
 ## 4. Inference and Demo Work
 
 The project includes selected image inference examples and a 50-sample inference analysis based on existing prediction outputs. It also includes video demo documentation and selected key frames for qualitative review.
@@ -188,15 +200,15 @@ GitHub tracks code, docs, configs, summaries, and selected lightweight demo asse
 - No production API inference endpoint yet.
 - No image size ablation yet.
 - No YOLOv8m experiment yet.
-- No ONNX Runtime benchmark yet.
+- No ONNX Runtime mAP/NMS evaluation.
 - No real Docker build/run validation yet.
-- Model weights and full dataset split folders are intentionally not committed.
+- Model weights, ONNX files, and full dataset split folders are intentionally not committed.
 
 ## 10. Recommended Next Steps
 
 - Run image size ablation if GPU resources are available.
 - Run YOLOv8m experiment if compute budget and tracking time are available.
-- Add ONNX Runtime check if ONNX export is performed locally.
+- Add ONNX Runtime mAP/NMS evaluation only if a separate evaluation protocol is defined.
 - Prepare presentation slides or portfolio summary.
 
 ## Related Documents
@@ -218,3 +230,4 @@ GitHub tracks code, docs, configs, summaries, and selected lightweight demo asse
 - [Local deployment guide](deployment_guide.md)
 - [Docker deployment guide](docker_deployment.md)
 - [API usage guide](api_usage.md)
+- [ONNX Runtime benchmark](onnx_runtime_benchmark.md)
