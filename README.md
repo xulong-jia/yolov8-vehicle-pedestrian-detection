@@ -277,7 +277,16 @@ pip install -r requirements-dev.txt
 Strict same-split result:
 
 - YOLOv8s improves over YOLOv8n on the official test split by Precision `+0.024`, Recall `+0.022`, mAP50 `+0.017`, and mAP50-95 `+0.019`.
-- No inference speed benchmark is included in this comparison.
+
+Inference speed benchmark:
+
+- Hardware: Google Colab Tesla T4, `cuda:0`
+- Image size: 640
+- Protocol: 100 measured images, 10 warmup images
+- YOLOv8n 640 50 epochs: `11.562 ms/image`, `86.49 FPS`
+- YOLOv8s 640 50 epochs retrain: `15.985 ms/image`, `62.56 FPS`
+- YOLOv8s latency ratio vs YOLOv8n: `1.383x`
+- Details: [Inference speed benchmark](docs/inference_speed_benchmark.md)
 
 ## Timeline by Date
 
@@ -317,6 +326,7 @@ Strict same-split result:
 - Implemented real FastAPI `/predict` image inference endpoint.
 - Added YOLOv8s retrain validation and official test split evaluation docs.
 - Added strict same-split YOLOv8n vs YOLOv8s comparison.
+- Added Colab T4 inference speed benchmark.
 
 ## Documentation Index
 
@@ -338,6 +348,7 @@ Strict same-split result:
 - [YOLOv8s retrain summary](docs/experiments/yolov8s_640_50epochs_retrain/summary.md)
 - [YOLOv8s official test summary](docs/evaluation/yolov8s_640_50epochs_official/summary.md)
 - [Strict model comparison](docs/strict_model_comparison.md)
+- [Inference speed benchmark](docs/inference_speed_benchmark.md)
 - [Project task board](docs/project_task_board.md)
 
 ## Safety and Git Policy
@@ -367,9 +378,9 @@ Policy:
 ## Current Limitations
 
 - Docker scaffold has not been built or deployed as a verified production image.
-- No inference speed benchmark has been completed yet.
 - No image size ablation has been completed yet.
 - No YOLOv8m experiment has been completed yet.
+- No ONNX Runtime benchmark has been completed yet.
 - Full model weights are not included in the repository.
 - Full dataset split folders are not included in the repository.
 
@@ -377,5 +388,5 @@ Policy:
 
 - Add README badges if needed.
 - Update presentation or portfolio summary materials.
-- Optionally run controlled inference speed benchmark.
 - Optionally run image size ablation or YOLOv8m experiment if GPU resources and tracking time are available.
+- Optionally run ONNX Runtime benchmark if ONNX export is performed locally.

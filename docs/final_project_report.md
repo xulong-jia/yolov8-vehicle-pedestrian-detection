@@ -82,6 +82,16 @@ On the official test split, YOLOv8s improves over YOLOv8n by:
 
 The comparison uses the same dataset config, test split, and image size.
 
+### Colab T4 Inference Speed Benchmark
+
+Inference speed benchmark was completed on Google Colab Tesla T4 with CUDA device `cuda:0`, image size 640, 100 measured images, and 10 warmup images.
+
+- YOLOv8n 640 50 epochs: 11.562 ms/image, 86.49 FPS.
+- YOLOv8s 640 50 epochs retrain: 15.985 ms/image, 62.56 FPS.
+- YOLOv8s latency ratio vs YOLOv8n: 1.383x.
+
+Reference: [Inference speed benchmark](inference_speed_benchmark.md)
+
 ## 4. Inference and Demo Work
 
 The project includes selected image inference examples and a 50-sample inference analysis based on existing prediction outputs. It also includes video demo documentation and selected key frames for qualitative review.
@@ -176,16 +186,14 @@ GitHub tracks code, docs, configs, summaries, and selected lightweight demo asse
 ## 9. Current Limitations
 
 - No production API inference endpoint yet.
-- No inference speed benchmark yet.
 - No image size ablation yet.
 - No YOLOv8m experiment yet.
-- No ONNX export yet.
+- No ONNX Runtime benchmark yet.
 - No real Docker build/run validation yet.
 - Model weights and full dataset split folders are intentionally not committed.
 
 ## 10. Recommended Next Steps
 
-- Add speed benchmark.
 - Run image size ablation if GPU resources are available.
 - Run YOLOv8m experiment if compute budget and tracking time are available.
 - Add ONNX Runtime check if ONNX export is performed locally.
