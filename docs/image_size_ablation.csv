@@ -1,0 +1,4 @@
+model,split,imgsz,precision,recall,map50,map50_95,run_dir,notes
+YOLOv8n 640 50 epochs,test,416,0.8336559434169718,0.7923935698743595,0.854994248617546,0.5757419322620606,/content/yolov8-vehicle-pedestrian-detection/runs/detect/runs/detect/val_yolov8n_ablation_imgsz_416,Image size ablation on official test split using the same custom YOLOv8n weight.
+YOLOv8n 640 50 epochs,test,512,0.8251548682822126,0.8303819807380598,0.8625624344939705,0.5823661617741087,/content/yolov8-vehicle-pedestrian-detection/runs/detect/runs/detect/val_yolov8n_ablation_imgsz_512,Image size ablation on official test split using the same custom YOLOv8n weight.
+YOLOv8n 640 50 epochs,test,640,0.8406572320879478,0.8157548906046581,0.8593860306365507,0.5817949166113635,/content/yolov8-vehicle-pedestrian-detection/runs/detect/runs/detect/val_yolov8n_ablation_imgsz_640,Image size ablation on official test split using the same custom YOLOv8n weight.

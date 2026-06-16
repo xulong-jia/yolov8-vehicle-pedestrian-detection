@@ -1,0 +1,101 @@
+{
+  "timestamp": "2026-06-16T11:50:46",
+  "environment": {
+    "gpu": "Tesla T4",
+    "torch": "2.11.0+cu128",
+    "cuda_available": true,
+    "device": "cuda:0"
+  },
+  "model_path": "local_weights/yolov8n_640_50epochs/best.pt",
+  "dataset": "dataset/data.yaml",
+  "split": "test",
+  "runs": [
+    {
+      "imgsz": 416,
+      "metrics": {
+        "model": "YOLOv8n 640 50 epochs",
+        "split": "test",
+        "imgsz": 416,
+        "precision": 0.8336559434169718,
+        "recall": 0.7923935698743595,
+        "map50": 0.854994248617546,
+        "map50_95": 0.5757419322620606,
+        "run_dir": "/content/yolov8-vehicle-pedestrian-detection/runs/detect/runs/detect/val_yolov8n_ablation_imgsz_416",
+        "notes": "Image size ablation on official test split using the same custom YOLOv8n weight."
+      },
+      "save_dir": "/content/yolov8-vehicle-pedestrian-detection/runs/detect/runs/detect/val_yolov8n_ablation_imgsz_416",
+      "class_names": {
+        "0": "Bus",
+        "1": "Car",
+        "2": "Motorcycle",
+        "3": "Person",
+        "4": "Truck",
+        "5": "mini-truck"
+      },
+      "speed": {
+        "preprocess": 1.1716865505071965,
+        "inference": 2.4883920707073535,
+        "loss": 0.000711674243630665,
+        "postprocess": 1.6228097222268052
+      }
+    },
+    {
+      "imgsz": 512,
+      "metrics": {
+        "model": "YOLOv8n 640 50 epochs",
+        "split": "test",
+        "imgsz": 512,
+        "precision": 0.8251548682822126,
+        "recall": 0.8303819807380598,
+        "map50": 0.8625624344939705,
+        "map50_95": 0.5823661617741087,
+        "run_dir": "/content/yolov8-vehicle-pedestrian-detection/runs/detect/runs/detect/val_yolov8n_ablation_imgsz_512",
+        "notes": "Image size ablation on official test split using the same custom YOLOv8n weight."
+      },
+      "save_dir": "/content/yolov8-vehicle-pedestrian-detection/runs/detect/runs/detect/val_yolov8n_ablation_imgsz_512",
+      "class_names": {
+        "0": "Bus",
+        "1": "Car",
+        "2": "Motorcycle",
+        "3": "Person",
+        "4": "Truck",
+        "5": "mini-truck"
+      },
+      "speed": {
+        "preprocess": 1.2229162171702181,
+        "inference": 3.173045333332626,
+        "loss": 0.0008568282820223512,
+        "postprocess": 1.0336459166706624
+      }
+    },
+    {
+      "imgsz": 640,
+      "metrics": {
+        "model": "YOLOv8n 640 50 epochs",
+        "split": "test",
+        "imgsz": 640,
+        "precision": 0.8406572320879478,
+        "recall": 0.8157548906046581,
+        "map50": 0.8593860306365507,
+        "map50_95": 0.5817949166113635,
+        "run_dir": "/content/yolov8-vehicle-pedestrian-detection/runs/detect/runs/detect/val_yolov8n_ablation_imgsz_640",
+        "notes": "Image size ablation on official test split using the same custom YOLOv8n weight."
+      },
+      "save_dir": "/content/yolov8-vehicle-pedestrian-detection/runs/detect/runs/detect/val_yolov8n_ablation_imgsz_640",
+      "class_names": {
+        "0": "Bus",
+        "1": "Car",
+        "2": "Motorcycle",
+        "3": "Person",
+        "4": "Truck",
+        "5": "mini-truck"
+      },
+      "speed": {
+        "preprocess": 2.0147864974747756,
+        "inference": 4.144508189395108,
+        "loss": 0.004899919194986529,
+        "postprocess": 1.6638903434336452
+      }
+    }
+  ]
+}
