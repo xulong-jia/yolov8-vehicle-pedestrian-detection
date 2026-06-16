@@ -1,0 +1,2805 @@
+{
+  "environment": {
+    "timestamp": "2026-06-16T11:20:41",
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.35",
+    "python_version": "3.12.13 (main, Mar  4 2026, 09:23:07) [GCC 11.4.0]",
+    "torch_version": "2.11.0+cu128",
+    "ultralytics_version": "8.4.68",
+    "onnx_version": "1.22.0",
+    "onnxruntime_version": "1.26.0",
+    "available_providers": [
+      "TensorrtExecutionProvider",
+      "CUDAExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "preferred_provider": "CUDAExecutionProvider",
+    "torch_cuda_available": true,
+    "gpu_name": "Tesla T4",
+    "imgsz": 640,
+    "image_source": "dataset/test/images",
+    "image_count": 100,
+    "warmup_count": 10
+  },
+  "images": [
+    "dataset/test/images/-_png_jpg.rf.09f6995c447f33fc134a3175bde9f580.jpg",
+    "dataset/test/images/-_png_jpg.rf.0f038aa47e84ecb108f068f3a41b8587.jpg",
+    "dataset/test/images/-_png_jpg.rf.16696c4cee85795800b9c89c6095d13c.jpg",
+    "dataset/test/images/-_png_jpg.rf.246e25b1c0e577bc5357cfc5178c87ef.jpg",
+    "dataset/test/images/-_png_jpg.rf.48a907bdddb902497c184ffc90d46119.jpg",
+    "dataset/test/images/-_png_jpg.rf.4f267a2a4f1ebdb5d8a41edbea186edf.jpg",
+    "dataset/test/images/-_png_jpg.rf.5e7087bf778c74ad6df8c65cbeb2a280.jpg",
+    "dataset/test/images/-_png_jpg.rf.72c15e9584bd74dcaee8233b79d4f48a.jpg",
+    "dataset/test/images/-_png_jpg.rf.72c586896018c542d70e7d31945dbff2.jpg",
+    "dataset/test/images/-_png_jpg.rf.86beb1acde19343c064053a9d8c5bee1.jpg",
+    "dataset/test/images/-_png_jpg.rf.b5d4835ec48cb21ffd96f823cd534270.jpg",
+    "dataset/test/images/-_png_jpg.rf.be25c15b86ab145cecb5bcb9d1d24695.jpg",
+    "dataset/test/images/-_png_jpg.rf.c78a38d94dc72cd211366d40d3815114.jpg",
+    "dataset/test/images/-_png_jpg.rf.c8f5d98032a6e1c3006402d8e77c5f9c.jpg",
+    "dataset/test/images/-_png_jpg.rf.c8f7bfc9c47b7f23f125d201c41a1275.jpg",
+    "dataset/test/images/-_png_jpg.rf.ce8b6d11bbd14955a17744d99ce3fdf7.jpg",
+    "dataset/test/images/-_png_jpg.rf.d2afd1d903d033587ab2c597401d7096.jpg",
+    "dataset/test/images/-_png_jpg.rf.d7ea8c3f5565a3fbfd0696556f247048.jpg",
+    "dataset/test/images/-_png_jpg.rf.e230c17f27a6959e8ca110c276c164fd.jpg",
+    "dataset/test/images/-_png_jpg.rf.fba95d631df5233e32eb5c308325e430.jpg",
+    "dataset/test/images/000d2e3d33b18463_jpg.rf.4718ba878911b9cd1cfed077073d709e.jpg",
+    "dataset/test/images/00347f583cd63d8f_jpg.rf.2be1e09d5c869598978bbac49f2bed3f.jpg",
+    "dataset/test/images/01e46bab22dbe5b6_jpg.rf.350bdf1afc3e3b1c572348eca86b9155.jpg",
+    "dataset/test/images/01e46bab22dbe5b6_jpg.rf.cf2a0d78624b1bbf1556cb58802d3ab0.jpg",
+    "dataset/test/images/01f693ee3da9ced7_jpg.rf.b49cfde194c436ee74aa2afde09dc201.jpg",
+    "dataset/test/images/02b0b2cb54169767_jpg.rf.37574b6da3bdb4f1ef7ef91dcb4f3eea.jpg",
+    "dataset/test/images/038789965a8f7606_jpg.rf.b5371c9d8ce704e1cdeccb9a873caafc.jpg",
+    "dataset/test/images/03d55299d9f9bf52_jpg.rf.ccdc5b132bb0d6448545cdcfe30c3ee4.jpg",
+    "dataset/test/images/03dbe0e1735485d0_jpg.rf.1fdf407330d315b35e38bbbcf863511f.jpg",
+    "dataset/test/images/03e8bc2333105e66_jpg.rf.47db733d08b4019199ac9d2c7c0fcf80.jpg",
+    "dataset/test/images/0b9d3a9512856b70_jpg.rf.c70e97bc7ce2667f0b6b1760fc7fac23.jpg",
+    "dataset/test/images/0c135bdff969f253_jpg.rf.50d476ddabcca879c2fec8b9dae55570.jpg",
+    "dataset/test/images/0c291e6a916a1669_jpg.rf.6dcf80af5abc888be5a9f7972b9946ce.jpg",
+    "dataset/test/images/0df44ae71ebdbb85_jpg.rf.b50e79a41cda460066c6d92213ad1337.jpg",
+    "dataset/test/images/0e568901d66ad81e46860b91cce2a7fe_jpg.rf.8c6f7ce142e9f3b3403d20c761ad1359.jpg",
+    "dataset/test/images/0e568901d66ad81e46860b91cce2a7fe_jpg.rf.c6fc43d0fe5c37e1197ba341f964dea6.jpg",
+    "dataset/test/images/0e5e6eb1d9b2bd58_jpg.rf.4b0a5768cd3e5d5daf579f0017e16231.jpg",
+    "dataset/test/images/0e6e18101999c827_jpg.rf.a8f2b6ca6e0c83d245855202769ee5fe.jpg",
+    "dataset/test/images/0e6e18101999c827_jpg.rf.d8984301699a91079e868cf33299402e.jpg",
+    "dataset/test/images/1060_png_jpg.rf.add1db5a7ebf1f9bd6b74f5bfebe9937.jpg",
+    "dataset/test/images/11070_png_jpg.rf.8a8667b27bf4153370de03098ddb6353.jpg",
+    "dataset/test/images/1660_png_jpg.rf.6cb5b403fa465e37f296251834a93c05.jpg",
+    "dataset/test/images/18270_png_jpg.rf.d312a8bf19923bfe15df5b263c511e3b.jpg",
+    "dataset/test/images/1c4915190a748798_jpg.rf.0c265452437e4c470eee04c6c8a24fc9.jpg",
+    "dataset/test/images/1c4915190a748798_jpg.rf.fd0b3969b653111a42db823087db3c5a.jpg",
+    "dataset/test/images/1df4f97b8c8dd396_jpg.rf.d9da2b50e2de7de98da0270bac9d61a3.jpg",
+    "dataset/test/images/1f1d578fbebeb017_jpg.rf.41db189b5089a8ace9724fba39951925.jpg",
+    "dataset/test/images/1f6a6392ca0b7412_jpg.rf.019bd0b448b4c526e6d0879bfe4b57f8.jpg",
+    "dataset/test/images/1f6a6392ca0b7412_jpg.rf.5b435bd8ee1786aa9bf31eca8974aa63.jpg",
+    "dataset/test/images/20220802_103005_mp4-140_jpg.rf.9a468ff834cf9e125b52423c1f32b427.jpg",
+    "dataset/test/images/20570-Copy_png_jpg.rf.8090caf7e7a5938884857d923161ffb7.jpg",
+    "dataset/test/images/212_jpg.rf.cca728bf326b708e0f4d25272c8bda1a.jpg",
+    "dataset/test/images/227_jpg.rf.b6bc849a3403faaa059f24927aa5a85a.jpg",
+    "dataset/test/images/23a2507b8bb31bd2a5c667f4f93deb60_jpg.rf.d585c589bb781165117a260f6fafffff.jpg",
+    "dataset/test/images/242_jpg.rf.6dd0a2edcf70a0bef0f51148a728ca1e.jpg",
+    "dataset/test/images/24_jpg.rf.4d53df7f738ca765f5a09ae47142982b.jpg",
+    "dataset/test/images/2590_png_jpg.rf.d89712eb26e2b346636585895ff810a7.jpg",
+    "dataset/test/images/26960_png_jpg.rf.acf7ea38ac2da54cb2874586823c7d1c.jpg",
+    "dataset/test/images/27_jpg.rf.e1a240b624fe3925360ae391968a1a70.jpg",
+    "dataset/test/images/292_jpg.rf.7656790c737cac9e6155db96acd5e4f5.jpg",
+    "dataset/test/images/2_png_jpg.rf.34cdbe48f470d2429162476d34b30646.jpg",
+    "dataset/test/images/2a2314ced155167d_jpg.rf.194140cb46f7b387a8b0ee2177791327.jpg",
+    "dataset/test/images/2af3b509d8db5d7b_jpg.rf.7eea406fc90a5ae56087397aff97c95d.jpg",
+    "dataset/test/images/2ee0950c0c60184e_jpg.rf.f042e07bdc79bbd3737991865012efaa.jpg",
+    "dataset/test/images/2f2a2784f085dee1_jpg.rf.298486ae91fefe0dd1c879e657bef1f7.jpg",
+    "dataset/test/images/32350_png_jpg.rf.95b211bde166514ea22e0355dfc2b17d.jpg",
+    "dataset/test/images/34460_png_jpg.rf.cffcafaa0dd2ab1e1206bd6e97ad62e5.jpg",
+    "dataset/test/images/34700_png_jpg.rf.5f6bca3c42c487dec4be855a9731693d.jpg",
+    "dataset/test/images/34910_png_jpg.rf.19d2a7325681540a581832591ad488aa.jpg",
+    "dataset/test/images/371_jpg.rf.1c097ca3426bc3994bb229114b9527b7.jpg",
+    "dataset/test/images/3J4A7817_frame_0005_png_jpg.rf.db2e2c97dec56b3c5eea95f9db29e7a2.jpg",
+    "dataset/test/images/3J4A7817_frame_0031_png_jpg.rf.9278a788346d12c78c4a72ac541aee7d.jpg",
+    "dataset/test/images/3J4A7817_frame_0037_png_jpg.rf.779a263e0dfdab28099e2d2856cd96fd.jpg",
+    "dataset/test/images/3J4A7817_frame_0038_png_jpg.rf.a830a337d74e96623a3bb6aae37fd653.jpg",
+    "dataset/test/images/3J4A7817_frame_0044_png_jpg.rf.fbbaba56db55cf78146bf365bfc11fc7.jpg",
+    "dataset/test/images/3J4A7817_frame_0046_png_jpg.rf.287a75c8cd266e1ebe80d6039df35d84.jpg",
+    "dataset/test/images/3J4A7817_frame_0048_png_jpg.rf.f7cfcd3e249d7cf084f779e89df64d93.jpg",
+    "dataset/test/images/3J4A7817_frame_0054_png_jpg.rf.66221feedeb5c28292591e3ff2350834.jpg",
+    "dataset/test/images/3J4A7817_frame_0055_png_jpg.rf.e1392204dba18e7722f0849889cbd815.jpg",
+    "dataset/test/images/3J4A7818_frame_0013_png_jpg.rf.caeb05b0a3e50f8435e90171d7806ca4.jpg",
+    "dataset/test/images/3J4A7818_frame_0017_png_jpg.rf.4a1c14e0149dfa7f04098929a7a7b3a5.jpg",
+    "dataset/test/images/3J4A7818_frame_0019_png_jpg.rf.95c1b4917644fa633a4881115f724f1b.jpg",
+    "dataset/test/images/3J4A7818_frame_0037_png_jpg.rf.6f64e6cd1b700394430a9bcf89642a8b.jpg",
+    "dataset/test/images/3J4A7818_frame_0043_png_jpg.rf.4a2418ee0d57a88e70f3c67847c5364c.jpg",
+    "dataset/test/images/3J4A7818_frame_0067_png_jpg.rf.e18f73ff6226cd402097efc76dcc5dc3.jpg",
+    "dataset/test/images/3J4A7818_frame_0068_png_jpg.rf.ebbc9930e890da0f318a04841431b866.jpg",
+    "dataset/test/images/3J4A7818_frame_0070_png_jpg.rf.88b34ae9d8284930aa76b63e7323895d.jpg",
+    "dataset/test/images/3J4A7818_frame_0072_png_jpg.rf.bdd7432218c7b6e8b53acd8c62d850c9.jpg",
+    "dataset/test/images/3J4A7818_frame_0075_png_jpg.rf.5e1c6490a5004873f834465a73614e24.jpg",
+    "dataset/test/images/3J4A7818_frame_0092_png_jpg.rf.d807e73d696c66c90dc8e2aa58f2d3b4.jpg",
+    "dataset/test/images/3J4A7818_frame_0099_png_jpg.rf.d58d93109edc4d63c8da6a0a4289101f.jpg",
+    "dataset/test/images/3J4A7818_frame_0121_png_jpg.rf.93261cebf5e5c5192dc68531cf5c4cc6.jpg",
+    "dataset/test/images/3J4A7818_frame_0146_png_jpg.rf.6715c6101e740f63d2de4f5d0491f975.jpg",
+    "dataset/test/images/3J4A7818_frame_0146_png_jpg.rf.eb10df2ec1135550574882615be13b05.jpg",
+    "dataset/test/images/3J4A7818_frame_0152_png_jpg.rf.3614d230a93b4443995976360af238af.jpg",
+    "dataset/test/images/3J4A7818_frame_0153_png_jpg.rf.63a917ff6d7bf23d1dd3d81e987269dc.jpg",
+    "dataset/test/images/3J4A7818_frame_0159_png_jpg.rf.5095135b1289945b23ffc7dea80b7886.jpg",
+    "dataset/test/images/3J4A7818_frame_0180_png_jpg.rf.e31bbcce93bd2ad312810b2fa9df95af.jpg",
+    "dataset/test/images/3J4A7819_frame_0159_png_jpg.rf.1728a4723c21c6b9df48c733df5f279a.jpg",
+    "dataset/test/images/3J4A7819_frame_0241_png_jpg.rf.3311551b9def3991f886efd1718fc85d.jpg"
+  ],
+  "models": [
+    {
+      "model": "YOLOv8n 640 50 epochs",
+      "onnx_path": "/content/onnx_runtime_work/yolov8n/best.onnx",
+      "runtime": "ONNX Runtime",
+      "providers": [
+        "CUDAExecutionProvider",
+        "CPUExecutionProvider"
+      ],
+      "output_shapes_first_image": [
+        [
+          1,
+          10,
+          8400
+        ]
+      ],
+      "output_finite_first_image": true,
+      "output_non_empty_first_image": true,
+      "aggregate": {
+        "model": "YOLOv8n 640 50 epochs",
+        "runtime": "ONNX Runtime",
+        "provider": "CUDAExecutionProvider,CPUExecutionProvider",
+        "imgsz": 640,
+        "image_count": 100,
+        "warmup_count": 10,
+        "total_seconds": 1.0994002339991766,
+        "avg_ms": 10.994002339991766,
+        "median_ms": 9.392849499931799,
+        "p95_ms": 16.947530099992036,
+        "min_ms": 8.386050999888539,
+        "max_ms": 41.599295999958485,
+        "fps": 90.95868538815947,
+        "onnx_path": "/content/onnx_runtime_work/yolov8n/best.onnx",
+        "torch_version": "2.11.0+cu128",
+        "onnxruntime_version": "1.26.0",
+        "notes": "ONNX Runtime inference benchmark/check. No mAP validation or NMS evaluation."
+      },
+      "per_image": [
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.09f6995c447f33fc134a3175bde9f580.jpg",
+          "latency_ms": 14.053601999876264,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.0f038aa47e84ecb108f068f3a41b8587.jpg",
+          "latency_ms": 11.290036999980657,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.16696c4cee85795800b9c89c6095d13c.jpg",
+          "latency_ms": 15.466032999938761,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.246e25b1c0e577bc5357cfc5178c87ef.jpg",
+          "latency_ms": 9.372716999905606,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.48a907bdddb902497c184ffc90d46119.jpg",
+          "latency_ms": 11.130383999898186,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.4f267a2a4f1ebdb5d8a41edbea186edf.jpg",
+          "latency_ms": 12.79542199995376,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.5e7087bf778c74ad6df8c65cbeb2a280.jpg",
+          "latency_ms": 9.116899999980888,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.72c15e9584bd74dcaee8233b79d4f48a.jpg",
+          "latency_ms": 11.813643000095908,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.72c586896018c542d70e7d31945dbff2.jpg",
+          "latency_ms": 10.28789199995117,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.86beb1acde19343c064053a9d8c5bee1.jpg",
+          "latency_ms": 9.14396600001055,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.b5d4835ec48cb21ffd96f823cd534270.jpg",
+          "latency_ms": 9.14430300008462,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.be25c15b86ab145cecb5bcb9d1d24695.jpg",
+          "latency_ms": 11.174841999945784,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.c78a38d94dc72cd211366d40d3815114.jpg",
+          "latency_ms": 10.620669999980237,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.c8f5d98032a6e1c3006402d8e77c5f9c.jpg",
+          "latency_ms": 11.172733999956108,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.c8f7bfc9c47b7f23f125d201c41a1275.jpg",
+          "latency_ms": 9.085135999839622,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.ce8b6d11bbd14955a17744d99ce3fdf7.jpg",
+          "latency_ms": 9.145266000132324,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.d2afd1d903d033587ab2c597401d7096.jpg",
+          "latency_ms": 11.103221999974267,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.d7ea8c3f5565a3fbfd0696556f247048.jpg",
+          "latency_ms": 9.132286999829375,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.e230c17f27a6959e8ca110c276c164fd.jpg",
+          "latency_ms": 13.244063000001915,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.fba95d631df5233e32eb5c308325e430.jpg",
+          "latency_ms": 11.363649000031728,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/000d2e3d33b18463_jpg.rf.4718ba878911b9cd1cfed077073d709e.jpg",
+          "latency_ms": 9.262291999903027,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/00347f583cd63d8f_jpg.rf.2be1e09d5c869598978bbac49f2bed3f.jpg",
+          "latency_ms": 13.218401999893103,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/01e46bab22dbe5b6_jpg.rf.350bdf1afc3e3b1c572348eca86b9155.jpg",
+          "latency_ms": 10.96477999999479,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/01e46bab22dbe5b6_jpg.rf.cf2a0d78624b1bbf1556cb58802d3ab0.jpg",
+          "latency_ms": 9.3432019998545,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/01f693ee3da9ced7_jpg.rf.b49cfde194c436ee74aa2afde09dc201.jpg",
+          "latency_ms": 10.430003999999826,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/02b0b2cb54169767_jpg.rf.37574b6da3bdb4f1ef7ef91dcb4f3eea.jpg",
+          "latency_ms": 15.636943000117753,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/038789965a8f7606_jpg.rf.b5371c9d8ce704e1cdeccb9a873caafc.jpg",
+          "latency_ms": 14.364934000013818,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/03d55299d9f9bf52_jpg.rf.ccdc5b132bb0d6448545cdcfe30c3ee4.jpg",
+          "latency_ms": 9.238416000016514,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/03dbe0e1735485d0_jpg.rf.1fdf407330d315b35e38bbbcf863511f.jpg",
+          "latency_ms": 9.347374999833846,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/03e8bc2333105e66_jpg.rf.47db733d08b4019199ac9d2c7c0fcf80.jpg",
+          "latency_ms": 11.8050639998728,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/0b9d3a9512856b70_jpg.rf.c70e97bc7ce2667f0b6b1760fc7fac23.jpg",
+          "latency_ms": 9.289596000144229,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/0c135bdff969f253_jpg.rf.50d476ddabcca879c2fec8b9dae55570.jpg",
+          "latency_ms": 11.09559600013199,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/0c291e6a916a1669_jpg.rf.6dcf80af5abc888be5a9f7972b9946ce.jpg",
+          "latency_ms": 9.215391999987332,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/0df44ae71ebdbb85_jpg.rf.b50e79a41cda460066c6d92213ad1337.jpg",
+          "latency_ms": 9.223512000062328,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/0e568901d66ad81e46860b91cce2a7fe_jpg.rf.8c6f7ce142e9f3b3403d20c761ad1359.jpg",
+          "latency_ms": 9.171693999860508,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/0e568901d66ad81e46860b91cce2a7fe_jpg.rf.c6fc43d0fe5c37e1197ba341f964dea6.jpg",
+          "latency_ms": 9.132233999935124,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/0e5e6eb1d9b2bd58_jpg.rf.4b0a5768cd3e5d5daf579f0017e16231.jpg",
+          "latency_ms": 9.691904000192153,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/0e6e18101999c827_jpg.rf.a8f2b6ca6e0c83d245855202769ee5fe.jpg",
+          "latency_ms": 9.284615000069607,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/0e6e18101999c827_jpg.rf.d8984301699a91079e868cf33299402e.jpg",
+          "latency_ms": 11.435830999971586,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/1060_png_jpg.rf.add1db5a7ebf1f9bd6b74f5bfebe9937.jpg",
+          "latency_ms": 9.20074099985868,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/11070_png_jpg.rf.8a8667b27bf4153370de03098ddb6353.jpg",
+          "latency_ms": 12.337231999936193,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/1660_png_jpg.rf.6cb5b403fa465e37f296251834a93c05.jpg",
+          "latency_ms": 8.855864999986807,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/18270_png_jpg.rf.d312a8bf19923bfe15df5b263c511e3b.jpg",
+          "latency_ms": 8.73837599988292,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/1c4915190a748798_jpg.rf.0c265452437e4c470eee04c6c8a24fc9.jpg",
+          "latency_ms": 12.719324000045162,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/1c4915190a748798_jpg.rf.fd0b3969b653111a42db823087db3c5a.jpg",
+          "latency_ms": 13.207741999849532,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/1df4f97b8c8dd396_jpg.rf.d9da2b50e2de7de98da0270bac9d61a3.jpg",
+          "latency_ms": 8.768978000034622,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/1f1d578fbebeb017_jpg.rf.41db189b5089a8ace9724fba39951925.jpg",
+          "latency_ms": 19.46487400005026,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/1f6a6392ca0b7412_jpg.rf.019bd0b448b4c526e6d0879bfe4b57f8.jpg",
+          "latency_ms": 10.92709699992156,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/1f6a6392ca0b7412_jpg.rf.5b435bd8ee1786aa9bf31eca8974aa63.jpg",
+          "latency_ms": 8.878047000052902,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/20220802_103005_mp4-140_jpg.rf.9a468ff834cf9e125b52423c1f32b427.jpg",
+          "latency_ms": 8.764715000097567,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/20570-Copy_png_jpg.rf.8090caf7e7a5938884857d923161ffb7.jpg",
+          "latency_ms": 8.679315999870596,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/212_jpg.rf.cca728bf326b708e0f4d25272c8bda1a.jpg",
+          "latency_ms": 8.710973999995986,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/227_jpg.rf.b6bc849a3403faaa059f24927aa5a85a.jpg",
+          "latency_ms": 8.79059299995788,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/23a2507b8bb31bd2a5c667f4f93deb60_jpg.rf.d585c589bb781165117a260f6fafffff.jpg",
+          "latency_ms": 11.29941899989717,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/242_jpg.rf.6dd0a2edcf70a0bef0f51148a728ca1e.jpg",
+          "latency_ms": 11.153483000043707,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/24_jpg.rf.4d53df7f738ca765f5a09ae47142982b.jpg",
+          "latency_ms": 9.258980999902633,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/2590_png_jpg.rf.d89712eb26e2b346636585895ff810a7.jpg",
+          "latency_ms": 9.004017999814096,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/26960_png_jpg.rf.acf7ea38ac2da54cb2874586823c7d1c.jpg",
+          "latency_ms": 12.330451000025278,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/27_jpg.rf.e1a240b624fe3925360ae391968a1a70.jpg",
+          "latency_ms": 17.247902999997677,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/292_jpg.rf.7656790c737cac9e6155db96acd5e4f5.jpg",
+          "latency_ms": 8.816981000109081,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/2_png_jpg.rf.34cdbe48f470d2429162476d34b30646.jpg",
+          "latency_ms": 8.993210000198815,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/2a2314ced155167d_jpg.rf.194140cb46f7b387a8b0ee2177791327.jpg",
+          "latency_ms": 8.703329000127269,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/2af3b509d8db5d7b_jpg.rf.7eea406fc90a5ae56087397aff97c95d.jpg",
+          "latency_ms": 10.850370000071052,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/2ee0950c0c60184e_jpg.rf.f042e07bdc79bbd3737991865012efaa.jpg",
+          "latency_ms": 9.796021000056498,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/2f2a2784f085dee1_jpg.rf.298486ae91fefe0dd1c879e657bef1f7.jpg",
+          "latency_ms": 9.06016599992654,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/32350_png_jpg.rf.95b211bde166514ea22e0355dfc2b17d.jpg",
+          "latency_ms": 8.669303000033324,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/34460_png_jpg.rf.cffcafaa0dd2ab1e1206bd6e97ad62e5.jpg",
+          "latency_ms": 8.704824999995253,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/34700_png_jpg.rf.5f6bca3c42c487dec4be855a9731693d.jpg",
+          "latency_ms": 8.70942799997465,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/34910_png_jpg.rf.19d2a7325681540a581832591ad488aa.jpg",
+          "latency_ms": 8.705946999953085,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/371_jpg.rf.1c097ca3426bc3994bb229114b9527b7.jpg",
+          "latency_ms": 12.007300000050236,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0005_png_jpg.rf.db2e2c97dec56b3c5eea95f9db29e7a2.jpg",
+          "latency_ms": 9.412981999957992,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0031_png_jpg.rf.9278a788346d12c78c4a72ac541aee7d.jpg",
+          "latency_ms": 11.874269999907483,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0037_png_jpg.rf.779a263e0dfdab28099e2d2856cd96fd.jpg",
+          "latency_ms": 9.018136999884518,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0038_png_jpg.rf.a830a337d74e96623a3bb6aae37fd653.jpg",
+          "latency_ms": 8.42314500005159,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0044_png_jpg.rf.fbbaba56db55cf78146bf365bfc11fc7.jpg",
+          "latency_ms": 10.521327999867935,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0046_png_jpg.rf.287a75c8cd266e1ebe80d6039df35d84.jpg",
+          "latency_ms": 8.464618000061819,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0048_png_jpg.rf.f7cfcd3e249d7cf084f779e89df64d93.jpg",
+          "latency_ms": 8.457138000039777,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0054_png_jpg.rf.66221feedeb5c28292591e3ff2350834.jpg",
+          "latency_ms": 8.534789000123055,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0055_png_jpg.rf.e1392204dba18e7722f0849889cbd815.jpg",
+          "latency_ms": 8.519677000094816,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0013_png_jpg.rf.caeb05b0a3e50f8435e90171d7806ca4.jpg",
+          "latency_ms": 10.894053000129134,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0017_png_jpg.rf.4a1c14e0149dfa7f04098929a7a7b3a5.jpg",
+          "latency_ms": 12.179651999986163,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0019_png_jpg.rf.95c1b4917644fa633a4881115f724f1b.jpg",
+          "latency_ms": 10.813020999876244,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0037_png_jpg.rf.6f64e6cd1b700394430a9bcf89642a8b.jpg",
+          "latency_ms": 10.84947600020314,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0043_png_jpg.rf.4a2418ee0d57a88e70f3c67847c5364c.jpg",
+          "latency_ms": 11.696356999891577,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0067_png_jpg.rf.e18f73ff6226cd402097efc76dcc5dc3.jpg",
+          "latency_ms": 25.90415600002416,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0068_png_jpg.rf.ebbc9930e890da0f318a04841431b866.jpg",
+          "latency_ms": 41.599295999958485,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0070_png_jpg.rf.88b34ae9d8284930aa76b63e7323895d.jpg",
+          "latency_ms": 8.559445999935633,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0072_png_jpg.rf.bdd7432218c7b6e8b53acd8c62d850c9.jpg",
+          "latency_ms": 8.538329999964844,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0075_png_jpg.rf.5e1c6490a5004873f834465a73614e24.jpg",
+          "latency_ms": 8.415376000129982,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0092_png_jpg.rf.d807e73d696c66c90dc8e2aa58f2d3b4.jpg",
+          "latency_ms": 8.386050999888539,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0099_png_jpg.rf.d58d93109edc4d63c8da6a0a4289101f.jpg",
+          "latency_ms": 8.404225000049337,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0121_png_jpg.rf.93261cebf5e5c5192dc68531cf5c4cc6.jpg",
+          "latency_ms": 9.76153500005239,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0146_png_jpg.rf.6715c6101e740f63d2de4f5d0491f975.jpg",
+          "latency_ms": 10.399781999922197,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0146_png_jpg.rf.eb10df2ec1135550574882615be13b05.jpg",
+          "latency_ms": 8.394017999989956,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0152_png_jpg.rf.3614d230a93b4443995976360af238af.jpg",
+          "latency_ms": 8.467550000204938,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0153_png_jpg.rf.63a917ff6d7bf23d1dd3d81e987269dc.jpg",
+          "latency_ms": 11.283668000032776,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0159_png_jpg.rf.5095135b1289945b23ffc7dea80b7886.jpg",
+          "latency_ms": 8.982853999896179,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0180_png_jpg.rf.e31bbcce93bd2ad312810b2fa9df95af.jpg",
+          "latency_ms": 10.67960199998197,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7819_frame_0159_png_jpg.rf.1728a4723c21c6b9df48c733df5f279a.jpg",
+          "latency_ms": 22.87041800013867,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7819_frame_0241_png_jpg.rf.3311551b9def3991f886efd1718fc85d.jpg",
+          "latency_ms": 16.93172099999174,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        }
+      ]
+    },
+    {
+      "model": "YOLOv8s 640 50 epochs retrain",
+      "onnx_path": "/content/onnx_runtime_work/yolov8s/best.onnx",
+      "runtime": "ONNX Runtime",
+      "providers": [
+        "CUDAExecutionProvider",
+        "CPUExecutionProvider"
+      ],
+      "output_shapes_first_image": [
+        [
+          1,
+          10,
+          8400
+        ]
+      ],
+      "output_finite_first_image": true,
+      "output_non_empty_first_image": true,
+      "aggregate": {
+        "model": "YOLOv8s 640 50 epochs retrain",
+        "runtime": "ONNX Runtime",
+        "provider": "CUDAExecutionProvider,CPUExecutionProvider",
+        "imgsz": 640,
+        "image_count": 100,
+        "warmup_count": 10,
+        "total_seconds": 1.3656925039999805,
+        "avg_ms": 13.656925039999805,
+        "median_ms": 12.868269000023247,
+        "p95_ms": 21.295168449910307,
+        "min_ms": 9.7597300000416,
+        "max_ms": 28.30056700008754,
+        "fps": 73.22292515123992,
+        "onnx_path": "/content/onnx_runtime_work/yolov8s/best.onnx",
+        "torch_version": "2.11.0+cu128",
+        "onnxruntime_version": "1.26.0",
+        "notes": "ONNX Runtime inference benchmark/check. No mAP validation or NMS evaluation."
+      },
+      "per_image": [
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.09f6995c447f33fc134a3175bde9f580.jpg",
+          "latency_ms": 14.148269000088476,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.0f038aa47e84ecb108f068f3a41b8587.jpg",
+          "latency_ms": 13.255910999987464,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.16696c4cee85795800b9c89c6095d13c.jpg",
+          "latency_ms": 15.146735000143963,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.246e25b1c0e577bc5357cfc5178c87ef.jpg",
+          "latency_ms": 15.338775999907739,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.48a907bdddb902497c184ffc90d46119.jpg",
+          "latency_ms": 16.815444999792817,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.4f267a2a4f1ebdb5d8a41edbea186edf.jpg",
+          "latency_ms": 13.369448000048578,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.5e7087bf778c74ad6df8c65cbeb2a280.jpg",
+          "latency_ms": 12.442555000006905,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.72c15e9584bd74dcaee8233b79d4f48a.jpg",
+          "latency_ms": 11.648063999928127,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.72c586896018c542d70e7d31945dbff2.jpg",
+          "latency_ms": 27.66984500021863,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.86beb1acde19343c064053a9d8c5bee1.jpg",
+          "latency_ms": 12.196227000004,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.b5d4835ec48cb21ffd96f823cd534270.jpg",
+          "latency_ms": 11.413485999810291,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.be25c15b86ab145cecb5bcb9d1d24695.jpg",
+          "latency_ms": 15.548375999969721,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.c78a38d94dc72cd211366d40d3815114.jpg",
+          "latency_ms": 14.377846000115824,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.c8f5d98032a6e1c3006402d8e77c5f9c.jpg",
+          "latency_ms": 15.019507000033627,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.c8f7bfc9c47b7f23f125d201c41a1275.jpg",
+          "latency_ms": 12.789896999947814,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.ce8b6d11bbd14955a17744d99ce3fdf7.jpg",
+          "latency_ms": 15.45307500009585,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.d2afd1d903d033587ab2c597401d7096.jpg",
+          "latency_ms": 15.642255000102523,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.d7ea8c3f5565a3fbfd0696556f247048.jpg",
+          "latency_ms": 11.516495000023497,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.e230c17f27a6959e8ca110c276c164fd.jpg",
+          "latency_ms": 11.517073000050004,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/-_png_jpg.rf.fba95d631df5233e32eb5c308325e430.jpg",
+          "latency_ms": 14.59307400000398,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/000d2e3d33b18463_jpg.rf.4718ba878911b9cd1cfed077073d709e.jpg",
+          "latency_ms": 11.494245999983832,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/00347f583cd63d8f_jpg.rf.2be1e09d5c869598978bbac49f2bed3f.jpg",
+          "latency_ms": 11.499963000005664,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/01e46bab22dbe5b6_jpg.rf.350bdf1afc3e3b1c572348eca86b9155.jpg",
+          "latency_ms": 13.494713000000047,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/01e46bab22dbe5b6_jpg.rf.cf2a0d78624b1bbf1556cb58802d3ab0.jpg",
+          "latency_ms": 12.94664100009868,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/01f693ee3da9ced7_jpg.rf.b49cfde194c436ee74aa2afde09dc201.jpg",
+          "latency_ms": 20.6011809998472,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/02b0b2cb54169767_jpg.rf.37574b6da3bdb4f1ef7ef91dcb4f3eea.jpg",
+          "latency_ms": 12.507367000125669,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/038789965a8f7606_jpg.rf.b5371c9d8ce704e1cdeccb9a873caafc.jpg",
+          "latency_ms": 14.71926599992912,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/03d55299d9f9bf52_jpg.rf.ccdc5b132bb0d6448545cdcfe30c3ee4.jpg",
+          "latency_ms": 11.55463600002804,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/03dbe0e1735485d0_jpg.rf.1fdf407330d315b35e38bbbcf863511f.jpg",
+          "latency_ms": 21.264070999905016,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/03e8bc2333105e66_jpg.rf.47db733d08b4019199ac9d2c7c0fcf80.jpg",
+          "latency_ms": 12.708174999943367,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/0b9d3a9512856b70_jpg.rf.c70e97bc7ce2667f0b6b1760fc7fac23.jpg",
+          "latency_ms": 17.7492949999305,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/0c135bdff969f253_jpg.rf.50d476ddabcca879c2fec8b9dae55570.jpg",
+          "latency_ms": 16.867899000089892,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/0c291e6a916a1669_jpg.rf.6dcf80af5abc888be5a9f7972b9946ce.jpg",
+          "latency_ms": 13.765621999937139,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/0df44ae71ebdbb85_jpg.rf.b50e79a41cda460066c6d92213ad1337.jpg",
+          "latency_ms": 13.938924999820301,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/0e568901d66ad81e46860b91cce2a7fe_jpg.rf.8c6f7ce142e9f3b3403d20c761ad1359.jpg",
+          "latency_ms": 15.698921999955928,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/0e568901d66ad81e46860b91cce2a7fe_jpg.rf.c6fc43d0fe5c37e1197ba341f964dea6.jpg",
+          "latency_ms": 11.63561600014873,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/0e5e6eb1d9b2bd58_jpg.rf.4b0a5768cd3e5d5daf579f0017e16231.jpg",
+          "latency_ms": 11.74847300012516,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/0e6e18101999c827_jpg.rf.a8f2b6ca6e0c83d245855202769ee5fe.jpg",
+          "latency_ms": 13.63600900003803,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/0e6e18101999c827_jpg.rf.d8984301699a91079e868cf33299402e.jpg",
+          "latency_ms": 28.30056700008754,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/1060_png_jpg.rf.add1db5a7ebf1f9bd6b74f5bfebe9937.jpg",
+          "latency_ms": 21.88602000001083,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/11070_png_jpg.rf.8a8667b27bf4153370de03098ddb6353.jpg",
+          "latency_ms": 13.673883000137721,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/1660_png_jpg.rf.6cb5b403fa465e37f296251834a93c05.jpg",
+          "latency_ms": 13.143616999968799,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/18270_png_jpg.rf.d312a8bf19923bfe15df5b263c511e3b.jpg",
+          "latency_ms": 12.481321999985084,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/1c4915190a748798_jpg.rf.0c265452437e4c470eee04c6c8a24fc9.jpg",
+          "latency_ms": 13.135365999914939,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/1c4915190a748798_jpg.rf.fd0b3969b653111a42db823087db3c5a.jpg",
+          "latency_ms": 15.368167000133326,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/1df4f97b8c8dd396_jpg.rf.d9da2b50e2de7de98da0270bac9d61a3.jpg",
+          "latency_ms": 15.477129999908357,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/1f1d578fbebeb017_jpg.rf.41db189b5089a8ace9724fba39951925.jpg",
+          "latency_ms": 14.327084999877115,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/1f6a6392ca0b7412_jpg.rf.019bd0b448b4c526e6d0879bfe4b57f8.jpg",
+          "latency_ms": 15.014731000064785,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/1f6a6392ca0b7412_jpg.rf.5b435bd8ee1786aa9bf31eca8974aa63.jpg",
+          "latency_ms": 11.681794999958584,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/20220802_103005_mp4-140_jpg.rf.9a468ff834cf9e125b52423c1f32b427.jpg",
+          "latency_ms": 11.50920099985342,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/20570-Copy_png_jpg.rf.8090caf7e7a5938884857d923161ffb7.jpg",
+          "latency_ms": 11.488766000184114,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/212_jpg.rf.cca728bf326b708e0f4d25272c8bda1a.jpg",
+          "latency_ms": 11.659593999866047,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/227_jpg.rf.b6bc849a3403faaa059f24927aa5a85a.jpg",
+          "latency_ms": 11.598650999985693,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/23a2507b8bb31bd2a5c667f4f93deb60_jpg.rf.d585c589bb781165117a260f6fafffff.jpg",
+          "latency_ms": 11.285754000027737,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/242_jpg.rf.6dd0a2edcf70a0bef0f51148a728ca1e.jpg",
+          "latency_ms": 11.487255000020014,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/24_jpg.rf.4d53df7f738ca765f5a09ae47142982b.jpg",
+          "latency_ms": 11.442301999977644,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/2590_png_jpg.rf.d89712eb26e2b346636585895ff810a7.jpg",
+          "latency_ms": 13.717064000047685,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/26960_png_jpg.rf.acf7ea38ac2da54cb2874586823c7d1c.jpg",
+          "latency_ms": 17.785714999945412,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/27_jpg.rf.e1a240b624fe3925360ae391968a1a70.jpg",
+          "latency_ms": 11.305179999908432,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/292_jpg.rf.7656790c737cac9e6155db96acd5e4f5.jpg",
+          "latency_ms": 11.29965799987076,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/2_png_jpg.rf.34cdbe48f470d2429162476d34b30646.jpg",
+          "latency_ms": 11.238954999953421,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/2a2314ced155167d_jpg.rf.194140cb46f7b387a8b0ee2177791327.jpg",
+          "latency_ms": 14.113202000089586,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/2af3b509d8db5d7b_jpg.rf.7eea406fc90a5ae56087397aff97c95d.jpg",
+          "latency_ms": 14.588926999977048,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/2ee0950c0c60184e_jpg.rf.f042e07bdc79bbd3737991865012efaa.jpg",
+          "latency_ms": 11.14753600018048,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/2f2a2784f085dee1_jpg.rf.298486ae91fefe0dd1c879e657bef1f7.jpg",
+          "latency_ms": 13.299952999886955,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/32350_png_jpg.rf.95b211bde166514ea22e0355dfc2b17d.jpg",
+          "latency_ms": 14.591619999919203,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/34460_png_jpg.rf.cffcafaa0dd2ab1e1206bd6e97ad62e5.jpg",
+          "latency_ms": 11.305510000056529,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/34700_png_jpg.rf.5f6bca3c42c487dec4be855a9731693d.jpg",
+          "latency_ms": 11.001103000126022,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/34910_png_jpg.rf.19d2a7325681540a581832591ad488aa.jpg",
+          "latency_ms": 13.303428999961397,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/371_jpg.rf.1c097ca3426bc3994bb229114b9527b7.jpg",
+          "latency_ms": 11.08266400001412,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0005_png_jpg.rf.db2e2c97dec56b3c5eea95f9db29e7a2.jpg",
+          "latency_ms": 10.39017099992634,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0031_png_jpg.rf.9278a788346d12c78c4a72ac541aee7d.jpg",
+          "latency_ms": 11.385632999918016,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0037_png_jpg.rf.779a263e0dfdab28099e2d2856cd96fd.jpg",
+          "latency_ms": 10.361331000012797,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0038_png_jpg.rf.a830a337d74e96623a3bb6aae37fd653.jpg",
+          "latency_ms": 10.26501899991672,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0044_png_jpg.rf.fbbaba56db55cf78146bf365bfc11fc7.jpg",
+          "latency_ms": 10.276264000140145,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0046_png_jpg.rf.287a75c8cd266e1ebe80d6039df35d84.jpg",
+          "latency_ms": 12.993373999961477,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0048_png_jpg.rf.f7cfcd3e249d7cf084f779e89df64d93.jpg",
+          "latency_ms": 10.256314999878668,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0054_png_jpg.rf.66221feedeb5c28292591e3ff2350834.jpg",
+          "latency_ms": 10.273153000071034,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7817_frame_0055_png_jpg.rf.e1392204dba18e7722f0849889cbd815.jpg",
+          "latency_ms": 19.201757000018915,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0013_png_jpg.rf.caeb05b0a3e50f8435e90171d7806ca4.jpg",
+          "latency_ms": 14.207217999910426,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0017_png_jpg.rf.4a1c14e0149dfa7f04098929a7a7b3a5.jpg",
+          "latency_ms": 13.404956999920614,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0019_png_jpg.rf.95c1b4917644fa633a4881115f724f1b.jpg",
+          "latency_ms": 18.45594700012043,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0037_png_jpg.rf.6f64e6cd1b700394430a9bcf89642a8b.jpg",
+          "latency_ms": 23.147169999901962,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0043_png_jpg.rf.4a2418ee0d57a88e70f3c67847c5364c.jpg",
+          "latency_ms": 22.469557000022178,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0067_png_jpg.rf.e18f73ff6226cd402097efc76dcc5dc3.jpg",
+          "latency_ms": 20.302318000176456,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0068_png_jpg.rf.ebbc9930e890da0f318a04841431b866.jpg",
+          "latency_ms": 14.2210100000284,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0070_png_jpg.rf.88b34ae9d8284930aa76b63e7323895d.jpg",
+          "latency_ms": 9.871484000086639,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0072_png_jpg.rf.bdd7432218c7b6e8b53acd8c62d850c9.jpg",
+          "latency_ms": 9.911236999869288,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0075_png_jpg.rf.5e1c6490a5004873f834465a73614e24.jpg",
+          "latency_ms": 11.887736000062432,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0092_png_jpg.rf.d807e73d696c66c90dc8e2aa58f2d3b4.jpg",
+          "latency_ms": 11.468189999959577,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0099_png_jpg.rf.d58d93109edc4d63c8da6a0a4289101f.jpg",
+          "latency_ms": 9.915194999848609,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0121_png_jpg.rf.93261cebf5e5c5192dc68531cf5c4cc6.jpg",
+          "latency_ms": 10.83166200010055,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0146_png_jpg.rf.6715c6101e740f63d2de4f5d0491f975.jpg",
+          "latency_ms": 9.837032999939765,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0146_png_jpg.rf.eb10df2ec1135550574882615be13b05.jpg",
+          "latency_ms": 9.770128000127443,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0152_png_jpg.rf.3614d230a93b4443995976360af238af.jpg",
+          "latency_ms": 9.7597300000416,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0153_png_jpg.rf.63a917ff6d7bf23d1dd3d81e987269dc.jpg",
+          "latency_ms": 9.765625,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0159_png_jpg.rf.5095135b1289945b23ffc7dea80b7886.jpg",
+          "latency_ms": 11.80995200002144,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7818_frame_0180_png_jpg.rf.e31bbcce93bd2ad312810b2fa9df95af.jpg",
+          "latency_ms": 11.958779999986291,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7819_frame_0159_png_jpg.rf.1728a4723c21c6b9df48c733df5f279a.jpg",
+          "latency_ms": 9.84289699999863,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        },
+        {
+          "image": "dataset/test/images/3J4A7819_frame_0241_png_jpg.rf.3311551b9def3991f886efd1718fc85d.jpg",
+          "latency_ms": 14.976559999922756,
+          "output_shapes": [
+            [
+              1,
+              10,
+              8400
+            ]
+          ],
+          "finite": true,
+          "non_empty": true
+        }
+      ]
+    }
+  ]
+}
