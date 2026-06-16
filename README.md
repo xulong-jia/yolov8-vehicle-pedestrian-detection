@@ -278,6 +278,18 @@ Strict same-split result:
 
 - YOLOv8s improves over YOLOv8n on the official test split by Precision `+0.024`, Recall `+0.022`, mAP50 `+0.017`, and mAP50-95 `+0.019`.
 
+Image size ablation:
+
+- Type: validation-only, no training.
+- Model: YOLOv8n 640 50 epochs custom weight.
+- Split: official test.
+- Image sizes: 416, 512, 640.
+- 416: Precision `0.834`, Recall `0.792`, mAP50 `0.855`, mAP50-95 `0.576`.
+- 512: Precision `0.825`, Recall `0.830`, mAP50 `0.863`, mAP50-95 `0.582`.
+- 640: Precision `0.841`, Recall `0.816`, mAP50 `0.859`, mAP50-95 `0.582`.
+- 512 slightly leads on mAP50/mAP50-95; 640 has the highest precision.
+- Details: [Image size ablation](docs/image_size_ablation.md)
+
 Inference speed benchmark:
 
 - Hardware: Google Colab Tesla T4, `cuda:0`
@@ -341,6 +353,7 @@ ONNX Runtime benchmark/check:
 - Added strict same-split YOLOv8n vs YOLOv8s comparison.
 - Added Colab T4 inference speed benchmark.
 - Added ONNX Runtime benchmark/check documentation.
+- Added YOLOv8n image size ablation documentation.
 
 ## Documentation Index
 
@@ -362,6 +375,7 @@ ONNX Runtime benchmark/check:
 - [YOLOv8s retrain summary](docs/experiments/yolov8s_640_50epochs_retrain/summary.md)
 - [YOLOv8s official test summary](docs/evaluation/yolov8s_640_50epochs_official/summary.md)
 - [Strict model comparison](docs/strict_model_comparison.md)
+- [Image size ablation](docs/image_size_ablation.md)
 - [Inference speed benchmark](docs/inference_speed_benchmark.md)
 - [ONNX Runtime benchmark](docs/onnx_runtime_benchmark.md)
 - [Project task board](docs/project_task_board.md)
@@ -393,7 +407,6 @@ Policy:
 ## Current Limitations
 
 - Docker scaffold has not been built or deployed as a verified production image.
-- No image size ablation has been completed yet.
 - No YOLOv8m experiment has been completed yet.
 - No ONNX Runtime mAP/NMS evaluation has been completed.
 - Full model weights are not included in the repository.
@@ -404,5 +417,5 @@ Policy:
 
 - Add README badges if needed.
 - Update presentation or portfolio summary materials.
-- Optionally run image size ablation or YOLOv8m experiment if GPU resources and tracking time are available.
+- Optionally run YOLOv8m experiment if GPU resources and tracking time are available.
 - Optionally run ONNX Runtime mAP/NMS evaluation only if a separate evaluation protocol is defined.

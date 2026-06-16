@@ -82,6 +82,20 @@ On the official test split, YOLOv8s improves over YOLOv8n by:
 
 The comparison uses the same dataset config, test split, and image size.
 
+### Image Size Ablation
+
+Image size ablation was completed as a validation-only experiment using the YOLOv8n 640 50 epochs custom weight on the official test split. No training was run, and this does not compare separately trained 416/512/640 models.
+
+| Image Size | Precision | Recall | mAP50 | mAP50-95 |
+| ---: | ---: | ---: | ---: | ---: |
+| 416 | 0.834 | 0.792 | 0.855 | 0.576 |
+| 512 | 0.825 | 0.830 | 0.863 | 0.582 |
+| 640 | 0.841 | 0.816 | 0.859 | 0.582 |
+
+512 slightly leads on mAP50/mAP50-95, while 640 has the highest precision. The differences between 512 and 640 are small, so deployment choice should consider speed and latency as well as accuracy.
+
+Reference: [Image size ablation](image_size_ablation.md)
+
 ### Colab T4 Inference Speed Benchmark
 
 Inference speed benchmark was completed on Google Colab Tesla T4 with CUDA device `cuda:0`, image size 640, 100 measured images, and 10 warmup images.
@@ -198,7 +212,6 @@ GitHub tracks code, docs, configs, summaries, and selected lightweight demo asse
 ## 9. Current Limitations
 
 - No production API inference endpoint yet.
-- No image size ablation yet.
 - No YOLOv8m experiment yet.
 - No ONNX Runtime mAP/NMS evaluation.
 - No real Docker build/run validation yet.
@@ -206,7 +219,6 @@ GitHub tracks code, docs, configs, summaries, and selected lightweight demo asse
 
 ## 10. Recommended Next Steps
 
-- Run image size ablation if GPU resources are available.
 - Run YOLOv8m experiment if compute budget and tracking time are available.
 - Add ONNX Runtime mAP/NMS evaluation only if a separate evaluation protocol is defined.
 - Prepare presentation slides or portfolio summary.
@@ -231,3 +243,4 @@ GitHub tracks code, docs, configs, summaries, and selected lightweight demo asse
 - [Docker deployment guide](docker_deployment.md)
 - [API usage guide](api_usage.md)
 - [ONNX Runtime benchmark](onnx_runtime_benchmark.md)
+- [Image size ablation](image_size_ablation.md)
