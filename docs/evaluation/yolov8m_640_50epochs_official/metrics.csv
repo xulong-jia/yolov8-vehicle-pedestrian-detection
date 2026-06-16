@@ -1,0 +1,2 @@
+experiment,split,imgsz,precision,recall,map50,map50_95,val_dir,weights_path,notes
+yolov8m_640_50epochs_official,test,640,0.852,0.82,0.872,0.594,runs/detect/runs/detect/val_yolov8m_640_50epochs_official,local_weights/yolov8m_640_50epochs/best.pt,Official test split evaluation for YOLOv8m 640x640 50 epoch model.

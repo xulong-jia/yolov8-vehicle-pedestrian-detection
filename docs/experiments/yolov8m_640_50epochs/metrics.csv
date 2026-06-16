@@ -1,0 +1,2 @@
+experiment,split,imgsz,epochs,batch,precision,recall,map50,map50_95,run_dir,weights_path,notes
+yolov8m_640_50epochs,validation,640,50,4,0.837,0.817,0.87,0.594,runs/detect/runs/detect/yolov8m_640_50epochs,local_weights/yolov8m_640_50epochs/best.pt,YOLOv8m 640x640 50 epoch training validation result. Official test split evaluation still required.
