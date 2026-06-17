@@ -96,6 +96,44 @@ Image size ablation was completed as a validation-only experiment using the YOLO
 
 Reference: [Image size ablation](image_size_ablation.md)
 
+### YOLOv8m 640x640 Model Scaling Experiment
+
+YOLOv8m training and official test split evaluation were completed as a model-scaling experiment.
+
+Training validation:
+
+- Precision: 0.837
+- Recall: 0.817
+- mAP50: 0.870
+- mAP50-95: 0.594
+
+Official test:
+
+- Precision: 0.852
+- Recall: 0.820
+- mAP50: 0.872
+- mAP50-95: 0.594
+
+YOLOv8m did not outperform YOLOv8s on the official test split. Compared with YOLOv8s, YOLOv8m changed by:
+
+- Precision: -0.013
+- Recall: -0.018
+- mAP50: -0.004
+- mAP50-95: -0.007
+
+YOLOv8m should therefore be treated as a model-scaling experiment, not the default deployment model. YOLOv8m PyTorch speed benchmark and ONNX Runtime benchmark have not yet been run.
+
+References:
+
+- [YOLOv8m training summary](experiments/yolov8m_640_50epochs/summary.md)
+- [YOLOv8m official test summary](evaluation/yolov8m_640_50epochs_official/summary.md)
+
+### Model Family Selection
+
+The model family comparison shows that YOLOv8s remains the recommended default model and the best current accuracy/latency trade-off. YOLOv8n remains the fastest measured model and is still useful when latency matters most. YOLOv8m is larger and did not improve official-test mAP50-95 over YOLOv8s, so it is not recommended as the default model based on current results.
+
+Reference: [YOLOv8 model family comparison](model_family_comparison.md)
+
 ### Colab T4 Inference Speed Benchmark
 
 Inference speed benchmark was completed on Google Colab Tesla T4 with CUDA device `cuda:0`, image size 640, 100 measured images, and 10 warmup images.
@@ -212,14 +250,16 @@ GitHub tracks code, docs, configs, summaries, and selected lightweight demo asse
 ## 9. Current Limitations
 
 - No production API inference endpoint yet.
-- No YOLOv8m experiment yet.
+- YOLOv8m PyTorch speed benchmark has not yet been run.
+- YOLOv8m ONNX Runtime benchmark has not yet been run.
 - No ONNX Runtime mAP/NMS evaluation.
 - No real Docker build/run validation yet.
 - Model weights, ONNX files, and full dataset split folders are intentionally not committed.
 
 ## 10. Recommended Next Steps
 
-- Run YOLOv8m experiment if compute budget and tracking time are available.
+- Run YOLOv8m PyTorch speed benchmark only if model-family latency completeness is needed.
+- Run YOLOv8m ONNX Runtime benchmark only if deployment completeness is needed.
 - Add ONNX Runtime mAP/NMS evaluation only if a separate evaluation protocol is defined.
 - Prepare presentation slides or portfolio summary.
 
@@ -244,3 +284,6 @@ GitHub tracks code, docs, configs, summaries, and selected lightweight demo asse
 - [API usage guide](api_usage.md)
 - [ONNX Runtime benchmark](onnx_runtime_benchmark.md)
 - [Image size ablation](image_size_ablation.md)
+- [YOLOv8 model family comparison](model_family_comparison.md)
+- [YOLOv8m training summary](experiments/yolov8m_640_50epochs/summary.md)
+- [YOLOv8m official test summary](evaluation/yolov8m_640_50epochs_official/summary.md)

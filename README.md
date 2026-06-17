@@ -273,10 +273,22 @@ pip install -r requirements-dev.txt
 | YOLOv8n official test | test | 640 | 50 | 0.841 | 0.816 | 0.859 | 0.582 | Official test split evaluation |
 | YOLOv8s retrain validation | validation | 640 | 50 | 0.83909 | 0.84059 | 0.87705 | 0.60405 | Retrain validation result |
 | YOLOv8s official test | test | 640 | 50 | 0.865 | 0.838 | 0.876 | 0.601 | Official test split evaluation |
+| YOLOv8m training validation | validation | 640 | 50 | 0.837 | 0.817 | 0.870 | 0.594 | Model-scaling training validation |
+| YOLOv8m official test | test | 640 | 50 | 0.852 | 0.820 | 0.872 | 0.594 | Official test split evaluation; below YOLOv8s |
 
 Strict same-split result:
 
 - YOLOv8s improves over YOLOv8n on the official test split by Precision `+0.024`, Recall `+0.022`, mAP50 `+0.017`, and mAP50-95 `+0.019`.
+
+Model family comparison:
+
+- YOLOv8s remains the recommended default model and best current accuracy/latency trade-off.
+- YOLOv8m completed training and official test evaluation, but did not outperform YOLOv8s on official test mAP50-95.
+- YOLOv8m vs YOLOv8s official test delta: Precision `-0.013`, Recall `-0.018`, mAP50 `-0.004`, mAP50-95 `-0.007`.
+- YOLOv8n remains the fastest measured model.
+- YOLOv8m PyTorch speed benchmark has not yet been run.
+- YOLOv8m ONNX Runtime benchmark has not yet been run.
+- Details: [YOLOv8 model family comparison](docs/model_family_comparison.md)
 
 Image size ablation:
 
@@ -354,6 +366,8 @@ ONNX Runtime benchmark/check:
 - Added Colab T4 inference speed benchmark.
 - Added ONNX Runtime benchmark/check documentation.
 - Added YOLOv8n image size ablation documentation.
+- Added YOLOv8m training and official test lightweight docs.
+- Added YOLOv8 model family comparison.
 
 ## Documentation Index
 
@@ -374,7 +388,10 @@ ONNX Runtime benchmark/check:
 - [API usage guide](docs/api_usage.md)
 - [YOLOv8s retrain summary](docs/experiments/yolov8s_640_50epochs_retrain/summary.md)
 - [YOLOv8s official test summary](docs/evaluation/yolov8s_640_50epochs_official/summary.md)
+- [YOLOv8m training summary](docs/experiments/yolov8m_640_50epochs/summary.md)
+- [YOLOv8m official test summary](docs/evaluation/yolov8m_640_50epochs_official/summary.md)
 - [Strict model comparison](docs/strict_model_comparison.md)
+- [YOLOv8 model family comparison](docs/model_family_comparison.md)
 - [Image size ablation](docs/image_size_ablation.md)
 - [Inference speed benchmark](docs/inference_speed_benchmark.md)
 - [ONNX Runtime benchmark](docs/onnx_runtime_benchmark.md)
@@ -407,7 +424,8 @@ Policy:
 ## Current Limitations
 
 - Docker scaffold has not been built or deployed as a verified production image.
-- No YOLOv8m experiment has been completed yet.
+- YOLOv8m PyTorch speed benchmark has not yet been run.
+- YOLOv8m ONNX Runtime benchmark has not yet been run.
 - No ONNX Runtime mAP/NMS evaluation has been completed.
 - Full model weights are not included in the repository.
 - ONNX files are not included in the repository.
@@ -417,5 +435,6 @@ Policy:
 
 - Add README badges if needed.
 - Update presentation or portfolio summary materials.
-- Optionally run YOLOv8m experiment if GPU resources and tracking time are available.
+- Optionally run YOLOv8m PyTorch speed benchmark if model-family latency completeness is needed.
+- Optionally run YOLOv8m ONNX Runtime benchmark if deployment completeness is needed.
 - Optionally run ONNX Runtime mAP/NMS evaluation only if a separate evaluation protocol is defined.
