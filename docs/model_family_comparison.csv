@@ -1,0 +1,4 @@
+model,split,imgsz,precision,recall,map50,map50_95,pytorch_t4_avg_ms,pytorch_t4_fps,onnxruntime_t4_avg_ms,onnxruntime_t4_fps,notes
+YOLOv8n 640 50 epochs,test,640,0.841,0.816,0.859,0.582,11.562,86.49,10.994,90.96,Fastest measured model
+YOLOv8s 640 50 epochs retrain,test,640,0.865,0.838,0.876,0.601,15.985,62.56,13.657,73.22,Best current accuracy/latency trade-off
+YOLOv8m 640 50 epochs,test,640,0.852,0.820,0.872,0.594,,,,Accuracy below YOLOv8s; speed not yet measured
