@@ -201,6 +201,8 @@ These analyses are qualitative and should be interpreted together with official 
 Engineering utilities include:
 
 - `configs/default.yaml`
+- `configs/tracking.yaml`
+- `configs/analytics.yaml`
 - setup check script: `src/check_setup.py`
 - batch prediction CLI: `src/batch_predict.py`
 - Makefile commands for checks and common workflows
@@ -212,6 +214,22 @@ Engineering utilities include:
   - `requirements-api.txt`
 
 The batch prediction CLI is designed to write generated outputs under `local_outputs/`, which is ignored by Git.
+
+### Video Analytics MVP
+
+`v0.8.0-video-analytics-mvp` adds pure-Python video analytics MVP contracts and core testable logic. It includes:
+
+- geometry utilities
+- line counter
+- ROI counter
+- event rules
+- track and analytics result writers
+- Video Analysis Center skeleton
+- synthetic unit tests for the video analytics core
+
+This MVP does not include real ByteTrack/DeepSORT integration, `track_video.py` runtime integration, Streamlit video result pages, FastAPI video jobs, database integration, or real video benchmarks.
+
+Reference: [Video analytics MVP](video_analytics_mvp.md)
 
 ## 7. Deployment and Serving Preparation
 
@@ -255,12 +273,14 @@ GitHub tracks code, docs, configs, summaries, and selected lightweight demo asse
 - No ONNX Runtime mAP/NMS evaluation.
 - No real Docker build/run validation yet.
 - Model weights, ONNX files, and full dataset split folders are intentionally not committed.
+- v0.8.0 video analytics is a pure-Python MVP core and does not yet include real tracker integration or a video UI/API workflow.
 
 ## 10. Recommended Next Steps
 
 - Run YOLOv8m PyTorch speed benchmark only if model-family latency completeness is needed.
 - Run YOLOv8m ONNX Runtime benchmark only if deployment completeness is needed.
 - Add ONNX Runtime mAP/NMS evaluation only if a separate evaluation protocol is defined.
+- Continue video analytics with a synthetic end-to-end sample or `track_video.py` skeleton before adding real ByteTrack/DeepSORT and Streamlit/FastAPI video workflows.
 - Prepare presentation slides or portfolio summary.
 
 ## Related Documents
@@ -285,5 +305,6 @@ GitHub tracks code, docs, configs, summaries, and selected lightweight demo asse
 - [ONNX Runtime benchmark](onnx_runtime_benchmark.md)
 - [Image size ablation](image_size_ablation.md)
 - [YOLOv8 model family comparison](model_family_comparison.md)
+- [Video analytics MVP](video_analytics_mvp.md)
 - [YOLOv8m training summary](experiments/yolov8m_640_50epochs/summary.md)
 - [YOLOv8m official test summary](evaluation/yolov8m_640_50epochs_official/summary.md)

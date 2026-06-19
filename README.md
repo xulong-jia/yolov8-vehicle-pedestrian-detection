@@ -15,6 +15,7 @@ Current project scope includes:
 - batch prediction CLI
 - FastAPI real image prediction endpoint
 - Docker scaffold
+- pure-Python video analytics MVP contracts and core testable logic
 - project documentation and safety policy
 
 ## Key Features
@@ -114,13 +115,23 @@ Completed experiments and recorded results:
 - `.dockerignore` excluding weights, dataset splits, local outputs, runs, and videos.
 - Docker image is designed to exclude model weights and the full dataset.
 
+### Video Analytics MVP
+
+`v0.8.0-video-analytics-mvp` adds pure-Python video analytics MVP contracts and core testable logic. It includes geometry utilities, line counter, ROI counter, event rules, result writers, and a Video Analysis Center skeleton.
+
+This phase does not include real tracker integration, `track_video.py` runtime integration, video UI pages, FastAPI video jobs, database integration, or real video benchmarks.
+
+Details: [Video analytics MVP](docs/video_analytics_mvp.md)
+
 ## Project Structure
 
 ```text
 yolov8-vehicle-pedestrian-detection/
   app.py
   configs/
+    analytics.yaml
     default.yaml
+    tracking.yaml
   dataset/
     data.yaml
     train/                  # local-only, ignored
@@ -136,9 +147,13 @@ yolov8-vehicle-pedestrian-detection/
     docker_deployment.md
     model_loading_strategy.md
     project_task_board.md
+    video_analytics_mvp.md
   local_outputs/            # generated local outputs, ignored
   local_weights/            # local model weights, ignored
   src/
+    analytics/
+    services/
+    tracking/
     analyze_dataset.py
     api.py
     batch_predict.py
@@ -150,6 +165,12 @@ yolov8-vehicle-pedestrian-detection/
     visualize_dataset.py
   tests/
     __init__.py
+    test_event_rules.py
+    test_geometry.py
+    test_line_counter.py
+    test_roi_counter.py
+    test_track_writer.py
+    test_video_analysis_center.py
     test_batch_predict.py
     test_check_setup.py
   .dockerignore
@@ -395,6 +416,7 @@ ONNX Runtime benchmark/check:
 - [Image size ablation](docs/image_size_ablation.md)
 - [Inference speed benchmark](docs/inference_speed_benchmark.md)
 - [ONNX Runtime benchmark](docs/onnx_runtime_benchmark.md)
+- [Video analytics MVP](docs/video_analytics_mvp.md)
 - [Project task board](docs/project_task_board.md)
 
 ## Safety and Git Policy
@@ -438,3 +460,4 @@ Policy:
 - Optionally run YOLOv8m PyTorch speed benchmark if model-family latency completeness is needed.
 - Optionally run YOLOv8m ONNX Runtime benchmark if deployment completeness is needed.
 - Optionally run ONNX Runtime mAP/NMS evaluation only if a separate evaluation protocol is defined.
+- Continue video analytics after v0.8.0 with a synthetic end-to-end sample or `track_video.py` skeleton before real ByteTrack/DeepSORT and UI/API integration.

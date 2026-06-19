@@ -81,15 +81,18 @@
 - [x] Step 5 event rules TDD / Step 5 事件规则 TDD — Priority: P0 — Status: Done — Output: `src/analytics/event_rules.py`, `tests/test_event_rules.py` — Commit: TBD
 - [x] Step 6 track writer / Step 6 轨迹写出器 — Priority: P0 — Status: Done — Output: `src/tracking/track_writer.py`, `tests/test_track_writer.py` — Commit: TBD
 - [x] Step 6 Video Analysis Center skeleton / Step 6 分析结果中心骨架 — Priority: P0 — Status: Done — Output: `src/services/video_analysis_center.py`, `tests/test_video_analysis_center.py` — Commit: TBD
-- [ ] Step 7 docs and tag / Step 7 文档与标签 — Priority: P0 — Status: Pending — Output: `docs/video_analytics_mvp.md`, `docs/project_task_board.md`, tag `v0.8.0-video-analytics-mvp` — Commit: TBD
+- [x] Step 7 docs and tag / Step 7 文档与标签 — Priority: P0 — Status: Ready for tag — Output: `docs/video_analytics_mvp.md`, `docs/project_task_board.md`, `README.md`, `docs/final_project_report.md`, tag `v0.8.0-video-analytics-mvp` — Commit: TBD
 
 Deferred beyond v0.8.0:
 
-- [ ] Real ByteTrack/DeepSORT adapter integration / 真实 ByteTrack/DeepSORT adapter 接入 — Target: v0.8.1/v0.9.0 — Status: Deferred
-- [ ] Streamlit video pages / Streamlit 视频分析页面 — Target: v0.8.1/v0.9.0 — Status: Deferred
-- [ ] FastAPI video jobs / FastAPI 异步视频任务接口 — Target: v0.8.1/v0.9.0 — Status: Deferred
-- [ ] React frontend / React 前端 — Target: v0.9.0+ — Status: Deferred
-- [ ] Real video benchmark / 真实视频基准测试 — Target: v0.9.0+ — Status: Deferred
+- [ ] Real `track_video.py` integration / 真实 `track_video.py` 接入 — Target: v0.8.1/v0.9.0 — Status: Pending
+- [ ] Real ByteTrack/DeepSORT adapter integration / 真实 ByteTrack/DeepSORT adapter 接入 — Target: v0.8.1/v0.9.0 — Status: Pending
+- [ ] Streamlit video analysis pages / Streamlit 视频分析页面 — Target: v0.8.1/v0.9.0 — Status: Pending
+- [ ] FastAPI video jobs / FastAPI 异步视频任务接口 — Target: v0.8.1/v0.9.0 — Status: Pending
+- [ ] FastAPI video result query endpoints / FastAPI 视频结果查询接口 — Target: v0.8.1/v0.9.0 — Status: Pending
+- [ ] Real video smoke demo / 真实视频冒烟演示 — Target: v0.8.1/v0.9.0 — Status: Pending
+- [ ] React frontend / React 前端 — Target: v0.9.0+ — Status: Pending
+- [ ] Real video benchmark / 真实视频基准测试 — Target: v0.9.0+ — Status: Pending
 
 ## P3 — Optional Future Experiments / 可选未来实验
 
@@ -122,4 +125,5 @@ Deferred beyond v0.8.0:
 
 ## Next Recommended Task
 
-1. v0.8.0 Step 7 docs and tag / v0.8.0 Step 7 文档与标签
+1. v0.8.1 synthetic end-to-end video analysis sample or `track_video.py` skeleton / v0.8.1 合成端到端视频分析样例或 `track_video.py` 骨架
+2. v0.9.0 real ByteTrack/DeepSORT plus Streamlit/FastAPI video workflow / v0.9.0 真实跟踪器与视频分析 UI/API 工作流

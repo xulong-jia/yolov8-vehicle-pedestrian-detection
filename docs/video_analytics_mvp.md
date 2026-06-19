@@ -20,11 +20,62 @@ Included in this MVP:
 Not included in this MVP:
 
 - real ByteTrack/DeepSORT adapter integration
+- track_video.py integration
 - Streamlit video pages
 - FastAPI async video jobs
 - React frontend
 - database integration
 - real video benchmark
+
+## Implemented in v0.8.0
+
+`v0.8.0-video-analytics-mvp` completes the pure-Python video analytics MVP core. It adds contracts, deterministic analytics utilities, result writers, a result-directory skeleton, and synthetic unit tests without requiring GPU access, model weights, or real videos.
+
+Implemented artifacts:
+
+- `configs/tracking.yaml`
+- `configs/analytics.yaml`
+- geometry utilities in `src/analytics/geometry.py`
+- line counter in `src/analytics/line_counter.py`
+- ROI counter in `src/analytics/roi_counter.py`
+- event rules in `src/analytics/event_rules.py`
+- track and analytics artifact writers in `src/tracking/track_writer.py`
+- Video Analysis Center skeleton in `src/services/video_analysis_center.py`
+- synthetic unit tests for geometry, line counting, ROI counting, event rules, result writers, and Video Analysis Center behavior
+
+Core implementation constraints:
+
+- pure Python only for the v0.8.0 analytics core
+- no `cv2`, `numpy`, `torch`, or `ultralytics` dependency in the core analytics modules
+- no real tracker adapter
+- no video decoding or model inference runtime
+- no generated run outputs committed
+
+Still out of scope for v0.8.0:
+
+- real ByteTrack/DeepSORT adapter integration
+- `track_video.py` integration
+- Streamlit video result pages
+- FastAPI video job endpoints
+- React frontend
+- database integration
+- real video benchmark
+
+Recommended next phases:
+
+- `v0.8.1`: integrate a synthetic end-to-end video analysis sample or a `track_video.py` skeleton that consumes synthetic CSV-style inputs before real tracker integration.
+- `v0.9.0`: add real ByteTrack/DeepSORT integration plus Streamlit and FastAPI video analysis workflows.
+
+## Test Summary
+
+The MVP is covered by synthetic unit tests:
+
+- `tests/test_geometry.py`
+- `tests/test_line_counter.py`
+- `tests/test_roi_counter.py`
+- `tests/test_event_rules.py`
+- `tests/test_track_writer.py`
+- `tests/test_video_analysis_center.py`
 
 ## Current Baseline
 
@@ -151,6 +202,6 @@ Purpose:
 - `configs/tracking.yaml` exists.
 - `configs/analytics.yaml` exists.
 - Data contracts are documented for detection, tracking, counting, ROI, events, and video analysis summaries.
-- Future geometry / line / ROI / event tests can be written against contracts.
+- Geometry / line / ROI / event / writer / Video Analysis Center tests are implemented with synthetic inputs.
 - No generated artifacts are committed.
 - `make check`, `make api-check`, and `make danger-check` pass.
