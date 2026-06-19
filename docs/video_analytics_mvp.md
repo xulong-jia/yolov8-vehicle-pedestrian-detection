@@ -455,6 +455,24 @@ The preflight checker validates:
 
 It prints command previews for the CSV detector, synthetic tracker, and unified smoke runner. It does not run YOLO, does not run tracking, does not create outputs, and does not write CSV/JSON artifacts. This prepares for a later actual real local smoke demo without committing generated files.
 
+## v0.9.9 Real Local Smoke Run Result
+
+`v0.9.9-real-local-smoke-result` documents the first real local smoke run result.
+
+The run used the local YOLOv8s `best.pt` weight and the local `pexels_crosswalk_traffic_demo.mp4` video. Preflight completed with `ok=true`.
+
+Observed result:
+
+- `21988` detections
+- `21988` synthetic track rows
+- `34` synthetic tracks
+- Video Analysis Center artifacts produced
+- no line, ROI, or event trigger under the default smoke analytics config
+
+The tracker is still synthetic. This is not real ByteTrack/DeepSORT tracking and does not produce tracked video rendering. Generated outputs stay local-only under `/tmp/yolov8_real_smoke` and are not committed.
+
+Result details: [Real Local Smoke Run Result](real_local_smoke_run_result.md)
+
 ## Test Summary
 
 The MVP is covered by synthetic unit tests:

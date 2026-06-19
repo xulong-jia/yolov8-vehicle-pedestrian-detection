@@ -1,0 +1,110 @@
+# Real Local Smoke Run Result
+
+This document records the first real local smoke run for the video analytics pipeline.
+It is a local validation record only. Generated outputs remain under `/tmp` and are not committed to Git.
+
+## Environment
+
+- Python: `.venv/bin/python`
+- ultralytics: `8.4.64`
+- cv2: `4.13.0`
+
+## Inputs
+
+- Model: local YOLOv8s `best.pt`
+  - `/Users/jiaxulong/Documents/yolov8-vehicle-pedestrian-detection/local_weights/yolov8s_640_50epochs/best.pt`
+- Video: local `pexels_crosswalk_traffic_demo.mp4`
+  - `/Users/jiaxulong/Documents/yolov8-vehicle-pedestrian-detection/local_videos/source/pexels_crosswalk_traffic_demo.mp4`
+- Output directory:
+  - `/tmp/yolov8_real_smoke`
+
+## Preflight
+
+Preflight completed with `ok=true`.
+
+Checks passed:
+
+- model path
+- video path
+- output directory path
+- `ultralytics` availability
+- `cv2` availability
+
+## Run Command
+
+Use `PYTHONPATH=.` for the local script invocation:
+
+```bash
+PYTHONPATH=. .venv/bin/python src/run_video_analysis_smoke.py \
+  --model local_weights/yolov8s_640_50epochs/best.pt \
+  --source local_videos/source/pexels_crosswalk_traffic_demo.mp4 \
+  --output-dir /tmp/yolov8_real_smoke \
+  --video-id demo \
+  --run-name demo_run \
+  --conf 0.25 \
+  --imgsz 640 \
+  --device cpu
+```
+
+Directly running `.venv/bin/python src/run_video_analysis_smoke.py ...` may trigger:
+
+```text
+ModuleNotFoundError: No module named 'src'
+```
+
+For the current local command, add `PYTHONPATH=.`. A future step can improve this with a module entrypoint or package invocation.
+
+## Output Artifacts
+
+The smoke run produced these local-only artifacts:
+
+- `/tmp/yolov8_real_smoke/detections.csv`
+- `/tmp/yolov8_real_smoke/tracking/tracks.csv`
+- `/tmp/yolov8_real_smoke/video_analysis/demo_run/metadata.json`
+- `/tmp/yolov8_real_smoke/video_analysis/demo_run/detections.csv`
+- `/tmp/yolov8_real_smoke/video_analysis/demo_run/tracks.csv`
+- `/tmp/yolov8_real_smoke/video_analysis/demo_run/count_events.csv`
+- `/tmp/yolov8_real_smoke/video_analysis/demo_run/roi_frame_counts.csv`
+- `/tmp/yolov8_real_smoke/video_analysis/demo_run/events.jsonl`
+- `/tmp/yolov8_real_smoke/video_analysis/demo_run/video_analysis_summary.json`
+
+Do not commit these generated CSV, JSON, or JSONL files.
+
+## Result Summary
+
+- `detection_count`: `21988`
+- `track_row_count`: `21988`
+- `track_count`: `34`
+- `count_summary.total_count`: `0`
+- `roi_summary.frames_observed`: `0`
+- `event_summary.total_events`: `0`
+- `detections.csv`: `21989` lines including header
+- `tracks.csv`: `21989` lines including header
+- `count_events.csv`: `1` line, header only
+- `roi_frame_counts.csv`: `1` line, header only
+- `events.jsonl`: `0` lines
+- Output size: `13M`
+
+## Interpretation
+
+- Real YOLO detection export worked.
+- The synthetic tracker converted detections to track rows.
+- The Video Analysis Center job and artifacts were produced.
+- The default smoke analytics config did not trigger line, ROI, or event counts.
+- This validates the real local detection-to-analysis file pipeline, not real MOT quality.
+
+## Limitations
+
+- Tracker is synthetic.
+- No ByteTrack/DeepSORT integration.
+- No tracked video rendering.
+- No Streamlit/FastAPI video workflow.
+- Outputs are local-only and ignored or not committed.
+
+## Next Steps
+
+- Fix CLI/module invocation ergonomics or keep documenting the `PYTHONPATH=.` requirement.
+- Optionally add a script entrypoint or `python -m src.run_video_analysis_smoke` workflow.
+- Tune the smoke analytics config for a real video.
+- Integrate real ByteTrack later.
+- Add tracked video rendering later.

@@ -253,12 +253,15 @@ The batch prediction CLI is designed to write generated outputs under `local_out
 
 `v0.9.7-four-step-smoke-runner` adds a unified four-step smoke runner. It orchestrates detection export, synthetic tracking, Video Analysis Center job creation, and analytics execution while still using the synthetic tracker and not rendering tracked video.
 
+`v0.9.9-real-local-smoke-result` documents the first real local smoke run. It validates real YOLO detection export, synthetic tracking, and Video Analysis Center artifacts on a local demo video. The run produced `21,988` detections and `34` synthetic tracks. Outputs remain local-only and are not committed.
+
 This MVP does not include real ByteTrack/DeepSORT integration, full `track_video.py` runtime integration, tracked video rendering, Streamlit video result pages, FastAPI video jobs, database integration, or real video benchmarks.
 
 References:
 
 - [Video analytics MVP](video_analytics_mvp.md)
 - [track_video.py CLI usage](track_video_cli_usage.md)
+- [Real local smoke run result](real_local_smoke_run_result.md)
 
 ## 7. Deployment and Serving Preparation
 

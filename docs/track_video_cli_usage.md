@@ -311,7 +311,7 @@ Step 1 runs YOLO if you provide a real model and real video. Step 2 still uses t
 `src/run_video_analysis_smoke.py` wraps the current four-step local flow in one command.
 
 ```bash
-python3 src/run_video_analysis_smoke.py \
+PYTHONPATH=. .venv/bin/python src/run_video_analysis_smoke.py \
   --model /absolute/path/to/best.pt \
   --source /absolute/path/to/video.mp4 \
   --output-dir /tmp/yolov8_four_step_runner \
@@ -333,6 +333,10 @@ Expected outputs:
 - `/tmp/yolov8_four_step_runner/video_analysis/demo_run/video_analysis_summary.json`
 
 The runner uses `predict_video.py`, so it runs YOLO when you provide a real model and video source. The tracker is still the synthetic tracker, not real ByteTrack/DeepSORT. The runner does not render tracked video. Use `/tmp` or another gitignored output directory, and do not commit generated outputs, model weights, or real videos.
+
+For local script execution, prefer `PYTHONPATH=. .venv/bin/python src/run_video_analysis_smoke.py ...`. If direct script execution reports `ModuleNotFoundError: No module named 'src'`, add `PYTHONPATH=.` or use a future module entrypoint once available.
+
+The first real local smoke run is documented in [Real Local Smoke Run Result](real_local_smoke_run_result.md). It produced `21988` detections and `34` synthetic tracks using local-only inputs and `/tmp` outputs.
 
 ## Real local smoke preflight
 

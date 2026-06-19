@@ -145,6 +145,8 @@ Completed experiments and recorded results:
 
 `v0.9.7-four-step-smoke-runner` adds a unified four-step smoke runner. It orchestrates detection export, synthetic tracking, Video Analysis Center job creation, and analytics execution while still using the synthetic tracker and not rendering tracked video. See [track_video.py CLI usage](docs/track_video_cli_usage.md).
 
+`v0.9.9-real-local-smoke-result` documents the first real local smoke run. It validates real YOLO detection export, synthetic tracking, and Video Analysis Center artifacts on a local demo video, producing `21,988` detections and `34` synthetic tracks. Outputs remain local-only and are not committed. See [Real Local Smoke Run Result](docs/real_local_smoke_run_result.md).
+
 This phase does not include real ByteTrack/DeepSORT integration, full `track_video.py` runtime integration, video UI pages, FastAPI video jobs, database integration, tracked video rendering, or real video benchmarks.
 
 Details: [Video analytics MVP](docs/video_analytics_mvp.md)

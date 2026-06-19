@@ -465,6 +465,33 @@ Pending after v0.9.8 Step 1:
 - [ ] FastAPI video jobs / FastAPI 视频任务 — Target: v1.0 candidate — Status: Pending
 - [ ] Real video smoke demo / 真实视频冒烟演示 — Target: v1.0 candidate — Status: Pending
 
+## v0.9.9-real-local-smoke-result / 真实本地冒烟结果记录
+
+- [x] Step 1 document real local smoke run result / Step 1 文档化真实本地冒烟运行结果 — Priority: P0 — Status: Completed in working tree — Output: `docs/real_local_smoke_run_result.md`, `docs/track_video_cli_usage.md`, `docs/video_analytics_mvp.md`, `docs/project_task_board.md`, `README.md`, `docs/final_project_report.md` — Commit: TBD
+
+Recorded result:
+
+- preflight `ok=true`
+- local YOLOv8s `best.pt` on local `pexels_crosswalk_traffic_demo.mp4`
+- `21988` detections
+- `21988` synthetic track rows
+- `34` synthetic tracks
+- Video Analysis Center artifacts produced
+- default smoke analytics config did not trigger line, ROI, or event outputs beyond headers
+- output stayed under `/tmp/yolov8_real_smoke` and was not committed
+- tracker remains synthetic, not ByteTrack/DeepSORT
+- no tracked video rendering
+- no Streamlit/FastAPI video workflow
+
+Pending after v0.9.9 Step 1:
+
+- [ ] CLI/module invocation ergonomics / CLI 与模块调用易用性修复 — Target: v0.9.10 — Status: Pending
+- [ ] Tune analytics config for real smoke video / 为真实 smoke 视频调优 analytics 配置 — Target: v0.9.10+ — Status: Pending
+- [ ] Real ByteTrack dependency integration / 真实 ByteTrack 依赖集成 — Target: v1.0 candidate — Status: Pending
+- [ ] Tracked video rendering / 跟踪视频渲染 — Target: v1.0 candidate — Status: Pending
+- [ ] Streamlit video pages / Streamlit 视频页面 — Target: v1.0 candidate — Status: Pending
+- [ ] FastAPI video jobs / FastAPI 视频任务 — Target: v1.0 candidate — Status: Pending
+
 ## P3 — Optional Future Experiments / 可选未来实验
 
 - [x] Run YOLOv8s official test split validation if weight is available / 在权重可用时运行 YOLOv8s 官方测试集验证 — Priority: P3 — Status: Done — Output: `docs/experiments/yolov8s_640_50epochs_retrain/`, `docs/evaluation/yolov8s_640_50epochs_official/` — Result: P `0.865`, R `0.838`, mAP50 `0.876`, mAP50-95 `0.601` — Commit: `e4d5adb`
@@ -496,5 +523,6 @@ Pending after v0.9.8 Step 1:
 
 ## Next Recommended Task
 
-1. v0.9.8 Step 2 document and tag real local smoke preflight / v0.9.8 Step 2 文档收尾并打 tag
-2. v1.0 candidate real ByteTrack dependency integration planning / v1.0 候选真实 ByteTrack 依赖集成规划
+1. v0.9.9 Step 2 commit docs and tag real local smoke result / v0.9.9 Step 2 提交文档并打 tag
+2. v0.9.10 CLI/module invocation ergonomics / v0.9.10 CLI 与模块调用易用性修复
+3. v1.0 candidate real ByteTrack dependency integration planning / v1.0 候选真实 ByteTrack 依赖集成规划
