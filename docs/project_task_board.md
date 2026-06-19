@@ -79,8 +79,8 @@
 - [x] Step 3 line counter TDD / Step 3 穿线计数 TDD — Priority: P0 — Status: Done — Output: `src/analytics/line_counter.py`, `tests/test_line_counter.py` — Commit: TBD
 - [x] Step 4 ROI counter TDD / Step 4 ROI 计数 TDD — Priority: P0 — Status: Done — Output: `src/analytics/roi_counter.py`, `tests/test_roi_counter.py` — Commit: TBD
 - [x] Step 5 event rules TDD / Step 5 事件规则 TDD — Priority: P0 — Status: Done — Output: `src/analytics/event_rules.py`, `tests/test_event_rules.py` — Commit: TBD
-- [ ] Step 6 track writer / Step 6 轨迹写出器 — Priority: P0 — Status: Pending — Output: `src/tracking/track_writer.py` — Commit: TBD
-- [ ] Step 6 Video Analysis Center skeleton / Step 6 分析结果中心骨架 — Priority: P0 — Status: Pending — Output: `src/services/video_analysis_center.py` — Commit: TBD
+- [x] Step 6 track writer / Step 6 轨迹写出器 — Priority: P0 — Status: Done — Output: `src/tracking/track_writer.py`, `tests/test_track_writer.py` — Commit: TBD
+- [x] Step 6 Video Analysis Center skeleton / Step 6 分析结果中心骨架 — Priority: P0 — Status: Done — Output: `src/services/video_analysis_center.py`, `tests/test_video_analysis_center.py` — Commit: TBD
 - [ ] Step 7 docs and tag / Step 7 文档与标签 — Priority: P0 — Status: Pending — Output: `docs/video_analytics_mvp.md`, `docs/project_task_board.md`, tag `v0.8.0-video-analytics-mvp` — Commit: TBD
 
 Deferred beyond v0.8.0:
@@ -122,6 +122,4 @@ Deferred beyond v0.8.0:
 
 ## Next Recommended Task
 
-1. v0.8.0 Step 6 track writer / v0.8.0 Step 6 轨迹写出器
-2. v0.8.0 Step 6 Video Analysis Center skeleton / v0.8.0 Step 6 分析结果中心骨架
-3. v0.8.0 Step 7 docs and tag / v0.8.0 Step 7 文档与标签
+1. v0.8.0 Step 7 docs and tag / v0.8.0 Step 7 文档与标签
