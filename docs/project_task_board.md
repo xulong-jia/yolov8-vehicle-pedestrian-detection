@@ -353,6 +353,34 @@ Pending after v0.9.4 Step 1:
 - [ ] FastAPI video jobs / FastAPI 视频任务 — Target: v1.0 candidate — Status: Pending
 - [ ] Real video smoke demo / 真实视频冒烟演示 — Target: v1.0 candidate — Status: Pending
 
+## v0.9.5-analytics-on-tracks-job / 基于 tracks 的分析任务执行
+
+- [x] Step 1 analytics execution on tracks job / Step 1 基于 tracks 的分析任务执行 — Priority: P0 — Status: Completed in working tree — Output: `src/services/video_analysis_job.py`, `tests/test_video_analysis_job.py`, `docs/project_task_board.md` — Commit: TBD
+
+Current scope:
+
+- optionally runs analytics from existing `tracks.csv` when `run_analytics=True`
+- executes line counter and writes `count_events.csv`
+- executes ROI counter and writes `roi_frame_counts.csv`
+- executes event rules and writes `events.jsonl`
+- updates `video_analysis_summary.json` with count, ROI, and event summaries
+- keeps default `run_analytics=False` behavior compatible with v0.9.3
+- tests use pytest `tmp_path` and fake CSV files only
+- does not run YOLO
+- does not run a tracker
+- does not integrate real ByteTrack/DeepSORT dependencies
+- does not render tracked video
+- does not create repository output directories
+
+Pending after v0.9.5 Step 1:
+
+- [ ] Real ByteTrack dependency integration / 真实 ByteTrack 依赖集成 — Target: v1.0 candidate — Status: Pending
+- [ ] Full real `track_video.py` runtime / 完整真实 `track_video.py` 运行时 — Target: v1.0 candidate — Status: Pending
+- [ ] Tracked video rendering / 跟踪视频渲染 — Target: v1.0 candidate — Status: Pending
+- [ ] Streamlit video pages / Streamlit 视频页面 — Target: v1.0 candidate — Status: Pending
+- [ ] FastAPI video jobs / FastAPI 视频任务 — Target: v1.0 candidate — Status: Pending
+- [ ] Real video smoke demo / 真实视频冒烟演示 — Target: v1.0 candidate — Status: Pending
+
 ## P3 — Optional Future Experiments / 可选未来实验
 
 - [x] Run YOLOv8s official test split validation if weight is available / 在权重可用时运行 YOLOv8s 官方测试集验证 — Priority: P3 — Status: Done — Output: `docs/experiments/yolov8s_640_50epochs_retrain/`, `docs/evaluation/yolov8s_640_50epochs_official/` — Result: P `0.865`, R `0.838`, mAP50 `0.876`, mAP50-95 `0.601` — Commit: `e4d5adb`
@@ -384,5 +412,5 @@ Pending after v0.9.4 Step 1:
 
 ## Next Recommended Task
 
-1. v1.0 candidate analytics execution on real tracks planning / v1.0 候选真实 tracks 分析执行规划
+1. v0.9.5 Step 2 document analytics execution on tracks job / v0.9.5 Step 2 文档化基于 tracks 的分析任务执行
 2. v1.0 candidate real ByteTrack dependency integration planning / v1.0 候选真实 ByteTrack 依赖集成规划
