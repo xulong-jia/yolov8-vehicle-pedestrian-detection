@@ -63,7 +63,7 @@ Still out of scope for v0.8.0:
 
 Recommended next phases:
 
-- after `v0.8.1`: add a `track_video.py` skeleton or real tracker adapter after the synthetic pipeline has proven the analytics contract flow.
+- after `v0.8.2`: add real video reading and YOLO frame inference skeletons before tracker adapter integration.
 - `v0.9.0`: add real ByteTrack/DeepSORT integration plus Streamlit and FastAPI video analysis workflows.
 
 ## v0.8.1 Synthetic Pipeline
@@ -102,6 +102,27 @@ Still out of scope after v0.8.1:
 - database integration
 - real video benchmark
 
+## v0.8.2 Track Video Skeleton
+
+`v0.8.2-track-video-skeleton` adds `src/track_video.py` as a skeleton CLI for synthetic `detections.csv` to `tracks.csv` conversion. It validates the command-line entry point and tracking output contract before real video runtime integration.
+
+Current CLI scope:
+
+- supports synthetic `detections.csv` to `tracks.csv` conversion only
+- verifies `tracks.csv` fields against the v0.8.0 tracking contract
+- does not run YOLO
+- does not read real video
+- does not integrate ByteTrack/DeepSORT
+- does not generate a real tracked video
+
+The CLI writes `tracks.csv` with fields matching the v0.8.0 `tracks.csv` contract. Tests use pytest `tmp_path` and do not write to `local_outputs`, `results`, or `runs`.
+
+Recommended next phases:
+
+- `v0.8.3` or `v0.9.0`: add real video reading and YOLO frame inference skeletons.
+- After that: integrate a ByteTrack/DeepSORT adapter.
+- Then: connect Streamlit and FastAPI video workflows.
+
 ## Test Summary
 
 The MVP is covered by synthetic unit tests:
@@ -113,6 +134,7 @@ The MVP is covered by synthetic unit tests:
 - `tests/test_track_writer.py`
 - `tests/test_video_analysis_center.py`
 - `tests/test_synthetic_video_analysis_pipeline.py`
+- `tests/test_track_video.py`
 
 ## Current Baseline
 

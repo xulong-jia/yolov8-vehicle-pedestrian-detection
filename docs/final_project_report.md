@@ -229,6 +229,8 @@ The batch prediction CLI is designed to write generated outputs under `local_out
 
 `v0.8.1-video-analysis-synthetic-pipeline` adds a synthetic end-to-end video analysis pipeline. It validates that tracks can flow through counting, ROI, events, result writers, and the Video Analysis Center without using real video or YOLO inference.
 
+`v0.8.2-track-video-skeleton` adds a `track_video.py` skeleton CLI for synthetic detections-to-tracks conversion. It validates the CLI and `tracks.csv` contract without reading real video, running YOLO, or integrating ByteTrack/DeepSORT.
+
 This MVP does not include real ByteTrack/DeepSORT integration, `track_video.py` runtime integration, Streamlit video result pages, FastAPI video jobs, database integration, or real video benchmarks.
 
 Reference: [Video analytics MVP](video_analytics_mvp.md)
@@ -282,7 +284,7 @@ GitHub tracks code, docs, configs, summaries, and selected lightweight demo asse
 - Run YOLOv8m PyTorch speed benchmark only if model-family latency completeness is needed.
 - Run YOLOv8m ONNX Runtime benchmark only if deployment completeness is needed.
 - Add ONNX Runtime mAP/NMS evaluation only if a separate evaluation protocol is defined.
-- Continue video analytics with a `track_video.py` skeleton or real tracker adapter before adding Streamlit/FastAPI video workflows.
+- Continue video analytics with real video reading and YOLO frame inference skeletons before adding tracker adapters and Streamlit/FastAPI video workflows.
 - Prepare presentation slides or portfolio summary.
 
 ## Related Documents

@@ -112,7 +112,7 @@ Pending after v0.8.1 Step 1:
 
 ## v0.8.2-track-video-skeleton / track_video 骨架
 
-- [x] Step 1 `track_video.py` skeleton + CLI contract / Step 1 `track_video.py` 骨架与 CLI 契约 — Priority: P0 — Status: Done — Output: `src/track_video.py`, `tests/test_track_video.py`, `docs/project_task_board.md` — Commit: TBD
+- [x] Step 1 `track_video.py` skeleton + CLI contract / Step 1 `track_video.py` 骨架与 CLI 契约 — Priority: P0 — Status: Completed — Output: `src/track_video.py`, `tests/test_track_video.py`, `docs/project_task_board.md` — Commit: `5403fe2`
 
 Current scope:
 
@@ -128,8 +128,10 @@ Pending after v0.8.2 Step 1:
 - [ ] Real video reading / 真实视频读取 — Target: v0.8.2/v0.9.0 — Status: Pending
 - [ ] YOLO frame inference / YOLO 帧级推理 — Target: v0.8.2/v0.9.0 — Status: Pending
 - [ ] ByteTrack/DeepSORT adapter integration / ByteTrack/DeepSORT adapter 接入 — Target: v0.8.2/v0.9.0 — Status: Pending
+- [ ] Real tracked video rendering / 真实跟踪视频渲染 — Target: v0.9.0 — Status: Pending
 - [ ] Streamlit video analysis pages / Streamlit 视频分析页面 — Target: v0.9.0 — Status: Pending
 - [ ] FastAPI video jobs / FastAPI 视频任务接口 — Target: v0.9.0 — Status: Pending
+- [ ] FastAPI video result query endpoints / FastAPI 视频结果查询接口 — Target: v0.9.0 — Status: Pending
 - [ ] Real video smoke demo / 真实视频冒烟演示 — Target: v0.9.0 — Status: Pending
 
 ## P3 — Optional Future Experiments / 可选未来实验

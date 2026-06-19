@@ -121,6 +121,8 @@ Completed experiments and recorded results:
 
 `v0.8.1-video-analysis-synthetic-pipeline` adds a synthetic end-to-end video analysis pipeline. It validates that tracks can flow through counting, ROI, events, result writers, and the Video Analysis Center without using real video or YOLO inference.
 
+`v0.8.2-track-video-skeleton` adds a `track_video.py` skeleton CLI for synthetic detections-to-tracks conversion. It validates the CLI and `tracks.csv` contract without reading real video, running YOLO, or integrating ByteTrack/DeepSORT.
+
 This phase does not include real tracker integration, `track_video.py` runtime integration, video UI pages, FastAPI video jobs, database integration, or real video benchmarks.
 
 Details: [Video analytics MVP](docs/video_analytics_mvp.md)
@@ -462,4 +464,4 @@ Policy:
 - Optionally run YOLOv8m PyTorch speed benchmark if model-family latency completeness is needed.
 - Optionally run YOLOv8m ONNX Runtime benchmark if deployment completeness is needed.
 - Optionally run ONNX Runtime mAP/NMS evaluation only if a separate evaluation protocol is defined.
-- Continue video analytics after v0.8.1 with a `track_video.py` skeleton or real tracker adapter before Streamlit/FastAPI video workflow integration.
+- Continue video analytics after v0.8.2 with real video reading and YOLO frame inference skeletons before tracker adapter and Streamlit/FastAPI workflow integration.
