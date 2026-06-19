@@ -63,8 +63,44 @@ Still out of scope for v0.8.0:
 
 Recommended next phases:
 
-- `v0.8.1`: integrate a synthetic end-to-end video analysis sample or a `track_video.py` skeleton that consumes synthetic CSV-style inputs before real tracker integration.
+- after `v0.8.1`: add a `track_video.py` skeleton or real tracker adapter after the synthetic pipeline has proven the analytics contract flow.
 - `v0.9.0`: add real ByteTrack/DeepSORT integration plus Streamlit and FastAPI video analysis workflows.
+
+## v0.8.1 Synthetic Pipeline
+
+`v0.8.1-video-analysis-synthetic-pipeline` adds a synthetic end-to-end video analysis pipeline. It validates that synthetic tracks can flow through counting, ROI analysis, event rules, result writers, and the Video Analysis Center without running a detector or reading real video.
+
+Pipeline scope:
+
+- starts from synthetic tracks, not detector outputs
+- sets `detection_count` to `0` because no detector is run
+- uses `VideoAnalysisCenter` for run directory and artifact writing
+- runs the line counter
+- runs the ROI counter
+- runs event rules
+- writes result artifacts through the existing result writers
+
+The pipeline is tested with pytest `tmp_path` and does not write to `local_outputs`, `results`, or `runs`.
+
+Generated and validated artifacts:
+
+- `metadata.json`
+- `tracks.csv`
+- `count_events.csv`
+- `roi_frame_counts.csv`
+- `events.jsonl`
+- `video_analysis_summary.json`
+
+Still out of scope after v0.8.1:
+
+- real `track_video.py`
+- ByteTrack/DeepSORT adapter
+- real video inference
+- Streamlit video pages
+- FastAPI video jobs
+- React frontend
+- database integration
+- real video benchmark
 
 ## Test Summary
 
@@ -76,6 +112,7 @@ The MVP is covered by synthetic unit tests:
 - `tests/test_event_rules.py`
 - `tests/test_track_writer.py`
 - `tests/test_video_analysis_center.py`
+- `tests/test_synthetic_video_analysis_pipeline.py`
 
 ## Current Baseline
 
