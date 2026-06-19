@@ -134,6 +134,31 @@ Pending after v0.8.2 Step 1:
 - [ ] FastAPI video result query endpoints / FastAPI 视频结果查询接口 — Target: v0.9.0 — Status: Pending
 - [ ] Real video smoke demo / 真实视频冒烟演示 — Target: v0.9.0 — Status: Pending
 
+## v0.8.3-real-video-reading-skeleton / 真实视频读取骨架
+
+- [x] Step 1 real video reading skeleton / Step 1 真实视频读取骨架 — Priority: P0 — Status: Done — Output: `src/video_reader.py`, `tests/test_video_reader.py`, `docs/project_task_board.md` — Commit: TBD
+
+Current scope:
+
+- reads video metadata only
+- builds frame index rows only
+- writes `frame_index.csv`
+- writes `video_metadata.json`
+- no YOLO frame inference
+- no ByteTrack/DeepSORT adapter
+- no real `track_video.py` runtime
+- no tracked video rendering
+
+Pending after v0.8.3 Step 1:
+
+- [ ] YOLO frame inference / YOLO 帧级推理 — Target: v0.8.3/v0.9.0 — Status: Pending
+- [ ] ByteTrack/DeepSORT adapter integration / ByteTrack/DeepSORT adapter 接入 — Target: v0.8.3/v0.9.0 — Status: Pending
+- [ ] Real `track_video.py` runtime / 真实 `track_video.py` 运行时 — Target: v0.9.0 — Status: Pending
+- [ ] Tracked video rendering / 跟踪视频渲染 — Target: v0.9.0 — Status: Pending
+- [ ] Streamlit video analysis pages / Streamlit 视频分析页面 — Target: v0.9.0 — Status: Pending
+- [ ] FastAPI video jobs / FastAPI 视频任务接口 — Target: v0.9.0 — Status: Pending
+- [ ] Real video smoke demo / 真实视频冒烟演示 — Target: v0.9.0 — Status: Pending
+
 ## P3 — Optional Future Experiments / 可选未来实验
 
 - [x] Run YOLOv8s official test split validation if weight is available / 在权重可用时运行 YOLOv8s 官方测试集验证 — Priority: P3 — Status: Done — Output: `docs/experiments/yolov8s_640_50epochs_retrain/`, `docs/evaluation/yolov8s_640_50epochs_official/` — Result: P `0.865`, R `0.838`, mAP50 `0.876`, mAP50-95 `0.601` — Commit: `e4d5adb`
@@ -165,5 +190,5 @@ Pending after v0.8.2 Step 1:
 
 ## Next Recommended Task
 
-1. v0.8.2 Step 2 real tracker adapter contract or real video reading plan / v0.8.2 Step 2 真实跟踪器 adapter 契约或真实视频读取方案
+1. v0.8.3 Step 2 YOLO frame inference skeleton or tracker adapter contract / v0.8.3 Step 2 YOLO 帧级推理骨架或跟踪器 adapter 契约
 2. v0.9.0 real ByteTrack/DeepSORT plus Streamlit/FastAPI video workflow / v0.9.0 真实跟踪器与视频分析 UI/API 工作流
