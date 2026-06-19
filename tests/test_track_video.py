@@ -7,6 +7,7 @@ from src.track_video import (
     detections_to_synthetic_tracks,
     main,
     parse_args,
+    run_video_metadata_skeleton,
     run_track_video_skeleton,
 )
 from src.tracking.track_writer import TRACKS_FIELDS
@@ -40,11 +41,63 @@ def test_parse_args_supports_required_paths_and_default_tracker(tmp_path):
     assert args.detections_csv == tmp_path / "detections.csv"
     assert args.output_dir == tmp_path / "tracks"
     assert args.tracker == "synthetic"
+    assert args.metadata_only is False
+    assert args.sample_every_n == 1
+    assert args.max_frames is None
+
+
+def test_parse_args_supports_metadata_only_video_mode(tmp_path):
+    args = parse_args(
+        [
+            "--video-source",
+            str(tmp_path / "demo.mp4"),
+            "--output-dir",
+            str(tmp_path / "metadata"),
+            "--metadata-only",
+            "--sample-every-n",
+            "2",
+            "--max-frames",
+            "3",
+        ]
+    )
+
+    assert args.video_source == tmp_path / "demo.mp4"
+    assert args.output_dir == tmp_path / "metadata"
+    assert args.metadata_only is True
+    assert args.sample_every_n == 2
+    assert args.max_frames == 3
 
 
 def test_parse_args_requires_input_and_output_paths():
     with pytest.raises(SystemExit):
         parse_args([])
+
+
+def test_parse_args_rejects_video_source_without_metadata_only(tmp_path):
+    with pytest.raises(SystemExit):
+        parse_args(
+            [
+                "--video-source",
+                str(tmp_path / "demo.mp4"),
+                "--output-dir",
+                str(tmp_path / "metadata"),
+            ]
+        )
+
+
+def test_parse_args_rejects_non_positive_sample_every_n(tmp_path):
+    with pytest.raises(SystemExit):
+        parse_args(
+            [
+                "--video-source",
+                str(tmp_path / "demo.mp4"),
+                "--output-dir",
+                str(tmp_path / "metadata"),
+                "--metadata-only",
+                "--sample-every-n",
+                "0",
+            ]
+        )
 
 
 def test_detections_to_synthetic_tracks_builds_tracks_contract_rows():
@@ -175,6 +228,85 @@ def test_run_track_video_skeleton_rejects_unsupported_tracker(tmp_path):
         run_track_video_skeleton(detections_csv, tmp_path / "out", tracker_name="bytetrack")
 
 
+def test_run_video_metadata_skeleton_writes_metadata_and_frame_index(tmp_path, monkeypatch):
+    video_path = tmp_path / "demo.mp4"
+    video_path.write_bytes(b"")
+    output_dir = tmp_path / "metadata"
+    monkeypatch.setattr("src.track_video.read_video_metadata", _fake_read_video_metadata)
+
+    summary = run_video_metadata_skeleton(
+        video_path,
+        output_dir,
+        sample_every_n=2,
+    )
+
+    metadata_json = output_dir / "video_metadata.json"
+    frame_index_csv = output_dir / "frame_index.csv"
+    assert metadata_json.exists()
+    assert frame_index_csv.exists()
+    assert summary["mode"] == "metadata_only"
+    assert summary["video_source"] == str(video_path)
+    assert summary["output_metadata_json"] == str(metadata_json)
+    assert summary["output_frame_index_csv"] == str(frame_index_csv)
+    assert summary["frame_index_rows"] == 5
+    assert summary["fps"] == 5.0
+    assert summary["width"] == 64
+    assert summary["height"] == 48
+    assert summary["frame_count"] == 10
+    assert summary["duration_sec"] == 2.0
+
+    with frame_index_csv.open(newline="", encoding="utf-8") as file:
+        rows = list(csv.DictReader(file))
+    assert [int(row["frame_index"]) for row in rows] == [0, 2, 4, 6, 8]
+
+
+def test_run_video_metadata_skeleton_honors_max_frames(tmp_path, monkeypatch):
+    video_path = tmp_path / "demo.mp4"
+    video_path.write_bytes(b"")
+    output_dir = tmp_path / "metadata"
+    monkeypatch.setattr("src.track_video.read_video_metadata", _fake_read_video_metadata)
+
+    summary = run_video_metadata_skeleton(
+        video_path,
+        output_dir,
+        sample_every_n=2,
+        max_frames=3,
+    )
+
+    assert summary["frame_index_rows"] == 3
+    with (output_dir / "frame_index.csv").open(newline="", encoding="utf-8") as file:
+        rows = list(csv.DictReader(file))
+    assert [int(row["frame_index"]) for row in rows] == [0, 2, 4]
+
+
+def test_main_metadata_only_writes_artifacts_and_prints_summary(tmp_path, monkeypatch, capsys):
+    video_path = tmp_path / "demo.mp4"
+    video_path.write_bytes(b"")
+    output_dir = tmp_path / "metadata"
+    monkeypatch.setattr("src.track_video.read_video_metadata", _fake_read_video_metadata)
+
+    result = main(
+        [
+            "--video-source",
+            str(video_path),
+            "--output-dir",
+            str(output_dir),
+            "--metadata-only",
+            "--sample-every-n",
+            "2",
+            "--max-frames",
+            "3",
+        ]
+    )
+
+    assert result == 0
+    assert (output_dir / "video_metadata.json").exists()
+    assert (output_dir / "frame_index.csv").exists()
+    printed_summary = json.loads(capsys.readouterr().out)
+    assert printed_summary["mode"] == "metadata_only"
+    assert printed_summary["frame_index_rows"] == 3
+
+
 def test_main_writes_tracks_csv_and_prints_summary(tmp_path, capsys):
     detections_csv = tmp_path / "detections.csv"
     output_dir = tmp_path / "out"
@@ -223,9 +355,34 @@ def test_track_video_skeleton_uses_tmp_path_only(tmp_path):
     assert not (tmp_path / "runs").exists()
 
 
+def test_video_metadata_skeleton_uses_tmp_path_only(tmp_path, monkeypatch):
+    video_path = tmp_path / "demo.mp4"
+    video_path.write_bytes(b"")
+    monkeypatch.setattr("src.track_video.read_video_metadata", _fake_read_video_metadata)
+
+    run_video_metadata_skeleton(video_path, tmp_path / "metadata")
+
+    assert not (tmp_path / "local_outputs").exists()
+    assert not (tmp_path / "results").exists()
+    assert not (tmp_path / "runs").exists()
+
+
 def _write_detections_csv(path, rows):
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="", encoding="utf-8") as file:
         writer = csv.DictWriter(file, fieldnames=DETECTIONS_FIELDS)
         writer.writeheader()
         writer.writerows(rows)
+
+
+def _fake_read_video_metadata(video_path):
+    return {
+        "video_path": "/tmp/demo.mp4",
+        "filename": "demo.mp4",
+        "fps": 5.0,
+        "width": 64,
+        "height": 48,
+        "frame_count": 10,
+        "duration_sec": 2.0,
+        "backend": "opencv",
+    }

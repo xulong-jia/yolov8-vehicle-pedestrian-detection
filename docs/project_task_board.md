@@ -152,10 +152,37 @@ Current scope:
 
 Pending after v0.8.3 Step 1:
 
-- [ ] Connect `video_reader.py` to `track_video.py` skeleton / 将 `video_reader.py` 接入 `track_video.py` 骨架 — Target: v0.8.4/v0.9.0 — Status: Pending
+- [x] Connect `video_reader.py` to `track_video.py` skeleton / 将 `video_reader.py` 接入 `track_video.py` 骨架 — Target: v0.8.4/v0.9.0 — Status: Completed in v0.8.4 Step 1
 - [ ] YOLO frame inference / YOLO 帧级推理 — Target: v0.8.4/v0.9.0 — Status: Pending
 - [ ] ByteTrack/DeepSORT adapter integration / ByteTrack/DeepSORT adapter 接入 — Target: v0.8.4/v0.9.0 — Status: Pending
 - [ ] Real `track_video.py` runtime / 真实 `track_video.py` 运行时 — Target: v0.9.0 — Status: Pending
+- [ ] Real tracked video rendering / 真实跟踪视频渲染 — Target: v0.9.0 — Status: Pending
+- [ ] Streamlit video analysis pages / Streamlit 视频分析页面 — Target: v0.9.0 — Status: Pending
+- [ ] FastAPI video jobs / FastAPI 视频任务接口 — Target: v0.9.0 — Status: Pending
+- [ ] FastAPI video result query endpoints / FastAPI 视频结果查询接口 — Target: v0.9.0 — Status: Pending
+- [ ] Real video smoke demo / 真实视频冒烟演示 — Target: v0.9.0 — Status: Pending
+
+## v0.8.4-video-reader-track-video-integration / video_reader 与 track_video 骨架集成
+
+- [x] Step 1 connect `video_reader.py` to `track_video.py` metadata-only mode / Step 1 将 `video_reader.py` 接入 `track_video.py` 元数据模式 — Priority: P0 — Status: Completed — Output: `src/track_video.py`, `tests/test_track_video.py`, `docs/project_task_board.md` — Commit: TBD
+
+Current scope:
+
+- `track_video.py` supports synthetic `detections.csv` to `tracks.csv` conversion
+- `track_video.py` supports `--video-source --metadata-only` mode
+- metadata-only mode writes `video_metadata.json`
+- metadata-only mode writes `frame_index.csv`
+- tests use pytest `tmp_path`
+- no YOLO frame inference
+- no ByteTrack/DeepSORT adapter
+- no real tracking runtime
+- no tracked video rendering
+
+Pending after v0.8.4 Step 1:
+
+- [ ] YOLO frame inference / YOLO 帧级推理 — Target: v0.8.4/v0.9.0 — Status: Pending
+- [ ] ByteTrack/DeepSORT adapter integration / ByteTrack/DeepSORT adapter 接入 — Target: v0.8.4/v0.9.0 — Status: Pending
+- [ ] Real tracking runtime / 真实跟踪运行时 — Target: v0.9.0 — Status: Pending
 - [ ] Real tracked video rendering / 真实跟踪视频渲染 — Target: v0.9.0 — Status: Pending
 - [ ] Streamlit video analysis pages / Streamlit 视频分析页面 — Target: v0.9.0 — Status: Pending
 - [ ] FastAPI video jobs / FastAPI 视频任务接口 — Target: v0.9.0 — Status: Pending
@@ -193,5 +220,5 @@ Pending after v0.8.3 Step 1:
 
 ## Next Recommended Task
 
-1. v0.8.4 connect `video_reader.py` to `track_video.py` skeleton / v0.8.4 将 `video_reader.py` 接入 `track_video.py` 骨架
+1. v0.8.4 Step 2 YOLO frame inference skeleton or adapter contract / v0.8.4 Step 2 YOLO 帧级推理骨架或 adapter 契约
 2. v0.9.0 real ByteTrack/DeepSORT plus Streamlit/FastAPI video workflow / v0.9.0 真实跟踪器与视频分析 UI/API 工作流
