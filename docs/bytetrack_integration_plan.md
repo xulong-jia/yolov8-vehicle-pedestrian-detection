@@ -207,3 +207,17 @@ Recommended next steps:
 - Run analytics-only rerun on ByteTrack tracks.
 - Render a longer or full-length ByteTrack preview.
 - Compare synthetic and ByteTrack track summaries before claiming MOT quality.
+
+## v0.11.3 Runtime Integration Plan and Contract Helper
+
+`v0.11.3` adds the [ByteTrack Runtime Integration Plan](bytetrack_runtime_integration_plan.md) and `src/tracking/bytetrack_runtime_contract.py`.
+
+This step does not run YOLO, does not rerun ByteTrack, does not render video, and does not promote ByteTrack into `track_video.py` yet. It captures the future `track_video.py --tracker bytetrack` runtime contract, path planning, config validation, and track-row summarization in a pure-Python helper with fake unit tests.
+
+Recommended implementation step:
+
+- `v0.11.4-track-video-bytetrack-runtime`
+- add a short-video `track_video.py --tracker bytetrack` path
+- keep `max_frames=300` as the safe default
+- keep the synthetic tracker fallback
+- keep generated outputs under `/tmp` and out of Git

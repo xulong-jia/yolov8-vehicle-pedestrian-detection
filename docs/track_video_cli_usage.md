@@ -501,6 +501,30 @@ Local output summary:
 
 Do not commit `/tmp` outputs, generated CSV files, generated MP4 files, local model weights, or local source videos.
 
+## Planned track_video.py ByteTrack runtime
+
+`v0.11.3` is a plan and contract step for the future `track_video.py --tracker bytetrack` runtime. It does not mean the standard `track_video.py` ByteTrack runtime is complete.
+
+Current runnable ByteTrack spike command remains:
+
+```bash
+.venv/bin/python -m src.track_video_bytetrack_spike ...
+```
+
+Future target command:
+
+```bash
+.venv/bin/python -m src.track_video \
+  --video-source local_videos/source/pexels_crosswalk_traffic_demo.mp4 \
+  --model local_weights/yolov8s_640_50epochs/best.pt \
+  --output-dir /tmp/yolov8_track_video_bytetrack \
+  --tracker bytetrack \
+  --max-frames 300 \
+  --video-id demo
+```
+
+The next implementation step is expected to be `v0.11.4-track-video-bytetrack-runtime`. Until then, `track_video.py --tracker bytetrack` remains a planned runtime path rather than the recommended runnable command.
+
 ## Video metadata-only mode
 
 Use this mode to validate video path reading, metadata extraction, and `frame_index.csv` creation.

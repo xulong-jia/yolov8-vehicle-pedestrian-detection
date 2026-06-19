@@ -163,6 +163,8 @@ Completed experiments and recorded results:
 
 `v0.11.2-lap-dependency-and-bytetrack-rerun` documents the first successful local ByteTrack short-video spike after installing `lap==0.5.13` into the local `.venv`. The 300-frame run produced `746` ByteTrack track rows, `25` unique tracks, and a local 300-frame ByteTrack tracked preview. Outputs are local-only under `/tmp` and are not committed. See [ByteTrack Integration Plan](docs/bytetrack_integration_plan.md).
 
+`v0.11.3-bytetrack-runtime-integration-plan` prepares promotion of the ByteTrack spike into the standard `track_video.py` runtime. It adds a pure-Python runtime contract helper and a formal [ByteTrack Runtime Integration Plan](docs/bytetrack_runtime_integration_plan.md). No real YOLO or ByteTrack rerun is performed in this step.
+
 This phase does not include real ByteTrack/DeepSORT integration, full `track_video.py` runtime integration, video UI pages, FastAPI video jobs, database integration, full-length tracked video validation, or real video benchmarks.
 
 Details: [Video analytics MVP](docs/video_analytics_mvp.md)

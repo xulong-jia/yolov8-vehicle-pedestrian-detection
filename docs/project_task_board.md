@@ -746,6 +746,31 @@ Pending after v0.11.2 local verification:
 - [ ] Full-length ByteTrack preview / 全长 ByteTrack 预览 — Target: v1.0 candidate — Status: Pending
 - [ ] Streamlit/FastAPI integration / Streamlit/FastAPI 集成 — Target: v1.0 candidate — Status: Pending
 
+## v0.11.3-bytetrack-runtime-integration-plan / ByteTrack runtime 接入计划
+
+- [x] Runtime plan doc / runtime 计划文档 — Priority: P0 — Status: Completed in working tree — Output: `docs/bytetrack_runtime_integration_plan.md` — Commit: TBD
+- [x] Contract helper / 契约 helper — Priority: P0 — Status: Completed in working tree — Output: `src/tracking/bytetrack_runtime_contract.py` — Commit: TBD
+- [x] Contract helper tests / 契约 helper 测试 — Priority: P0 — Status: Completed in working tree — Output: `tests/test_bytetrack_runtime_contract.py` — Commit: TBD
+
+Scope:
+
+- pure-Python planning and contract helper only
+- no real YOLO rerun
+- no real ByteTrack rerun
+- no tracked video rendering
+- no `/tmp` output copied into the repository
+- no `track_video.py` runtime change yet
+- no requirements change yet
+
+Pending after v0.11.3 Step 1:
+
+- [ ] Add lap dependency decision / 是否固化 lap 依赖 — Target: v0.11.4+ — Status: Pending
+- [ ] Implement `track_video.py --tracker bytetrack` / 实现 `track_video.py --tracker bytetrack` — Target: v0.11.4 — Status: Pending
+- [ ] Analytics rerun on ByteTrack tracks / 基于 ByteTrack tracks 重跑 analytics — Target: v0.11.5+ — Status: Pending
+- [ ] Synthetic vs ByteTrack comparison / synthetic 与 ByteTrack 对比 — Target: v0.11.5+ — Status: Pending
+- [ ] Full-length validation / 全长验证 — Target: v1.0 candidate — Status: Pending
+- [ ] Streamlit/FastAPI integration / Streamlit/FastAPI 集成 — Target: v1.0 candidate — Status: Pending
+
 ## P3 — Optional Future Experiments / 可选未来实验
 
 - [x] Run YOLOv8s official test split validation if weight is available / 在权重可用时运行 YOLOv8s 官方测试集验证 — Priority: P3 — Status: Done — Output: `docs/experiments/yolov8s_640_50epochs_retrain/`, `docs/evaluation/yolov8s_640_50epochs_official/` — Result: P `0.865`, R `0.838`, mAP50 `0.876`, mAP50-95 `0.601` — Commit: `e4d5adb`

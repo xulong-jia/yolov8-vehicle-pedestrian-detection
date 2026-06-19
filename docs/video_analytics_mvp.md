@@ -580,6 +580,18 @@ Successful local results:
 
 This proves that the Ultralytics ByteTrack dependency path can run locally and that the existing renderer can consume real ByteTrack tracks. It is still not full production integration: ByteTrack is not promoted into `track_video.py`, `lap` is not pinned in requirements, analytics has not been rerun on ByteTrack tracks, synthetic vs ByteTrack comparison is pending, and full-length validation remains pending.
 
+## v0.11.3 ByteTrack Runtime Integration Plan
+
+`v0.11.3` prepares the transition from the short-video ByteTrack spike to a formal `track_video.py --tracker bytetrack` runtime.
+
+This step adds:
+
+- [ByteTrack Runtime Integration Plan](bytetrack_runtime_integration_plan.md)
+- `src/tracking/bytetrack_runtime_contract.py`
+- fake unit tests for config validation, output path planning, track-row summarization, and future runtime plan objects
+
+No real YOLO or ByteTrack rerun is performed in this step. ByteTrack is still not promoted into the standard `track_video.py` runtime. The recommended next implementation version is `v0.11.4-track-video-bytetrack-runtime`.
+
 ## Test Summary
 
 The MVP is covered by synthetic unit tests:

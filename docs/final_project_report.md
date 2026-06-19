@@ -271,6 +271,8 @@ The batch prediction CLI is designed to write generated outputs under `local_out
 
 `v0.11.2-lap-dependency-and-bytetrack-rerun` documents the first successful local ByteTrack short-video spike after installing `lap==0.5.13` into the local `.venv`. The 300-frame run produced `746` ByteTrack track rows, `25` unique tracks, and a local 300-frame ByteTrack tracked preview. Outputs remain local-only under `/tmp` and are not committed.
 
+`v0.11.3-bytetrack-runtime-integration-plan` prepares promotion of the ByteTrack spike into the standard `track_video.py` runtime. It adds a pure-Python runtime contract helper and a formal ByteTrack runtime integration plan. No real YOLO or ByteTrack rerun is performed in this step.
+
 This MVP does not include real ByteTrack/DeepSORT integration, full `track_video.py` runtime integration, full-length tracked video validation, Streamlit video result pages, FastAPI video jobs, database integration, or real video benchmarks.
 
 References:
