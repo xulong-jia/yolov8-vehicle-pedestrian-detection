@@ -164,7 +164,7 @@ Pending after v0.8.3 Step 1:
 
 ## v0.8.4-video-reader-track-video-integration / video_reader 与 track_video 骨架集成
 
-- [x] Step 1 connect `video_reader.py` to `track_video.py` metadata-only mode / Step 1 将 `video_reader.py` 接入 `track_video.py` 元数据模式 — Priority: P0 — Status: Completed — Output: `src/track_video.py`, `tests/test_track_video.py`, `docs/project_task_board.md` — Commit: TBD
+- [x] Step 1 connect `video_reader.py` to `track_video.py` metadata-only mode / Step 1 将 `video_reader.py` 接入 `track_video.py` 元数据模式 — Priority: P0 — Status: Completed — Output: `src/track_video.py`, `tests/test_track_video.py`, `docs/project_task_board.md` — Commit: `be26a40`
 
 Current scope:
 
@@ -220,5 +220,5 @@ Pending after v0.8.4 Step 1:
 
 ## Next Recommended Task
 
-1. v0.8.4 Step 2 YOLO frame inference skeleton or adapter contract / v0.8.4 Step 2 YOLO 帧级推理骨架或 adapter 契约
+1. v0.8.5 lightweight synthetic CLI demo docs or sample command docs / v0.8.5 轻量合成 CLI 演示文档或示例命令文档
 2. v0.9.0 real ByteTrack/DeepSORT plus Streamlit/FastAPI video workflow / v0.9.0 真实跟踪器与视频分析 UI/API 工作流

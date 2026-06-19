@@ -125,6 +125,8 @@ Completed experiments and recorded results:
 
 `v0.8.3-real-video-reading-skeleton` adds a video reader skeleton for safe video path validation, metadata extraction, and frame-index construction. It does not yet run YOLO, read frames for inference, or integrate ByteTrack/DeepSORT.
 
+`v0.8.4-video-reader-track-video-integration` connects the video reader skeleton to `track_video.py`. The CLI now supports metadata-only video mode and synthetic detections-to-tracks mode, but still does not run YOLO, perform real tracking, or render tracked video.
+
 This phase does not include real tracker integration, `track_video.py` runtime integration, video UI pages, FastAPI video jobs, database integration, or real video benchmarks.
 
 Details: [Video analytics MVP](docs/video_analytics_mvp.md)
@@ -468,4 +470,4 @@ Policy:
 - Optionally run YOLOv8m PyTorch speed benchmark if model-family latency completeness is needed.
 - Optionally run YOLOv8m ONNX Runtime benchmark if deployment completeness is needed.
 - Optionally run ONNX Runtime mAP/NMS evaluation only if a separate evaluation protocol is defined.
-- Continue video analytics after v0.8.3 by connecting `video_reader.py` to the `track_video.py` skeleton before YOLO frame inference, tracker adapter, and Streamlit/FastAPI workflow integration.
+- Continue video analytics after v0.8.4 with lightweight CLI demo docs before YOLO frame inference, tracker adapter, and Streamlit/FastAPI workflow integration.

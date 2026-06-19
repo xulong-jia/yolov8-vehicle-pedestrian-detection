@@ -154,9 +154,46 @@ OpenCV / `cv2` is imported lazily. If `cv2` is unavailable in the test environme
 
 Recommended next phases:
 
-- `v0.8.4` or `v0.9.0`: connect `video_reader.py` to the `track_video.py` skeleton.
+- `v0.8.4`: connect `video_reader.py` to the `track_video.py` skeleton.
 - Later: add YOLO frame inference.
 - Later: add a ByteTrack/DeepSORT adapter.
+- Later: connect Streamlit and FastAPI video workflows.
+
+## v0.8.4 Video Reader + Track Video Skeleton Integration
+
+`v0.8.4-video-reader-track-video-integration` connects `video_reader.py` to the `track_video.py` skeleton. The CLI now has a metadata-only video path through the existing skeleton while preserving the synthetic detections-to-tracks contract.
+
+Current `track_video.py` modes:
+
+1. synthetic `detections.csv` to `tracks.csv`
+2. `--video-source --metadata-only` to `video_metadata.json` plus `frame_index.csv`
+
+Metadata-only mode supports:
+
+- `--video-source`
+- `--metadata-only`
+- `--sample-every-n`
+- `--max-frames`
+
+Metadata-only outputs:
+
+- `video_metadata.json`
+- `frame_index.csv`
+
+Current boundaries:
+
+- does not run YOLO
+- does not integrate ByteTrack/DeepSORT
+- does not read frames for inference
+- does not generate annotated video or tracked video
+- does not write to `local_outputs`, `results`, or `runs`
+
+Tests use pytest `tmp_path` and keep generated files outside the repository tree.
+
+Recommended next phases:
+
+- `v0.8.5`: add lightweight synthetic CLI demo docs or sample command docs.
+- `v0.9.0`: add YOLO frame inference plus tracker adapter.
 - Later: connect Streamlit and FastAPI video workflows.
 
 ## Test Summary
