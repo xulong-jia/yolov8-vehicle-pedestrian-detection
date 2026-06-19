@@ -75,7 +75,7 @@
 ## v0.8.0-video-analytics-mvp / 视频分析 MVP
 
 - [x] Step 1 configs + contracts / Step 1 配置与数据契约 — Priority: P0 — Status: Done — Output: `configs/tracking.yaml`, `configs/analytics.yaml`, `docs/video_analytics_mvp.md`, `docs/project_task_board.md` — Commit: TBD
-- [ ] Step 2 geometry TDD / Step 2 几何工具 TDD — Priority: P0 — Status: Pending — Output: `src/analytics/geometry.py`, `tests/test_geometry.py` — Commit: TBD
+- [x] Step 2 geometry TDD / Step 2 几何工具 TDD — Priority: P0 — Status: Done — Output: `src/analytics/__init__.py`, `src/analytics/geometry.py`, `tests/test_geometry.py` — Commit: TBD
 - [ ] Step 3 line counter TDD / Step 3 穿线计数 TDD — Priority: P0 — Status: Pending — Output: `src/analytics/line_counter.py`, `tests/test_line_counter.py` — Commit: TBD
 - [ ] Step 4 ROI counter TDD / Step 4 ROI 计数 TDD — Priority: P0 — Status: Pending — Output: `src/analytics/roi_counter.py`, `tests/test_roi_counter.py` — Commit: TBD
 - [ ] Step 5 event rules TDD / Step 5 事件规则 TDD — Priority: P0 — Status: Pending — Output: `src/analytics/event_rules.py`, `tests/test_event_rules.py` — Commit: TBD
@@ -122,6 +122,6 @@ Deferred beyond v0.8.0:
 
 ## Next Recommended Task
 
-1. v0.8.0 Step 2 geometry TDD / v0.8.0 Step 2 几何工具 TDD
-2. v0.8.0 Step 3 line counter TDD / v0.8.0 Step 3 穿线计数 TDD
-3. v0.8.0 Step 4 ROI counter TDD / v0.8.0 Step 4 ROI 计数 TDD
+1. v0.8.0 Step 3 line counter TDD / v0.8.0 Step 3 穿线计数 TDD
+2. v0.8.0 Step 4 ROI counter TDD / v0.8.0 Step 4 ROI 计数 TDD
+3. v0.8.0 Step 5 event rules TDD / v0.8.0 Step 5 事件规则 TDD
