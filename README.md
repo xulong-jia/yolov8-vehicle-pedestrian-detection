@@ -149,6 +149,8 @@ Completed experiments and recorded results:
 
 `v0.10.0-cli-module-invocation-ergonomics` documents and tests module-style CLI invocation for local smoke tools. Prefer `.venv/bin/python -m src.run_video_analysis_smoke ...` and `.venv/bin/python -m src.smoke_preflight ...` for local runs. See [track_video.py CLI usage](docs/track_video_cli_usage.md) and [Real Local Smoke Run Result](docs/real_local_smoke_run_result.md).
 
+`v0.10.1-real-smoke-analytics-config-tuning` adds an analytics config tuning helper. It summarizes `tracks.csv` coordinate distributions and suggests line, ROI, and event-rule config for tuning real smoke analytics without rerunning YOLO. See [Analytics Config Tuning](docs/analytics_config_tuning.md).
+
 This phase does not include real ByteTrack/DeepSORT integration, full `track_video.py` runtime integration, video UI pages, FastAPI video jobs, database integration, tracked video rendering, or real video benchmarks.
 
 Details: [Video analytics MVP](docs/video_analytics_mvp.md)

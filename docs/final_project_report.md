@@ -257,6 +257,8 @@ The batch prediction CLI is designed to write generated outputs under `local_out
 
 `v0.10.0-cli-module-invocation-ergonomics` documents and tests module-style CLI invocation for local smoke tools. The recommended local command is `.venv/bin/python -m src.run_video_analysis_smoke ...`; `src.smoke_preflight` is also callable with `.venv/bin/python -m src.smoke_preflight ...`.
 
+`v0.10.1-real-smoke-analytics-config-tuning` adds an analytics config tuning helper. It summarizes `tracks.csv` coordinate distributions and suggests line, ROI, and event-rule config so real smoke analytics can be tuned without rerunning YOLO.
+
 This MVP does not include real ByteTrack/DeepSORT integration, full `track_video.py` runtime integration, tracked video rendering, Streamlit video result pages, FastAPI video jobs, database integration, or real video benchmarks.
 
 References:
@@ -264,6 +266,7 @@ References:
 - [Video analytics MVP](video_analytics_mvp.md)
 - [track_video.py CLI usage](track_video_cli_usage.md)
 - [Real local smoke run result](real_local_smoke_run_result.md)
+- [Analytics config tuning](analytics_config_tuning.md)
 
 ## 7. Deployment and Serving Preparation
 

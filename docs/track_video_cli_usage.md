@@ -360,6 +360,21 @@ Expected output:
 - checks for `model_path`, `video_path`, `output_dir`, `ultralytics`, and `cv2`
 - command previews for `predict_video.py`, `track_video.py --tracker synthetic`, and `run_video_analysis_smoke.py`
 
+## Analytics config suggestion from tracks.csv
+
+After a smoke run has produced `tracks.csv`, use the analytics config suggester to inspect coordinate distributions and generate a starting-point config suggestion.
+
+```bash
+.venv/bin/python -m src.analytics_config_suggester \
+  --tracks-csv /tmp/yolov8_real_smoke/tracking/tracks.csv \
+  --video-id demo \
+  --output-json /tmp/yolov8_real_smoke/suggested_analytics_config.json
+```
+
+This command does not rerun YOLO, does not run a tracker, and only reads the existing `tracks.csv`. Keep the suggested JSON under `/tmp` or another ignored local path. Do not commit generated `tracks.csv`, suggested config JSON, real videos, model weights, or smoke outputs.
+
+Details: [Analytics Config Tuning](analytics_config_tuning.md)
+
 ## Video metadata-only mode
 
 Use this mode to validate video path reading, metadata extraction, and `frame_index.csv` creation.

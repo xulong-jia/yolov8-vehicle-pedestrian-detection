@@ -119,3 +119,9 @@ Do not commit these generated CSV, JSON, or JSONL files.
 - Tune the smoke analytics config for a real video.
 - Integrate real ByteTrack later.
 - Add tracked video rendering later.
+
+## v0.10.1 Follow-up
+
+The first real smoke run produced analytics artifacts, but the default smoke analytics config did not trigger line, ROI, or event counts. `src.analytics_config_suggester` was added to suggest line, ROI, and event-rule settings from the existing `tracks.csv` coordinate distribution.
+
+See [Analytics Config Tuning](analytics_config_tuning.md).

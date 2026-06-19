@@ -486,6 +486,16 @@ Recommended commands:
 
 This avoids using the `PYTHONPATH=.` workaround as the primary path. The fallback remains available for direct script execution when needed. This step only documents and tests CLI/module invocation ergonomics; it does not integrate a real tracker, add ByteTrack/DeepSORT dependencies, or render tracked video.
 
+## v0.10.1 Real Smoke Analytics Config Tuning Helper
+
+`v0.10.1-real-smoke-analytics-config-tuning` adds `src/analytics_config_suggester.py`.
+
+The helper reads an existing `tracks.csv`, summarizes bbox, center, and bottom-center coordinate distributions, and suggests line, ROI, and event-rule settings for follow-up analytics tuning.
+
+It does not rerun YOLO, does not change the tracker, does not integrate ByteTrack/DeepSORT, and does not render tracked video. It is a heuristic starting point for tuning a real smoke video's analytics config.
+
+Details: [Analytics Config Tuning](analytics_config_tuning.md)
+
 ## Test Summary
 
 The MVP is covered by synthetic unit tests:
