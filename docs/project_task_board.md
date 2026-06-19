@@ -94,6 +94,18 @@ Deferred beyond v0.8.0:
 - [ ] React frontend / React 前端 — Target: v0.9.0+ — Status: Pending
 - [ ] Real video benchmark / 真实视频基准测试 — Target: v0.9.0+ — Status: Pending
 
+## v0.8.1-video-analysis-synthetic-pipeline / 视频分析合成流水线
+
+- [x] Step 1 synthetic pipeline / Step 1 合成端到端流水线 — Priority: P0 — Status: Done — Output: `src/services/synthetic_video_analysis_pipeline.py`, `tests/test_synthetic_video_analysis_pipeline.py`, `docs/project_task_board.md` — Commit: TBD
+
+Pending after v0.8.1 Step 1:
+
+- [ ] Real `track_video.py` integration / 真实 `track_video.py` 接入 — Target: v0.8.1/v0.9.0 — Status: Pending
+- [ ] Real ByteTrack/DeepSORT adapter integration / 真实 ByteTrack/DeepSORT adapter 接入 — Target: v0.8.1/v0.9.0 — Status: Pending
+- [ ] Streamlit video analysis pages / Streamlit 视频分析页面 — Target: v0.8.1/v0.9.0 — Status: Pending
+- [ ] FastAPI video jobs / FastAPI 异步视频任务接口 — Target: v0.8.1/v0.9.0 — Status: Pending
+- [ ] Real video smoke demo / 真实视频冒烟演示 — Target: v0.8.1/v0.9.0 — Status: Pending
+
 ## P3 — Optional Future Experiments / 可选未来实验
 
 - [x] Run YOLOv8s official test split validation if weight is available / 在权重可用时运行 YOLOv8s 官方测试集验证 — Priority: P3 — Status: Done — Output: `docs/experiments/yolov8s_640_50epochs_retrain/`, `docs/evaluation/yolov8s_640_50epochs_official/` — Result: P `0.865`, R `0.838`, mAP50 `0.876`, mAP50-95 `0.601` — Commit: `e4d5adb`
@@ -125,5 +137,5 @@ Deferred beyond v0.8.0:
 
 ## Next Recommended Task
 
-1. v0.8.1 synthetic end-to-end video analysis sample or `track_video.py` skeleton / v0.8.1 合成端到端视频分析样例或 `track_video.py` 骨架
+1. v0.8.1 Step 2 `track_video.py` skeleton with synthetic CSV-style inputs / v0.8.1 Step 2 使用合成 CSV 风格输入的 `track_video.py` 骨架
 2. v0.9.0 real ByteTrack/DeepSORT plus Streamlit/FastAPI video workflow / v0.9.0 真实跟踪器与视频分析 UI/API 工作流
