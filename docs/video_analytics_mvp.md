@@ -299,6 +299,45 @@ Still pending after v0.9.2:
 - FastAPI video jobs
 - real video smoke demo
 
+## v0.9.3 Video Analysis Job Skeleton
+
+`v0.9.3-video-analysis-job-skeleton` adds `src/services/video_analysis_job.py`. The module organizes existing `detections.csv` and `tracks.csv` artifacts into a `VideoAnalysisCenter` run directory.
+
+The job skeleton copies these artifacts into the run directory:
+
+- `detections.csv`
+- `tracks.csv`
+
+It writes:
+
+- `metadata.json`
+- `video_analysis_summary.json`
+
+The summary includes:
+
+- `detection_count`
+- `track_row_count`
+- `track_count`
+- `artifact_paths`
+- `count_summary`
+- `roi_summary`
+- `event_summary`
+- `bad_case_links`
+
+Current boundaries:
+
+- does not run YOLO
+- does not run tracker
+- does not integrate real ByteTrack/DeepSORT dependencies
+- does not generate tracked video
+- does not connect Streamlit or FastAPI
+
+Recommended next phases:
+
+- `v0.9.4`: document a three-step local flow: `predict_video.py` to `track_video.py` synthetic tracker to `video_analysis_job`.
+- Later: run analytics on real tracks.
+- Later: integrate the real ByteTrack dependency.
+
 ## Test Summary
 
 The MVP is covered by synthetic unit tests:
@@ -315,6 +354,7 @@ The MVP is covered by synthetic unit tests:
 - `tests/test_predict_video.py`
 - `tests/test_tracking_adapters.py`
 - `tests/test_predict_to_track_smoke_flow.py`
+- `tests/test_video_analysis_job.py`
 
 ## Current Baseline
 

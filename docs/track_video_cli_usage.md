@@ -92,6 +92,19 @@ Expected files:
 
 Step 1 runs YOLO if you provide a real model and real video. The automated test for this flow uses fake YOLO and `tmp_path` instead. Step 2 still uses the synthetic tracker and is not real ByteTrack/DeepSORT tracking. Keep model weights and videos local, write smoke outputs to `/tmp`, and do not commit `/tmp` outputs, generated `detections.csv`, generated `tracks.csv`, real videos, or model weights.
 
+## Organizing outputs with Video Analysis Center
+
+After `detections.csv` and `tracks.csv` already exist, `src/services/video_analysis_job.py` can organize them into a `VideoAnalysisCenter` run directory. This is currently a service function used from Python and tests, not a CLI command.
+
+The job skeleton copies existing CSV artifacts and writes:
+
+- `metadata.json`
+- `detections.csv`
+- `tracks.csv`
+- `video_analysis_summary.json`
+
+It does not run YOLO, does not run a tracker, and does not render tracked video. Use it only with already generated CSV files and keep generated run outputs outside Git-tracked directories unless they are deliberate tiny documentation examples.
+
 ## Video metadata-only mode
 
 Use this mode to validate video path reading, metadata extraction, and `frame_index.csv` creation.

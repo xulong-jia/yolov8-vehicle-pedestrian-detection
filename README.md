@@ -135,6 +135,8 @@ Completed experiments and recorded results:
 
 `v0.9.2-two-command-smoke-flow` documents and tests a two-command smoke flow from `predict_video.py` detections export to `track_video.py` synthetic tracking. It validates the file-contract chain without real ByteTrack or tracked video rendering. See [track_video.py CLI usage](docs/track_video_cli_usage.md) and [Video analytics MVP](docs/video_analytics_mvp.md).
 
+`v0.9.3-video-analysis-job-skeleton` adds a Video Analysis Center job skeleton that organizes existing `detections.csv` and `tracks.csv` into a run directory. It writes `metadata.json` and `video_analysis_summary.json`, but does not run YOLO, run a tracker, or render tracked video. See [Video analytics MVP](docs/video_analytics_mvp.md).
+
 This phase does not include real ByteTrack/DeepSORT integration, full `track_video.py` runtime integration, video UI pages, FastAPI video jobs, database integration, tracked video rendering, or real video benchmarks.
 
 Details: [Video analytics MVP](docs/video_analytics_mvp.md)

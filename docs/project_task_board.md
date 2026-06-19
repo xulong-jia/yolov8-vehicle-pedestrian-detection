@@ -301,7 +301,7 @@ Pending after v0.9.2 Step 1:
 
 ## v0.9.3-video-analysis-center-real-job-skeleton / Video Analysis Center 真实任务骨架
 
-- [x] Step 1 Video Analysis Center real-job skeleton / Step 1 Video Analysis Center 真实任务骨架 — Priority: P0 — Status: Completed in working tree — Output: `src/services/video_analysis_job.py`, `tests/test_video_analysis_job.py`, `docs/project_task_board.md` — Commit: TBD
+- [x] Step 1 Video Analysis Center real-job skeleton / Step 1 Video Analysis Center 真实任务骨架 — Priority: P0 — Status: Completed — Output: `src/services/video_analysis_job.py`, `tests/test_video_analysis_job.py`, `docs/project_task_board.md` — Commit: `6e4ede9`
 
 Current scope:
 

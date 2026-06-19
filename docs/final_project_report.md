@@ -243,6 +243,8 @@ The batch prediction CLI is designed to write generated outputs under `local_out
 
 `v0.9.2-two-command-smoke-flow` documents and tests a two-command smoke flow from `predict_video.py` detections export to `track_video.py` synthetic tracking. It validates the `detections.csv` to `tracks.csv` file-contract chain without real ByteTrack or tracked video rendering.
 
+`v0.9.3-video-analysis-job-skeleton` adds a Video Analysis Center job skeleton that organizes existing `detections.csv` and `tracks.csv` into a run directory. It writes `metadata.json` and `video_analysis_summary.json`, but does not run YOLO, run a tracker, or render tracked video.
+
 This MVP does not include real ByteTrack/DeepSORT integration, full `track_video.py` runtime integration, tracked video rendering, Streamlit video result pages, FastAPI video jobs, database integration, or real video benchmarks.
 
 References:
