@@ -526,6 +526,21 @@ This step does not rerun YOLO, does not regenerate detections or tracks, does no
 
 Details: [Tracked Video Rendering](tracked_video_rendering.md)
 
+## v0.11.0 ByteTrack Discovery Spike
+
+`v0.11.0` adds `src/tracking/bytetrack_discovery.py` and [ByteTrack Integration Plan](bytetrack_integration_plan.md).
+
+This is discovery only. It does not install new dependencies, does not run real ByteTrack, does not run real DeepSORT, does not run YOLO, and does not generate `detections.csv`, `tracks.csv`, JSON artifacts, or tracked videos.
+
+The discovery helper defines how ByteTrack-like outputs, especially Ultralytics `model.track(..., tracker="bytetrack.yaml")` outputs, can be normalized into the existing `tracks.csv` contract. It uses duck typing and fake test objects so tests do not depend on Ultralytics, OpenCV, torch, numpy, model weights, or real videos.
+
+Recommended next step:
+
+- `v0.11.1`: run an explicitly approved short local Ultralytics `model.track` spike.
+- Export real ByteTrack-like rows to `tracks.csv` under `/tmp`.
+- Reuse the existing tracked video renderer for a short preview.
+- Keep the synthetic tracker fallback until real ByteTrack track quality is reviewed.
+
 ## Test Summary
 
 The MVP is covered by synthetic unit tests:
@@ -548,6 +563,7 @@ The MVP is covered by synthetic unit tests:
 - `tests/test_analytics_only_rerun.py`
 - `tests/test_analytics_overlay_plan.py`
 - `tests/test_render_tracked_video.py`
+- `tests/test_bytetrack_discovery.py`
 
 ## Current Baseline
 

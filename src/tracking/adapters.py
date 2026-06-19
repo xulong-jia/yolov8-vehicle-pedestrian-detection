@@ -11,6 +11,18 @@ from typing import Any
 from src.analytics.geometry import bbox_center, bbox_size_and_area
 
 
+BYTETRACK_DISCOVERY_NOTE = (
+    "ByteTrackAdapter is not implemented yet; real ByteTrack dependency is not "
+    "integrated yet. See docs/bytetrack_integration_plan.md and "
+    "src/tracking/bytetrack_discovery.py."
+)
+DEEPSORT_DISCOVERY_NOTE = (
+    "DeepSORTAdapter is not implemented yet; real DeepSORT dependency is not "
+    "integrated yet. See docs/bytetrack_integration_plan.md and "
+    "src/tracking/bytetrack_discovery.py."
+)
+
+
 class BaseTrackerAdapter:
     def __init__(self, tracker_type: str) -> None:
         self.tracker_type = tracker_type
@@ -69,7 +81,7 @@ class ByteTrackAdapter(BaseTrackerAdapter):
         frame_index: int | None = None,
         timestamp_sec: float | None = None,
     ) -> list[dict[str, Any]]:
-        raise NotImplementedError("real ByteTrack dependency is not integrated yet")
+        raise NotImplementedError(BYTETRACK_DISCOVERY_NOTE)
 
 
 class DeepSORTAdapter(BaseTrackerAdapter):
@@ -82,7 +94,7 @@ class DeepSORTAdapter(BaseTrackerAdapter):
         frame_index: int | None = None,
         timestamp_sec: float | None = None,
     ) -> list[dict[str, Any]]:
-        raise NotImplementedError("real DeepSORT dependency is not integrated yet")
+        raise NotImplementedError(DEEPSORT_DISCOVERY_NOTE)
 
 
 def create_tracker_adapter(tracker_type: str, **kwargs: Any) -> BaseTrackerAdapter:

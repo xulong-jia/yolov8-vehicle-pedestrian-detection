@@ -422,6 +422,18 @@ After a source video and `tracks.csv` already exist, render a local tracked prev
 
 This does not rerun YOLO and does not run a tracker. It uses existing tracks to draw bbox, track labels, line overlays, and ROI overlays. Write output videos to `/tmp` or another ignored path, and do not commit generated preview videos.
 
+## ByteTrack discovery
+
+`v0.11.0` adds a discovery helper for planning real ByteTrack integration:
+
+```bash
+.venv/bin/python -m src.tracking.bytetrack_discovery --pretty
+```
+
+This command does not run YOLO, does not run ByteTrack, does not run DeepSORT, and does not create output files. It checks optional module availability with `importlib.util.find_spec`, summarizes candidate integration paths, and documents the `tracks.csv` contract that future ByteTrack exports must satisfy.
+
+The recommended next implementation path is a short, explicitly approved Ultralytics `model.track(..., tracker="bytetrack.yaml")` spike that writes real ByteTrack-like `tracks.csv` output under `/tmp`. Keep the synthetic tracker fallback until real ByteTrack quality is reviewed.
+
 ## Video metadata-only mode
 
 Use this mode to validate video path reading, metadata extraction, and `frame_index.csv` creation.
@@ -463,9 +475,9 @@ Expected output:
 
 Pending runtime work:
 
-- real YOLO frame inference
 - real ByteTrack/DeepSORT dependency integration
-- tracked video rendering
+- real ByteTrack `tracks.csv` export
+- synthetic vs ByteTrack track comparison
 - Video Analysis Center integration for real video jobs
 - Streamlit video pages
 - FastAPI video jobs

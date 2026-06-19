@@ -56,10 +56,15 @@ def test_placeholder_adapters_raise_not_implemented():
 
     assert bytetrack.tracker_type == "bytetrack"
     assert deepsort.tracker_type == "deepsort"
-    with pytest.raises(NotImplementedError, match="real ByteTrack dependency is not integrated yet"):
+    with pytest.raises(NotImplementedError, match="ByteTrackAdapter is not implemented yet"):
         bytetrack.update([detection_row()])
-    with pytest.raises(NotImplementedError, match="real DeepSORT dependency is not integrated yet"):
+    with pytest.raises(NotImplementedError, match="DeepSORTAdapter is not implemented yet"):
         deepsort.update([detection_row()])
+
+
+def test_placeholder_adapters_point_to_discovery_plan():
+    with pytest.raises(NotImplementedError, match="bytetrack_discovery.py"):
+        create_tracker_adapter("bytetrack").update([detection_row()])
 
 
 def test_base_tracker_adapter_update_is_abstract_contract():

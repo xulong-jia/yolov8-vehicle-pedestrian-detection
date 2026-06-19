@@ -653,6 +653,38 @@ Pending after v0.10.4 Step 1:
 - [ ] Streamlit video playback / Streamlit 视频播放 — Target: v1.0 candidate — Status: Pending
 - [ ] FastAPI video artifact endpoint / FastAPI 视频 artifact 端点 — Target: v1.0 candidate — Status: Pending
 
+## v0.11.0-bytetrack-discovery-spike / ByteTrack 发现性 spike
+
+- [x] Step 1 ByteTrack discovery helper and plan / Step 1 ByteTrack 发现性 helper 与计划 — Priority: P0 — Status: Completed in working tree — Output: `src/tracking/bytetrack_discovery.py`, `tests/test_bytetrack_discovery.py`, `docs/bytetrack_integration_plan.md`, `docs/project_task_board.md`, `docs/video_analytics_mvp.md`, `README.md`, `docs/final_project_report.md`, `docs/track_video_cli_usage.md` — Commit: TBD
+
+Current scope:
+
+- pure-Python discovery helper only
+- optional module checks use `importlib.util.find_spec`
+- no real ByteTrack runtime
+- no real DeepSORT runtime
+- no YOLO run
+- no local model or video read
+- no generated CSV, JSON, JSONL, or video outputs
+- validates how fake Ultralytics `model.track` output maps into the existing `tracks.csv` contract
+- keeps synthetic tracker fallback
+
+Recommended path:
+
+- first short local Ultralytics `model.track(..., tracker="bytetrack.yaml")` spike after explicit approval
+- export real ByteTrack-like `tracks.csv` under `/tmp`
+- render a short tracked preview from real ByteTrack tracks
+- compare synthetic vs ByteTrack track summaries before claiming tracking quality
+
+Pending after v0.11.0 Step 1:
+
+- [ ] Ultralytics ByteTrack short local spike / Ultralytics ByteTrack 短视频本地 spike — Target: v0.11.1 — Status: Pending
+- [ ] Export real ByteTrack `tracks.csv` / 导出真实 ByteTrack `tracks.csv` — Target: v0.11.1+ — Status: Pending
+- [ ] Render tracked video from real ByteTrack tracks / 基于真实 ByteTrack tracks 渲染跟踪视频 — Target: v0.11.2+ — Status: Pending
+- [ ] Compare synthetic vs ByteTrack tracks / 对比 synthetic 与 ByteTrack 轨迹 — Target: v0.11.2+ — Status: Pending
+- [ ] Streamlit video playback / Streamlit 视频播放 — Target: v1.0 candidate — Status: Pending
+- [ ] FastAPI video jobs / FastAPI 视频任务 — Target: v1.0 candidate — Status: Pending
+
 ## P3 — Optional Future Experiments / 可选未来实验
 
 - [x] Run YOLOv8s official test split validation if weight is available / 在权重可用时运行 YOLOv8s 官方测试集验证 — Priority: P3 — Status: Done — Output: `docs/experiments/yolov8s_640_50epochs_retrain/`, `docs/evaluation/yolov8s_640_50epochs_official/` — Result: P `0.865`, R `0.838`, mAP50 `0.876`, mAP50-95 `0.601` — Commit: `e4d5adb`

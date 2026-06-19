@@ -265,11 +265,14 @@ The batch prediction CLI is designed to write generated outputs under `local_out
 
 `v0.10.4-tracked-video-rendering` adds tracked video rendering from existing tracks. It renders local preview videos with bbox, track labels, line overlays, and ROI overlays without rerunning YOLO.
 
+`v0.11.0-bytetrack-discovery-spike` adds a ByteTrack integration discovery helper and plan. It does not run real ByteTrack yet; it documents candidate integration paths and validates how Ultralytics `model.track`-style outputs can be normalized into the existing `tracks.csv` contract.
+
 This MVP does not include real ByteTrack/DeepSORT integration, full `track_video.py` runtime integration, full-length tracked video validation, Streamlit video result pages, FastAPI video jobs, database integration, or real video benchmarks.
 
 References:
 
 - [Video analytics MVP](video_analytics_mvp.md)
+- [ByteTrack integration plan](bytetrack_integration_plan.md)
 - [track_video.py CLI usage](track_video_cli_usage.md)
 - [Real local smoke run result](real_local_smoke_run_result.md)
 - [Analytics config tuning](analytics_config_tuning.md)
