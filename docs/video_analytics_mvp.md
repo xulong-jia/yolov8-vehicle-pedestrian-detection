@@ -280,6 +280,25 @@ Recommended next phases:
 - `v0.9.2`: connect `predict_video.py` `detections.csv` output with `track_video.py` synthetic tracker in a documented two-command smoke flow.
 - Later: integrate the real ByteTrack dependency behind the existing adapter interface.
 
+## v0.9.2 Two-Command Smoke Flow
+
+`v0.9.2-two-command-video-analysis-smoke-flow` documents and tests the current safe two-command predict-to-track path:
+
+1. `predict_video.py` generates `detections.csv`.
+2. `track_video.py` reads `detections.csv` and uses the synthetic tracker to generate `tracks.csv`.
+
+The automated smoke test uses fake YOLO results and pytest `tmp_path`, so it does not load real model weights, read a real video, write repository outputs, or require GPU access.
+
+Still pending after v0.9.2:
+
+- real ByteTrack dependency integration
+- real DeepSORT dependency integration
+- tracked video rendering
+- Video Analysis Center integration for real video jobs
+- Streamlit video pages
+- FastAPI video jobs
+- real video smoke demo
+
 ## Test Summary
 
 The MVP is covered by synthetic unit tests:
@@ -295,6 +314,7 @@ The MVP is covered by synthetic unit tests:
 - `tests/test_video_reader.py`
 - `tests/test_predict_video.py`
 - `tests/test_tracking_adapters.py`
+- `tests/test_predict_to_track_smoke_flow.py`
 
 ## Current Baseline
 

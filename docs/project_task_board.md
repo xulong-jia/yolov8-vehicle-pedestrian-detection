@@ -275,6 +275,30 @@ Pending after v0.9.1 Step 1:
 - [ ] FastAPI video jobs / FastAPI 视频任务 — Target: v1.0 candidate — Status: Pending
 - [ ] Real video smoke demo / 真实视频冒烟演示 — Target: v1.0 candidate — Status: Pending
 
+## v0.9.2-two-command-video-analysis-smoke-flow / 两命令视频分析冒烟链路
+
+- [x] Step 1 two-command predict-to-track smoke flow / Step 1 两命令 predict-to-track 冒烟链路 — Priority: P0 — Status: Completed in working tree — Output: `tests/test_predict_to_track_smoke_flow.py`, `docs/track_video_cli_usage.md`, `docs/video_analytics_mvp.md`, `docs/project_task_board.md` — Commit: TBD
+
+Current scope:
+
+- documents `predict_video.py` to `track_video.py` two-command flow
+- tests `predict_video.py` fake YOLO output to `detections.csv`
+- tests `track_video.py` synthetic tracker output to `tracks.csv`
+- tests use pytest `tmp_path` and monkeypatch/mock YOLO
+- no real ByteTrack/DeepSORT dependency integration
+- no tracked video rendering
+- no repository output directories are created
+
+Pending after v0.9.2 Step 1:
+
+- [ ] Real ByteTrack dependency integration / 真实 ByteTrack 依赖集成 — Target: v1.0 candidate — Status: Pending
+- [ ] Real DeepSORT dependency integration / 真实 DeepSORT 依赖集成 — Target: v1.0 candidate — Status: Pending
+- [ ] Tracked video rendering / 跟踪视频渲染 — Target: v1.0 candidate — Status: Pending
+- [ ] Video Analysis Center integration for real video jobs / 真实视频任务接入 Video Analysis Center — Target: v0.9.2+ — Status: Pending
+- [ ] Streamlit video pages / Streamlit 视频页面 — Target: v1.0 candidate — Status: Pending
+- [ ] FastAPI video jobs / FastAPI 视频任务 — Target: v1.0 candidate — Status: Pending
+- [ ] Real video smoke demo / 真实视频冒烟演示 — Target: v1.0 candidate — Status: Pending
+
 ## P3 — Optional Future Experiments / 可选未来实验
 
 - [x] Run YOLOv8s official test split validation if weight is available / 在权重可用时运行 YOLOv8s 官方测试集验证 — Priority: P3 — Status: Done — Output: `docs/experiments/yolov8s_640_50epochs_retrain/`, `docs/evaluation/yolov8s_640_50epochs_official/` — Result: P `0.865`, R `0.838`, mAP50 `0.876`, mAP50-95 `0.601` — Commit: `e4d5adb`
@@ -306,5 +330,5 @@ Pending after v0.9.1 Step 1:
 
 ## Next Recommended Task
 
-1. v0.9.1 Step 2 connect `predict_video.py` CSV output to Video Analysis Center skeleton / v0.9.1 Step 2 将 `predict_video.py` CSV 输出接入 Video Analysis Center 骨架
+1. v0.9.2 Step 2 connect two-command smoke outputs to Video Analysis Center skeleton / v0.9.2 Step 2 将两命令冒烟输出接入 Video Analysis Center 骨架
 2. v1.0 candidate real ByteTrack dependency integration planning / v1.0 候选真实 ByteTrack 依赖集成规划

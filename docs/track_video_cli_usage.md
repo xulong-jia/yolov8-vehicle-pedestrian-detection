@@ -59,6 +59,39 @@ Expected output:
 
 `--tracker bytetrack` and `--tracker deepsort` are recognized only as placeholder adapter names at this stage. They currently fail with `NotImplementedError` because the real ByteTrack/DeepSORT dependencies have not been integrated. Do not use them as successful smoke commands yet.
 
+## Two-command smoke flow
+
+Use this flow to connect the current CSV-first detector output to the safe synthetic tracker path. Keep generated files under `/tmp` and do not commit them.
+
+Step 1: generate `detections.csv` with `predict_video.py`.
+
+```bash
+python3 src/predict_video.py \
+  --model /absolute/path/to/best.pt \
+  --source /absolute/path/to/video.mp4 \
+  --output-csv /tmp/yolov8_video_smoke/detections.csv \
+  --conf 0.25 \
+  --imgsz 640 \
+  --device cpu \
+  --video-id demo
+```
+
+Step 2: convert `detections.csv` to `tracks.csv` with the synthetic tracker.
+
+```bash
+python3 src/track_video.py \
+  --detections-csv /tmp/yolov8_video_smoke/detections.csv \
+  --output-dir /tmp/yolov8_video_smoke/tracking \
+  --tracker synthetic
+```
+
+Expected files:
+
+- `/tmp/yolov8_video_smoke/detections.csv`
+- `/tmp/yolov8_video_smoke/tracking/tracks.csv`
+
+Step 1 runs YOLO if you provide a real model and real video. Step 2 still uses the synthetic tracker and is not real ByteTrack/DeepSORT tracking. Keep model weights and videos local, and do not commit `/tmp` outputs.
+
 ## Video metadata-only mode
 
 Use this mode to validate video path reading, metadata extraction, and `frame_index.csv` creation.
