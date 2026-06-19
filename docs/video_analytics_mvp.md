@@ -119,9 +119,45 @@ The CLI writes `tracks.csv` with fields matching the v0.8.0 `tracks.csv` contrac
 
 Recommended next phases:
 
-- `v0.8.3` or `v0.9.0`: add real video reading and YOLO frame inference skeletons.
+- `v0.8.3`: add a real video reading metadata skeleton.
 - After that: integrate a ByteTrack/DeepSORT adapter.
 - Then: connect Streamlit and FastAPI video workflows.
+
+## v0.8.3 Real Video Reading Skeleton
+
+`v0.8.3-real-video-reading-skeleton` adds `src/video_reader.py` as a safe video reading metadata layer. The module only validates video paths, reads video metadata, and builds frame-index rows before any YOLO inference or tracker integration.
+
+Readable metadata:
+
+- `fps`
+- `width`
+- `height`
+- `frame_count`
+- `duration_sec`
+- `filename`
+- `video_path`
+
+Writable artifacts:
+
+- `video_metadata.json`
+- `frame_index.csv`
+
+Current boundaries:
+
+- does not run YOLO
+- does not integrate ByteTrack/DeepSORT
+- does not save frame images
+- does not generate annotated video
+- does not create a real `track_video.py` runtime
+
+OpenCV / `cv2` is imported lazily. If `cv2` is unavailable in the test environment, the tiny video metadata test is skipped instead of failing. Tests use pytest `tmp_path` and do not write to `local_outputs`, `results`, or `runs`.
+
+Recommended next phases:
+
+- `v0.8.4` or `v0.9.0`: connect `video_reader.py` to the `track_video.py` skeleton.
+- Later: add YOLO frame inference.
+- Later: add a ByteTrack/DeepSORT adapter.
+- Later: connect Streamlit and FastAPI video workflows.
 
 ## Test Summary
 
@@ -135,6 +171,7 @@ The MVP is covered by synthetic unit tests:
 - `tests/test_video_analysis_center.py`
 - `tests/test_synthetic_video_analysis_pipeline.py`
 - `tests/test_track_video.py`
+- `tests/test_video_reader.py`
 
 ## Current Baseline
 

@@ -231,6 +231,8 @@ The batch prediction CLI is designed to write generated outputs under `local_out
 
 `v0.8.2-track-video-skeleton` adds a `track_video.py` skeleton CLI for synthetic detections-to-tracks conversion. It validates the CLI and `tracks.csv` contract without reading real video, running YOLO, or integrating ByteTrack/DeepSORT.
 
+`v0.8.3-real-video-reading-skeleton` adds a video reader skeleton for safe video path validation, metadata extraction, and frame-index construction. It does not yet run YOLO, read frames for inference, or integrate ByteTrack/DeepSORT.
+
 This MVP does not include real ByteTrack/DeepSORT integration, `track_video.py` runtime integration, Streamlit video result pages, FastAPI video jobs, database integration, or real video benchmarks.
 
 Reference: [Video analytics MVP](video_analytics_mvp.md)
