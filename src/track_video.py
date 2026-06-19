@@ -2,11 +2,13 @@
 
 Supported skeleton modes:
 
-- synthetic detections.csv to tracks.csv conversion
+- detections.csv to tracks.csv conversion through the tracking adapter factory
 - metadata-only video mode for video path validation and frame indexing
 
-This still does not run YOLO, read frames for inference, integrate
-ByteTrack/DeepSORT, or render tracked videos.
+The synthetic tracker is available for contract tests. ByteTrack/DeepSORT are
+placeholder adapters only. This still does not run YOLO, read frames for
+inference, integrate real ByteTrack/DeepSORT dependencies, or render tracked
+videos.
 """
 
 from __future__ import annotations
@@ -17,7 +19,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from src.analytics.geometry import bbox_center, bbox_size_and_area
+from src.tracking.adapters import SyntheticTrackerAdapter, create_tracker_adapter
 from src.tracking.track_writer import write_tracks_csv
 from src.video_reader import (
     build_frame_index,
@@ -58,41 +60,12 @@ def detections_to_synthetic_tracks(
     detection_rows: list[dict[str, Any]],
     tracker_name: str = "synthetic",
 ) -> list[dict[str, Any]]:
-    tracks: list[dict[str, Any]] = []
-
-    for row_index, row in enumerate(detection_rows, start=1):
-        xmin = float(row["xmin"])
-        ymin = float(row["ymin"])
-        xmax = float(row["xmax"])
-        ymax = float(row["ymax"])
-        center_x, center_y = bbox_center(xmin, ymin, xmax, ymax)
-        box_width, box_height, box_area = bbox_size_and_area(xmin, ymin, xmax, ymax)
-        track_id = row.get("detection_id") or f"synthetic_{row_index}"
-
-        tracks.append(
-            {
-                "video_id": row.get("video_id", ""),
-                "frame_index": _to_int_if_possible(row.get("frame_index")),
-                "timestamp_sec": _to_float_if_possible(row.get("timestamp_sec")),
-                "track_id": track_id,
-                "class_id": _to_int_if_possible(row.get("class_id")),
-                "class_name": row.get("class_name", ""),
-                "confidence": _to_float_if_possible(row.get("confidence")),
-                "xmin": xmin,
-                "ymin": ymin,
-                "xmax": xmax,
-                "ymax": ymax,
-                "center_x": center_x,
-                "center_y": center_y,
-                "box_width": box_width,
-                "box_height": box_height,
-                "box_area": box_area,
-                "state": "confirmed",
-                "tracker_name": tracker_name,
-            }
-        )
-
-    return tracks
+    """Compatibility wrapper around the synthetic tracking adapter."""
+    adapter = SyntheticTrackerAdapter()
+    track_rows = adapter.update(detection_rows)
+    if tracker_name == "synthetic":
+        return track_rows
+    return [{**row, "tracker_name": tracker_name} for row in track_rows]
 
 
 def run_track_video_skeleton(
@@ -100,9 +73,6 @@ def run_track_video_skeleton(
     output_dir: str | Path,
     tracker_name: str = "synthetic",
 ) -> dict[str, Any]:
-    if tracker_name != "synthetic":
-        raise ValueError("track_video skeleton currently supports only tracker='synthetic'")
-
     input_path = Path(input_csv)
     if not input_path.exists():
         raise FileNotFoundError(f"detections CSV not found: {input_path}")
@@ -111,7 +81,8 @@ def run_track_video_skeleton(
     output_path.mkdir(parents=True, exist_ok=True)
 
     detection_rows = _read_detections_csv(input_path)
-    track_rows = detections_to_synthetic_tracks(detection_rows, tracker_name=tracker_name)
+    adapter = create_tracker_adapter(tracker_name)
+    track_rows = adapter.update(detection_rows)
     tracks_csv = write_tracks_csv(track_rows, output_path / "tracks.csv")
 
     return {
@@ -179,24 +150,6 @@ def main(argv: list[str] | None = None) -> int:
 def _read_detections_csv(input_path: Path) -> list[dict[str, Any]]:
     with input_path.open(newline="", encoding="utf-8") as file:
         return list(csv.DictReader(file))
-
-
-def _to_int_if_possible(value: Any) -> Any:
-    if value in (None, ""):
-        return value
-    try:
-        return int(value)
-    except (TypeError, ValueError):
-        return value
-
-
-def _to_float_if_possible(value: Any) -> Any:
-    if value in (None, ""):
-        return value
-    try:
-        return float(value)
-    except (TypeError, ValueError):
-        return value
 
 
 if __name__ == "__main__":

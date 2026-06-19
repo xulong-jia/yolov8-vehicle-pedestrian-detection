@@ -207,6 +207,72 @@ def test_run_track_video_skeleton_writes_tracks_csv(tmp_path):
         assert list(reader)[0]["track_id"] == "det-1"
 
 
+def test_run_track_video_skeleton_uses_tracker_adapter_factory(tmp_path, monkeypatch):
+    detections_csv = tmp_path / "detections.csv"
+    output_dir = tmp_path / "out"
+    _write_detections_csv(
+        detections_csv,
+        [
+            {
+                "video_id": "video-1",
+                "frame_index": 1,
+                "timestamp_sec": 0.04,
+                "detection_id": "det-1",
+                "class_id": 0,
+                "class_name": "Car",
+                "confidence": 0.9,
+                "xmin": 0,
+                "ymin": 0,
+                "xmax": 10,
+                "ymax": 20,
+            }
+        ],
+    )
+    calls = {"factory_tracker_name": None, "update_rows": None}
+
+    class FakeAdapter:
+        def update(self, detection_rows):
+            calls["update_rows"] = detection_rows
+            return [
+                {
+                    "video_id": "video-1",
+                    "frame_index": 1,
+                    "timestamp_sec": 0.04,
+                    "track_id": "fake-track-1",
+                    "class_id": 0,
+                    "class_name": "Car",
+                    "confidence": 0.9,
+                    "xmin": 0,
+                    "ymin": 0,
+                    "xmax": 10,
+                    "ymax": 20,
+                    "center_x": 5,
+                    "center_y": 10,
+                    "box_width": 10,
+                    "box_height": 20,
+                    "box_area": 200,
+                    "state": "confirmed",
+                    "tracker_name": "synthetic",
+                }
+            ]
+
+    def fake_factory(tracker_name):
+        calls["factory_tracker_name"] = tracker_name
+        return FakeAdapter()
+
+    monkeypatch.setattr("src.track_video.create_tracker_adapter", fake_factory)
+
+    summary = run_track_video_skeleton(detections_csv, output_dir, tracker_name="synthetic")
+
+    assert calls["factory_tracker_name"] == "synthetic"
+    assert calls["update_rows"][0]["detection_id"] == "det-1"
+    assert summary["tracker_name"] == "synthetic"
+    assert summary["track_rows"] == 1
+    with (output_dir / "tracks.csv").open(newline="", encoding="utf-8") as file:
+        rows = list(csv.DictReader(file))
+    assert rows[0]["track_id"] == "fake-track-1"
+
+
 def test_run_track_video_skeleton_writes_header_for_empty_detections(tmp_path):
     detections_csv = tmp_path / "empty_detections.csv"
     output_dir = tmp_path / "out"
@@ -220,12 +286,24 @@ def test_run_track_video_skeleton_writes_header_for_empty_detections(tmp_path):
     assert tracks_csv.read_text(encoding="utf-8").splitlines()[0].split(",") == TRACKS_FIELDS
 
 
-def test_run_track_video_skeleton_rejects_unsupported_tracker(tmp_path):
+def test_run_track_video_skeleton_rejects_unknown_tracker(tmp_path):
     detections_csv = tmp_path / "detections.csv"
     _write_detections_csv(detections_csv, [])
 
-    with pytest.raises(ValueError, match="synthetic"):
-        run_track_video_skeleton(detections_csv, tmp_path / "out", tracker_name="bytetrack")
+    with pytest.raises(ValueError, match="Unsupported tracker_type"):
+        run_track_video_skeleton(detections_csv, tmp_path / "out", tracker_name="unknown")
+
+
+@pytest.mark.parametrize("tracker_name", ["bytetrack", "deepsort"])
+def test_run_track_video_skeleton_propagates_placeholder_tracker_errors(
+    tmp_path,
+    tracker_name,
+):
+    detections_csv = tmp_path / "detections.csv"
+    _write_detections_csv(detections_csv, [])
+
+    with pytest.raises(NotImplementedError, match="not integrated"):
+        run_track_video_skeleton(detections_csv, tmp_path / "out", tracker_name=tracker_name)
 
 
 def test_run_video_metadata_skeleton_writes_metadata_and_frame_index(tmp_path, monkeypatch):
@@ -342,6 +420,59 @@ def test_main_writes_tracks_csv_and_prints_summary(tmp_path, capsys):
     assert (output_dir / "tracks.csv").exists()
     printed_summary = json.loads(capsys.readouterr().out)
     assert printed_summary["track_rows"] == 1
+
+
+def test_main_accepts_explicit_synthetic_tracker(tmp_path, capsys):
+    detections_csv = tmp_path / "detections.csv"
+    output_dir = tmp_path / "out"
+    _write_detections_csv(detections_csv, [])
+
+    result = main(
+        [
+            "--detections-csv",
+            str(detections_csv),
+            "--output-dir",
+            str(output_dir),
+            "--tracker",
+            "synthetic",
+        ]
+    )
+
+    assert result == 0
+    printed_summary = json.loads(capsys.readouterr().out)
+    assert printed_summary["tracker_name"] == "synthetic"
+
+
+def test_main_propagates_placeholder_tracker_errors(tmp_path):
+    detections_csv = tmp_path / "detections.csv"
+    _write_detections_csv(detections_csv, [])
+
+    with pytest.raises(NotImplementedError, match="not integrated"):
+        main(
+            [
+                "--detections-csv",
+                str(detections_csv),
+                "--output-dir",
+                str(tmp_path / "out"),
+                "--tracker",
+                "bytetrack",
+            ]
+        )
+
+
+def test_metadata_only_mode_does_not_call_tracker_adapter_factory(tmp_path, monkeypatch):
+    video_path = tmp_path / "demo.mp4"
+    video_path.write_bytes(b"")
+    monkeypatch.setattr("src.track_video.read_video_metadata", _fake_read_video_metadata)
+
+    def fail_factory(tracker_name):
+        raise AssertionError(f"metadata-only mode called tracker factory: {tracker_name}")
+
+    monkeypatch.setattr("src.track_video.create_tracker_adapter", fail_factory)
+
+    summary = run_video_metadata_skeleton(video_path, tmp_path / "metadata")
+
+    assert summary["mode"] == "metadata_only"
 
 
 def test_track_video_skeleton_uses_tmp_path_only(tmp_path):

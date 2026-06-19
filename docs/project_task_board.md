@@ -248,6 +248,33 @@ Pending after v0.9.0 Step 2:
 - [ ] FastAPI video result query endpoints / FastAPI 视频结果查询接口 — Target: v0.9.0+ — Status: Pending
 - [ ] Real video smoke demo / 真实视频冒烟演示 — Target: v0.9.0+ — Status: Pending
 
+## v0.9.1-predict-to-track-synthetic-runtime / 预测到跟踪的 synthetic 运行路径
+
+- [x] Step 1 `track_video.py` uses tracking adapter factory / Step 1 `track_video.py` 使用 tracking adapter factory — Priority: P0 — Status: Completed in working tree — Output: `src/track_video.py`, `tests/test_track_video.py`, `docs/project_task_board.md` — Commit: TBD
+
+Current scope:
+
+- `track_video.py` keeps synthetic `detections.csv` to `tracks.csv` CLI behavior
+- detections-to-tracks mode now uses `create_tracker_adapter(tracker_name)`
+- current successful runtime tracker is `synthetic`
+- `bytetrack` and `deepsort` create placeholder adapters and raise `NotImplementedError` on `update(...)`
+- metadata-only video mode does not call the tracker adapter factory
+- tests use fake detections and pytest `tmp_path`
+- no real ByteTrack/DeepSORT dependency integration
+- no full real video tracking runtime
+- no tracked video rendering
+
+Pending after v0.9.1 Step 1:
+
+- [ ] Real ByteTrack dependency integration / 真实 ByteTrack 依赖集成 — Target: v1.0 candidate — Status: Pending
+- [ ] Real DeepSORT dependency integration / 真实 DeepSORT 依赖集成 — Target: v1.0 candidate — Status: Pending
+- [ ] Full real video tracking runtime / 完整真实视频跟踪运行时 — Target: v1.0 candidate — Status: Pending
+- [ ] Tracked video rendering / 跟踪视频渲染 — Target: v1.0 candidate — Status: Pending
+- [ ] Video Analysis Center integration for real video jobs / 真实视频任务接入 Video Analysis Center — Target: v0.9.1+ — Status: Pending
+- [ ] Streamlit video pages / Streamlit 视频页面 — Target: v1.0 candidate — Status: Pending
+- [ ] FastAPI video jobs / FastAPI 视频任务 — Target: v1.0 candidate — Status: Pending
+- [ ] Real video smoke demo / 真实视频冒烟演示 — Target: v1.0 candidate — Status: Pending
+
 ## P3 — Optional Future Experiments / 可选未来实验
 
 - [x] Run YOLOv8s official test split validation if weight is available / 在权重可用时运行 YOLOv8s 官方测试集验证 — Priority: P3 — Status: Done — Output: `docs/experiments/yolov8s_640_50epochs_retrain/`, `docs/evaluation/yolov8s_640_50epochs_official/` — Result: P `0.865`, R `0.838`, mAP50 `0.876`, mAP50-95 `0.601` — Commit: `e4d5adb`
@@ -279,5 +306,5 @@ Pending after v0.9.0 Step 2:
 
 ## Next Recommended Task
 
-1. v0.9.1 connect `predict_video.py` CSV output to `track_video.py` synthetic tracker mode or Video Analysis Center / v0.9.1 将 `predict_video.py` CSV 输出接入 `track_video.py` synthetic tracker 模式或 Video Analysis Center
+1. v0.9.1 Step 2 connect `predict_video.py` CSV output to Video Analysis Center skeleton / v0.9.1 Step 2 将 `predict_video.py` CSV 输出接入 Video Analysis Center 骨架
 2. v1.0 candidate real ByteTrack dependency integration planning / v1.0 候选真实 ByteTrack 依赖集成规划
