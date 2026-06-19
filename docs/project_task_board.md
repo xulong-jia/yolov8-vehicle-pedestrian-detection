@@ -327,6 +327,32 @@ Pending after v0.9.3 Step 1:
 - [ ] FastAPI video jobs / FastAPI 视频任务 — Target: v1.0 candidate — Status: Pending
 - [ ] Real video smoke demo / 真实视频冒烟演示 — Target: v1.0 candidate — Status: Pending
 
+## v0.9.4-three-step-video-analysis-job-flow / 三步视频分析任务链路
+
+- [x] Step 1 three-step video analysis job flow / Step 1 三步视频分析任务链路 — Priority: P0 — Status: Completed in working tree — Output: `tests/test_three_step_video_analysis_job_flow.py`, `docs/track_video_cli_usage.md`, `docs/video_analytics_mvp.md`, `docs/project_task_board.md` — Commit: TBD
+
+Current scope:
+
+- tests `predict_video.py` fake YOLO output to `detections.csv`
+- tests `track_video.py` synthetic tracker output to `tracks.csv`
+- tests `video_analysis_job.py` output to `VideoAnalysisCenter` run directory
+- verifies copied `detections.csv` and `tracks.csv`
+- verifies `metadata.json` and `video_analysis_summary.json`
+- tests use pytest `tmp_path` and monkeypatch/mock YOLO
+- no real ByteTrack/DeepSORT dependency integration
+- no tracked video rendering
+- no repository output directories are created
+
+Pending after v0.9.4 Step 1:
+
+- [ ] Real ByteTrack dependency integration / 真实 ByteTrack 依赖集成 — Target: v1.0 candidate — Status: Pending
+- [ ] Real DeepSORT dependency integration / 真实 DeepSORT 依赖集成 — Target: v1.0 candidate — Status: Pending
+- [ ] Tracked video rendering / 跟踪视频渲染 — Target: v1.0 candidate — Status: Pending
+- [ ] Analytics execution on real tracks / 对真实 tracks 执行 analytics — Target: v0.9.4+ — Status: Pending
+- [ ] Streamlit video pages / Streamlit 视频页面 — Target: v1.0 candidate — Status: Pending
+- [ ] FastAPI video jobs / FastAPI 视频任务 — Target: v1.0 candidate — Status: Pending
+- [ ] Real video smoke demo / 真实视频冒烟演示 — Target: v1.0 candidate — Status: Pending
+
 ## P3 — Optional Future Experiments / 可选未来实验
 
 - [x] Run YOLOv8s official test split validation if weight is available / 在权重可用时运行 YOLOv8s 官方测试集验证 — Priority: P3 — Status: Done — Output: `docs/experiments/yolov8s_640_50epochs_retrain/`, `docs/evaluation/yolov8s_640_50epochs_official/` — Result: P `0.865`, R `0.838`, mAP50 `0.876`, mAP50-95 `0.601` — Commit: `e4d5adb`
@@ -358,5 +384,5 @@ Pending after v0.9.3 Step 1:
 
 ## Next Recommended Task
 
-1. v0.9.3 Step 2 document Video Analysis Center real-job skeleton / v0.9.3 Step 2 文档化 Video Analysis Center 真实任务骨架
+1. v0.9.4 Step 2 document three-step video analysis job flow / v0.9.4 Step 2 文档化三步视频分析任务链路
 2. v1.0 candidate real ByteTrack dependency integration planning / v1.0 候选真实 ByteTrack 依赖集成规划

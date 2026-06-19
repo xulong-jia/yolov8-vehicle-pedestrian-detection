@@ -105,6 +105,64 @@ The job skeleton copies existing CSV artifacts and writes:
 
 It does not run YOLO, does not run a tracker, and does not render tracked video. Use it only with already generated CSV files and keep generated run outputs outside Git-tracked directories unless they are deliberate tiny documentation examples.
 
+## Three-step Video Analysis Center smoke flow
+
+Use this flow to produce `detections.csv`, convert it to synthetic `tracks.csv`, and organize both files into a `VideoAnalysisCenter` run directory.
+
+Step 1: generate `detections.csv`.
+
+```bash
+python3 src/predict_video.py \
+  --model /absolute/path/to/best.pt \
+  --source /absolute/path/to/video.mp4 \
+  --output-csv /tmp/yolov8_video_job/detections.csv \
+  --conf 0.25 \
+  --imgsz 640 \
+  --device cpu \
+  --video-id demo
+```
+
+Step 2: generate synthetic `tracks.csv`.
+
+```bash
+python3 src/track_video.py \
+  --detections-csv /tmp/yolov8_video_job/detections.csv \
+  --output-dir /tmp/yolov8_video_job/tracking \
+  --tracker synthetic
+```
+
+Step 3: organize outputs with `video_analysis_job`.
+
+There is no CLI for this step yet; use the Python service function.
+
+```bash
+python3 - <<'PY'
+from src.services.video_analysis_job import create_video_analysis_job_run
+
+summary = create_video_analysis_job_run(
+    run_name="demo_run",
+    base_dir="/tmp/yolov8_video_job/video_analysis",
+    detections_csv="/tmp/yolov8_video_job/detections.csv",
+    tracks_csv="/tmp/yolov8_video_job/tracking/tracks.csv",
+    metadata={
+        "video_id": "demo",
+        "input_video": "/absolute/path/to/video.mp4",
+        "mode": "three_step_smoke",
+    },
+)
+print(summary)
+PY
+```
+
+Expected files:
+
+- `/tmp/yolov8_video_job/detections.csv`
+- `/tmp/yolov8_video_job/tracking/tracks.csv`
+- `/tmp/yolov8_video_job/video_analysis/demo_run/metadata.json`
+- `/tmp/yolov8_video_job/video_analysis/demo_run/video_analysis_summary.json`
+
+Step 1 runs YOLO if you provide a real model and real video. Step 2 still uses the synthetic tracker and is not real ByteTrack/DeepSORT tracking. Step 3 does not run YOLO or a tracker; it only organizes existing CSV files. Do not commit `/tmp` outputs, real videos, or model weights.
+
 ## Video metadata-only mode
 
 Use this mode to validate video path reading, metadata extraction, and `frame_index.csv` creation.

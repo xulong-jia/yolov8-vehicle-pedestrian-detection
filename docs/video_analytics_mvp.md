@@ -338,6 +338,26 @@ Recommended next phases:
 - Later: run analytics on real tracks.
 - Later: integrate the real ByteTrack dependency.
 
+## v0.9.4 Three-Step Video Analysis Job Flow
+
+`v0.9.4-three-step-video-analysis-job-flow` documents and tests the current safe chain:
+
+1. `predict_video.py` generates `detections.csv`.
+2. `track_video.py` with the synthetic tracker generates `tracks.csv`.
+3. `video_analysis_job.py` organizes the CSV artifacts into a `VideoAnalysisCenter` run directory.
+
+The flow verifies that `detections.csv` and `tracks.csv` are copied into the run directory and that `metadata.json` plus `video_analysis_summary.json` are written. Tests use fake YOLO and pytest `tmp_path`; they do not load real model weights, read real video, write repository outputs, or require GPU access.
+
+Still pending after v0.9.4:
+
+- real ByteTrack dependency integration
+- real DeepSORT dependency integration
+- tracked video rendering
+- analytics execution on real tracks
+- Streamlit video pages
+- FastAPI video jobs
+- real video smoke demo
+
 ## Test Summary
 
 The MVP is covered by synthetic unit tests:
@@ -355,6 +375,7 @@ The MVP is covered by synthetic unit tests:
 - `tests/test_tracking_adapters.py`
 - `tests/test_predict_to_track_smoke_flow.py`
 - `tests/test_video_analysis_job.py`
+- `tests/test_three_step_video_analysis_job_flow.py`
 
 ## Current Baseline
 
