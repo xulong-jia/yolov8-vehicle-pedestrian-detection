@@ -407,6 +407,26 @@ Recommended next phases:
 - later: tracked video rendering
 - later: real video smoke demo
 
+## v0.9.6 Four-Step Local Flow
+
+`v0.9.6-four-step-local-flow` documents and tests the current safe four-step chain:
+
+1. `predict_video.py` exports `detections.csv`.
+2. `track_video.py --tracker synthetic` exports `tracks.csv`.
+3. `video_analysis_job.py` organizes the CSV artifacts into a `VideoAnalysisCenter` run directory.
+4. `create_video_analysis_job_run(..., run_analytics=True, analytics_config=...)` executes line, ROI, and event analytics.
+
+The flow verifies:
+
+- `detections.csv`
+- `tracks.csv`
+- `count_events.csv`
+- `roi_frame_counts.csv`
+- `events.jsonl`
+- `video_analysis_summary.json`
+
+Tests use fake YOLO and pytest `tmp_path`; they do not load real weights, read real video, write repository outputs, or require GPU access. Real ByteTrack dependency integration, tracked video rendering, Streamlit video pages, FastAPI video jobs, and real video smoke demos remain pending.
+
 ## Test Summary
 
 The MVP is covered by synthetic unit tests:

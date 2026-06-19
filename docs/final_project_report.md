@@ -249,6 +249,8 @@ The batch prediction CLI is designed to write generated outputs under `local_out
 
 `v0.9.5-analytics-on-tracks-job` adds analytics execution on existing tracks inside the Video Analysis Center job. Existing `tracks.csv` can now produce `count_events.csv`, `roi_frame_counts.csv`, `events.jsonl`, and an updated `video_analysis_summary.json`; it does not run YOLO, run a real tracker, or render tracked video.
 
+`v0.9.6-four-step-local-flow` documents and tests a four-step local flow from detection export to synthetic tracking to Video Analysis Center analytics. It validates the file-contract chain through analytics artifacts without real ByteTrack or tracked video rendering.
+
 This MVP does not include real ByteTrack/DeepSORT integration, full `track_video.py` runtime integration, tracked video rendering, Streamlit video result pages, FastAPI video jobs, database integration, or real video benchmarks.
 
 References:

@@ -215,6 +215,97 @@ PY
 
 This service function does not run YOLO, does not run a tracker, and only reads existing `detections.csv` and `tracks.csv`. It writes `count_events.csv`, `roi_frame_counts.csv`, `events.jsonl`, and an updated `video_analysis_summary.json` under the run directory. Keep these outputs under `/tmp` for smoke usage and do not commit generated `/tmp` outputs.
 
+## Four-step local video analysis flow
+
+This is the current safe local chain from video detection export to synthetic tracking to Video Analysis Center analytics.
+
+Step 1: export detections.
+
+```bash
+python3 src/predict_video.py \
+  --model /absolute/path/to/best.pt \
+  --source /absolute/path/to/video.mp4 \
+  --output-csv /tmp/yolov8_four_step/detections.csv \
+  --conf 0.25 \
+  --imgsz 640 \
+  --device cpu \
+  --video-id demo
+```
+
+Step 2: convert detections to synthetic tracks.
+
+```bash
+python3 src/track_video.py \
+  --detections-csv /tmp/yolov8_four_step/detections.csv \
+  --output-dir /tmp/yolov8_four_step/tracking \
+  --tracker synthetic
+```
+
+Step 3/4: organize the CSV artifacts and run analytics.
+
+The analytics job is currently a Python service function, not a CLI command.
+
+```bash
+python3 - <<'PY'
+from src.services.video_analysis_job import create_video_analysis_job_run
+
+analytics_config = {
+    "line": {
+        "id": "line_main",
+        "name": "Main Line",
+        "points": [[0, 0], [10, 0]],
+        "directions": {"positive": "in", "negative": "out"},
+        "target_classes": ["Car", "Person"],
+        "enabled": True,
+    },
+    "roi": {
+        "id": "roi_main",
+        "name": "Main ROI",
+        "polygon": [[0, 0], [20, 0], [20, 30], [0, 30]],
+        "target_classes": ["Car", "Person"],
+        "enabled": True,
+    },
+    "event_rules": {
+        "long_stay": {
+            "id": "long_stay_main",
+            "event_type": "long_stay",
+            "enabled": True,
+            "roi_id": "roi_main",
+            "target_classes": ["Car", "Person"],
+            "parameters": {"min_duration_sec": 2.0, "cooldown_sec": 10.0},
+        }
+    },
+}
+
+summary = create_video_analysis_job_run(
+    run_name="demo_run",
+    base_dir="/tmp/yolov8_four_step/video_analysis",
+    detections_csv="/tmp/yolov8_four_step/detections.csv",
+    tracks_csv="/tmp/yolov8_four_step/tracking/tracks.csv",
+    metadata={
+        "video_id": "demo",
+        "input_video": "/absolute/path/to/video.mp4",
+        "mode": "four_step_smoke",
+    },
+    analytics_config=analytics_config,
+    run_analytics=True,
+)
+print(summary)
+PY
+```
+
+Expected files:
+
+- `/tmp/yolov8_four_step/detections.csv`
+- `/tmp/yolov8_four_step/tracking/tracks.csv`
+- `/tmp/yolov8_four_step/video_analysis/demo_run/metadata.json`
+- `/tmp/yolov8_four_step/video_analysis/demo_run/count_events.csv`
+- `/tmp/yolov8_four_step/video_analysis/demo_run/roi_frame_counts.csv`
+- `/tmp/yolov8_four_step/video_analysis/demo_run/events.jsonl`
+- `/tmp/yolov8_four_step/video_analysis/demo_run/video_analysis_summary.json`
+
+Step 1 runs YOLO if you provide a real model and real video. Step 2 still uses the synthetic tracker and is not real ByteTrack/DeepSORT tracking. Step 3/4 does not run YOLO or a tracker; it only organizes existing CSV files and executes analytics. Do not commit `/tmp` outputs, model weights, or real videos.
+
 ## Video metadata-only mode
 
 Use this mode to validate video path reading, metadata extraction, and `frame_index.csv` creation.
