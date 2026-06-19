@@ -155,7 +155,9 @@ Completed experiments and recorded results:
 
 `v0.10.3-suggested-analytics-overlay-plan` adds overlay planning and geometry validation for suggested analytics config. It checks line/ROI placement against `tracks.csv` coordinate distributions and prepares a JSON plan for a future renderer without rendering video. See [Analytics Config Tuning](docs/analytics_config_tuning.md).
 
-This phase does not include real ByteTrack/DeepSORT integration, full `track_video.py` runtime integration, video UI pages, FastAPI video jobs, database integration, tracked video rendering, or real video benchmarks.
+`v0.10.4-tracked-video-rendering` adds tracked video rendering from existing tracks. It renders local preview videos with bbox, track labels, line overlays, and ROI overlays without rerunning YOLO. See [Tracked Video Rendering](docs/tracked_video_rendering.md).
+
+This phase does not include real ByteTrack/DeepSORT integration, full `track_video.py` runtime integration, video UI pages, FastAPI video jobs, database integration, full-length tracked video validation, or real video benchmarks.
 
 Details: [Video analytics MVP](docs/video_analytics_mvp.md)
 

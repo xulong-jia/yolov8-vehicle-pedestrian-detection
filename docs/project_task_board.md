@@ -610,11 +610,48 @@ Local overlay plan result:
 
 Pending after v0.10.3 Step 1:
 
-- [ ] Static frame overlay renderer / 静态帧 overlay 渲染器 — Target: v0.10.4+ — Status: Pending
+- [x] Tracked video renderer / 跟踪视频渲染器 — Target: v0.10.4+ — Status: Completed in working tree
+- [ ] Full-length tracked video validation / 全长跟踪视频验证 — Target: v0.10.5+ — Status: Pending
 - [ ] Tracked video rendering / 跟踪视频渲染 — Target: v1.0 candidate — Status: Pending
 - [ ] Real ByteTrack dependency integration / 真实 ByteTrack 依赖集成 — Target: v1.0 candidate — Status: Pending
 - [ ] Streamlit video pages / Streamlit 视频页面 — Target: v1.0 candidate — Status: Pending
 - [ ] FastAPI video jobs / FastAPI 视频任务 — Target: v1.0 candidate — Status: Pending
+
+## v0.10.4-tracked-video-rendering / 跟踪视频渲染
+
+- [x] Step 1 tracked video renderer / Step 1 跟踪视频渲染器 — Priority: P0 — Status: Completed in working tree — Output: `src/render_tracked_video.py`, `tests/test_render_tracked_video.py`, `docs/tracked_video_rendering.md`, `docs/track_video_cli_usage.md`, `docs/video_analytics_mvp.md`, `docs/project_task_board.md`, `README.md`, `docs/final_project_report.md`, `docs/real_local_smoke_run_result.md` — Commit: TBD
+- [x] Local 300-frame tracked preview rendered / 本地 300 帧跟踪预览已渲染 — Priority: P0 — Status: Completed locally — Output: `/tmp/yolov8_real_smoke/tracked_preview_300.mp4` — Commit: Not committed
+
+Current scope:
+
+- reads existing source video
+- reads existing `tracks.csv`
+- draws bbox rectangles
+- draws `track_id` and `class_name`
+- optionally draws line and ROI overlays
+- writes output video only to user-provided `--output-video`
+- does not run YOLO
+- does not run tracker
+- does not regenerate detections or tracks
+- no real ByteTrack/DeepSORT dependency integration
+- no Streamlit/FastAPI video playback
+
+Local preview result:
+
+- `frames_written`: `300`
+- `track_rows_loaded`: `21988`
+- `unique_tracks`: `34`
+- `frames_with_tracks`: `1678`
+- `line_overlay_count`: `1`
+- `roi_overlay_count`: `1`
+- output size: `16M` (`16440663` bytes)
+
+Pending after v0.10.4 Step 1:
+
+- [ ] Full-length tracked video validation / 全长跟踪视频验证 — Target: v0.10.5+ — Status: Pending
+- [ ] Real ByteTrack dependency integration / 真实 ByteTrack 依赖集成 — Target: v1.0 candidate — Status: Pending
+- [ ] Streamlit video playback / Streamlit 视频播放 — Target: v1.0 candidate — Status: Pending
+- [ ] FastAPI video artifact endpoint / FastAPI 视频 artifact 端点 — Target: v1.0 candidate — Status: Pending
 
 ## P3 — Optional Future Experiments / 可选未来实验
 
@@ -647,6 +684,6 @@ Pending after v0.10.3 Step 1:
 
 ## Next Recommended Task
 
-1. v0.10.3 Step 2 commit docs/tests and tag suggested analytics overlay plan / v0.10.3 Step 2 提交测试文档并打 tag
-2. v0.10.4 static frame overlay renderer / v0.10.4 静态帧 overlay 渲染器
+1. v0.10.4 Step 2 commit docs/tests and tag tracked video rendering / v0.10.4 Step 2 提交测试文档并打 tag
+2. v0.10.5 full-length tracked preview validation / v0.10.5 全长跟踪预览验证
 3. v1.0 candidate real ByteTrack dependency integration planning / v1.0 候选真实 ByteTrack 依赖集成规划

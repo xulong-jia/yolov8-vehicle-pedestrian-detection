@@ -406,6 +406,22 @@ Before rendering overlays, generate a JSON plan that validates the suggested lin
 
 This command does not run YOLO, does not run a tracker, does not read or render video frames, and does not generate tracked video. Keep the JSON output under `/tmp` or another ignored path, and do not commit generated overlay plans.
 
+## Tracked video rendering
+
+After a source video and `tracks.csv` already exist, render a local tracked preview:
+
+```bash
+.venv/bin/python -m src.render_tracked_video \
+  --video /absolute/path/to/video.mp4 \
+  --tracks-csv /tmp/yolov8_real_smoke/tracking/tracks.csv \
+  --output-video /tmp/yolov8_real_smoke/tracked_preview_300.mp4 \
+  --config-json /tmp/yolov8_real_smoke/suggested_analytics_config.json \
+  --overlay-plan-json /tmp/yolov8_real_smoke/analytics_overlay_plan.json \
+  --max-frames 300
+```
+
+This does not rerun YOLO and does not run a tracker. It uses existing tracks to draw bbox, track labels, line overlays, and ROI overlays. Write output videos to `/tmp` or another ignored path, and do not commit generated preview videos.
+
 ## Video metadata-only mode
 
 Use this mode to validate video path reading, metadata extraction, and `frame_index.csv` creation.

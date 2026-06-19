@@ -263,7 +263,9 @@ The batch prediction CLI is designed to write generated outputs under `local_out
 
 `v0.10.3-suggested-analytics-overlay-plan` adds overlay planning and geometry validation for suggested analytics config. It checks line/ROI placement against `tracks.csv` coordinate distributions and prepares a JSON plan for a future renderer without rendering video.
 
-This MVP does not include real ByteTrack/DeepSORT integration, full `track_video.py` runtime integration, tracked video rendering, Streamlit video result pages, FastAPI video jobs, database integration, or real video benchmarks.
+`v0.10.4-tracked-video-rendering` adds tracked video rendering from existing tracks. It renders local preview videos with bbox, track labels, line overlays, and ROI overlays without rerunning YOLO.
+
+This MVP does not include real ByteTrack/DeepSORT integration, full `track_video.py` runtime integration, full-length tracked video validation, Streamlit video result pages, FastAPI video jobs, database integration, or real video benchmarks.
 
 References:
 

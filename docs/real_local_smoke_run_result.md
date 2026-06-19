@@ -158,3 +158,20 @@ Local-only overlay plan summary from `/tmp/yolov8_real_smoke/analytics_overlay_p
 - ROI `roi_main`: `recommendation=ok`, `within_bbox_bounds=true`, `covers_center_distribution=true`, `covers_bottom_distribution=true`
 
 This is a JSON plan only. It does not render video, does not validate true video frame metadata, and the generated `/tmp` JSON is not committed.
+
+## v0.10.4 Tracked Preview Follow-up
+
+The tracked video renderer produced a local 300-frame preview from the existing source video and existing `tracks.csv`. It did not rerun YOLO, did not regenerate detections or tracks, and did not use ByteTrack/DeepSORT.
+
+Local-only preview:
+
+- output path: `/tmp/yolov8_real_smoke/tracked_preview_300.mp4`
+- `frames_written`: `300`
+- `track_rows_loaded`: `21988`
+- `unique_tracks`: `34`
+- `frames_with_tracks`: `1678`
+- `line_overlay_count`: `1`
+- `roi_overlay_count`: `1`
+- output size: `16M` (`16440663` bytes)
+
+The output video is local-only and is not committed.

@@ -516,6 +516,16 @@ This step does not render video, does not read video frames, does not rerun YOLO
 
 Details: [Analytics Config Tuning](analytics_config_tuning.md)
 
+## v0.10.4 Tracked Video Rendering
+
+`v0.10.4` adds `src/render_tracked_video.py`.
+
+The renderer reads an existing source video and existing `tracks.csv`, then draws bbox rectangles, `track_id`, `class_name`, optional confidence labels, line overlays, and ROI overlays. It can use the suggested analytics config and overlay plan produced in earlier steps.
+
+This step does not rerun YOLO, does not regenerate detections or tracks, does not change the tracker, does not integrate ByteTrack/DeepSORT, and does not prove MOT quality. Current tracks may still be synthetic.
+
+Details: [Tracked Video Rendering](tracked_video_rendering.md)
+
 ## Test Summary
 
 The MVP is covered by synthetic unit tests:
@@ -537,6 +547,7 @@ The MVP is covered by synthetic unit tests:
 - `tests/test_analytics_config_suggester.py`
 - `tests/test_analytics_only_rerun.py`
 - `tests/test_analytics_overlay_plan.py`
+- `tests/test_render_tracked_video.py`
 
 ## Current Baseline
 
