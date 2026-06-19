@@ -151,6 +151,8 @@ Completed experiments and recorded results:
 
 `v0.10.1-real-smoke-analytics-config-tuning` adds an analytics config tuning helper. It summarizes `tracks.csv` coordinate distributions and suggests line, ROI, and event-rule config for tuning real smoke analytics without rerunning YOLO. See [Analytics Config Tuning](docs/analytics_config_tuning.md).
 
+`v0.10.2-analytics-only-rerun-with-suggested-config` adds analytics-only rerun support. It applies suggested analytics config to existing `detections.csv` and `tracks.csv` without rerunning YOLO or tracking, producing fresh Video Analysis Center artifacts. See [Analytics Config Tuning](docs/analytics_config_tuning.md) and [Real Local Smoke Run Result](docs/real_local_smoke_run_result.md).
+
 This phase does not include real ByteTrack/DeepSORT integration, full `track_video.py` runtime integration, video UI pages, FastAPI video jobs, database integration, tracked video rendering, or real video benchmarks.
 
 Details: [Video analytics MVP](docs/video_analytics_mvp.md)

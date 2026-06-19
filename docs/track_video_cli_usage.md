@@ -375,6 +375,23 @@ This command does not rerun YOLO, does not run a tracker, and only reads the exi
 
 Details: [Analytics Config Tuning](analytics_config_tuning.md)
 
+## Analytics-only rerun
+
+After generating a suggested analytics config, rerun only the analytics layer against existing CSV artifacts:
+
+```bash
+.venv/bin/python -m src.analytics_only_rerun \
+  --detections-csv /tmp/yolov8_real_smoke/detections.csv \
+  --tracks-csv /tmp/yolov8_real_smoke/tracking/tracks.csv \
+  --config-json /tmp/yolov8_real_smoke/suggested_analytics_config.json \
+  --output-dir /tmp/yolov8_real_smoke_analytics_rerun \
+  --video-id demo \
+  --run-name suggested_config_rerun \
+  --source-run-dir /tmp/yolov8_real_smoke
+```
+
+This command does not run YOLO, does not run a tracker, and does not generate tracked video. Inputs are existing `detections.csv`, `tracks.csv`, and config JSON. Write outputs to `/tmp` or another ignored path, and do not commit generated CSV, JSON, JSONL, videos, or weights.
+
 ## Video metadata-only mode
 
 Use this mode to validate video path reading, metadata extraction, and `frame_index.csv` creation.

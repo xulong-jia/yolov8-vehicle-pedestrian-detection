@@ -125,3 +125,21 @@ Do not commit these generated CSV, JSON, or JSONL files.
 The first real smoke run produced analytics artifacts, but the default smoke analytics config did not trigger line, ROI, or event counts. `src.analytics_config_suggester` was added to suggest line, ROI, and event-rule settings from the existing `tracks.csv` coordinate distribution.
 
 See [Analytics Config Tuning](analytics_config_tuning.md).
+
+## v0.10.2 Analytics-only Rerun Follow-up
+
+The default smoke config did not trigger counts. The v0.10.1 suggester produced a suggested line, ROI, and event-rule config from the existing `tracks.csv`. The v0.10.2 analytics-only rerun applies that config to existing `detections.csv` and `tracks.csv` without rerunning YOLO or the tracker.
+
+Local-only rerun summary from `/tmp/yolov8_real_smoke_analytics_rerun`:
+
+- `count_events.csv`: `62` lines including header
+- `roi_frame_counts.csv`: `1347` lines including header
+- `events.jsonl`: `14` lines
+- `count_summary.total_count`: `61`
+- `count_summary.by_direction`: `positive=31`, `negative=30`
+- `roi_summary.frames_observed`: `1283`
+- `roi_summary.max_count`: `27`
+- `event_summary.total_events`: `14`
+- `event_summary.by_type`: `long_stay=14`
+
+These are statistics only. Generated CSV, JSON, and JSONL files remain local-only and are not committed.

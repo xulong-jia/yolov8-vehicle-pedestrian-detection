@@ -496,6 +496,16 @@ It does not rerun YOLO, does not change the tracker, does not integrate ByteTrac
 
 Details: [Analytics Config Tuning](analytics_config_tuning.md)
 
+## v0.10.2 Analytics-only Rerun With Suggested Config
+
+`v0.10.2` adds `src/analytics_only_rerun.py`.
+
+The helper reads existing `detections.csv`, `tracks.csv`, and an analytics config JSON. It extracts the `suggested_config` wrapper produced by `src.analytics_config_suggester` or accepts a direct analytics config, then creates a fresh Video Analysis Center run with analytics artifacts.
+
+This step applies suggested config without rerunning YOLO, without regenerating detections or tracks, without changing the tracker, without integrating ByteTrack/DeepSORT, and without rendering tracked video.
+
+Details: [Analytics Config Tuning](analytics_config_tuning.md)
+
 ## Test Summary
 
 The MVP is covered by synthetic unit tests:
@@ -514,6 +524,8 @@ The MVP is covered by synthetic unit tests:
 - `tests/test_predict_to_track_smoke_flow.py`
 - `tests/test_video_analysis_job.py`
 - `tests/test_three_step_video_analysis_job_flow.py`
+- `tests/test_analytics_config_suggester.py`
+- `tests/test_analytics_only_rerun.py`
 
 ## Current Baseline
 

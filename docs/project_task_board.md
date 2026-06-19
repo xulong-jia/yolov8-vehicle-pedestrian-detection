@@ -534,8 +534,44 @@ Current scope:
 
 Pending after v0.10.1 Step 1:
 
-- [ ] Apply suggested config to analytics-only rerun / 将建议配置用于仅 analytics 重跑 — Target: v0.10.2+ — Status: Pending
+- [x] Apply suggested config to analytics-only rerun / 将建议配置用于仅 analytics 重跑 — Target: v0.10.2+ — Status: Completed in working tree
 - [ ] Visualization overlay for suggested line/ROI / 建议 line/ROI 可视化叠加 — Target: v0.10.2+ — Status: Pending
+- [ ] Real ByteTrack dependency integration / 真实 ByteTrack 依赖集成 — Target: v1.0 candidate — Status: Pending
+- [ ] Tracked video rendering / 跟踪视频渲染 — Target: v1.0 candidate — Status: Pending
+- [ ] Streamlit video pages / Streamlit 视频页面 — Target: v1.0 candidate — Status: Pending
+- [ ] FastAPI video jobs / FastAPI 视频任务 — Target: v1.0 candidate — Status: Pending
+
+## v0.10.2-analytics-only-rerun-with-suggested-config / 建议配置 analytics-only 重跑
+
+- [x] Step 1 analytics-only rerun tool / Step 1 仅 analytics 重跑工具 — Priority: P0 — Status: Completed in working tree — Output: `src/analytics_only_rerun.py`, `tests/test_analytics_only_rerun.py`, `docs/analytics_config_tuning.md`, `docs/real_local_smoke_run_result.md`, `docs/track_video_cli_usage.md`, `docs/video_analytics_mvp.md`, `docs/project_task_board.md`, `README.md`, `docs/final_project_report.md` — Commit: TBD
+- [x] Real smoke analytics rerun performed locally / 本地执行真实 smoke analytics 重跑 — Priority: P0 — Status: Completed locally — Output: `/tmp/yolov8_real_smoke_analytics_rerun` — Commit: Not committed
+
+Current scope:
+
+- reads existing `detections.csv`
+- reads existing `tracks.csv`
+- reads direct analytics config JSON or v0.10.1 `suggested_config` JSON
+- creates a fresh Video Analysis Center run
+- writes analytics-only `count_events.csv`, `roi_frame_counts.csv`, `events.jsonl`, and `video_analysis_summary.json`
+- does not rerun YOLO
+- does not rerun tracker
+- does not regenerate detections or tracks
+- no real ByteTrack/DeepSORT dependency integration
+- no tracked video rendering
+- no Streamlit/FastAPI video workflow
+
+Local rerun result:
+
+- `count_events.csv`: `62` lines including header
+- `roi_frame_counts.csv`: `1347` lines including header
+- `events.jsonl`: `14` lines
+- `count_summary.total_count`: `61`
+- `roi_summary.frames_observed`: `1283`
+- `event_summary.total_events`: `14`
+
+Pending after v0.10.2 Step 1:
+
+- [ ] Visualization overlay for suggested line/ROI / 建议 line/ROI 可视化叠加 — Target: v0.10.3+ — Status: Pending
 - [ ] Real ByteTrack dependency integration / 真实 ByteTrack 依赖集成 — Target: v1.0 candidate — Status: Pending
 - [ ] Tracked video rendering / 跟踪视频渲染 — Target: v1.0 candidate — Status: Pending
 - [ ] Streamlit video pages / Streamlit 视频页面 — Target: v1.0 candidate — Status: Pending
@@ -572,6 +608,6 @@ Pending after v0.10.1 Step 1:
 
 ## Next Recommended Task
 
-1. v0.10.1 Step 2 commit docs/tests and tag analytics config tuning helper / v0.10.1 Step 2 提交测试文档并打 tag
-2. v0.10.2 apply suggested config to analytics-only rerun / v0.10.2 将建议配置用于仅 analytics 重跑
+1. v0.10.2 Step 2 commit docs/tests and tag analytics-only rerun / v0.10.2 Step 2 提交测试文档并打 tag
+2. v0.10.3 visualization overlay for suggested line/ROI / v0.10.3 建议 line/ROI 可视化叠加
 3. v1.0 candidate real ByteTrack dependency integration planning / v1.0 候选真实 ByteTrack 依赖集成规划
