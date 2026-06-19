@@ -277,7 +277,7 @@ Pending after v0.9.1 Step 1:
 
 ## v0.9.2-two-command-video-analysis-smoke-flow / 两命令视频分析冒烟链路
 
-- [x] Step 1 two-command predict-to-track smoke flow / Step 1 两命令 predict-to-track 冒烟链路 — Priority: P0 — Status: Completed in working tree — Output: `tests/test_predict_to_track_smoke_flow.py`, `docs/track_video_cli_usage.md`, `docs/video_analytics_mvp.md`, `docs/project_task_board.md` — Commit: TBD
+- [x] Step 1 two-command predict-to-track smoke flow / Step 1 两命令 predict-to-track 冒烟链路 — Priority: P0 — Status: Completed — Output: `tests/test_predict_to_track_smoke_flow.py`, `docs/track_video_cli_usage.md`, `docs/video_analytics_mvp.md`, `docs/project_task_board.md` — Commit: `9fe464a`
 
 Current scope:
 

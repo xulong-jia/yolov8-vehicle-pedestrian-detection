@@ -90,7 +90,7 @@ Expected files:
 - `/tmp/yolov8_video_smoke/detections.csv`
 - `/tmp/yolov8_video_smoke/tracking/tracks.csv`
 
-Step 1 runs YOLO if you provide a real model and real video. Step 2 still uses the synthetic tracker and is not real ByteTrack/DeepSORT tracking. Keep model weights and videos local, and do not commit `/tmp` outputs.
+Step 1 runs YOLO if you provide a real model and real video. The automated test for this flow uses fake YOLO and `tmp_path` instead. Step 2 still uses the synthetic tracker and is not real ByteTrack/DeepSORT tracking. Keep model weights and videos local, write smoke outputs to `/tmp`, and do not commit `/tmp` outputs, generated `detections.csv`, generated `tracks.csv`, real videos, or model weights.
 
 ## Video metadata-only mode
 
