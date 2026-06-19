@@ -765,3 +765,29 @@ Purpose:
 - Geometry / line / ROI / event / writer / Video Analysis Center tests are implemented with synthetic inputs.
 - No generated artifacts are committed.
 - `make check`, `make api-check`, and `make danger-check` pass.
+
+## v0.11.5 ByteTrack Pipeline Validation
+
+`v0.11.5` validates the post-tracking pipeline for standard ByteTrack output.
+The new `src.validate_bytetrack_pipeline` helper consumes existing
+`detections.csv` and `tracks.csv`, runs analytics-only rerun, and optionally
+renders a tracked preview.
+
+The helper does not rerun YOLO and does not rerun ByteTrack. It keeps generated
+analytics artifacts and preview video under `/tmp`.
+
+Local 300-frame validation result:
+
+- `track_rows=746`
+- `unique_tracks=25`
+- `frames_with_tracks=261`
+- `class_counts`: `Person=720`, `Bus=26`
+- `detection_count=21988`
+- `track_count=25`
+- ROI frames observed: `33`
+- long-stay events: `24`
+- preview readable by cv2: `300` frames, `29.97 FPS`, `1280x720`
+
+The helper creates a local compatibility copy when ByteTrack rows have blank
+`timestamp_sec` values so the existing long-stay analytics can run. The source
+tracks file is not modified.

@@ -362,3 +362,22 @@ GitHub tracks code, docs, configs, summaries, and selected lightweight demo asse
 - [Video analytics MVP](video_analytics_mvp.md)
 - [YOLOv8m training summary](experiments/yolov8m_640_50epochs/summary.md)
 - [YOLOv8m official test summary](evaluation/yolov8m_640_50epochs_official/summary.md)
+## v0.11.5 ByteTrack Pipeline Validation
+
+The project now validates the post-tracking pipeline for standard ByteTrack
+output. `src.validate_bytetrack_pipeline` consumes existing YOLO detections and
+standard ByteTrack tracks, runs analytics-only rerun, and optionally renders a
+tracked preview without rerunning YOLO or rerunning ByteTrack.
+
+Local validation summary:
+
+- `track_rows=746`
+- `unique_tracks=25`
+- `frames_with_tracks=261`
+- `track_count=25`
+- ROI frames observed: `33`
+- long-stay events: `24`
+- preview readable by cv2: `300` frames, `29.97 FPS`, `1280x720`
+
+Generated CSV, JSON, JSONL, and MP4 outputs stayed under `/tmp` and were not
+committed. See [ByteTrack Pipeline Validation](bytetrack_pipeline_validation.md).

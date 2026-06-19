@@ -142,3 +142,46 @@ Still pending:
 - synthetic vs ByteTrack comparison
 - full-length validation
 - Streamlit/FastAPI video workflow integration
+
+## v0.11.5 ByteTrack Pipeline Validation
+
+`v0.11.5` adds `src.validate_bytetrack_pipeline` to validate the standard
+`track_video.py --tracker bytetrack` output with the existing analytics-only
+rerun and tracked-video renderer.
+
+Validation command:
+
+```bash
+.venv/bin/python -m src.validate_bytetrack_pipeline \
+  --detections-csv /tmp/yolov8_real_smoke/detections.csv \
+  --tracks-csv /tmp/yolov8_track_video_bytetrack/tracks.csv \
+  --config-json /tmp/yolov8_real_smoke/suggested_analytics_config.json \
+  --video local_videos/source/pexels_crosswalk_traffic_demo.mp4 \
+  --output-dir /tmp/yolov8_bytetrack_pipeline_validation \
+  --run-name bytetrack_validation \
+  --video-id demo \
+  --render-preview \
+  --overlay-plan-json /tmp/yolov8_real_smoke/analytics_overlay_plan.json \
+  --max-frames 300
+```
+
+Local result:
+
+- `track_rows=746`
+- `unique_tracks=25`
+- `frames_with_tracks=261`
+- `class_counts`: `Person=720`, `Bus=26`
+- analytics rerun succeeded with `track_row_count=746` and `track_count=25`
+- ROI summary observed `33` frame/class rows
+- event summary produced `24` long-stay events
+- renderer wrote a readable 300-frame, `1280x720`, `29.97 FPS` preview
+
+The validation does not rerun YOLO and does not rerun ByteTrack. Outputs remain
+under `/tmp` and are not committed.
+
+Still pending after v0.11.5:
+
+- synthetic vs ByteTrack comparison
+- full-length ByteTrack validation
+- `lap` requirements pin decision
+- Streamlit/FastAPI video workflow integration

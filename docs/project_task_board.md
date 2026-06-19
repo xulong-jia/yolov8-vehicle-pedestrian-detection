@@ -802,6 +802,40 @@ Pending after v0.11.4 Step 1:
 - [ ] Synthetic vs ByteTrack comparison / synthetic 与 ByteTrack 对比 — Target: v0.11.5+ — Status: Pending
 - [ ] Streamlit/FastAPI integration / Streamlit/FastAPI 集成 — Target: v1.0 candidate — Status: Pending
 
+## v0.11.5-bytetrack-analytics-and-render-validation / ByteTrack analytics 与渲染验证
+
+- [x] Validation helper / 验证 helper — Priority: P0 — Status: Completed in working tree — Output: `src/validate_bytetrack_pipeline.py` — Commit: TBD
+- [x] Validation tests / 验证测试 — Priority: P0 — Status: Completed in working tree — Output: `tests/test_validate_bytetrack_pipeline.py` — Commit: TBD
+- [x] Local 300-frame pipeline validation / 本地 300 帧后半链路验证 — Priority: P0 — Status: Completed locally — Output: `/tmp/yolov8_bytetrack_pipeline_validation` — Commit: Not committed
+
+Scope:
+
+- consumes existing YOLO `detections.csv`
+- consumes standard `track_video.py --tracker bytetrack` `tracks.csv`
+- runs analytics-only rerun
+- renders a 300-frame ByteTrack tracked preview
+- does not rerun YOLO
+- does not rerun ByteTrack
+- does not commit `/tmp` CSV, JSON, JSONL, or MP4 outputs
+
+Local result summary:
+
+- `track_rows=746`
+- `unique_tracks=25`
+- `frames_with_tracks=261`
+- `class_counts`: `Person=720`, `Bus=26`
+- analytics rerun: `detection_count=21988`, `track_row_count=746`, `track_count=25`
+- ROI frames observed: `33`
+- long-stay events: `24`
+- preview readable by cv2: `300` frames, `29.97 FPS`, `1280x720`
+
+Pending after v0.11.5 Step 1:
+
+- [ ] Synthetic vs ByteTrack comparison / synthetic 与 ByteTrack 对比 — Target: v0.11.6+ — Status: Pending
+- [ ] Full-length ByteTrack validation / 全长 ByteTrack 验证 — Target: v1.0 candidate — Status: Pending
+- [ ] Add lap dependency decision / 是否固化 lap 依赖 — Target: v1.0 candidate — Status: Pending
+- [ ] Streamlit/FastAPI integration / Streamlit/FastAPI 集成 — Target: v1.0 candidate — Status: Pending
+
 ## P3 — Optional Future Experiments / 可选未来实验
 
 - [x] Run YOLOv8s official test split validation if weight is available / 在权重可用时运行 YOLOv8s 官方测试集验证 — Priority: P3 — Status: Done — Output: `docs/experiments/yolov8s_640_50epochs_retrain/`, `docs/evaluation/yolov8s_640_50epochs_official/` — Result: P `0.865`, R `0.838`, mAP50 `0.876`, mAP50-95 `0.601` — Commit: `e4d5adb`

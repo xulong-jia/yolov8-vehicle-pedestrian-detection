@@ -241,3 +241,22 @@ The supported runtime command shape is now:
 Local validation produced standard `tracks.csv` output under `/tmp/yolov8_track_video_bytetrack` with `track_rows=746`, `unique_tracks=25`, `frames_with_rows=261`, and `class_counts` of `Person=720`, `Bus=26`. Generated outputs remain local-only and are not committed.
 
 Still pending: `lap` requirements decision, analytics rerun on ByteTrack tracks, synthetic vs ByteTrack comparison, full-length validation, and UI/API integration.
+
+## v0.11.5 ByteTrack Pipeline Validation
+
+`v0.11.5` validates that the standard `track_video.py --tracker bytetrack`
+`tracks.csv` can flow into analytics-only rerun and tracked-video rendering
+without rerunning YOLO and without rerunning the tracker.
+
+See [ByteTrack Pipeline Validation](bytetrack_pipeline_validation.md).
+
+Local 300-frame result:
+
+- `track_rows=746`
+- `unique_tracks=25`
+- `frames_with_tracks=261`
+- `class_counts`: `Person=720`, `Bus=26`
+- analytics artifacts and a readable 300-frame preview were generated under `/tmp`
+
+Still pending: synthetic vs ByteTrack comparison, full-length ByteTrack
+validation, `lap` requirements decision, and UI/API integration.

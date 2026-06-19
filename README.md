@@ -467,7 +467,17 @@ ONNX Runtime benchmark/check:
 - [Inference speed benchmark](docs/inference_speed_benchmark.md)
 - [ONNX Runtime benchmark](docs/onnx_runtime_benchmark.md)
 - [Video analytics MVP](docs/video_analytics_mvp.md)
+- [ByteTrack pipeline validation](docs/bytetrack_pipeline_validation.md)
 - [Project task board](docs/project_task_board.md)
+
+## v0.11.5 ByteTrack Pipeline Validation
+
+`v0.11.5` validates that standard `track_video.py --tracker bytetrack` output
+can flow into analytics-only rerun and tracked-video rendering without rerunning
+YOLO or the tracker. The local 300-frame validation used `746` ByteTrack rows,
+`25` unique tracks, and generated local-only analytics artifacts plus a readable
+300-frame preview under `/tmp`. See
+[ByteTrack pipeline validation](docs/bytetrack_pipeline_validation.md).
 
 ## Safety and Git Policy
 

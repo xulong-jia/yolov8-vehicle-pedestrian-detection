@@ -254,3 +254,34 @@ Local-only result:
 - `class_counts`: `Person=720`, `Bus=26`
 
 No preview video was rendered in this validation. Generated output remains under `/tmp` and is not committed. Analytics rerun, synthetic vs ByteTrack comparison, full-length validation, and UI/API integration remain pending.
+
+## v0.11.5 ByteTrack Pipeline Validation Follow-up
+
+The standard `track_video.py --tracker bytetrack` `tracks.csv` was validated
+with analytics-only rerun and tracked-video rendering through
+`src.validate_bytetrack_pipeline`.
+
+This follow-up did not rerun YOLO and did not rerun ByteTrack. It consumed:
+
+- `/tmp/yolov8_real_smoke/detections.csv`
+- `/tmp/yolov8_track_video_bytetrack/tracks.csv`
+- `/tmp/yolov8_real_smoke/suggested_analytics_config.json`
+- `/tmp/yolov8_real_smoke/analytics_overlay_plan.json`
+
+Local-only result under `/tmp/yolov8_bytetrack_pipeline_validation`:
+
+- `track_rows=746`
+- `unique_tracks=25`
+- `frames_with_tracks=261`
+- `class_counts`: `Person=720`, `Bus=26`
+- `detection_count=21988`
+- `track_row_count=746`
+- `track_count=25`
+- ROI frames observed: `33`
+- long-stay events: `24`
+- preview readable by cv2: `300` frames, `29.97 FPS`, `1280x720`
+
+The helper wrote a local compatibility copy with filled `timestamp_sec` values
+for analytics because the ByteTrack runtime output has blank timestamps. The
+original ByteTrack `tracks.csv` was not modified. Generated CSV, JSON, JSONL,
+and MP4 outputs remain local-only and are not committed.

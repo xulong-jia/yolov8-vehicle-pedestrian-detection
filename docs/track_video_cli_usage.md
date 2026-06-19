@@ -592,3 +592,33 @@ Pending runtime work:
 - Streamlit video pages
 - FastAPI video jobs
 - real video smoke demo
+
+## Validate ByteTrack tracks with analytics and renderer
+
+`v0.11.5` adds a validation wrapper for the post-tracking pipeline. It consumes
+existing `detections.csv` and standard ByteTrack `tracks.csv`, then runs
+analytics-only rerun and optionally renders a tracked preview.
+
+```bash
+.venv/bin/python -m src.validate_bytetrack_pipeline \
+  --detections-csv /tmp/yolov8_real_smoke/detections.csv \
+  --tracks-csv /tmp/yolov8_track_video_bytetrack/tracks.csv \
+  --config-json /tmp/yolov8_real_smoke/suggested_analytics_config.json \
+  --video local_videos/source/pexels_crosswalk_traffic_demo.mp4 \
+  --output-dir /tmp/yolov8_bytetrack_pipeline_validation \
+  --run-name bytetrack_validation \
+  --video-id demo \
+  --render-preview \
+  --overlay-plan-json /tmp/yolov8_real_smoke/analytics_overlay_plan.json \
+  --max-frames 300
+```
+
+This command does not rerun YOLO and does not rerun the tracker. It writes only
+local validation outputs under `/tmp`; do not commit the generated CSV, JSON,
+JSONL, or MP4 files.
+
+Local v0.11.5 result:
+
+- `track_rows=746`, `unique_tracks=25`, `frames_with_tracks=261`
+- analytics rerun succeeded with `track_count=25`
+- renderer wrote a readable 300-frame ByteTrack preview
