@@ -437,6 +437,34 @@ Pending after v0.9.7 Step 1:
 - [ ] FastAPI video jobs / FastAPI 视频任务 — Target: v1.0 candidate — Status: Pending
 - [ ] Real video smoke demo / 真实视频冒烟演示 — Target: v1.0 candidate — Status: Pending
 
+## v0.9.8-real-local-smoke-preflight / 真实本地冒烟预检
+
+- [x] Step 1 real local smoke preflight checker / Step 1 真实本地冒烟预检器 — Priority: P0 — Status: Completed in working tree — Output: `src/smoke_preflight.py`, `tests/test_smoke_preflight.py`, `docs/project_task_board.md`, `docs/track_video_cli_usage.md`, `docs/video_analytics_mvp.md` — Commit: TBD
+
+Current scope:
+
+- checks model path exists and is a file
+- checks video path exists and is a file
+- checks output directory path without creating it
+- checks optional `ultralytics` and `cv2` availability without importing them
+- prints command previews for detector CSV export, synthetic tracking, and unified smoke runner
+- does not run YOLO
+- does not run tracking
+- does not create output files or directories
+- no real ByteTrack/DeepSORT dependency integration
+- no tracked video rendering
+- no Streamlit/FastAPI video workflow
+
+Pending after v0.9.8 Step 1:
+
+- [ ] Actual real local smoke run / 实际真实本地冒烟运行 — Target: v0.9.8+ — Status: Pending
+- [ ] Real ByteTrack dependency integration / 真实 ByteTrack 依赖集成 — Target: v1.0 candidate — Status: Pending
+- [ ] Real DeepSORT dependency integration / 真实 DeepSORT 依赖集成 — Target: v1.0 candidate — Status: Pending
+- [ ] Tracked video rendering / 跟踪视频渲染 — Target: v1.0 candidate — Status: Pending
+- [ ] Streamlit video pages / Streamlit 视频页面 — Target: v1.0 candidate — Status: Pending
+- [ ] FastAPI video jobs / FastAPI 视频任务 — Target: v1.0 candidate — Status: Pending
+- [ ] Real video smoke demo / 真实视频冒烟演示 — Target: v1.0 candidate — Status: Pending
+
 ## P3 — Optional Future Experiments / 可选未来实验
 
 - [x] Run YOLOv8s official test split validation if weight is available / 在权重可用时运行 YOLOv8s 官方测试集验证 — Priority: P3 — Status: Done — Output: `docs/experiments/yolov8s_640_50epochs_retrain/`, `docs/evaluation/yolov8s_640_50epochs_official/` — Result: P `0.865`, R `0.838`, mAP50 `0.876`, mAP50-95 `0.601` — Commit: `e4d5adb`
@@ -468,5 +496,5 @@ Pending after v0.9.7 Step 1:
 
 ## Next Recommended Task
 
-1. v0.9.7 Step 2 document and tag four-step smoke runner / v0.9.7 Step 2 文档收尾并打 tag
+1. v0.9.8 Step 2 document and tag real local smoke preflight / v0.9.8 Step 2 文档收尾并打 tag
 2. v1.0 candidate real ByteTrack dependency integration planning / v1.0 候选真实 ByteTrack 依赖集成规划

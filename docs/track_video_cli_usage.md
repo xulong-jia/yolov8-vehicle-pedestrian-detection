@@ -334,6 +334,28 @@ Expected outputs:
 
 The runner uses `predict_video.py`, so it runs YOLO when you provide a real model and video source. The tracker is still the synthetic tracker, not real ByteTrack/DeepSORT. The runner does not render tracked video. Use `/tmp` or another gitignored output directory, and do not commit generated outputs, model weights, or real videos.
 
+## Real local smoke preflight
+
+Before running a real local smoke command, run the preflight checker. It does not run YOLO, does not create the output directory, does not write `detections.csv`, `tracks.csv`, or summaries, and does not run tracking. It only checks paths, optional module availability, and prints command previews.
+
+```bash
+python3 src/smoke_preflight.py \
+  --model /absolute/path/to/best.pt \
+  --video /absolute/path/to/video.mp4 \
+  --output-dir /tmp/yolov8_real_smoke \
+  --video-id demo \
+  --run-name demo_run \
+  --conf 0.25 \
+  --imgsz 640 \
+  --device cpu
+```
+
+Expected output:
+
+- `ok`: `true` or `false`
+- checks for `model_path`, `video_path`, `output_dir`, `ultralytics`, and `cv2`
+- command previews for `predict_video.py`, `track_video.py --tracker synthetic`, and `run_video_analysis_smoke.py`
+
 ## Video metadata-only mode
 
 Use this mode to validate video path reading, metadata extraction, and `frame_index.csv` creation.

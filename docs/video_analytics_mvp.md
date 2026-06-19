@@ -441,6 +441,20 @@ The runner:
 
 It may run YOLO through `predict_video.py` when used with real model weights and a real source video. It still uses the synthetic tracker, does not integrate real ByteTrack/DeepSORT, does not render tracked video, and does not connect Streamlit or FastAPI.
 
+## v0.9.8 Real Local Smoke Preflight
+
+`v0.9.8-real-local-smoke-preflight` adds `src/smoke_preflight.py`, a safe preflight checker for real local smoke runs.
+
+The preflight checker validates:
+
+- model path exists and is a file
+- video path exists and is a file
+- output directory path is safe without creating it
+- optional `ultralytics` module availability
+- optional `cv2` module availability
+
+It prints command previews for the CSV detector, synthetic tracker, and unified smoke runner. It does not run YOLO, does not run tracking, does not create outputs, and does not write CSV/JSON artifacts. This prepares for a later actual real local smoke demo without committing generated files.
+
 ## Test Summary
 
 The MVP is covered by synthetic unit tests:
