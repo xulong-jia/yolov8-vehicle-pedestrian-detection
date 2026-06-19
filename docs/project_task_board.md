@@ -685,6 +685,40 @@ Pending after v0.11.0 Step 1:
 - [ ] Streamlit video playback / Streamlit 视频播放 — Target: v1.0 candidate — Status: Pending
 - [ ] FastAPI video jobs / FastAPI 视频任务 — Target: v1.0 candidate — Status: Pending
 
+## v0.11.1-ultralytics-bytetrack-short-video-spike / Ultralytics ByteTrack 短视频 spike
+
+- [x] Step 1 short-video ByteTrack spike tool / Step 1 短视频 ByteTrack spike 工具 — Priority: P0 — Status: Completed in working tree — Output: `src/track_video_bytetrack_spike.py`, `tests/test_track_video_bytetrack_spike.py`, docs updates — Commit: TBD
+- [x] Local short ByteTrack spike attempted / 本地短视频 ByteTrack spike 已尝试 — Priority: P0 — Status: Blocked locally — Output: `/tmp/yolov8_bytetrack_spike` empty dir only — Commit: Not committed
+
+Current scope:
+
+- lazy-loads Ultralytics
+- runs `model.track(..., tracker="bytetrack.yaml")` only when explicitly executed
+- limits iteration with `--max-frames`
+- writes intended output to `/tmp/yolov8_bytetrack_spike/bytetrack_tracks.csv`
+- can call existing tracked video renderer for preview output
+- tests use fake model/results only
+- no Streamlit/FastAPI integration
+- not full production integration
+
+Local attempt result:
+
+- blocked by missing dependency: `No module named 'lap'`
+- no `bytetrack_tracks.csv` produced
+- no tracked preview MP4 produced
+- no generated output committed
+
+Pending after v0.11.1 Step 1:
+
+- [ ] Approve/install missing Ultralytics ByteTrack dependency such as `lap` / 批准并安装缺失的 Ultralytics ByteTrack 依赖如 `lap` — Target: v0.11.2 — Status: Pending
+- [ ] Rerun short ByteTrack spike / 重新运行短视频 ByteTrack spike — Target: v0.11.2 — Status: Pending
+- [ ] Export real ByteTrack `tracks.csv` / 导出真实 ByteTrack `tracks.csv` — Target: v0.11.2 — Status: Pending
+- [ ] Render tracked video from real ByteTrack tracks / 基于真实 ByteTrack tracks 渲染跟踪视频 — Target: v0.11.2+ — Status: Pending
+- [ ] Compare synthetic vs ByteTrack tracks / 对比 synthetic 与 ByteTrack 轨迹 — Target: v0.11.2+ — Status: Pending
+- [ ] Promote spike into `track_video.py` runtime / 将 spike 提升为 `track_video.py` runtime — Target: v1.0 candidate — Status: Pending
+- [ ] Analytics rerun on ByteTrack tracks / 基于 ByteTrack tracks 重跑 analytics — Target: v1.0 candidate — Status: Pending
+- [ ] Streamlit/FastAPI integration / Streamlit/FastAPI 集成 — Target: v1.0 candidate — Status: Pending
+
 ## P3 — Optional Future Experiments / 可选未来实验
 
 - [x] Run YOLOv8s official test split validation if weight is available / 在权重可用时运行 YOLOv8s 官方测试集验证 — Priority: P3 — Status: Done — Output: `docs/experiments/yolov8s_640_50epochs_retrain/`, `docs/evaluation/yolov8s_640_50epochs_official/` — Result: P `0.865`, R `0.838`, mAP50 `0.876`, mAP50-95 `0.601` — Commit: `e4d5adb`

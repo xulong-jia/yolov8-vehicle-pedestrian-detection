@@ -124,3 +124,47 @@ The helper does not import Ultralytics, OpenCV, torch, numpy, ByteTrack, or Deep
 - Synthetic vs ByteTrack track summary comparison.
 - Streamlit video playback.
 - FastAPI video artifact and job endpoints.
+
+## v0.11.1 Ultralytics ByteTrack Short Video Spike
+
+`v0.11.1` adds `src/track_video_bytetrack_spike.py`, a short-video spike CLI for Ultralytics `model.track(..., tracker="bytetrack.yaml")`.
+
+The tool:
+
+- reads a local model path and local video path
+- lazy-loads Ultralytics only when executed
+- runs `model.track` with `stream=True`, `persist=True`, and a required `--max-frames` limit
+- exports ByteTrack-style rows to `/tmp/.../bytetrack_tracks.csv`
+- can optionally call `src.render_tracked_video` to create a short tracked preview
+- does not modify the existing synthetic tracker path
+- is not full production integration
+
+Example:
+
+```bash
+.venv/bin/python -m src.track_video_bytetrack_spike \
+  --model /absolute/path/to/best.pt \
+  --video /absolute/path/to/video.mp4 \
+  --output-dir /tmp/yolov8_bytetrack_spike \
+  --video-id demo \
+  --tracker bytetrack.yaml \
+  --conf 0.25 \
+  --imgsz 640 \
+  --device cpu \
+  --max-frames 300 \
+  --render-preview
+```
+
+Local attempt result:
+
+- attempted on local YOLOv8s weights and local demo video
+- output directory: `/tmp/yolov8_bytetrack_spike`
+- blocked before tracks export by missing dependency: `No module named 'lap'`
+- generated output files: none
+- no `bytetrack_tracks.csv` or preview MP4 is committed
+
+Next fix:
+
+- approve/install the missing ByteTrack runtime dependency required by Ultralytics, likely `lap`
+- rerun the same short-video command under `/tmp`
+- only after a successful short run, compare synthetic and ByteTrack track summaries

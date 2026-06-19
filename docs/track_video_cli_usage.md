@@ -434,6 +434,33 @@ This command does not run YOLO, does not run ByteTrack, does not run DeepSORT, a
 
 The recommended next implementation path is a short, explicitly approved Ultralytics `model.track(..., tracker="bytetrack.yaml")` spike that writes real ByteTrack-like `tracks.csv` output under `/tmp`. Keep the synthetic tracker fallback until real ByteTrack quality is reviewed.
 
+## Ultralytics ByteTrack short video spike
+
+`v0.11.1` adds a short-video spike tool:
+
+```bash
+.venv/bin/python -m src.track_video_bytetrack_spike \
+  --model /absolute/path/to/best.pt \
+  --video /absolute/path/to/video.mp4 \
+  --output-dir /tmp/yolov8_bytetrack_spike \
+  --video-id demo \
+  --tracker bytetrack.yaml \
+  --conf 0.25 \
+  --imgsz 640 \
+  --device cpu \
+  --max-frames 300 \
+  --render-preview \
+  --config-json /tmp/yolov8_real_smoke/suggested_analytics_config.json \
+  --overlay-plan-json /tmp/yolov8_real_smoke/analytics_overlay_plan.json
+```
+
+Expected outputs, when the local ByteTrack runtime dependencies are available:
+
+- `/tmp/yolov8_bytetrack_spike/bytetrack_tracks.csv`
+- `/tmp/yolov8_bytetrack_spike/bytetrack_tracked_preview_300.mp4` when `--render-preview` is used
+
+Do not commit these outputs. This spike uses Ultralytics ByteTrack-style tracking and is different from the existing synthetic tracker, but it is still not full production integration. The first local attempt was blocked by missing `lap`; no tracks CSV or preview video was produced.
+
 ## Video metadata-only mode
 
 Use this mode to validate video path reading, metadata extraction, and `frame_index.csv` creation.

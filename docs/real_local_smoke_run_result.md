@@ -175,3 +175,24 @@ Local-only preview:
 - output size: `16M` (`16440663` bytes)
 
 The output video is local-only and is not committed.
+
+## v0.11.1 ByteTrack Short Spike Follow-up
+
+`src.track_video_bytetrack_spike` was added to run a max-frame-limited Ultralytics `model.track(..., tracker="bytetrack.yaml")` spike and export ByteTrack-style `tracks.csv` under `/tmp`.
+
+Local attempt:
+
+- model: local YOLOv8s `best.pt`
+- video: local `pexels_crosswalk_traffic_demo.mp4`
+- output dir: `/tmp/yolov8_bytetrack_spike`
+- max frames: `300`
+- requested preview: enabled
+
+Result:
+
+- blocked before tracks export by missing dependency: `No module named 'lap'`
+- generated output files: none
+- no `bytetrack_tracks.csv` was produced
+- no ByteTrack tracked preview MP4 was produced
+
+This does not change the earlier synthetic-tracker smoke result. The next step is to resolve the missing Ultralytics ByteTrack runtime dependency before rerunning the short spike.

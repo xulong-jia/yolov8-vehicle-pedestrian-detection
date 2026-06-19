@@ -267,6 +267,8 @@ The batch prediction CLI is designed to write generated outputs under `local_out
 
 `v0.11.0-bytetrack-discovery-spike` adds a ByteTrack integration discovery helper and plan. It does not run real ByteTrack yet; it documents candidate integration paths and validates how Ultralytics `model.track`-style outputs can be normalized into the existing `tracks.csv` contract.
 
+`v0.11.1-ultralytics-bytetrack-short-video-spike` adds a short-video Ultralytics `model.track(..., tracker="bytetrack.yaml")` spike tool that writes ByteTrack-style `tracks.csv` under `/tmp` and can reuse the tracked video renderer for preview output. The first local attempt was blocked by missing `lap`, so no real ByteTrack tracks are committed or claimed as validated.
+
 This MVP does not include real ByteTrack/DeepSORT integration, full `track_video.py` runtime integration, full-length tracked video validation, Streamlit video result pages, FastAPI video jobs, database integration, or real video benchmarks.
 
 References:

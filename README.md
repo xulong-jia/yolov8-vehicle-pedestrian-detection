@@ -159,6 +159,8 @@ Completed experiments and recorded results:
 
 `v0.11.0-bytetrack-discovery-spike` adds a ByteTrack integration discovery helper and plan. It does not run real ByteTrack yet; it defines how Ultralytics `model.track`-style outputs can be normalized into the existing `tracks.csv` contract. See [ByteTrack Integration Plan](docs/bytetrack_integration_plan.md).
 
+`v0.11.1-ultralytics-bytetrack-short-video-spike` adds `src/track_video_bytetrack_spike.py`, a max-frame-limited Ultralytics `model.track(..., tracker="bytetrack.yaml")` spike tool for exporting real ByteTrack-style `tracks.csv` under `/tmp`. The local attempt was blocked by missing `lap`; no generated CSV or preview video is committed. See [ByteTrack Integration Plan](docs/bytetrack_integration_plan.md).
+
 This phase does not include real ByteTrack/DeepSORT integration, full `track_video.py` runtime integration, video UI pages, FastAPI video jobs, database integration, full-length tracked video validation, or real video benchmarks.
 
 Details: [Video analytics MVP](docs/video_analytics_mvp.md)

@@ -541,6 +541,21 @@ Recommended next step:
 - Reuse the existing tracked video renderer for a short preview.
 - Keep the synthetic tracker fallback until real ByteTrack track quality is reviewed.
 
+## v0.11.1 Ultralytics ByteTrack Short Video Spike
+
+`v0.11.1` adds `src/track_video_bytetrack_spike.py`.
+
+The tool runs a max-frame-limited Ultralytics `model.track(..., tracker="bytetrack.yaml")` spike, normalizes track results into the existing `tracks.csv` contract, and can pass those tracks to the existing tracked video renderer. Outputs are local-only under `/tmp`.
+
+This is not full production integration. It does not promote ByteTrack into `track_video.py`, does not replace the synthetic tracker fallback, does not connect Streamlit/FastAPI, and does not claim tracking quality.
+
+Local attempt result:
+
+- attempted with local YOLOv8s weights and local demo video
+- blocked by missing `lap`
+- no `bytetrack_tracks.csv` or tracked preview MP4 was produced
+- next step requires resolving the Ultralytics ByteTrack runtime dependency before rerun
+
 ## Test Summary
 
 The MVP is covered by synthetic unit tests:
@@ -564,6 +579,7 @@ The MVP is covered by synthetic unit tests:
 - `tests/test_analytics_overlay_plan.py`
 - `tests/test_render_tracked_video.py`
 - `tests/test_bytetrack_discovery.py`
+- `tests/test_track_video_bytetrack_spike.py`
 
 ## Current Baseline
 
