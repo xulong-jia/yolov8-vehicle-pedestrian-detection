@@ -239,9 +239,14 @@ The batch prediction CLI is designed to write generated outputs under `local_out
 
 `v0.9.0-real-video-detection-tracking-foundation` adds CSV-first `predict_video.py` video detection export and a tracking adapter interface skeleton. It defines the `detections.csv` contract and placeholder ByteTrack/DeepSORT adapters while keeping tests based on fake detections and monkeypatched YOLO.
 
+`v0.9.1-predict-to-track-synthetic-runtime` connects `track_video.py` detections-to-tracks mode to the tracking adapter factory. The synthetic tracker is available through the adapter interface; ByteTrack/DeepSORT remain placeholders.
+
 This MVP does not include real ByteTrack/DeepSORT integration, full `track_video.py` runtime integration, tracked video rendering, Streamlit video result pages, FastAPI video jobs, database integration, or real video benchmarks.
 
-Reference: [Video analytics MVP](video_analytics_mvp.md)
+References:
+
+- [Video analytics MVP](video_analytics_mvp.md)
+- [track_video.py CLI usage](track_video_cli_usage.md)
 
 ## 7. Deployment and Serving Preparation
 

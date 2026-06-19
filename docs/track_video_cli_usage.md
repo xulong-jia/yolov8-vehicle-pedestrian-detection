@@ -11,12 +11,14 @@ Current boundaries:
 
 Current safe modes:
 
-1. synthetic `detections.csv` to `tracks.csv`
+1. synthetic `detections.csv` to `tracks.csv` through the tracker adapter factory
 2. video metadata-only mode
 
 ## Synthetic detections-to-tracks mode
 
 Use this mode to validate field conversion from `detections.csv` to `tracks.csv`.
+Internally, `track_video.py` now obtains the tracker with `create_tracker_adapter(tracker_name)`.
+The default tracker is `synthetic`.
 
 Input:
 
@@ -27,6 +29,7 @@ Output:
 - `tracks.csv`
 
 This mode does not read real video.
+It does not run YOLO and does not generate tracked video.
 
 Smoke command:
 
@@ -53,6 +56,8 @@ Expected output:
 - `center_x`, `center_y`, `box_width`, `box_height`, and `box_area` are populated
 - `state` is `confirmed`
 - `tracker_name` is `synthetic`
+
+`--tracker bytetrack` and `--tracker deepsort` are recognized only as placeholder adapter names at this stage. They currently fail with `NotImplementedError` because the real ByteTrack/DeepSORT dependencies have not been integrated. Do not use them as successful smoke commands yet.
 
 ## Video metadata-only mode
 
@@ -96,7 +101,7 @@ Expected output:
 Pending runtime work:
 
 - real YOLO frame inference
-- ByteTrack/DeepSORT adapter
+- real ByteTrack/DeepSORT dependency integration
 - tracked video rendering
 - Video Analysis Center integration for real video jobs
 - Streamlit video pages

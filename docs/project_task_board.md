@@ -250,7 +250,7 @@ Pending after v0.9.0 Step 2:
 
 ## v0.9.1-predict-to-track-synthetic-runtime / 预测到跟踪的 synthetic 运行路径
 
-- [x] Step 1 `track_video.py` uses tracking adapter factory / Step 1 `track_video.py` 使用 tracking adapter factory — Priority: P0 — Status: Completed in working tree — Output: `src/track_video.py`, `tests/test_track_video.py`, `docs/project_task_board.md` — Commit: TBD
+- [x] Step 1 `track_video.py` uses tracking adapter factory / Step 1 `track_video.py` 使用 tracking adapter factory — Priority: P0 — Status: Completed — Output: `src/track_video.py`, `tests/test_track_video.py`, `docs/project_task_board.md` — Commit: `bb23a28`
 
 Current scope:
 

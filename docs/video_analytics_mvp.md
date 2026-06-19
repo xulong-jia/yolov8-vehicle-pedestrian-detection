@@ -252,6 +252,34 @@ Recommended next phases:
 - `v0.9.1`: connect `predict_video.py` CSV output to `track_video.py` synthetic tracker mode or the Video Analysis Center.
 - `v1.0` candidate: integrate a real ByteTrack adapter and run a controlled real video smoke demo without committing generated artifacts.
 
+## v0.9.1 Predict-to-Track Synthetic Runtime
+
+`v0.9.1-predict-to-track-synthetic-runtime` connects the `track_video.py` `detections.csv` to `tracks.csv` path to the tracking adapter factory. The CLI still operates in a safe skeleton mode, but the synthetic tracking path now goes through the same adapter interface that future real trackers will use.
+
+Current behavior:
+
+- `track_video.py` obtains trackers with `create_tracker_adapter(tracker_name)`.
+- The current successful runtime tracker is `synthetic`.
+- The synthetic tracker writes `tracks.csv` from existing or synthetic `detections.csv` rows.
+- `bytetrack` and `deepsort` are still placeholder adapters.
+- Calling `update(...)` on `bytetrack` or `deepsort` raises `NotImplementedError`.
+- Metadata-only video mode does not call the tracker adapter factory.
+
+Still out of scope after v0.9.1:
+
+- real ByteTrack dependency integration
+- real DeepSORT dependency integration
+- full real video tracking runtime
+- tracked video rendering
+- Streamlit video pages
+- FastAPI video jobs
+- real video smoke demo
+
+Recommended next phases:
+
+- `v0.9.2`: connect `predict_video.py` `detections.csv` output with `track_video.py` synthetic tracker in a documented two-command smoke flow.
+- Later: integrate the real ByteTrack dependency behind the existing adapter interface.
+
 ## Test Summary
 
 The MVP is covered by synthetic unit tests:
