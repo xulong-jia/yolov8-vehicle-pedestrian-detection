@@ -571,9 +571,48 @@ Local rerun result:
 
 Pending after v0.10.2 Step 1:
 
-- [ ] Visualization overlay for suggested line/ROI / 建议 line/ROI 可视化叠加 — Target: v0.10.3+ — Status: Pending
+- [x] Suggested analytics overlay plan / 建议 analytics overlay plan — Target: v0.10.3+ — Status: Completed in working tree
+- [ ] Static frame overlay renderer / 静态帧 overlay 渲染器 — Target: v0.10.4+ — Status: Pending
 - [ ] Real ByteTrack dependency integration / 真实 ByteTrack 依赖集成 — Target: v1.0 candidate — Status: Pending
 - [ ] Tracked video rendering / 跟踪视频渲染 — Target: v1.0 candidate — Status: Pending
+- [ ] Streamlit video pages / Streamlit 视频页面 — Target: v1.0 candidate — Status: Pending
+- [ ] FastAPI video jobs / FastAPI 视频任务 — Target: v1.0 candidate — Status: Pending
+
+## v0.10.3-suggested-analytics-overlay-plan / 建议 analytics overlay plan
+
+- [x] Step 1 overlay plan and geometry validation / Step 1 overlay plan 与几何校验 — Priority: P0 — Status: Completed in working tree — Output: `src/analytics_overlay_plan.py`, `tests/test_analytics_overlay_plan.py`, `docs/analytics_config_tuning.md`, `docs/real_local_smoke_run_result.md`, `docs/track_video_cli_usage.md`, `docs/video_analytics_mvp.md`, `docs/project_task_board.md`, `README.md`, `docs/final_project_report.md` — Commit: TBD
+- [x] Real smoke overlay plan generated locally / 本地生成真实 smoke overlay plan — Priority: P0 — Status: Completed locally — Output: `/tmp/yolov8_real_smoke/analytics_overlay_plan.json` — Commit: Not committed
+
+Current scope:
+
+- reads existing `tracks.csv`
+- reads direct analytics config JSON or v0.10.1 `suggested_config` JSON
+- summarizes bbox, center, and bottom-center coordinate ranges
+- computes `inferred_frame_bounds` from bbox max coordinates
+- validates suggested line geometry
+- validates suggested ROI geometry
+- writes optional JSON plan only when `--output-json` is provided
+- does not run YOLO
+- does not run tracker
+- does not read or render video frames
+- no real ByteTrack/DeepSORT dependency integration
+- no tracked video rendering
+- no Streamlit/FastAPI video workflow
+
+Local overlay plan result:
+
+- `row_count`: `21988`
+- `track_count`: `34`
+- `class_counts`: `Bus=588`, `Motorcycle=4`, `Person=21396`
+- `inferred_frame_bounds`: `width_hint=1280`, `height_hint=720`
+- line `line_main`: `recommendation=ok`
+- ROI `roi_main`: `recommendation=ok`
+
+Pending after v0.10.3 Step 1:
+
+- [ ] Static frame overlay renderer / 静态帧 overlay 渲染器 — Target: v0.10.4+ — Status: Pending
+- [ ] Tracked video rendering / 跟踪视频渲染 — Target: v1.0 candidate — Status: Pending
+- [ ] Real ByteTrack dependency integration / 真实 ByteTrack 依赖集成 — Target: v1.0 candidate — Status: Pending
 - [ ] Streamlit video pages / Streamlit 视频页面 — Target: v1.0 candidate — Status: Pending
 - [ ] FastAPI video jobs / FastAPI 视频任务 — Target: v1.0 candidate — Status: Pending
 
@@ -608,6 +647,6 @@ Pending after v0.10.2 Step 1:
 
 ## Next Recommended Task
 
-1. v0.10.2 Step 2 commit docs/tests and tag analytics-only rerun / v0.10.2 Step 2 提交测试文档并打 tag
-2. v0.10.3 visualization overlay for suggested line/ROI / v0.10.3 建议 line/ROI 可视化叠加
+1. v0.10.3 Step 2 commit docs/tests and tag suggested analytics overlay plan / v0.10.3 Step 2 提交测试文档并打 tag
+2. v0.10.4 static frame overlay renderer / v0.10.4 静态帧 overlay 渲染器
 3. v1.0 candidate real ByteTrack dependency integration planning / v1.0 候选真实 ByteTrack 依赖集成规划

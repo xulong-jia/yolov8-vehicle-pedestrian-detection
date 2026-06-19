@@ -261,6 +261,8 @@ The batch prediction CLI is designed to write generated outputs under `local_out
 
 `v0.10.2-analytics-only-rerun-with-suggested-config` adds analytics-only rerun support. It applies suggested analytics config to existing `detections.csv` and `tracks.csv` without rerunning YOLO or tracking, producing fresh Video Analysis Center artifacts.
 
+`v0.10.3-suggested-analytics-overlay-plan` adds overlay planning and geometry validation for suggested analytics config. It checks line/ROI placement against `tracks.csv` coordinate distributions and prepares a JSON plan for a future renderer without rendering video.
+
 This MVP does not include real ByteTrack/DeepSORT integration, full `track_video.py` runtime integration, tracked video rendering, Streamlit video result pages, FastAPI video jobs, database integration, or real video benchmarks.
 
 References:

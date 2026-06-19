@@ -73,3 +73,43 @@ Outputs:
 - `video_analysis_summary.json`
 
 Keep rerun outputs under `/tmp` or another ignored local path. Do not commit generated CSV, JSON, or JSONL artifacts.
+
+## Overlay Plan / Geometry Validation
+
+`v0.10.3` adds `src.analytics_overlay_plan` for geometry validation before any visual overlay renderer exists.
+
+The helper reads `tracks.csv` and analytics config JSON, then infers bbox, center, and bottom-center coordinate ranges from the existing track rows. It validates whether suggested lines and ROIs fall inside the detected coordinate space and reports how they relate to center/bottom-center distributions.
+
+It does not read real video frames, does not run YOLO, does not run a tracker, does not render video, and does not generate tracked video.
+
+Example:
+
+```bash
+.venv/bin/python -m src.analytics_overlay_plan \
+  --tracks-csv /tmp/yolov8_real_smoke/tracking/tracks.csv \
+  --config-json /tmp/yolov8_real_smoke/suggested_analytics_config.json \
+  --video-id demo \
+  --output-json /tmp/yolov8_real_smoke/analytics_overlay_plan.json
+```
+
+Output includes:
+
+- `coordinate_summary`
+- `line_plans`
+- `roi_plans`
+- `overlay_recommendations`
+- `notes`
+
+Limitations:
+
+- inferred frame bounds are based on track bbox coordinates, not true video metadata
+- no visual validation yet
+- synthetic tracks are still not real MOT
+- this does not replace manual overlay inspection
+- not ByteTrack/DeepSORT
+- not tracked video rendering
+
+Next steps:
+
+- implement a static frame or image overlay renderer later
+- eventually add tracked video rendering after real tracking is integrated

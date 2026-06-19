@@ -143,3 +143,18 @@ Local-only rerun summary from `/tmp/yolov8_real_smoke_analytics_rerun`:
 - `event_summary.by_type`: `long_stay=14`
 
 These are statistics only. Generated CSV, JSON, and JSONL files remain local-only and are not committed.
+
+## v0.10.3 Overlay Plan Follow-up
+
+The overlay plan validates suggested line and ROI geometry before any renderer is added. It reads existing `tracks.csv` and `suggested_analytics_config.json`, infers coordinate ranges from bbox data, and reports line/ROI placement recommendations.
+
+Local-only overlay plan summary from `/tmp/yolov8_real_smoke/analytics_overlay_plan.json`:
+
+- `row_count`: `21988`
+- `track_count`: `34`
+- `class_counts`: `Bus=588`, `Motorcycle=4`, `Person=21396`
+- `inferred_frame_bounds`: `width_hint=1280`, `height_hint=720`
+- line `line_main`: `recommendation=ok`, `orientation=horizontal`, `within_bbox_bounds=true`, `within_bottom_bounds=true`
+- ROI `roi_main`: `recommendation=ok`, `within_bbox_bounds=true`, `covers_center_distribution=true`, `covers_bottom_distribution=true`
+
+This is a JSON plan only. It does not render video, does not validate true video frame metadata, and the generated `/tmp` JSON is not committed.

@@ -392,6 +392,20 @@ After generating a suggested analytics config, rerun only the analytics layer ag
 
 This command does not run YOLO, does not run a tracker, and does not generate tracked video. Inputs are existing `detections.csv`, `tracks.csv`, and config JSON. Write outputs to `/tmp` or another ignored path, and do not commit generated CSV, JSON, JSONL, videos, or weights.
 
+## Analytics overlay plan
+
+Before rendering overlays, generate a JSON plan that validates the suggested line and ROI against `tracks.csv` coordinate distributions:
+
+```bash
+.venv/bin/python -m src.analytics_overlay_plan \
+  --tracks-csv /tmp/yolov8_real_smoke/tracking/tracks.csv \
+  --config-json /tmp/yolov8_real_smoke/suggested_analytics_config.json \
+  --video-id demo \
+  --output-json /tmp/yolov8_real_smoke/analytics_overlay_plan.json
+```
+
+This command does not run YOLO, does not run a tracker, does not read or render video frames, and does not generate tracked video. Keep the JSON output under `/tmp` or another ignored path, and do not commit generated overlay plans.
+
 ## Video metadata-only mode
 
 Use this mode to validate video path reading, metadata extraction, and `frame_index.csv` creation.

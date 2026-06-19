@@ -506,6 +506,16 @@ This step applies suggested config without rerunning YOLO, without regenerating 
 
 Details: [Analytics Config Tuning](analytics_config_tuning.md)
 
+## v0.10.3 Suggested Analytics Overlay Plan
+
+`v0.10.3` adds `src/analytics_overlay_plan.py`.
+
+The helper reads existing `tracks.csv` and suggested analytics config JSON, summarizes the observed bbox/center/bottom-center coordinate space, and validates suggested line and ROI placement. It produces JSON `line_plans`, `roi_plans`, `inferred_frame_bounds`, and overlay recommendations for a future renderer.
+
+This step does not render video, does not read video frames, does not rerun YOLO, does not run a tracker, does not integrate ByteTrack/DeepSORT, and does not generate tracked video.
+
+Details: [Analytics Config Tuning](analytics_config_tuning.md)
+
 ## Test Summary
 
 The MVP is covered by synthetic unit tests:
@@ -526,6 +536,7 @@ The MVP is covered by synthetic unit tests:
 - `tests/test_three_step_video_analysis_job_flow.py`
 - `tests/test_analytics_config_suggester.py`
 - `tests/test_analytics_only_rerun.py`
+- `tests/test_analytics_overlay_plan.py`
 
 ## Current Baseline
 
