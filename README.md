@@ -127,6 +127,8 @@ Completed experiments and recorded results:
 
 `v0.8.4-video-reader-track-video-integration` connects the video reader skeleton to `track_video.py`. The CLI now supports metadata-only video mode and synthetic detections-to-tracks mode, but still does not run YOLO, perform real tracking, or render tracked video.
 
+`v0.8.5-cli-smoke-docs` documents safe smoke commands for the skeleton CLI. See [track_video.py CLI usage](docs/track_video_cli_usage.md) for synthetic detections-to-tracks mode and metadata-only video mode. The CLI remains a skeleton and does not run YOLO, ByteTrack/DeepSORT, or real tracking.
+
 This phase does not include real tracker integration, `track_video.py` runtime integration, video UI pages, FastAPI video jobs, database integration, or real video benchmarks.
 
 Details: [Video analytics MVP](docs/video_analytics_mvp.md)
@@ -470,4 +472,4 @@ Policy:
 - Optionally run YOLOv8m PyTorch speed benchmark if model-family latency completeness is needed.
 - Optionally run YOLOv8m ONNX Runtime benchmark if deployment completeness is needed.
 - Optionally run ONNX Runtime mAP/NMS evaluation only if a separate evaluation protocol is defined.
-- Continue video analytics after v0.8.4 with lightweight CLI demo docs before YOLO frame inference, tracker adapter, and Streamlit/FastAPI workflow integration.
+- Continue video analytics after v0.8.5 with YOLO frame inference planning before tracker adapter and Streamlit/FastAPI workflow integration.

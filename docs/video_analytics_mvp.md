@@ -196,6 +196,17 @@ Recommended next phases:
 - `v0.9.0`: add YOLO frame inference plus tracker adapter.
 - Later: connect Streamlit and FastAPI video workflows.
 
+## v0.8.5 CLI Smoke Documentation
+
+`v0.8.5-cli-smoke-docs` adds `docs/track_video_cli_usage.md`. It documents the current safe `track_video.py` skeleton CLI modes and gives smoke commands that write generated outputs to `/tmp` rather than the repository tree.
+
+Documented modes:
+
+- synthetic `detections.csv` to `tracks.csv`
+- video metadata-only mode
+
+This is a documentation-only step. It adds no new runtime code and still does not run YOLO, integrate ByteTrack/DeepSORT, or perform real video tracking.
+
 ## Test Summary
 
 The MVP is covered by synthetic unit tests:

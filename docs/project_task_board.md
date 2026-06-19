@@ -189,6 +189,32 @@ Pending after v0.8.4 Step 1:
 - [ ] FastAPI video result query endpoints / FastAPI 视频结果查询接口 — Target: v0.9.0 — Status: Pending
 - [ ] Real video smoke demo / 真实视频冒烟演示 — Target: v0.9.0 — Status: Pending
 
+## v0.8.5-cli-smoke-docs / CLI 冒烟命令文档
+
+- [x] Step 1 track_video CLI smoke docs / Step 1 `track_video.py` CLI 冒烟命令文档 — Priority: P0 — Status: Completed — Output: `docs/track_video_cli_usage.md`, `docs/video_analytics_mvp.md`, `docs/project_task_board.md`, `README.md`, `docs/final_project_report.md` — Commit: TBD
+
+Current scope:
+
+- documents synthetic `detections.csv` to `tracks.csv` smoke command
+- documents metadata-only video smoke command
+- smoke outputs use `/tmp`
+- no new runtime code
+- no YOLO frame inference
+- no ByteTrack/DeepSORT adapter
+- no real tracking runtime
+- no tracked video rendering
+
+Pending after v0.8.5 Step 1:
+
+- [ ] Real YOLO frame inference / 真实 YOLO 帧级推理 — Target: v0.9.0 — Status: Pending
+- [ ] ByteTrack/DeepSORT adapter integration / ByteTrack/DeepSORT adapter 接入 — Target: v0.9.0 — Status: Pending
+- [ ] Real tracking runtime / 真实跟踪运行时 — Target: v0.9.0 — Status: Pending
+- [ ] Tracked video rendering / 跟踪视频渲染 — Target: v0.9.0 — Status: Pending
+- [ ] Streamlit video analysis pages / Streamlit 视频分析页面 — Target: v0.9.0 — Status: Pending
+- [ ] FastAPI video jobs / FastAPI 视频任务接口 — Target: v0.9.0 — Status: Pending
+- [ ] FastAPI video result query endpoints / FastAPI 视频结果查询接口 — Target: v0.9.0 — Status: Pending
+- [ ] Real video smoke demo / 真实视频冒烟演示 — Target: v0.9.0 — Status: Pending
+
 ## P3 — Optional Future Experiments / 可选未来实验
 
 - [x] Run YOLOv8s official test split validation if weight is available / 在权重可用时运行 YOLOv8s 官方测试集验证 — Priority: P3 — Status: Done — Output: `docs/experiments/yolov8s_640_50epochs_retrain/`, `docs/evaluation/yolov8s_640_50epochs_official/` — Result: P `0.865`, R `0.838`, mAP50 `0.876`, mAP50-95 `0.601` — Commit: `e4d5adb`
@@ -220,5 +246,5 @@ Pending after v0.8.4 Step 1:
 
 ## Next Recommended Task
 
-1. v0.8.5 lightweight synthetic CLI demo docs or sample command docs / v0.8.5 轻量合成 CLI 演示文档或示例命令文档
+1. v0.8.5 docs and tag / v0.8.5 文档收尾与标签
 2. v0.9.0 real ByteTrack/DeepSORT plus Streamlit/FastAPI video workflow / v0.9.0 真实跟踪器与视频分析 UI/API 工作流

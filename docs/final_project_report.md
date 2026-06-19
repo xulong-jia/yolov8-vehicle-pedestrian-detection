@@ -235,6 +235,8 @@ The batch prediction CLI is designed to write generated outputs under `local_out
 
 `v0.8.4-video-reader-track-video-integration` connects the video reader skeleton to `track_video.py`. The CLI now supports metadata-only video mode and synthetic detections-to-tracks mode, but still does not run YOLO, perform real tracking, or render tracked video.
 
+`v0.8.5-cli-smoke-docs` documents safe smoke commands for the `track_video.py` skeleton. The commands validate current contracts without committing generated outputs or running real inference/tracking.
+
 This MVP does not include real ByteTrack/DeepSORT integration, `track_video.py` runtime integration, Streamlit video result pages, FastAPI video jobs, database integration, or real video benchmarks.
 
 Reference: [Video analytics MVP](video_analytics_mvp.md)
@@ -288,7 +290,7 @@ GitHub tracks code, docs, configs, summaries, and selected lightweight demo asse
 - Run YOLOv8m PyTorch speed benchmark only if model-family latency completeness is needed.
 - Run YOLOv8m ONNX Runtime benchmark only if deployment completeness is needed.
 - Add ONNX Runtime mAP/NMS evaluation only if a separate evaluation protocol is defined.
-- Continue video analytics with lightweight CLI demo docs before adding YOLO frame inference, tracker adapters, and Streamlit/FastAPI video workflows.
+- Continue video analytics with YOLO frame inference planning before adding tracker adapters and Streamlit/FastAPI video workflows.
 - Prepare presentation slides or portfolio summary.
 
 ## Related Documents
