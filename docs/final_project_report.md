@@ -269,6 +269,8 @@ The batch prediction CLI is designed to write generated outputs under `local_out
 
 `v0.11.1-ultralytics-bytetrack-short-video-spike` adds a short-video Ultralytics `model.track(..., tracker="bytetrack.yaml")` spike tool that writes ByteTrack-style `tracks.csv` under `/tmp` and can reuse the tracked video renderer for preview output. The first local attempt was blocked by missing `lap`, so no real ByteTrack tracks are committed or claimed as validated.
 
+`v0.11.2-lap-dependency-and-bytetrack-rerun` documents the first successful local ByteTrack short-video spike after installing `lap==0.5.13` into the local `.venv`. The 300-frame run produced `746` ByteTrack track rows, `25` unique tracks, and a local 300-frame ByteTrack tracked preview. Outputs remain local-only under `/tmp` and are not committed.
+
 This MVP does not include real ByteTrack/DeepSORT integration, full `track_video.py` runtime integration, full-length tracked video validation, Streamlit video result pages, FastAPI video jobs, database integration, or real video benchmarks.
 
 References:

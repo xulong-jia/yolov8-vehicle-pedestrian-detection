@@ -196,3 +196,34 @@ Result:
 - no ByteTrack tracked preview MP4 was produced
 
 This does not change the earlier synthetic-tracker smoke result. The next step is to resolve the missing Ultralytics ByteTrack runtime dependency before rerunning the short spike.
+
+## v0.11.2 ByteTrack Short-Video Spike Follow-up
+
+After installing `lap==0.5.13` into the local `.venv`, the 300-frame Ultralytics ByteTrack short-video spike completed successfully.
+
+Environment:
+
+- Python: `/Users/jiaxulong/Documents/yolov8-vehicle-pedestrian-detection/.venv/bin/python`
+- `lap`: `0.5.13`
+- `ultralytics`: `8.4.64`
+- `cv2`: `4.13.0`
+- requirements files: unchanged
+
+Local-only outputs:
+
+- tracks CSV: `/tmp/yolov8_bytetrack_spike/bytetrack_tracks.csv`
+- tracked preview: `/tmp/yolov8_bytetrack_spike/bytetrack_tracked_preview_300.mp4`
+- output directory size: `16M`
+
+Result summary:
+
+- `frames_seen=300`
+- `track_rows=746`
+- `unique_tracks=25`
+- `frames_with_tracks=261`
+- `class_counts`: `Person=720`, `Bus=26`
+- tracks CSV line count: `747` including header, `746` data rows
+- preview size: `15,921,137` bytes, about `15M`
+- preview cv2 readable: `opened=True`, `frame_count=300`, `fps=29.97`, `width=1280`, `height=720`, `first_frame_read=True`
+
+This is the first successful real ByteTrack-style short preview in this project. The outputs remain local-only and are not committed. This does not yet promote ByteTrack into the stable `track_video.py` runtime, does not add `lap` to requirements, and does not validate full-length MOT quality.

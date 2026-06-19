@@ -168,3 +168,42 @@ Next fix:
 - approve/install the missing ByteTrack runtime dependency required by Ultralytics, likely `lap`
 - rerun the same short-video command under `/tmp`
 - only after a successful short run, compare synthetic and ByteTrack track summaries
+
+## v0.11.2 lap dependency verification and successful short spike
+
+`v0.11.1` was blocked by the missing Ultralytics ByteTrack runtime dependency `lap`.
+In `v0.11.2`, `lap==0.5.13` was installed into the local `.venv` and the 300-frame Ultralytics ByteTrack short-video spike succeeded.
+
+This is a local dependency verification result, not a committed dependency pin. `requirements.txt`, `requirements-api.txt`, and `requirements-dev.txt` are unchanged. Generated outputs are local-only under `/tmp/yolov8_bytetrack_spike` and are not committed.
+
+Successful local output summary:
+
+- `frames_seen=300`
+- `track_rows=746`
+- `unique_tracks=25`
+- `frames_with_tracks=261`
+- `class_counts`: `Person=720`, `Bus=26`
+- preview video readable by OpenCV/cv2
+- preview metadata: `frame_count=300`, `fps=29.97`, `width=1280`, `height=720`
+
+Meaning:
+
+- ByteTrack runtime dependency path is confirmed.
+- Ultralytics `model.track(..., tracker="bytetrack.yaml")` can produce stable track IDs for this local video.
+- The existing tracked video renderer can consume real ByteTrack `tracks.csv` output.
+
+Limits:
+
+- This remains a short-video spike, not full production integration.
+- `lap` is not yet added to requirements.
+- ByteTrack is not yet promoted into the stable `track_video.py` runtime path.
+- Synthetic vs ByteTrack metrics comparison has not been done.
+- Full-length ByteTrack validation has not been done.
+
+Recommended next steps:
+
+- Decide whether to add `lap` to requirements.
+- Promote the ByteTrack spike into a stable track-video runtime path.
+- Run analytics-only rerun on ByteTrack tracks.
+- Render a longer or full-length ByteTrack preview.
+- Compare synthetic and ByteTrack track summaries before claiming MOT quality.

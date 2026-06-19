@@ -161,6 +161,8 @@ Completed experiments and recorded results:
 
 `v0.11.1-ultralytics-bytetrack-short-video-spike` adds `src/track_video_bytetrack_spike.py`, a max-frame-limited Ultralytics `model.track(..., tracker="bytetrack.yaml")` spike tool for exporting real ByteTrack-style `tracks.csv` under `/tmp`. The local attempt was blocked by missing `lap`; no generated CSV or preview video is committed. See [ByteTrack Integration Plan](docs/bytetrack_integration_plan.md).
 
+`v0.11.2-lap-dependency-and-bytetrack-rerun` documents the first successful local ByteTrack short-video spike after installing `lap==0.5.13` into the local `.venv`. The 300-frame run produced `746` ByteTrack track rows, `25` unique tracks, and a local 300-frame ByteTrack tracked preview. Outputs are local-only under `/tmp` and are not committed. See [ByteTrack Integration Plan](docs/bytetrack_integration_plan.md).
+
 This phase does not include real ByteTrack/DeepSORT integration, full `track_video.py` runtime integration, video UI pages, FastAPI video jobs, database integration, full-length tracked video validation, or real video benchmarks.
 
 Details: [Video analytics MVP](docs/video_analytics_mvp.md)

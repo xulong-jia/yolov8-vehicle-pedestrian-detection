@@ -719,6 +719,33 @@ Pending after v0.11.1 Step 1:
 - [ ] Analytics rerun on ByteTrack tracks / 基于 ByteTrack tracks 重跑 analytics — Target: v1.0 candidate — Status: Pending
 - [ ] Streamlit/FastAPI integration / Streamlit/FastAPI 集成 — Target: v1.0 candidate — Status: Pending
 
+## v0.11.2-lap-dependency-and-bytetrack-rerun / lap 依赖与 ByteTrack 重新运行
+
+- [x] lap install verified locally / 本地已验证 lap 安装 — Priority: P0 — Status: Completed locally — Output: `.venv` local install `lap==0.5.13` — Commit: Not committed
+- [x] 300-frame ByteTrack spike succeeded / 300 帧 ByteTrack spike 成功 — Priority: P0 — Status: Completed locally — Output: `/tmp/yolov8_bytetrack_spike` — Commit: Not committed
+- [x] Real ByteTrack tracks.csv exported locally / 本地导出真实 ByteTrack `tracks.csv` — Priority: P0 — Status: Completed locally — Output: `/tmp/yolov8_bytetrack_spike/bytetrack_tracks.csv` — Commit: Not committed
+- [x] Real ByteTrack tracked preview rendered locally / 本地渲染真实 ByteTrack 跟踪预览 — Priority: P0 — Status: Completed locally — Output: `/tmp/yolov8_bytetrack_spike/bytetrack_tracked_preview_300.mp4` — Commit: Not committed
+
+Local result summary:
+
+- `frames_seen=300`
+- `track_rows=746`
+- `unique_tracks=25`
+- `frames_with_tracks=261`
+- `class_counts`: `Person=720`, `Bus=26`
+- preview readable by cv2: `frame_count=300`, `fps=29.97`, `width=1280`, `height=720`
+- requirements files unchanged; `lap` dependency pin decision pending
+- generated outputs are local-only and not committed
+
+Pending after v0.11.2 local verification:
+
+- [ ] Add lap to requirements decision / 是否将 lap 加入 requirements — Target: v0.11.3+ — Status: Pending
+- [ ] Promote spike into `track_video.py` runtime / 将 spike 提升为 `track_video.py` runtime — Target: v1.0 candidate — Status: Pending
+- [ ] Analytics rerun on ByteTrack tracks / 基于 ByteTrack tracks 重跑 analytics — Target: v1.0 candidate — Status: Pending
+- [ ] Synthetic vs ByteTrack comparison / synthetic 与 ByteTrack 对比 — Target: v1.0 candidate — Status: Pending
+- [ ] Full-length ByteTrack preview / 全长 ByteTrack 预览 — Target: v1.0 candidate — Status: Pending
+- [ ] Streamlit/FastAPI integration / Streamlit/FastAPI 集成 — Target: v1.0 candidate — Status: Pending
+
 ## P3 — Optional Future Experiments / 可选未来实验
 
 - [x] Run YOLOv8s official test split validation if weight is available / 在权重可用时运行 YOLOv8s 官方测试集验证 — Priority: P3 — Status: Done — Output: `docs/experiments/yolov8s_640_50epochs_retrain/`, `docs/evaluation/yolov8s_640_50epochs_official/` — Result: P `0.865`, R `0.838`, mAP50 `0.876`, mAP50-95 `0.601` — Commit: `e4d5adb`

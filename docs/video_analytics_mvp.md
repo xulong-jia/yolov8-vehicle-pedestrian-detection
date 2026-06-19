@@ -556,6 +556,30 @@ Local attempt result:
 - no `bytetrack_tracks.csv` or tracked preview MP4 was produced
 - next step requires resolving the Ultralytics ByteTrack runtime dependency before rerun
 
+## v0.11.2 Successful ByteTrack Short-Video Spike
+
+`v0.11.2` verifies the missing local runtime dependency and reruns the short Ultralytics ByteTrack spike successfully.
+
+Local environment:
+
+- `lap==0.5.13`
+- `ultralytics==8.4.64`
+- `cv2==4.13.0`
+- requirements files unchanged; dependency pin decision pending
+
+Successful local results:
+
+- `frames_seen=300`
+- `track_rows=746`
+- `unique_tracks=25`
+- `frames_with_tracks=261`
+- `class_counts`: `Person=720`, `Bus=26`
+- real ByteTrack-style tracks exported locally to `/tmp/yolov8_bytetrack_spike/bytetrack_tracks.csv`
+- tracked preview rendered locally to `/tmp/yolov8_bytetrack_spike/bytetrack_tracked_preview_300.mp4`
+- preview is cv2 readable with `frame_count=300`, `fps=29.97`, `width=1280`, `height=720`
+
+This proves that the Ultralytics ByteTrack dependency path can run locally and that the existing renderer can consume real ByteTrack tracks. It is still not full production integration: ByteTrack is not promoted into `track_video.py`, `lap` is not pinned in requirements, analytics has not been rerun on ByteTrack tracks, synthetic vs ByteTrack comparison is pending, and full-length validation remains pending.
+
 ## Test Summary
 
 The MVP is covered by synthetic unit tests:

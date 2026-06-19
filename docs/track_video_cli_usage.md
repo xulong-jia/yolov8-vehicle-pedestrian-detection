@@ -461,6 +461,46 @@ Expected outputs, when the local ByteTrack runtime dependencies are available:
 
 Do not commit these outputs. This spike uses Ultralytics ByteTrack-style tracking and is different from the existing synthetic tracker, but it is still not full production integration. The first local attempt was blocked by missing `lap`; no tracks CSV or preview video was produced.
 
+## Successful ByteTrack short-video spike after lap install
+
+`v0.11.2` verifies the local Ultralytics ByteTrack runtime dependency path. Install and verify `lap` in the local `.venv` before rerunning the short spike:
+
+```bash
+python -m pip install lap
+```
+
+The local verification used `lap==0.5.13`, `ultralytics==8.4.64`, and `cv2==4.13.0`. This dependency is not yet pinned in requirements; the decision to add `lap` to project requirements is still pending.
+
+Successful local command:
+
+```bash
+.venv/bin/python -m src.track_video_bytetrack_spike \
+  --model local_weights/yolov8s_640_50epochs/best.pt \
+  --video local_videos/source/pexels_crosswalk_traffic_demo.mp4 \
+  --output-dir /tmp/yolov8_bytetrack_spike \
+  --video-id demo \
+  --tracker bytetrack.yaml \
+  --conf 0.25 \
+  --imgsz 640 \
+  --device cpu \
+  --max-frames 300 \
+  --render-preview \
+  --config-json /tmp/yolov8_real_smoke/suggested_analytics_config.json \
+  --overlay-plan-json /tmp/yolov8_real_smoke/analytics_overlay_plan.json
+```
+
+Local output summary:
+
+- `frames_seen=300`
+- `track_rows=746`
+- `unique_tracks=25`
+- `frames_with_tracks=261`
+- `class_counts`: `Person=720`, `Bus=26`
+- `bytetrack_tracks.csv`: `/tmp/yolov8_bytetrack_spike/bytetrack_tracks.csv`
+- tracked preview: `/tmp/yolov8_bytetrack_spike/bytetrack_tracked_preview_300.mp4`
+
+Do not commit `/tmp` outputs, generated CSV files, generated MP4 files, local model weights, or local source videos.
+
 ## Video metadata-only mode
 
 Use this mode to validate video path reading, metadata extraction, and `frame_index.csv` creation.
