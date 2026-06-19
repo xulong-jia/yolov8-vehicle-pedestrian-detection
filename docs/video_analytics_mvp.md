@@ -791,3 +791,24 @@ Local 300-frame validation result:
 The helper creates a local compatibility copy when ByteTrack rows have blank
 `timestamp_sec` values so the existing long-stay analytics can run. The source
 tracks file is not modified.
+
+## v0.11.6 Synthetic vs ByteTrack Comparison
+
+`v0.11.6` compares the earlier synthetic tracking output with standard
+ByteTrack output using `src.compare_tracking_outputs`.
+
+Local summary:
+
+- synthetic tracks: `21988` rows, `34` tracks
+- ByteTrack tracks: `746` rows, `25` tracks, `261` frames with rows
+- ByteTrack classes: `Person=720`, `Bus=26`
+- synthetic analytics: `count_total=61`, `roi_frames=1283`, `events=14`
+- ByteTrack analytics: `roi_frames=33`, `long_stay_events=24`
+
+Interpretation:
+
+- Synthetic tracks are useful for deterministic tests and fallback.
+- ByteTrack tracks should be used for runtime/demo where real MOT semantics
+  matter.
+- No MOTA/IDF1 claim is made because no ground-truth tracking labels are
+  available.

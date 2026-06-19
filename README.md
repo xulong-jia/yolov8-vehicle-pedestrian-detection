@@ -468,6 +468,7 @@ ONNX Runtime benchmark/check:
 - [ONNX Runtime benchmark](docs/onnx_runtime_benchmark.md)
 - [Video analytics MVP](docs/video_analytics_mvp.md)
 - [ByteTrack pipeline validation](docs/bytetrack_pipeline_validation.md)
+- [Synthetic vs ByteTrack tracking comparison](docs/tracking_comparison.md)
 - [Project task board](docs/project_task_board.md)
 
 ## v0.11.5 ByteTrack Pipeline Validation
@@ -478,6 +479,14 @@ YOLO or the tracker. The local 300-frame validation used `746` ByteTrack rows,
 `25` unique tracks, and generated local-only analytics artifacts plus a readable
 300-frame preview under `/tmp`. See
 [ByteTrack pipeline validation](docs/bytetrack_pipeline_validation.md).
+
+## v0.11.6 Synthetic vs ByteTrack Comparison
+
+`v0.11.6` compares synthetic and ByteTrack tracking outputs. The comparison
+shows that ByteTrack tracks are much sparser but carry real MOT semantics, so
+ByteTrack should be used for runtime/demo while synthetic tracking remains the
+deterministic fallback/test path. See
+[Synthetic vs ByteTrack tracking comparison](docs/tracking_comparison.md).
 
 ## Safety and Git Policy
 

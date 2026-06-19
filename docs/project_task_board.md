@@ -836,6 +836,33 @@ Pending after v0.11.5 Step 1:
 - [ ] Add lap dependency decision / 是否固化 lap 依赖 — Target: v1.0 candidate — Status: Pending
 - [ ] Streamlit/FastAPI integration / Streamlit/FastAPI 集成 — Target: v1.0 candidate — Status: Pending
 
+## v0.11.6-synthetic-vs-bytetrack-comparison / synthetic 与 ByteTrack 对比
+
+- [x] Comparison helper / 对比 helper — Priority: P0 — Status: Completed in working tree — Output: `src/compare_tracking_outputs.py` — Commit: TBD
+- [x] Comparison tests / 对比测试 — Priority: P0 — Status: Completed in working tree — Output: `tests/test_compare_tracking_outputs.py` — Commit: TBD
+- [x] Local comparison summary / 本地对比摘要 — Priority: P0 — Status: Completed locally — Output: `/tmp/yolov8_tracking_comparison.json` — Commit: Not committed
+- [x] Comparison docs / 对比文档 — Priority: P0 — Status: Completed in working tree — Output: `docs/tracking_comparison.md` — Commit: TBD
+
+Local result summary:
+
+- synthetic: `21988` rows, `34` tracks, `1678` frames with rows
+- ByteTrack: `746` rows, `25` tracks, `261` frames with rows
+- ByteTrack classes: `Person=720`, `Bus=26`
+- synthetic analytics: `count_total=61`, `roi_frames=1283`, `events=14`
+- ByteTrack analytics: `count_total=0`, `roi_frames=33`, `long_stay_events=24`
+
+Decision:
+
+- Use ByteTrack for runtime/demo.
+- Keep synthetic tracking for deterministic tests and fallback behavior.
+
+Pending after v0.11.6 Step 1:
+
+- [ ] Full-length ByteTrack validation / 全长 ByteTrack 验证 — Target: v1.0 candidate — Status: Pending
+- [ ] Streamlit video demo page / Streamlit 视频 demo 页面 — Target: v1.0 candidate — Status: Pending
+- [ ] FastAPI video jobs / FastAPI 视频任务 — Target: v1.0 candidate — Status: Pending
+- [ ] Optional MOT metrics such as MOTA/IDF1 / 可选 MOTA/IDF1 MOT 指标 — Target: Future only if labels exist — Status: Pending
+
 ## P3 — Optional Future Experiments / 可选未来实验
 
 - [x] Run YOLOv8s official test split validation if weight is available / 在权重可用时运行 YOLOv8s 官方测试集验证 — Priority: P3 — Status: Done — Output: `docs/experiments/yolov8s_640_50epochs_retrain/`, `docs/evaluation/yolov8s_640_50epochs_official/` — Result: P `0.865`, R `0.838`, mAP50 `0.876`, mAP50-95 `0.601` — Commit: `e4d5adb`

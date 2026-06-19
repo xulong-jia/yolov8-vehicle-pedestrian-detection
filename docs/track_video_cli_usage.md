@@ -622,3 +622,22 @@ Local v0.11.5 result:
 - `track_rows=746`, `unique_tracks=25`, `frames_with_tracks=261`
 - analytics rerun succeeded with `track_count=25`
 - renderer wrote a readable 300-frame ByteTrack preview
+
+## Compare synthetic and ByteTrack tracks
+
+`v0.11.6` adds a comparison helper for existing synthetic and ByteTrack
+`tracks.csv` outputs:
+
+```bash
+.venv/bin/python -m src.compare_tracking_outputs \
+  --synthetic-tracks /tmp/yolov8_real_smoke/tracking/tracks.csv \
+  --bytetrack-tracks /tmp/yolov8_track_video_bytetrack/tracks.csv \
+  --synthetic-summary /tmp/yolov8_real_smoke_analytics_rerun/suggested_config_rerun/video_analysis_summary.json \
+  --bytetrack-summary /tmp/yolov8_bytetrack_pipeline_validation/analytics/bytetrack_validation/video_analysis_summary.json \
+  --video-id demo \
+  --output-json /tmp/yolov8_tracking_comparison.json
+```
+
+The command does not run YOLO, does not run ByteTrack, and does not render
+video. Write `--output-json` to `/tmp` or another ignored path and do not commit
+the generated comparison JSON.

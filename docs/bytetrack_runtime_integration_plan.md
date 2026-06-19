@@ -185,3 +185,20 @@ Still pending after v0.11.5:
 - full-length ByteTrack validation
 - `lap` requirements pin decision
 - Streamlit/FastAPI video workflow integration
+
+## v0.11.6 Synthetic vs ByteTrack Comparison
+
+`v0.11.6` adds `src.compare_tracking_outputs` and documents the comparison in
+[Synthetic vs ByteTrack Tracking Comparison](tracking_comparison.md).
+
+Local result:
+
+- synthetic tracks: `21988` rows, `34` tracks
+- ByteTrack tracks: `746` rows, `25` tracks, `261` frames with rows
+- ByteTrack class counts: `Person=720`, `Bus=26`
+- synthetic analytics: `count_total=61`, `roi_frames=1283`, `events=14`
+- ByteTrack analytics: `roi_frames=33`, `long_stay_events=24`
+
+Recommendation: use ByteTrack tracks for runtime/demo where real MOT matters,
+while keeping synthetic tracks for deterministic tests and fallback. Full-length
+ByteTrack validation and UI/API integration remain pending.

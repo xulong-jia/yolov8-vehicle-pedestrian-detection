@@ -285,3 +285,22 @@ The helper wrote a local compatibility copy with filled `timestamp_sec` values
 for analytics because the ByteTrack runtime output has blank timestamps. The
 original ByteTrack `tracks.csv` was not modified. Generated CSV, JSON, JSONL,
 and MP4 outputs remain local-only and are not committed.
+
+## v0.11.6 Synthetic vs ByteTrack Comparison Follow-up
+
+`src.compare_tracking_outputs` compared the earlier synthetic tracks with the
+standard ByteTrack tracks using existing local CSV and summary JSON artifacts.
+
+Local-only comparison summary:
+
+- synthetic tracks: `21988` rows, `34` tracks, `1678` frames with rows
+- ByteTrack tracks: `746` rows, `25` tracks, `261` frames with rows
+- ByteTrack classes: `Person=720`, `Bus=26`
+- synthetic analytics: `count_total=61`, `roi_frames=1283`, `events=14`
+- ByteTrack analytics: `count_total=0`, `roi_frames=33`, `long_stay_events=24`
+
+Interpretation: synthetic tracks are useful for deterministic tests and fallback
+but inflate row volume because they follow detection rows. ByteTrack tracks are
+sparser but should be used for runtime/demo because they carry real MOT
+`track_id` semantics. The comparison output stayed under `/tmp` and was not
+committed.

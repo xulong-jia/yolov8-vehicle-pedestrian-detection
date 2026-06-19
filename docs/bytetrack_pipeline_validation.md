@@ -77,3 +77,15 @@ Preview summary:
 - No synthetic-vs-ByteTrack quality comparison yet.
 - Analytics config is still heuristic and should be reviewed visually before
   claiming production counting accuracy.
+
+## v0.11.6 Tracking Comparison
+
+The follow-up [Synthetic vs ByteTrack Tracking Comparison](tracking_comparison.md)
+compares the standard ByteTrack tracks with the earlier synthetic tracks.
+
+Local summary:
+
+- synthetic: `21988` rows, `34` tracks
+- ByteTrack: `746` rows, `25` tracks, `261` frames with rows
+- recommendation: use ByteTrack for runtime/demo and keep synthetic tracking for
+  deterministic tests and fallback behavior

@@ -381,3 +381,15 @@ Local validation summary:
 
 Generated CSV, JSON, JSONL, and MP4 outputs stayed under `/tmp` and were not
 committed. See [ByteTrack Pipeline Validation](bytetrack_pipeline_validation.md).
+
+## v0.11.6 Synthetic vs ByteTrack Comparison
+
+The project now includes a synthetic-vs-ByteTrack comparison helper. The local
+comparison reported `21988` synthetic rows across `34` tracks versus `746`
+ByteTrack rows across `25` tracks and `261` frames with rows.
+
+The key conclusion is that synthetic tracks are appropriate for deterministic
+tests and fallback behavior, while ByteTrack tracks should be used for
+runtime/demo because they carry real MOT `track_id` semantics. No MOTA/IDF1
+claim is made because no ground-truth tracking labels are available. See
+[Synthetic vs ByteTrack Tracking Comparison](tracking_comparison.md).
