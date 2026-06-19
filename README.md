@@ -167,7 +167,9 @@ Completed experiments and recorded results:
 
 `v0.11.4-track-video-bytetrack-runtime` promotes the ByteTrack spike into the standard `track_video.py` runtime. It supports `.venv/bin/python -m src.track_video --tracker bytetrack ...` and writes real ByteTrack `tracks.csv` to the requested output directory. Local 300-frame validation produced `746` track rows and `25` unique tracks under `/tmp`; outputs are not committed.
 
-This phase does not include DeepSORT integration, ByteTrack production hardening, video UI pages, FastAPI video jobs, database integration, full-length tracked video validation, or real video benchmarks.
+`v0.12.0-streamlit-video-demo-page` adds a read-only Streamlit page for browsing existing ByteTrack, analytics, comparison, and tracked-preview artifacts. It does not run YOLO, run ByteTrack, rerun analytics, or render new videos. See [Streamlit Video Demo Page](docs/streamlit_video_demo.md).
+
+This phase does not include DeepSORT integration, ByteTrack production hardening, Streamlit job launching, FastAPI video jobs, database integration, full-length tracked video validation, or real video benchmarks.
 
 Details: [Video analytics MVP](docs/video_analytics_mvp.md)
 
@@ -469,6 +471,7 @@ ONNX Runtime benchmark/check:
 - [Video analytics MVP](docs/video_analytics_mvp.md)
 - [ByteTrack pipeline validation](docs/bytetrack_pipeline_validation.md)
 - [Synthetic vs ByteTrack tracking comparison](docs/tracking_comparison.md)
+- [Streamlit Video Demo Page](docs/streamlit_video_demo.md)
 - [Project task board](docs/project_task_board.md)
 
 ## v0.11.5 ByteTrack Pipeline Validation
@@ -487,6 +490,15 @@ shows that ByteTrack tracks are much sparser but carry real MOT semantics, so
 ByteTrack should be used for runtime/demo while synthetic tracking remains the
 deterministic fallback/test path. See
 [Synthetic vs ByteTrack tracking comparison](docs/tracking_comparison.md).
+
+## v0.12.0 Streamlit Video Demo Page
+
+`v0.12.0` adds a read-only Streamlit video artifact browser. It can display an
+existing Video Analysis Center run, ByteTrack `tracks.csv` summaries, analytics
+CSV/JSONL previews, an existing tracked preview video, and optional
+synthetic-vs-ByteTrack comparison JSON. It does not run YOLO, ByteTrack,
+analytics, or video rendering. See
+[Streamlit Video Demo Page](docs/streamlit_video_demo.md).
 
 ## Safety and Git Policy
 

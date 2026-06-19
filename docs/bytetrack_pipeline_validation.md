@@ -89,3 +89,18 @@ Local summary:
 - ByteTrack: `746` rows, `25` tracks, `261` frames with rows
 - recommendation: use ByteTrack for runtime/demo and keep synthetic tracking for
   deterministic tests and fallback behavior
+
+## v0.12.0 Streamlit Artifact Browser
+
+The read-only [Streamlit Video Demo Page](streamlit_video_demo.md) can browse
+the local ByteTrack validation artifacts from this workflow:
+
+- analytics run directory, for example
+  `/tmp/yolov8_bytetrack_pipeline_validation/analytics/bytetrack_validation`
+- tracked preview video, for example
+  `/tmp/yolov8_bytetrack_pipeline_validation/bytetrack_tracked_preview_300.mp4`
+- optional synthetic-vs-ByteTrack comparison JSON, for example
+  `/tmp/yolov8_tracking_comparison.json`
+
+The page only reads existing artifacts. It does not run YOLO, does not run
+ByteTrack, does not rerun analytics, and does not render new videos.

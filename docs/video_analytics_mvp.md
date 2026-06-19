@@ -812,3 +812,41 @@ Interpretation:
   matter.
 - No MOTA/IDF1 claim is made because no ground-truth tracking labels are
   available.
+
+## v0.12.0 Streamlit Video Demo Page
+
+`v0.12.0` adds a read-only Streamlit page for browsing existing local
+ByteTrack, analytics, comparison, and tracked-preview artifacts.
+
+Implemented artifacts:
+
+- `src/services/video_demo_catalog.py`
+- `tests/test_video_demo_catalog.py`
+- `app/streamlit_video_demo.py`
+- `docs/streamlit_video_demo.md`
+
+The page can display:
+
+- `video_analysis_summary.json` metrics
+- `tracks.csv` summary and preview rows
+- `count_events.csv` preview rows
+- `roi_frame_counts.csv` preview rows
+- `events.jsonl` preview rows
+- tracked preview video playback when a local MP4 path is provided
+- synthetic-vs-ByteTrack comparison JSON when provided
+
+Safety boundary:
+
+- does not run YOLO
+- does not run ByteTrack
+- does not run analytics
+- does not render new videos
+- does not copy `/tmp` artifacts into the repository
+- tests use synthetic `tmp_path` artifacts only
+
+Recommended next phases:
+
+- full-length ByteTrack validation if a longer local run is needed
+- FastAPI video job endpoint after the CLI workflow is stable
+- Streamlit job-launch controls only after output policy and runtime safety are
+  finalized

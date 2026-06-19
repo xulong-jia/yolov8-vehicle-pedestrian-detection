@@ -641,3 +641,19 @@ Local v0.11.5 result:
 The command does not run YOLO, does not run ByteTrack, and does not render
 video. Write `--output-json` to `/tmp` or another ignored path and do not commit
 the generated comparison JSON.
+
+## Browse Local Video Artifacts with Streamlit
+
+`v0.12.0` adds a read-only Streamlit artifact browser:
+
+```bash
+.venv/bin/streamlit run app/streamlit_video_demo.py
+```
+
+Use it to inspect an existing Video Analysis Center run directory, an existing
+tracked preview MP4, and an optional synthetic-vs-ByteTrack comparison JSON.
+
+The page does not run YOLO, does not run ByteTrack, does not rerun analytics,
+and does not render new tracked video. Keep generated outputs under `/tmp` or
+another ignored local path and do not commit CSV, JSON, JSONL, MP4, weights, or
+source videos.

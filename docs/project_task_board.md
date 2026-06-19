@@ -859,9 +859,33 @@ Decision:
 Pending after v0.11.6 Step 1:
 
 - [ ] Full-length ByteTrack validation / 全长 ByteTrack 验证 — Target: v1.0 candidate — Status: Pending
-- [ ] Streamlit video demo page / Streamlit 视频 demo 页面 — Target: v1.0 candidate — Status: Pending
+- [x] Streamlit video demo page / Streamlit 视频 demo 页面 — Target: v0.12.0 — Status: Completed in working tree
 - [ ] FastAPI video jobs / FastAPI 视频任务 — Target: v1.0 candidate — Status: Pending
 - [ ] Optional MOT metrics such as MOTA/IDF1 / 可选 MOTA/IDF1 MOT 指标 — Target: Future only if labels exist — Status: Pending
+
+## v0.12.0-streamlit-video-demo-page / Streamlit 视频 demo 页面
+
+- [x] Read-only video demo catalog service / 只读视频 demo catalog 服务 — Priority: P0 — Status: Completed in working tree — Output: `src/services/video_demo_catalog.py` — Commit: TBD
+- [x] Catalog service tests / catalog 服务测试 — Priority: P0 — Status: Completed in working tree — Output: `tests/test_video_demo_catalog.py` — Commit: TBD
+- [x] Streamlit video artifact browser / Streamlit 视频 artifact 浏览页面 — Priority: P0 — Status: Completed in working tree — Output: `app/streamlit_video_demo.py` — Commit: TBD
+- [x] Streamlit video demo docs / Streamlit 视频 demo 文档 — Priority: P0 — Status: Completed in working tree — Output: `docs/streamlit_video_demo.md` — Commit: TBD
+
+Scope:
+
+- browses existing ByteTrack, analytics, comparison, and tracked-preview artifacts
+- does not run YOLO
+- does not run ByteTrack
+- does not run analytics
+- does not render or generate video
+- tests use synthetic `tmp_path` artifacts only
+
+Pending after v0.12.0 Step 1:
+
+- [ ] Full-length ByteTrack validation / 全长 ByteTrack 验证 — Target: v1.0 candidate — Status: Pending
+- [ ] Streamlit job launcher / Streamlit 任务启动器 — Target: Future only after runtime policy — Status: Pending
+- [ ] FastAPI video jobs / FastAPI 视频任务 — Target: v1.0 candidate — Status: Pending
+- [ ] Docker/deployment update for video workflow / 视频工作流 Docker/部署更新 — Target: Future — Status: Pending
+- [ ] Full product demo script / 完整产品演示脚本 — Target: v1.0 candidate — Status: Pending
 
 ## P3 — Optional Future Experiments / 可选未来实验
 

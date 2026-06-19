@@ -393,3 +393,16 @@ tests and fallback behavior, while ByteTrack tracks should be used for
 runtime/demo because they carry real MOT `track_id` semantics. No MOTA/IDF1
 claim is made because no ground-truth tracking labels are available. See
 [Synthetic vs ByteTrack Tracking Comparison](tracking_comparison.md).
+
+## v0.12.0 Streamlit Video Demo Page
+
+The project now includes a read-only Streamlit video artifact browser. It can
+display existing ByteTrack tracks, Video Analysis Center summaries, analytics
+CSV/JSONL previews, tracked preview video playback, and synthetic-vs-ByteTrack
+comparison JSON without running YOLO, running ByteTrack, rerunning analytics, or
+rendering new videos.
+
+This closes an important demo gap: the local ByteTrack validation artifacts can
+now be reviewed through a lightweight UI while generated CSV, JSON, JSONL, MP4,
+weights, and source videos remain local-only and uncommitted. See
+[Streamlit Video Demo Page](streamlit_video_demo.md).
