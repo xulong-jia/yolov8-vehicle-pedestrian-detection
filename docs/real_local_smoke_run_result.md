@@ -32,7 +32,7 @@ Checks passed:
 
 ## Run Command
 
-Use `PYTHONPATH=.` for the local script invocation:
+The first real local run used `PYTHONPATH=.` as a workaround for script-path execution:
 
 ```bash
 PYTHONPATH=. .venv/bin/python src/run_video_analysis_smoke.py \
@@ -53,6 +53,17 @@ ModuleNotFoundError: No module named 'src'
 ```
 
 For the current local command, add `PYTHONPATH=.`. A future step can improve this with a module entrypoint or package invocation.
+
+## Invocation Note
+
+The recommended local invocation style is now module-based:
+
+```bash
+.venv/bin/python -m src.smoke_preflight ...
+.venv/bin/python -m src.run_video_analysis_smoke ...
+```
+
+Direct script execution can be affected by Python import path behavior. If `.venv/bin/python src/run_video_analysis_smoke.py ...` reports `ModuleNotFoundError: No module named 'src'`, use `.venv/bin/python -m src.run_video_analysis_smoke ...` first. The `PYTHONPATH=.` script form remains a fallback.
 
 ## Output Artifacts
 

@@ -311,7 +311,7 @@ Step 1 runs YOLO if you provide a real model and real video. Step 2 still uses t
 `src/run_video_analysis_smoke.py` wraps the current four-step local flow in one command.
 
 ```bash
-PYTHONPATH=. .venv/bin/python src/run_video_analysis_smoke.py \
+.venv/bin/python -m src.run_video_analysis_smoke \
   --model /absolute/path/to/best.pt \
   --source /absolute/path/to/video.mp4 \
   --output-dir /tmp/yolov8_four_step_runner \
@@ -334,7 +334,7 @@ Expected outputs:
 
 The runner uses `predict_video.py`, so it runs YOLO when you provide a real model and video source. The tracker is still the synthetic tracker, not real ByteTrack/DeepSORT. The runner does not render tracked video. Use `/tmp` or another gitignored output directory, and do not commit generated outputs, model weights, or real videos.
 
-For local script execution, prefer `PYTHONPATH=. .venv/bin/python src/run_video_analysis_smoke.py ...`. If direct script execution reports `ModuleNotFoundError: No module named 'src'`, add `PYTHONPATH=.` or use a future module entrypoint once available.
+For local execution, prefer module-style invocation: `.venv/bin/python -m src.run_video_analysis_smoke ...`. If direct script execution reports `ModuleNotFoundError: No module named 'src'`, use the module entrypoint first. The fallback is `PYTHONPATH=. .venv/bin/python src/run_video_analysis_smoke.py ...`.
 
 The first real local smoke run is documented in [Real Local Smoke Run Result](real_local_smoke_run_result.md). It produced `21988` detections and `34` synthetic tracks using local-only inputs and `/tmp` outputs.
 
@@ -343,7 +343,7 @@ The first real local smoke run is documented in [Real Local Smoke Run Result](re
 Before running a real local smoke command, run the preflight checker. It does not run YOLO, does not create the output directory, does not write `detections.csv`, `tracks.csv`, or summaries, and does not run tracking. It only checks paths, optional module availability, and prints command previews.
 
 ```bash
-python3 src/smoke_preflight.py \
+.venv/bin/python -m src.smoke_preflight \
   --model /absolute/path/to/best.pt \
   --video /absolute/path/to/video.mp4 \
   --output-dir /tmp/yolov8_real_smoke \

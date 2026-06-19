@@ -473,6 +473,19 @@ The tracker is still synthetic. This is not real ByteTrack/DeepSORT tracking and
 
 Result details: [Real Local Smoke Run Result](real_local_smoke_run_result.md)
 
+## v0.10.0 CLI/Module Invocation Ergonomics
+
+`v0.10.0-cli-module-invocation-ergonomics` standardizes module-style local invocation for smoke tools.
+
+Recommended commands:
+
+```bash
+.venv/bin/python -m src.smoke_preflight ...
+.venv/bin/python -m src.run_video_analysis_smoke ...
+```
+
+This avoids using the `PYTHONPATH=.` workaround as the primary path. The fallback remains available for direct script execution when needed. This step only documents and tests CLI/module invocation ergonomics; it does not integrate a real tracker, add ByteTrack/DeepSORT dependencies, or render tracked video.
+
 ## Test Summary
 
 The MVP is covered by synthetic unit tests:

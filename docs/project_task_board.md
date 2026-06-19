@@ -492,6 +492,30 @@ Pending after v0.9.9 Step 1:
 - [ ] Streamlit video pages / Streamlit 视频页面 — Target: v1.0 candidate — Status: Pending
 - [ ] FastAPI video jobs / FastAPI 视频任务 — Target: v1.0 candidate — Status: Pending
 
+## v0.10.0-cli-module-invocation-ergonomics / CLI 与模块调用易用性
+
+- [x] Step 1 module invocation documented and tested / Step 1 文档化并测试模块调用 — Priority: P0 — Status: Completed in working tree — Output: `tests/test_cli_module_invocation.py`, `docs/track_video_cli_usage.md`, `docs/real_local_smoke_run_result.md`, `docs/video_analytics_mvp.md`, `docs/project_task_board.md`, `README.md`, `docs/final_project_report.md` — Commit: TBD
+
+Current scope:
+
+- verifies `.venv/bin/python -m src.smoke_preflight --help`
+- verifies `.venv/bin/python -m src.run_video_analysis_smoke --help`
+- verifies module-style smoke preflight execution does not create outputs
+- keeps `PYTHONPATH=. .venv/bin/python src/run_video_analysis_smoke.py ...` as fallback documentation
+- no source code changes required
+- no real YOLO run in tests
+- no real ByteTrack/DeepSORT dependency integration
+- no tracked video rendering
+- no Streamlit/FastAPI video workflow
+
+Pending after v0.10.0 Step 1:
+
+- [ ] Tune analytics config for real smoke video / 为真实 smoke 视频调优 analytics 配置 — Target: v0.10.1+ — Status: Pending
+- [ ] Real ByteTrack dependency integration / 真实 ByteTrack 依赖集成 — Target: v1.0 candidate — Status: Pending
+- [ ] Tracked video rendering / 跟踪视频渲染 — Target: v1.0 candidate — Status: Pending
+- [ ] Streamlit video pages / Streamlit 视频页面 — Target: v1.0 candidate — Status: Pending
+- [ ] FastAPI video jobs / FastAPI 视频任务 — Target: v1.0 candidate — Status: Pending
+
 ## P3 — Optional Future Experiments / 可选未来实验
 
 - [x] Run YOLOv8s official test split validation if weight is available / 在权重可用时运行 YOLOv8s 官方测试集验证 — Priority: P3 — Status: Done — Output: `docs/experiments/yolov8s_640_50epochs_retrain/`, `docs/evaluation/yolov8s_640_50epochs_official/` — Result: P `0.865`, R `0.838`, mAP50 `0.876`, mAP50-95 `0.601` — Commit: `e4d5adb`
@@ -523,6 +547,6 @@ Pending after v0.9.9 Step 1:
 
 ## Next Recommended Task
 
-1. v0.9.9 Step 2 commit docs and tag real local smoke result / v0.9.9 Step 2 提交文档并打 tag
-2. v0.9.10 CLI/module invocation ergonomics / v0.9.10 CLI 与模块调用易用性修复
+1. v0.10.0 Step 2 commit docs/tests and tag CLI module invocation ergonomics / v0.10.0 Step 2 提交测试文档并打 tag
+2. v0.10.1 tune analytics config for real smoke video / v0.10.1 为真实 smoke 视频调优 analytics 配置
 3. v1.0 candidate real ByteTrack dependency integration planning / v1.0 候选真实 ByteTrack 依赖集成规划
