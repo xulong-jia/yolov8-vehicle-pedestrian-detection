@@ -72,6 +72,25 @@
 - [x] Add Dockerfile without weights / 添加不包含权重的 Dockerfile — Priority: P2 — Status: Done — Output: `Dockerfile`, `.dockerignore`, `docs/docker_deployment.md` — Commit: `7361e23`
 - [x] Create model loading strategy / 创建模型加载策略 — Priority: P2 — Status: Done — Output: `docs/model_loading_strategy.md` — Commit: `13def7c`
 
+## v0.8.0-video-analytics-mvp / 视频分析 MVP
+
+- [x] Step 1 configs + contracts / Step 1 配置与数据契约 — Priority: P0 — Status: Done — Output: `configs/tracking.yaml`, `configs/analytics.yaml`, `docs/video_analytics_mvp.md`, `docs/project_task_board.md` — Commit: TBD
+- [ ] Step 2 geometry TDD / Step 2 几何工具 TDD — Priority: P0 — Status: Pending — Output: `src/analytics/geometry.py`, `tests/test_geometry.py` — Commit: TBD
+- [ ] Step 3 line counter TDD / Step 3 穿线计数 TDD — Priority: P0 — Status: Pending — Output: `src/analytics/line_counter.py`, `tests/test_line_counter.py` — Commit: TBD
+- [ ] Step 4 ROI counter TDD / Step 4 ROI 计数 TDD — Priority: P0 — Status: Pending — Output: `src/analytics/roi_counter.py`, `tests/test_roi_counter.py` — Commit: TBD
+- [ ] Step 5 event rules TDD / Step 5 事件规则 TDD — Priority: P0 — Status: Pending — Output: `src/analytics/event_rules.py`, `tests/test_event_rules.py` — Commit: TBD
+- [ ] Step 6 track writer / Step 6 轨迹写出器 — Priority: P0 — Status: Pending — Output: `src/tracking/track_writer.py` — Commit: TBD
+- [ ] Step 6 Video Analysis Center skeleton / Step 6 分析结果中心骨架 — Priority: P0 — Status: Pending — Output: `src/services/video_analysis_center.py` — Commit: TBD
+- [ ] Step 7 docs and tag / Step 7 文档与标签 — Priority: P0 — Status: Pending — Output: `docs/video_analytics_mvp.md`, `docs/project_task_board.md`, tag `v0.8.0-video-analytics-mvp` — Commit: TBD
+
+Deferred beyond v0.8.0:
+
+- [ ] Real ByteTrack/DeepSORT adapter integration / 真实 ByteTrack/DeepSORT adapter 接入 — Target: v0.8.1/v0.9.0 — Status: Deferred
+- [ ] Streamlit video pages / Streamlit 视频分析页面 — Target: v0.8.1/v0.9.0 — Status: Deferred
+- [ ] FastAPI video jobs / FastAPI 异步视频任务接口 — Target: v0.8.1/v0.9.0 — Status: Deferred
+- [ ] React frontend / React 前端 — Target: v0.9.0+ — Status: Deferred
+- [ ] Real video benchmark / 真实视频基准测试 — Target: v0.9.0+ — Status: Deferred
+
 ## P3 — Optional Future Experiments / 可选未来实验
 
 - [x] Run YOLOv8s official test split validation if weight is available / 在权重可用时运行 YOLOv8s 官方测试集验证 — Priority: P3 — Status: Done — Output: `docs/experiments/yolov8s_640_50epochs_retrain/`, `docs/evaluation/yolov8s_640_50epochs_official/` — Result: P `0.865`, R `0.838`, mAP50 `0.876`, mAP50-95 `0.601` — Commit: `e4d5adb`
@@ -103,6 +122,6 @@
 
 ## Next Recommended Task
 
-1. Create model card / 创建模型卡
-2. Create dataset card / 创建数据集卡
-3. Create model weight policy / 创建模型权重管理策略
+1. v0.8.0 Step 2 geometry TDD / v0.8.0 Step 2 几何工具 TDD
+2. v0.8.0 Step 3 line counter TDD / v0.8.0 Step 3 穿线计数 TDD
+3. v0.8.0 Step 4 ROI counter TDD / v0.8.0 Step 4 ROI 计数 TDD

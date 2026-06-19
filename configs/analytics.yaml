@@ -1,0 +1,104 @@
+class_groups:
+  vehicle:
+    - Bus
+    - Car
+    - Motorcycle
+    - Truck
+    - mini-truck
+  pedestrian:
+    - Person
+
+geometry:
+  point_mode: bottom_center
+  min_crossing_displacement_px: 2.0
+  epsilon: 1.0
+
+lines:
+  - id: line_main
+    name: Main Counting Line
+    points:
+      - [100, 360]
+      - [1180, 360]
+    directions:
+      positive: in
+      negative: out
+    target_classes:
+      - Bus
+      - Car
+      - Motorcycle
+      - Person
+      - Truck
+      - mini-truck
+    enabled: true
+
+rois:
+  - id: roi_main
+    name: Main ROI
+    polygon:
+      - [100, 200]
+      - [1180, 200]
+      - [1180, 700]
+      - [100, 700]
+    target_classes:
+      - Bus
+      - Car
+      - Motorcycle
+      - Person
+      - Truck
+      - mini-truck
+    enabled: true
+
+event_rules:
+  - id: crowd_main
+    event_type: crowd_warning
+    enabled: true
+    roi_id: roi_main
+    target_classes:
+      - Person
+    parameters:
+      min_count: 8
+      min_duration_sec: 3.0
+      cooldown_sec: 10.0
+  - id: long_stay_main
+    event_type: long_stay
+    enabled: true
+    roi_id: roi_main
+    target_classes:
+      - Bus
+      - Car
+      - Motorcycle
+      - Person
+      - Truck
+      - mini-truck
+    parameters:
+      min_duration_sec: 15.0
+      cooldown_sec: 10.0
+  - id: wrong_direction_main
+    event_type: wrong_direction
+    enabled: false
+    line_id: line_main
+    target_classes:
+      - Bus
+      - Car
+      - Motorcycle
+      - Person
+      - Truck
+      - mini-truck
+    parameters:
+      min_track_length: 10
+      min_displacement_px: 20.0
+      angle_threshold_deg: 120.0
+      cooldown_sec: 10.0
+
+outputs:
+  count_events_csv: count_events.csv
+  count_summary_json: count_summary.json
+  roi_frame_counts_csv: roi_frame_counts.csv
+  roi_summary_json: roi_summary.json
+  events_jsonl: events.jsonl
+  event_summary_json: event_summary.json
+
+notes:
+  - analytics configuration for synthetic tests and future video runs
+  - coordinates are pixel coordinates for a 1280x720 reference frame
+  - no analytics runtime is implemented in this step

@@ -1,0 +1,41 @@
+tracker:
+  default_type: bytetrack
+  supported_types:
+    - bytetrack
+    - deepsort
+  min_confirmed_frames: 3
+  max_lost_frames: 30
+  match_threshold: 0.8
+  min_track_length: 5
+  use_class_consistency: true
+
+output:
+  tracks_csv: tracks.csv
+  tracked_video: tracked_video.mp4
+  track_summary_json: track_summary.json
+
+fields:
+  tracks_csv:
+    - video_id
+    - frame_index
+    - timestamp_sec
+    - track_id
+    - class_id
+    - class_name
+    - confidence
+    - xmin
+    - ymin
+    - xmax
+    - ymax
+    - center_x
+    - center_y
+    - box_width
+    - box_height
+    - box_area
+    - state
+    - tracker_name
+
+notes:
+  - tracker configuration for future video analytics MVP
+  - no tracker adapter is implemented in this step
+  - this file defines contracts only
