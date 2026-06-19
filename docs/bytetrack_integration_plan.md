@@ -221,3 +221,23 @@ Recommended implementation step:
 - keep `max_frames=300` as the safe default
 - keep the synthetic tracker fallback
 - keep generated outputs under `/tmp` and out of Git
+
+## v0.11.4 Standard track_video ByteTrack Runtime
+
+`v0.11.4` promotes the ByteTrack spike into the standard `track_video.py` CLI. See the [ByteTrack Runtime Integration Plan](bytetrack_runtime_integration_plan.md) for the runtime contract and command details.
+
+The supported runtime command shape is now:
+
+```bash
+.venv/bin/python -m src.track_video \
+  --video-source local_videos/source/pexels_crosswalk_traffic_demo.mp4 \
+  --model local_weights/yolov8s_640_50epochs/best.pt \
+  --output-dir /tmp/yolov8_track_video_bytetrack \
+  --tracker bytetrack \
+  --max-frames 300 \
+  --video-id demo
+```
+
+Local validation produced standard `tracks.csv` output under `/tmp/yolov8_track_video_bytetrack` with `track_rows=746`, `unique_tracks=25`, `frames_with_rows=261`, and `class_counts` of `Person=720`, `Bus=26`. Generated outputs remain local-only and are not committed.
+
+Still pending: `lap` requirements decision, analytics rerun on ByteTrack tracks, synthetic vs ByteTrack comparison, full-length validation, and UI/API integration.

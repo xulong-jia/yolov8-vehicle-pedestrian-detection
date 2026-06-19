@@ -165,7 +165,9 @@ Completed experiments and recorded results:
 
 `v0.11.3-bytetrack-runtime-integration-plan` prepares promotion of the ByteTrack spike into the standard `track_video.py` runtime. It adds a pure-Python runtime contract helper and a formal [ByteTrack Runtime Integration Plan](docs/bytetrack_runtime_integration_plan.md). No real YOLO or ByteTrack rerun is performed in this step.
 
-This phase does not include real ByteTrack/DeepSORT integration, full `track_video.py` runtime integration, video UI pages, FastAPI video jobs, database integration, full-length tracked video validation, or real video benchmarks.
+`v0.11.4-track-video-bytetrack-runtime` promotes the ByteTrack spike into the standard `track_video.py` runtime. It supports `.venv/bin/python -m src.track_video --tracker bytetrack ...` and writes real ByteTrack `tracks.csv` to the requested output directory. Local 300-frame validation produced `746` track rows and `25` unique tracks under `/tmp`; outputs are not committed.
+
+This phase does not include DeepSORT integration, ByteTrack production hardening, video UI pages, FastAPI video jobs, database integration, full-length tracked video validation, or real video benchmarks.
 
 Details: [Video analytics MVP](docs/video_analytics_mvp.md)
 

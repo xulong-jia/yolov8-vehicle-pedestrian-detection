@@ -273,7 +273,9 @@ The batch prediction CLI is designed to write generated outputs under `local_out
 
 `v0.11.3-bytetrack-runtime-integration-plan` prepares promotion of the ByteTrack spike into the standard `track_video.py` runtime. It adds a pure-Python runtime contract helper and a formal ByteTrack runtime integration plan. No real YOLO or ByteTrack rerun is performed in this step.
 
-This MVP does not include real ByteTrack/DeepSORT integration, full `track_video.py` runtime integration, full-length tracked video validation, Streamlit video result pages, FastAPI video jobs, database integration, or real video benchmarks.
+`v0.11.4-track-video-bytetrack-runtime` promotes the ByteTrack spike into the standard `track_video.py` runtime. It supports `.venv/bin/python -m src.track_video --tracker bytetrack ...` and writes real ByteTrack `tracks.csv` to the requested output directory. Local 300-frame validation produced `746` track rows and `25` unique tracks under `/tmp`; outputs are not committed.
+
+This MVP does not include DeepSORT integration, ByteTrack production hardening, full-length tracked video validation, Streamlit video result pages, FastAPI video jobs, database integration, or real video benchmarks.
 
 References:
 

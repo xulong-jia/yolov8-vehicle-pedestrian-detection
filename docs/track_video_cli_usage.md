@@ -501,17 +501,11 @@ Local output summary:
 
 Do not commit `/tmp` outputs, generated CSV files, generated MP4 files, local model weights, or local source videos.
 
-## Planned track_video.py ByteTrack runtime
+## Standard track_video ByteTrack runtime
 
-`v0.11.3` is a plan and contract step for the future `track_video.py --tracker bytetrack` runtime. It does not mean the standard `track_video.py` ByteTrack runtime is complete.
+`v0.11.4` supports the standard `track_video.py --tracker bytetrack` runtime. This path uses Ultralytics `model.track(..., tracker="bytetrack.yaml")` directly from a video source and writes real ByteTrack `tracks.csv` rows to the user-provided output directory.
 
-Current runnable ByteTrack spike command remains:
-
-```bash
-.venv/bin/python -m src.track_video_bytetrack_spike ...
-```
-
-Future target command:
+Command:
 
 ```bash
 .venv/bin/python -m src.track_video \
@@ -520,10 +514,35 @@ Future target command:
   --output-dir /tmp/yolov8_track_video_bytetrack \
   --tracker bytetrack \
   --max-frames 300 \
-  --video-id demo
+  --video-id demo \
+  --conf 0.25 \
+  --imgsz 640 \
+  --device cpu
 ```
 
-The next implementation step is expected to be `v0.11.4-track-video-bytetrack-runtime`. Until then, `track_video.py --tracker bytetrack` remains a planned runtime path rather than the recommended runnable command.
+Output:
+
+- `/tmp/yolov8_track_video_bytetrack/tracks.csv`
+
+This runtime does not use `detections.csv` as input. It calls Ultralytics `model.track` and normalizes `boxes.id` into the existing `tracks.csv` contract. It requires Ultralytics and `lap`; `lap==0.5.13` has been verified locally, but the requirements pin decision is still pending.
+
+The default is a short `max_frames=300` run to avoid accidental full-length processing. Keep outputs under `/tmp` or another ignored local directory and do not commit generated CSV, MP4, model weights, or source videos.
+
+Local v0.11.4 standard CLI validation:
+
+- `tracks.csv` lines: `747` including header
+- `track_rows=746`
+- `unique_tracks=25`
+- `frames_with_rows=261`
+- `class_counts`: `Person=720`, `Bus=26`
+
+The legacy spike command remains available for focused experiments:
+
+```bash
+.venv/bin/python -m src.track_video_bytetrack_spike ...
+```
+
+The synthetic tracker path remains available and unchanged for contract tests and fallback usage.
 
 ## Video metadata-only mode
 

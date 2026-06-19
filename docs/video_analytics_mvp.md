@@ -592,6 +592,26 @@ This step adds:
 
 No real YOLO or ByteTrack rerun is performed in this step. ByteTrack is still not promoted into the standard `track_video.py` runtime. The recommended next implementation version is `v0.11.4-track-video-bytetrack-runtime`.
 
+## v0.11.4 Track Video ByteTrack Runtime
+
+`v0.11.4` promotes the verified ByteTrack spike into the standard `track_video.py` CLI.
+
+Supported command shape:
+
+```bash
+.venv/bin/python -m src.track_video \
+  --video-source local_videos/source/pexels_crosswalk_traffic_demo.mp4 \
+  --model local_weights/yolov8s_640_50epochs/best.pt \
+  --output-dir /tmp/yolov8_track_video_bytetrack \
+  --tracker bytetrack \
+  --max-frames 300 \
+  --video-id demo
+```
+
+The runtime exports real ByteTrack `tracks.csv` rows to the user output directory. The local 300-frame validation produced `track_rows=746`, `unique_tracks=25`, `frames_with_rows=261`, with `Person=720` and `Bus=26`.
+
+This step does not add UI/API workflow, does not make full-length runs the default, does not rerun analytics on ByteTrack tracks, and does not commit generated outputs.
+
 ## Test Summary
 
 The MVP is covered by synthetic unit tests:

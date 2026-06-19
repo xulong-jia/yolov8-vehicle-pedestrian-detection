@@ -227,3 +227,30 @@ Result summary:
 - preview cv2 readable: `opened=True`, `frame_count=300`, `fps=29.97`, `width=1280`, `height=720`, `first_frame_read=True`
 
 This is the first successful real ByteTrack-style short preview in this project. The outputs remain local-only and are not committed. This does not yet promote ByteTrack into the stable `track_video.py` runtime, does not add `lap` to requirements, and does not validate full-length MOT quality.
+
+## v0.11.4 Standard track_video ByteTrack Runtime Follow-up
+
+The verified ByteTrack path was promoted into the standard `track_video.py` CLI and validated locally with a 300-frame run.
+
+Command shape:
+
+```bash
+.venv/bin/python -m src.track_video \
+  --video-source local_videos/source/pexels_crosswalk_traffic_demo.mp4 \
+  --model local_weights/yolov8s_640_50epochs/best.pt \
+  --output-dir /tmp/yolov8_track_video_bytetrack \
+  --tracker bytetrack \
+  --max-frames 300 \
+  --video-id demo
+```
+
+Local-only result:
+
+- output: `/tmp/yolov8_track_video_bytetrack/tracks.csv`
+- tracks CSV line count: `747` including header
+- `track_rows=746`
+- `unique_tracks=25`
+- `frames_with_rows=261`
+- `class_counts`: `Person=720`, `Bus=26`
+
+No preview video was rendered in this validation. Generated output remains under `/tmp` and is not committed. Analytics rerun, synthetic vs ByteTrack comparison, full-length validation, and UI/API integration remain pending.

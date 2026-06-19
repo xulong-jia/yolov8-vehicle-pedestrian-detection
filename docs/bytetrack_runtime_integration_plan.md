@@ -96,3 +96,49 @@ Minimum scope:
 - require or default `max_frames=300`
 - use fake tests only for automated coverage
 - keep optional manual `/tmp` smoke validation separate from committed artifacts
+
+## v0.11.4 Track Video ByteTrack Runtime
+
+`v0.11.4` implements the formal `track_video.py --tracker bytetrack` runtime path.
+
+Standard CLI:
+
+```bash
+.venv/bin/python -m src.track_video \
+  --video-source local_videos/source/pexels_crosswalk_traffic_demo.mp4 \
+  --model local_weights/yolov8s_640_50epochs/best.pt \
+  --output-dir /tmp/yolov8_track_video_bytetrack \
+  --tracker bytetrack \
+  --max-frames 300 \
+  --video-id demo \
+  --conf 0.25 \
+  --imgsz 640 \
+  --device cpu
+```
+
+Runtime behavior:
+
+- requires `--video-source` and `--model`
+- calls Ultralytics `model.track(..., tracker="bytetrack.yaml", stream=True, persist=True)`
+- writes standard `tracks.csv` to the user-provided output directory
+- keeps `max_frames=300` as the safe default
+- does not render tracked video by default
+- keeps synthetic tracker behavior unchanged
+
+Local 300-frame standard CLI validation:
+
+- output: `/tmp/yolov8_track_video_bytetrack/tracks.csv`
+- tracks CSV lines: `747` including header
+- `track_rows=746`
+- `unique_tracks=25`
+- `frames_with_rows=261`
+- `class_counts`: `Person=720`, `Bus=26`
+
+Still pending:
+
+- `lap` requirements pin decision
+- analytics rerun on ByteTrack tracks
+- ByteTrack tracked video rendering through the standard pipeline
+- synthetic vs ByteTrack comparison
+- full-length validation
+- Streamlit/FastAPI video workflow integration

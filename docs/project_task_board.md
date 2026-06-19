@@ -771,6 +771,37 @@ Pending after v0.11.3 Step 1:
 - [ ] Full-length validation / 全长验证 — Target: v1.0 candidate — Status: Pending
 - [ ] Streamlit/FastAPI integration / Streamlit/FastAPI 集成 — Target: v1.0 candidate — Status: Pending
 
+## v0.11.4-track-video-bytetrack-runtime / 标准 track_video ByteTrack runtime
+
+- [x] Standard CLI path / 标准 CLI 路径 — Priority: P0 — Status: Completed in working tree — Output: `src/track_video.py` — Commit: TBD
+- [x] Fake tests / fake 单元测试 — Priority: P0 — Status: Completed in working tree — Output: `tests/test_track_video.py` — Commit: TBD
+- [x] Local 300-frame validation / 本地 300 帧验证 — Priority: P0 — Status: Completed locally — Output: `/tmp/yolov8_track_video_bytetrack/tracks.csv` — Commit: Not committed
+
+Scope:
+
+- `python -m src.track_video --video-source ... --model ... --tracker bytetrack`
+- writes standard `tracks.csv` under the requested output directory
+- default safe short run: `max_frames=300`
+- synthetic tracker and metadata-only behavior unchanged
+- no tracked video rendering by default
+- no analytics rerun in this step
+
+Local result summary:
+
+- `track_rows=746`
+- `unique_tracks=25`
+- `frames_with_rows=261`
+- `class_counts`: `Person=720`, `Bus=26`
+- generated output stayed under `/tmp` and was not committed
+
+Pending after v0.11.4 Step 1:
+
+- [ ] Add lap dependency decision / 是否固化 lap 依赖 — Target: v0.11.5+ — Status: Pending
+- [ ] Analytics rerun on ByteTrack tracks / 基于 ByteTrack tracks 重跑 analytics — Target: v0.11.5+ — Status: Pending
+- [ ] ByteTrack tracked video rendering through standard pipeline / 通过标准流程渲染 ByteTrack 跟踪视频 — Target: v0.11.5+ — Status: Pending
+- [ ] Synthetic vs ByteTrack comparison / synthetic 与 ByteTrack 对比 — Target: v0.11.5+ — Status: Pending
+- [ ] Streamlit/FastAPI integration / Streamlit/FastAPI 集成 — Target: v1.0 candidate — Status: Pending
+
 ## P3 — Optional Future Experiments / 可选未来实验
 
 - [x] Run YOLOv8s official test split validation if weight is available / 在权重可用时运行 YOLOv8s 官方测试集验证 — Priority: P3 — Status: Done — Output: `docs/experiments/yolov8s_640_50epochs_retrain/`, `docs/evaluation/yolov8s_640_50epochs_official/` — Result: P `0.865`, R `0.838`, mAP50 `0.876`, mAP50-95 `0.601` — Commit: `e4d5adb`

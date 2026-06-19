@@ -4,11 +4,10 @@ Supported skeleton modes:
 
 - detections.csv to tracks.csv conversion through the tracking adapter factory
 - metadata-only video mode for video path validation and frame indexing
+- video-source ByteTrack runtime through Ultralytics model.track
 
-The synthetic tracker is available for contract tests. ByteTrack/DeepSORT are
-placeholder adapters only. This still does not run YOLO, read frames for
-inference, integrate real ByteTrack/DeepSORT dependencies, or render tracked
-videos.
+The synthetic tracker is available for contract tests. The ByteTrack video
+runtime is opt-in and max-frame-limited. DeepSORT remains a placeholder.
 """
 
 from __future__ import annotations
@@ -19,6 +18,8 @@ import json
 from pathlib import Path
 from typing import Any
 
+from src import track_video_bytetrack_spike as bytetrack_spike
+from src.tracking.bytetrack_runtime_contract import parse_frame_limit, summarize_track_rows
 from src.tracking.adapters import SyntheticTrackerAdapter, create_tracker_adapter
 from src.tracking.track_writer import write_tracks_csv
 from src.video_reader import (
@@ -35,8 +36,13 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     )
     parser.add_argument("--detections-csv", type=Path)
     parser.add_argument("--video-source", type=Path)
+    parser.add_argument("--model", type=Path)
     parser.add_argument("--output-dir", required=True, type=Path)
     parser.add_argument("--tracker", default="synthetic")
+    parser.add_argument("--video-id", default="demo")
+    parser.add_argument("--conf", type=float, default=0.25)
+    parser.add_argument("--imgsz", type=int, default=640)
+    parser.add_argument("--device", default="cpu")
     parser.add_argument("--metadata-only", action="store_true")
     parser.add_argument("--sample-every-n", type=int, default=1)
     parser.add_argument("--max-frames", type=int)
@@ -46,8 +52,10 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     has_video_source = args.video_source is not None
     if has_detections == has_video_source:
         parser.error("provide exactly one of --detections-csv or --video-source")
-    if has_video_source and not args.metadata_only:
-        parser.error("video-source mode currently supports only --metadata-only")
+    if has_video_source and not args.metadata_only and args.tracker != "bytetrack":
+        parser.error("video-source mode currently supports --metadata-only or --tracker bytetrack")
+    if has_video_source and not args.metadata_only and args.tracker == "bytetrack" and args.model is None:
+        parser.error("--tracker bytetrack with --video-source requires --model")
     if has_detections and args.metadata_only:
         parser.error("--metadata-only requires --video-source")
     if args.sample_every_n <= 0:
@@ -128,6 +136,71 @@ def run_video_metadata_skeleton(
     }
 
 
+def run_track_video_bytetrack_runtime(
+    model_path: str | Path,
+    video_source: str | Path,
+    output_dir: str | Path,
+    video_id: str = "demo",
+    tracker: str = "bytetrack.yaml",
+    conf: float = 0.25,
+    imgsz: int = 640,
+    device: str = "cpu",
+    max_frames: int | None = 300,
+) -> dict[str, Any]:
+    frame_limit = parse_frame_limit(max_frames, default=300)
+    try:
+        model_file = bytetrack_spike.require_file(model_path, "model")
+        video_file = bytetrack_spike.require_file(video_source, "video")
+        output_path = bytetrack_spike.ensure_output_dir(output_dir)
+        tracks_csv = output_path / "tracks.csv"
+        model = bytetrack_spike.lazy_load_yolo_model(model_file)
+
+        rows: list[dict[str, Any]] = []
+        frames_seen = 0
+        for frame_index, result in enumerate(
+            bytetrack_spike.iter_ultralytics_track_results(
+                model,
+                video_file,
+                tracker=tracker,
+                conf=conf,
+                imgsz=imgsz,
+                device=device,
+                stream=True,
+            )
+        ):
+            if frames_seen >= frame_limit:
+                break
+            rows.extend(
+                bytetrack_spike.normalize_result_rows(
+                    result,
+                    video_id=video_id,
+                    frame_index=frame_index,
+                )
+            )
+            frames_seen += 1
+    except ModuleNotFoundError as exc:
+        raise RuntimeError(_bytetrack_dependency_error()) from exc
+    except Exception as exc:
+        message = str(exc).lower()
+        if "lap" in message or "ultralytics" in message:
+            raise RuntimeError(_bytetrack_dependency_error()) from exc
+        raise
+
+    bytetrack_spike.write_tracks_csv(rows, tracks_csv)
+    track_summary = summarize_track_rows(rows)
+    return {
+        "mode": "track_video_bytetrack_runtime",
+        "tracker": "bytetrack",
+        "tracks_csv": str(tracks_csv),
+        "frames_seen": frames_seen,
+        "track_rows": track_summary["track_rows"],
+        "unique_tracks": track_summary["unique_tracks"],
+        "frames_with_tracks": track_summary["frames_with_tracks"],
+        "max_frames": frame_limit,
+        "video_id": video_id,
+    }
+
+
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
     if args.metadata_only:
@@ -135,6 +208,17 @@ def main(argv: list[str] | None = None) -> int:
             args.video_source,
             args.output_dir,
             sample_every_n=args.sample_every_n,
+            max_frames=args.max_frames,
+        )
+    elif args.video_source is not None and args.tracker == "bytetrack":
+        summary = run_track_video_bytetrack_runtime(
+            model_path=args.model,
+            video_source=args.video_source,
+            output_dir=args.output_dir,
+            video_id=args.video_id,
+            conf=args.conf,
+            imgsz=args.imgsz,
+            device=args.device,
             max_frames=args.max_frames,
         )
     else:
@@ -150,6 +234,13 @@ def main(argv: list[str] | None = None) -> int:
 def _read_detections_csv(input_path: Path) -> list[dict[str, Any]]:
     with input_path.open(newline="", encoding="utf-8") as file:
         return list(csv.DictReader(file))
+
+
+def _bytetrack_dependency_error() -> str:
+    return (
+        "ByteTrack runtime requires ultralytics and lap. Install lap in the active "
+        "environment or see docs/bytetrack_integration_plan.md"
+    )
 
 
 if __name__ == "__main__":

@@ -1,5 +1,6 @@
 import csv
 import json
+from pathlib import Path
 
 import pytest
 
@@ -7,6 +8,7 @@ from src.track_video import (
     detections_to_synthetic_tracks,
     main,
     parse_args,
+    run_track_video_bytetrack_runtime,
     run_video_metadata_skeleton,
     run_track_video_skeleton,
 )
@@ -83,6 +85,55 @@ def test_parse_args_rejects_video_source_without_metadata_only(tmp_path):
                 str(tmp_path / "metadata"),
             ]
         )
+
+
+def test_parse_args_requires_model_for_bytetrack_video_source(tmp_path):
+    with pytest.raises(SystemExit):
+        parse_args(
+            [
+                "--video-source",
+                str(tmp_path / "demo.mp4"),
+                "--output-dir",
+                str(tmp_path / "tracks"),
+                "--tracker",
+                "bytetrack",
+            ]
+        )
+
+
+def test_parse_args_accepts_bytetrack_video_source_runtime(tmp_path):
+    args = parse_args(
+        [
+            "--video-source",
+            str(tmp_path / "demo.mp4"),
+            "--model",
+            str(tmp_path / "best.pt"),
+            "--output-dir",
+            str(tmp_path / "tracks"),
+            "--tracker",
+            "bytetrack",
+            "--video-id",
+            "demo",
+            "--conf",
+            "0.25",
+            "--imgsz",
+            "640",
+            "--device",
+            "cpu",
+            "--max-frames",
+            "300",
+        ]
+    )
+
+    assert args.video_source == tmp_path / "demo.mp4"
+    assert args.model == tmp_path / "best.pt"
+    assert args.output_dir == tmp_path / "tracks"
+    assert args.tracker == "bytetrack"
+    assert args.video_id == "demo"
+    assert args.conf == 0.25
+    assert args.imgsz == 640
+    assert args.device == "cpu"
+    assert args.max_frames == 300
 
 
 def test_parse_args_rejects_non_positive_sample_every_n(tmp_path):
@@ -475,6 +526,140 @@ def test_metadata_only_mode_does_not_call_tracker_adapter_factory(tmp_path, monk
     assert summary["mode"] == "metadata_only"
 
 
+def test_run_track_video_bytetrack_runtime_writes_standard_tracks_csv(tmp_path, monkeypatch):
+    model_path = _touch(tmp_path / "best.pt")
+    video_path = _touch(tmp_path / "source.mp4")
+    output_dir = tmp_path / "out"
+    monkeypatch.setattr("src.track_video.bytetrack_spike.lazy_load_yolo_model", lambda _: object())
+    monkeypatch.setattr(
+        "src.track_video.bytetrack_spike.iter_ultralytics_track_results",
+        lambda *_, **__: [
+            FakeTrackResult(
+                [[0, 0, 10, 20], [20, 20, 30, 40]],
+                [1, 2],
+                [0, 1],
+                [0.9, 0.8],
+            ),
+            FakeTrackResult([[1, 0, 11, 20]], [1], [0], [0.85]),
+        ],
+    )
+
+    summary = run_track_video_bytetrack_runtime(
+        model_path=model_path,
+        video_source=video_path,
+        output_dir=output_dir,
+        video_id="demo",
+        max_frames=300,
+    )
+
+    tracks_csv = output_dir / "tracks.csv"
+    assert tracks_csv.exists()
+    assert not (output_dir / "bytetrack_tracks.csv").exists()
+    assert not list(output_dir.glob("*.mp4"))
+    assert summary["mode"] == "track_video_bytetrack_runtime"
+    assert summary["tracker"] == "bytetrack"
+    assert summary["tracks_csv"] == str(tracks_csv)
+    assert summary["frames_seen"] == 2
+    assert summary["track_rows"] == 3
+    assert summary["unique_tracks"] == 2
+    assert summary["frames_with_tracks"] == 2
+    assert summary["max_frames"] == 300
+    assert summary["video_id"] == "demo"
+    with tracks_csv.open(newline="", encoding="utf-8") as file:
+        rows = list(csv.DictReader(file))
+    assert rows[0]["track_id"] == "1"
+    assert rows[0]["tracker_name"] == "bytetrack"
+
+
+def test_run_track_video_bytetrack_runtime_respects_max_frames(tmp_path, monkeypatch):
+    model_path = _touch(tmp_path / "best.pt")
+    video_path = _touch(tmp_path / "source.mp4")
+    monkeypatch.setattr("src.track_video.bytetrack_spike.lazy_load_yolo_model", lambda _: object())
+    monkeypatch.setattr(
+        "src.track_video.bytetrack_spike.iter_ultralytics_track_results",
+        lambda *_, **__: [
+            FakeTrackResult([[index, 0, index + 10, 20]], [index + 1], [0], [0.9])
+            for index in range(5)
+        ],
+    )
+
+    summary = run_track_video_bytetrack_runtime(
+        model_path=model_path,
+        video_source=video_path,
+        output_dir=tmp_path / "out",
+        max_frames=2,
+    )
+
+    assert summary["frames_seen"] == 2
+    assert summary["track_rows"] == 2
+    with (tmp_path / "out" / "tracks.csv").open(newline="", encoding="utf-8") as file:
+        assert len(list(csv.DictReader(file))) == 2
+
+
+def test_main_bytetrack_runtime_writes_summary_with_fake_results(tmp_path, monkeypatch, capsys):
+    model_path = _touch(tmp_path / "best.pt")
+    video_path = _touch(tmp_path / "source.mp4")
+    monkeypatch.setattr("src.track_video.bytetrack_spike.lazy_load_yolo_model", lambda _: object())
+    monkeypatch.setattr(
+        "src.track_video.bytetrack_spike.iter_ultralytics_track_results",
+        lambda *_, **__: [FakeTrackResult([[0, 0, 10, 20]], [1], [0], [0.9])],
+    )
+
+    result = main(
+        [
+            "--video-source",
+            str(video_path),
+            "--model",
+            str(model_path),
+            "--output-dir",
+            str(tmp_path / "out"),
+            "--tracker",
+            "bytetrack",
+            "--max-frames",
+            "300",
+            "--video-id",
+            "demo",
+        ]
+    )
+
+    printed_summary = json.loads(capsys.readouterr().out)
+    assert result == 0
+    assert printed_summary["mode"] == "track_video_bytetrack_runtime"
+    assert printed_summary["track_rows"] == 1
+    assert (tmp_path / "out" / "tracks.csv").exists()
+
+
+def test_run_track_video_bytetrack_runtime_reports_dependency_error(tmp_path, monkeypatch):
+    model_path = _touch(tmp_path / "best.pt")
+    video_path = _touch(tmp_path / "source.mp4")
+
+    def fail_load(_):
+        raise ModuleNotFoundError("lap")
+
+    monkeypatch.setattr("src.track_video.bytetrack_spike.lazy_load_yolo_model", fail_load)
+
+    with pytest.raises(RuntimeError) as exc_info:
+        run_track_video_bytetrack_runtime(
+            model_path=model_path,
+            video_source=video_path,
+            output_dir=tmp_path / "out",
+        )
+
+    message = str(exc_info.value)
+    assert "lap" in message
+    assert "docs/bytetrack_integration_plan.md" in message
+
+
+def test_track_video_source_has_no_forbidden_top_level_runtime_imports():
+    source = Path("src/track_video.py").read_text(encoding="utf-8")
+    first_lines = "\n".join(source.splitlines()[:35])
+
+    assert "from ultralytics import" not in first_lines
+    assert "import cv2" not in first_lines
+    assert "import torch" not in first_lines
+    assert "import numpy" not in first_lines
+
+
 def test_track_video_skeleton_uses_tmp_path_only(tmp_path):
     detections_csv = tmp_path / "detections.csv"
     _write_detections_csv(detections_csv, [])
@@ -506,6 +691,11 @@ def _write_detections_csv(path, rows):
         writer.writerows(rows)
 
 
+def _touch(path):
+    path.write_text("fake", encoding="utf-8")
+    return path
+
+
 def _fake_read_video_metadata(video_path):
     return {
         "video_path": "/tmp/demo.mp4",
@@ -517,3 +707,18 @@ def _fake_read_video_metadata(video_path):
         "duration_sec": 2.0,
         "backend": "opencv",
     }
+
+
+class FakeTrackBoxes:
+    def __init__(self, xyxy, ids, cls, conf):
+        self.xyxy = xyxy
+        self.id = ids
+        self.cls = cls
+        self.conf = conf
+
+
+class FakeTrackResult:
+    names = {0: "Person", 1: "Bus"}
+
+    def __init__(self, xyxy, ids, cls, conf):
+        self.boxes = FakeTrackBoxes(xyxy, ids, cls, conf)
