@@ -251,6 +251,8 @@ The batch prediction CLI is designed to write generated outputs under `local_out
 
 `v0.9.6-four-step-local-flow` documents and tests a four-step local flow from detection export to synthetic tracking to Video Analysis Center analytics. It validates the file-contract chain through analytics artifacts without real ByteTrack or tracked video rendering.
 
+`v0.9.7-four-step-smoke-runner` adds a unified four-step smoke runner. It orchestrates detection export, synthetic tracking, Video Analysis Center job creation, and analytics execution while still using the synthetic tracker and not rendering tracked video.
+
 This MVP does not include real ByteTrack/DeepSORT integration, full `track_video.py` runtime integration, tracked video rendering, Streamlit video result pages, FastAPI video jobs, database integration, or real video benchmarks.
 
 References:

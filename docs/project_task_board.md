@@ -410,6 +410,33 @@ Pending after v0.9.6 Step 1:
 - [ ] FastAPI video jobs / FastAPI 视频任务 — Target: v1.0 candidate — Status: Pending
 - [ ] Real video smoke demo / 真实视频冒烟演示 — Target: v1.0 candidate — Status: Pending
 
+## v0.9.7-four-step-smoke-runner / 四步本地冒烟 runner
+
+- [x] Step 1 four-step local smoke runner / Step 1 四步本地冒烟 runner — Priority: P0 — Status: Completed in working tree — Output: `src/run_video_analysis_smoke.py`, `tests/test_run_video_analysis_smoke.py`, `docs/track_video_cli_usage.md`, `docs/video_analytics_mvp.md`, `docs/project_task_board.md`, `README.md`, `docs/final_project_report.md` — Commit: TBD
+
+Current scope:
+
+- wraps the current four-step local flow in `src/run_video_analysis_smoke.py`
+- requires explicit `--output-dir`
+- calls `predict_video.py` to export `detections.csv`
+- calls `track_video.py` with the synthetic tracker to export `tracks.csv`
+- calls `video_analysis_job.py` with `run_analytics=True`
+- writes Video Analysis Center and analytics artifacts under the provided output directory
+- tests use pytest `tmp_path` and monkeypatch/mock YOLO
+- no real ByteTrack/DeepSORT dependency integration
+- no tracked video rendering
+- no Streamlit/FastAPI video workflow
+- no repository output directories are created
+
+Pending after v0.9.7 Step 1:
+
+- [ ] Real ByteTrack dependency integration / 真实 ByteTrack 依赖集成 — Target: v1.0 candidate — Status: Pending
+- [ ] Real DeepSORT dependency integration / 真实 DeepSORT 依赖集成 — Target: v1.0 candidate — Status: Pending
+- [ ] Tracked video rendering / 跟踪视频渲染 — Target: v1.0 candidate — Status: Pending
+- [ ] Streamlit video pages / Streamlit 视频页面 — Target: v1.0 candidate — Status: Pending
+- [ ] FastAPI video jobs / FastAPI 视频任务 — Target: v1.0 candidate — Status: Pending
+- [ ] Real video smoke demo / 真实视频冒烟演示 — Target: v1.0 candidate — Status: Pending
+
 ## P3 — Optional Future Experiments / 可选未来实验
 
 - [x] Run YOLOv8s official test split validation if weight is available / 在权重可用时运行 YOLOv8s 官方测试集验证 — Priority: P3 — Status: Done — Output: `docs/experiments/yolov8s_640_50epochs_retrain/`, `docs/evaluation/yolov8s_640_50epochs_official/` — Result: P `0.865`, R `0.838`, mAP50 `0.876`, mAP50-95 `0.601` — Commit: `e4d5adb`
@@ -441,5 +468,5 @@ Pending after v0.9.6 Step 1:
 
 ## Next Recommended Task
 
-1. v0.9.6 Step 2 document and tag four-step local flow / v0.9.6 Step 2 文档收尾并打 tag
+1. v0.9.7 Step 2 document and tag four-step smoke runner / v0.9.7 Step 2 文档收尾并打 tag
 2. v1.0 candidate real ByteTrack dependency integration planning / v1.0 候选真实 ByteTrack 依赖集成规划

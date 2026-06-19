@@ -143,6 +143,8 @@ Completed experiments and recorded results:
 
 `v0.9.6-four-step-local-flow` documents and tests a four-step local flow from detection export to synthetic tracking to Video Analysis Center analytics. It validates the file-contract chain through analytics artifacts without real ByteTrack or tracked video rendering. See [track_video.py CLI usage](docs/track_video_cli_usage.md) and [Video analytics MVP](docs/video_analytics_mvp.md).
 
+`v0.9.7-four-step-smoke-runner` adds a unified four-step smoke runner. It orchestrates detection export, synthetic tracking, Video Analysis Center job creation, and analytics execution while still using the synthetic tracker and not rendering tracked video. See [track_video.py CLI usage](docs/track_video_cli_usage.md).
+
 This phase does not include real ByteTrack/DeepSORT integration, full `track_video.py` runtime integration, video UI pages, FastAPI video jobs, database integration, tracked video rendering, or real video benchmarks.
 
 Details: [Video analytics MVP](docs/video_analytics_mvp.md)

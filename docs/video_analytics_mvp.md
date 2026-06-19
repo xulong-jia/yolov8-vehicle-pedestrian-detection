@@ -427,6 +427,20 @@ The flow verifies:
 
 Tests use fake YOLO and pytest `tmp_path`; they do not load real weights, read real video, write repository outputs, or require GPU access. Real ByteTrack dependency integration, tracked video rendering, Streamlit video pages, FastAPI video jobs, and real video smoke demos remain pending.
 
+## v0.9.7 Four-Step Smoke Runner
+
+`v0.9.7-four-step-smoke-runner` adds `src/run_video_analysis_smoke.py`, a unified smoke runner for the current four-step local flow.
+
+The runner:
+
+- exports `detections.csv` through `predict_video.py`
+- generates `tracks.csv` through `track_video.py` with the synthetic tracker
+- creates a `VideoAnalysisCenter` job run
+- calls `create_video_analysis_job_run(..., run_analytics=True, analytics_config=...)`
+- writes outputs under the user-provided `--output-dir`
+
+It may run YOLO through `predict_video.py` when used with real model weights and a real source video. It still uses the synthetic tracker, does not integrate real ByteTrack/DeepSORT, does not render tracked video, and does not connect Streamlit or FastAPI.
+
 ## Test Summary
 
 The MVP is covered by synthetic unit tests:

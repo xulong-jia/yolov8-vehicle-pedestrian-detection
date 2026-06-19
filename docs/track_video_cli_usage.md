@@ -306,6 +306,34 @@ Expected files:
 
 Step 1 runs YOLO if you provide a real model and real video. Step 2 still uses the synthetic tracker and is not real ByteTrack/DeepSORT tracking. Step 3/4 does not run YOLO or a tracker; it only organizes existing CSV files and executes analytics. Do not commit `/tmp` outputs, model weights, or real videos.
 
+## Unified four-step smoke runner
+
+`src/run_video_analysis_smoke.py` wraps the current four-step local flow in one command.
+
+```bash
+python3 src/run_video_analysis_smoke.py \
+  --model /absolute/path/to/best.pt \
+  --source /absolute/path/to/video.mp4 \
+  --output-dir /tmp/yolov8_four_step_runner \
+  --video-id demo \
+  --run-name demo_run \
+  --conf 0.25 \
+  --imgsz 640 \
+  --device cpu
+```
+
+Expected outputs:
+
+- `/tmp/yolov8_four_step_runner/detections.csv`
+- `/tmp/yolov8_four_step_runner/tracking/tracks.csv`
+- `/tmp/yolov8_four_step_runner/video_analysis/demo_run/metadata.json`
+- `/tmp/yolov8_four_step_runner/video_analysis/demo_run/count_events.csv`
+- `/tmp/yolov8_four_step_runner/video_analysis/demo_run/roi_frame_counts.csv`
+- `/tmp/yolov8_four_step_runner/video_analysis/demo_run/events.jsonl`
+- `/tmp/yolov8_four_step_runner/video_analysis/demo_run/video_analysis_summary.json`
+
+The runner uses `predict_video.py`, so it runs YOLO when you provide a real model and video source. The tracker is still the synthetic tracker, not real ByteTrack/DeepSORT. The runner does not render tracked video. Use `/tmp` or another gitignored output directory, and do not commit generated outputs, model weights, or real videos.
+
 ## Video metadata-only mode
 
 Use this mode to validate video path reading, metadata extraction, and `frame_index.csv` creation.
