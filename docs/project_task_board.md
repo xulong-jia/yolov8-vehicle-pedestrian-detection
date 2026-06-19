@@ -218,20 +218,25 @@ Pending after v0.8.5 Step 1:
 ## v0.9.0-real-video-detection-tracking-runtime / 真实视频检测与跟踪运行时
 
 - [x] Step 1 YOLO video `detections.csv` skeleton / Step 1 YOLO 视频 `detections.csv` 骨架 — Priority: P0 — Status: Completed — Output: `src/predict_video.py`, `tests/test_predict_video.py`, `docs/project_task_board.md` — Commit: TBD
+- [x] Step 2 ByteTrack/DeepSORT adapter interface skeleton / Step 2 ByteTrack/DeepSORT adapter 接口骨架 — Priority: P0 — Status: Completed — Output: `src/tracking/adapters.py`, `tests/test_tracking_adapters.py`, `docs/project_task_board.md` — Commit: TBD
 
 Current scope:
 
 - `predict_video.py` supports CSV-first video detection export
 - writes `detections.csv`
-- tests use monkeypatch/mock YOLO and pytest `tmp_path`
+- tracking adapter interface is defined
+- `SyntheticTrackerAdapter` validates `detections.csv` to `tracks.csv` contract conversion
+- `ByteTrackAdapter` and `DeepSORTAdapter` are placeholders only
+- tests use monkeypatch/mock YOLO, fake detections, and pytest `tmp_path`
 - no tracker integration
-- no ByteTrack/DeepSORT adapter
+- no real ByteTrack/DeepSORT dependency integration
 - no tracked video rendering
 - no real smoke demo
 
-Pending after v0.9.0 Step 1:
+Pending after v0.9.0 Step 2:
 
-- [ ] ByteTrack/DeepSORT adapter / ByteTrack/DeepSORT adapter — Target: v0.9.0+ — Status: Pending
+- [ ] Real ByteTrack dependency integration / 真实 ByteTrack 依赖集成 — Target: v0.9.0+ — Status: Pending
+- [ ] Real DeepSORT dependency integration / 真实 DeepSORT 依赖集成 — Target: v0.9.0+ — Status: Pending
 - [ ] Real `tracks.csv` runtime / 真实 `tracks.csv` 运行时 — Target: v0.9.0+ — Status: Pending
 - [ ] Tracked video rendering / 跟踪视频渲染 — Target: v0.9.0+ — Status: Pending
 - [ ] `track_video.py` full real runtime / `track_video.py` 完整真实运行时 — Target: v0.9.0+ — Status: Pending
@@ -271,5 +276,5 @@ Pending after v0.9.0 Step 1:
 
 ## Next Recommended Task
 
-1. v0.9.0 Step 2 ByteTrack/DeepSORT adapter skeleton / v0.9.0 Step 2 ByteTrack/DeepSORT adapter 骨架
-2. v0.9.0 track_video real runtime planning / v0.9.0 `track_video.py` 真实运行时规划
+1. v0.9.0 Step 3 track_video real runtime skeleton / v0.9.0 Step 3 `track_video.py` 真实运行时骨架
+2. v0.9.0 real ByteTrack/DeepSORT dependency integration planning / v0.9.0 真实 ByteTrack/DeepSORT 依赖集成规划
