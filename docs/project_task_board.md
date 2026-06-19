@@ -329,7 +329,7 @@ Pending after v0.9.3 Step 1:
 
 ## v0.9.4-three-step-video-analysis-job-flow / 三步视频分析任务链路
 
-- [x] Step 1 three-step video analysis job flow / Step 1 三步视频分析任务链路 — Priority: P0 — Status: Completed in working tree — Output: `tests/test_three_step_video_analysis_job_flow.py`, `docs/track_video_cli_usage.md`, `docs/video_analytics_mvp.md`, `docs/project_task_board.md` — Commit: TBD
+- [x] Step 1 three-step video analysis job flow / Step 1 三步视频分析任务链路 — Priority: P0 — Status: Completed — Output: `tests/test_three_step_video_analysis_job_flow.py`, `docs/track_video_cli_usage.md`, `docs/video_analytics_mvp.md`, `docs/project_task_board.md` — Commit: `6c1add9`
 
 Current scope:
 
@@ -384,5 +384,5 @@ Pending after v0.9.4 Step 1:
 
 ## Next Recommended Task
 
-1. v0.9.4 Step 2 document three-step video analysis job flow / v0.9.4 Step 2 文档化三步视频分析任务链路
+1. v1.0 candidate analytics execution on real tracks planning / v1.0 候选真实 tracks 分析执行规划
 2. v1.0 candidate real ByteTrack dependency integration planning / v1.0 候选真实 ByteTrack 依赖集成规划

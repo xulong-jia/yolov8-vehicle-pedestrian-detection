@@ -340,13 +340,20 @@ Recommended next phases:
 
 ## v0.9.4 Three-Step Video Analysis Job Flow
 
-`v0.9.4-three-step-video-analysis-job-flow` documents and tests the current safe chain:
+`v0.9.4-three-step-video-analysis-job-flow` documents and tests the current safe three-step chain:
 
 1. `predict_video.py` generates `detections.csv`.
 2. `track_video.py` with the synthetic tracker generates `tracks.csv`.
 3. `video_analysis_job.py` organizes the CSV artifacts into a `VideoAnalysisCenter` run directory.
 
-The flow verifies that `detections.csv` and `tracks.csv` are copied into the run directory and that `metadata.json` plus `video_analysis_summary.json` are written. Tests use fake YOLO and pytest `tmp_path`; they do not load real model weights, read real video, write repository outputs, or require GPU access.
+The run directory contains:
+
+- `metadata.json`
+- copied `detections.csv`
+- copied `tracks.csv`
+- `video_analysis_summary.json`
+
+The flow verifies that `detections.csv` and `tracks.csv` are copied into the run directory and that `metadata.json` plus `video_analysis_summary.json` are written. Tests use fake YOLO and pytest `tmp_path`; they do not load real model weights, read real video, write repository outputs, or require GPU access. This phase does not integrate real ByteTrack/DeepSORT, does not generate tracked video, and does not connect Streamlit or FastAPI.
 
 Still pending after v0.9.4:
 
@@ -356,6 +363,13 @@ Still pending after v0.9.4:
 - analytics execution on real tracks
 - Streamlit video pages
 - FastAPI video jobs
+- real video smoke demo
+
+Recommended next phases:
+
+- analytics execution on real tracks
+- real ByteTrack dependency integration
+- tracked video rendering
 - real video smoke demo
 
 ## Test Summary

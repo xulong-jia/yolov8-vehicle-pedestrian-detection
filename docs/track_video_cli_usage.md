@@ -161,7 +161,7 @@ Expected files:
 - `/tmp/yolov8_video_job/video_analysis/demo_run/metadata.json`
 - `/tmp/yolov8_video_job/video_analysis/demo_run/video_analysis_summary.json`
 
-Step 1 runs YOLO if you provide a real model and real video. Step 2 still uses the synthetic tracker and is not real ByteTrack/DeepSORT tracking. Step 3 does not run YOLO or a tracker; it only organizes existing CSV files. Do not commit `/tmp` outputs, real videos, or model weights.
+Step 1 runs YOLO if you provide a real model and real video. Step 2 still uses the synthetic tracker and is not real ByteTrack/DeepSORT tracking. Step 3 does not run YOLO or a tracker; it only organizes existing CSV files. Keep all smoke-flow outputs under `/tmp`. Do not commit `/tmp` outputs, model weights, real videos, `runs/`, or zip archives.
 
 ## Video metadata-only mode
 
