@@ -215,6 +215,31 @@ Pending after v0.8.5 Step 1:
 - [ ] FastAPI video result query endpoints / FastAPI 视频结果查询接口 — Target: v0.9.0 — Status: Pending
 - [ ] Real video smoke demo / 真实视频冒烟演示 — Target: v0.9.0 — Status: Pending
 
+## v0.9.0-real-video-detection-tracking-runtime / 真实视频检测与跟踪运行时
+
+- [x] Step 1 YOLO video `detections.csv` skeleton / Step 1 YOLO 视频 `detections.csv` 骨架 — Priority: P0 — Status: Completed — Output: `src/predict_video.py`, `tests/test_predict_video.py`, `docs/project_task_board.md` — Commit: TBD
+
+Current scope:
+
+- `predict_video.py` supports CSV-first video detection export
+- writes `detections.csv`
+- tests use monkeypatch/mock YOLO and pytest `tmp_path`
+- no tracker integration
+- no ByteTrack/DeepSORT adapter
+- no tracked video rendering
+- no real smoke demo
+
+Pending after v0.9.0 Step 1:
+
+- [ ] ByteTrack/DeepSORT adapter / ByteTrack/DeepSORT adapter — Target: v0.9.0+ — Status: Pending
+- [ ] Real `tracks.csv` runtime / 真实 `tracks.csv` 运行时 — Target: v0.9.0+ — Status: Pending
+- [ ] Tracked video rendering / 跟踪视频渲染 — Target: v0.9.0+ — Status: Pending
+- [ ] `track_video.py` full real runtime / `track_video.py` 完整真实运行时 — Target: v0.9.0+ — Status: Pending
+- [ ] Streamlit video pages / Streamlit 视频页面 — Target: v0.9.0+ — Status: Pending
+- [ ] FastAPI video jobs / FastAPI 视频任务 — Target: v0.9.0+ — Status: Pending
+- [ ] FastAPI video result query endpoints / FastAPI 视频结果查询接口 — Target: v0.9.0+ — Status: Pending
+- [ ] Real video smoke demo / 真实视频冒烟演示 — Target: v0.9.0+ — Status: Pending
+
 ## P3 — Optional Future Experiments / 可选未来实验
 
 - [x] Run YOLOv8s official test split validation if weight is available / 在权重可用时运行 YOLOv8s 官方测试集验证 — Priority: P3 — Status: Done — Output: `docs/experiments/yolov8s_640_50epochs_retrain/`, `docs/evaluation/yolov8s_640_50epochs_official/` — Result: P `0.865`, R `0.838`, mAP50 `0.876`, mAP50-95 `0.601` — Commit: `e4d5adb`
@@ -246,5 +271,5 @@ Pending after v0.8.5 Step 1:
 
 ## Next Recommended Task
 
-1. v0.8.5 docs and tag / v0.8.5 文档收尾与标签
-2. v0.9.0 real ByteTrack/DeepSORT plus Streamlit/FastAPI video workflow / v0.9.0 真实跟踪器与视频分析 UI/API 工作流
+1. v0.9.0 Step 2 ByteTrack/DeepSORT adapter skeleton / v0.9.0 Step 2 ByteTrack/DeepSORT adapter 骨架
+2. v0.9.0 track_video real runtime planning / v0.9.0 `track_video.py` 真实运行时规划
