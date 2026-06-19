@@ -163,6 +163,58 @@ Expected files:
 
 Step 1 runs YOLO if you provide a real model and real video. Step 2 still uses the synthetic tracker and is not real ByteTrack/DeepSORT tracking. Step 3 does not run YOLO or a tracker; it only organizes existing CSV files. Keep all smoke-flow outputs under `/tmp`. Do not commit `/tmp` outputs, model weights, real videos, `runs/`, or zip archives.
 
+## Analytics on existing tracks
+
+After `detections.csv` and `tracks.csv` already exist, the service function `create_video_analysis_job_run(..., run_analytics=True, analytics_config=...)` can run line counting, ROI counting, and event rules on the existing track rows. There is no CLI command for this step yet.
+
+Example service-function call:
+
+```bash
+python3 - <<'PY'
+from src.services.video_analysis_job import create_video_analysis_job_run
+
+analytics_config = {
+    "line": {
+        "id": "line_main",
+        "name": "Main Line",
+        "points": [[0, 0], [10, 0]],
+        "directions": {"positive": "in", "negative": "out"},
+        "target_classes": ["Car", "Person"],
+        "enabled": True,
+    },
+    "roi": {
+        "id": "roi_main",
+        "name": "Main ROI",
+        "polygon": [[0, 0], [10, 0], [10, 10], [0, 10]],
+        "target_classes": ["Car", "Person"],
+        "enabled": True,
+    },
+    "event_rules": {
+        "long_stay": {
+            "event_type": "long_stay",
+            "enabled": True,
+            "roi_id": "roi_main",
+            "target_classes": ["Car", "Person"],
+            "parameters": {"min_duration_sec": 2.0},
+        }
+    },
+}
+
+summary = create_video_analysis_job_run(
+    run_name="demo_run_with_analytics",
+    base_dir="/tmp/yolov8_video_job/video_analysis",
+    detections_csv="/tmp/yolov8_video_job/detections.csv",
+    tracks_csv="/tmp/yolov8_video_job/tracking/tracks.csv",
+    metadata={"video_id": "demo", "mode": "analytics_on_tracks"},
+    analytics_config=analytics_config,
+    run_analytics=True,
+)
+print(summary)
+PY
+```
+
+This service function does not run YOLO, does not run a tracker, and only reads existing `detections.csv` and `tracks.csv`. It writes `count_events.csv`, `roi_frame_counts.csv`, `events.jsonl`, and an updated `video_analysis_summary.json` under the run directory. Keep these outputs under `/tmp` for smoke usage and do not commit generated `/tmp` outputs.
+
 ## Video metadata-only mode
 
 Use this mode to validate video path reading, metadata extraction, and `frame_index.csv` creation.

@@ -355,7 +355,7 @@ Pending after v0.9.4 Step 1:
 
 ## v0.9.5-analytics-on-tracks-job / 基于 tracks 的分析任务执行
 
-- [x] Step 1 analytics execution on tracks job / Step 1 基于 tracks 的分析任务执行 — Priority: P0 — Status: Completed in working tree — Output: `src/services/video_analysis_job.py`, `tests/test_video_analysis_job.py`, `docs/project_task_board.md` — Commit: TBD
+- [x] Step 1 analytics execution on tracks job / Step 1 基于 tracks 的分析任务执行 — Priority: P0 — Status: Completed — Output: `src/services/video_analysis_job.py`, `tests/test_video_analysis_job.py`, `docs/project_task_board.md` — Commit: `0bd4e31`
 
 Current scope:
 
@@ -374,7 +374,9 @@ Current scope:
 
 Pending after v0.9.5 Step 1:
 
+- [ ] Documented four-step local flow / 文档化四步本地链路 — Target: v0.9.5+ — Status: Pending
 - [ ] Real ByteTrack dependency integration / 真实 ByteTrack 依赖集成 — Target: v1.0 candidate — Status: Pending
+- [ ] Real DeepSORT dependency integration / 真实 DeepSORT 依赖集成 — Target: v1.0 candidate — Status: Pending
 - [ ] Full real `track_video.py` runtime / 完整真实 `track_video.py` 运行时 — Target: v1.0 candidate — Status: Pending
 - [ ] Tracked video rendering / 跟踪视频渲染 — Target: v1.0 candidate — Status: Pending
 - [ ] Streamlit video pages / Streamlit 视频页面 — Target: v1.0 candidate — Status: Pending
@@ -412,5 +414,5 @@ Pending after v0.9.5 Step 1:
 
 ## Next Recommended Task
 
-1. v0.9.5 Step 2 document analytics execution on tracks job / v0.9.5 Step 2 文档化基于 tracks 的分析任务执行
+1. v0.9.6 document four-step local flow / v0.9.6 文档化四步本地链路
 2. v1.0 candidate real ByteTrack dependency integration planning / v1.0 候选真实 ByteTrack 依赖集成规划

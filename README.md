@@ -139,6 +139,8 @@ Completed experiments and recorded results:
 
 `v0.9.4-three-step-video-analysis-job-flow` documents and tests the three-step video analysis job flow from `predict_video.py` to `track_video.py` to the Video Analysis Center. It validates the file-contract chain without real ByteTrack or tracked video rendering. See [track_video.py CLI usage](docs/track_video_cli_usage.md) and [Video analytics MVP](docs/video_analytics_mvp.md).
 
+`v0.9.5-analytics-on-tracks-job` adds analytics execution on existing tracks inside the Video Analysis Center job. Existing `tracks.csv` can now produce `count_events.csv`, `roi_frame_counts.csv`, `events.jsonl`, and an updated `video_analysis_summary.json`; it does not run YOLO, run a real tracker, or render tracked video. See [track_video.py CLI usage](docs/track_video_cli_usage.md) and [Video analytics MVP](docs/video_analytics_mvp.md).
+
 This phase does not include real ByteTrack/DeepSORT integration, full `track_video.py` runtime integration, video UI pages, FastAPI video jobs, database integration, tracked video rendering, or real video benchmarks.
 
 Details: [Video analytics MVP](docs/video_analytics_mvp.md)

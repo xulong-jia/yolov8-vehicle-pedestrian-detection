@@ -372,6 +372,41 @@ Recommended next phases:
 - tracked video rendering
 - real video smoke demo
 
+## v0.9.5 Analytics on Tracks Job
+
+`v0.9.5-analytics-on-tracks-job` extends `src/services/video_analysis_job.py` so `create_video_analysis_job_run(..., run_analytics=True, analytics_config=...)` can execute analytics from an existing `tracks.csv`.
+
+Current supported outputs:
+
+- line counter -> `count_events.csv`
+- ROI counter -> `roi_frame_counts.csv`
+- event rules -> `events.jsonl`
+- updated `video_analysis_summary.json`
+
+The summary now updates:
+
+- `count_summary`
+- `roi_summary`
+- `event_summary`
+- `artifact_paths`
+
+The default `run_analytics=False` behavior remains compatible with the earlier job skeleton: it only organizes existing `detections.csv` and `tracks.csv` and writes metadata plus summary files.
+
+Current boundaries:
+
+- does not run YOLO
+- does not run tracker
+- does not integrate real ByteTrack/DeepSORT dependencies
+- does not generate tracked video
+- does not connect Streamlit or FastAPI
+
+Recommended next phases:
+
+- documented four-step local flow: `predict_video.py` -> `track_video.py` synthetic tracker -> `video_analysis_job` with analytics
+- later: real ByteTrack dependency integration
+- later: tracked video rendering
+- later: real video smoke demo
+
 ## Test Summary
 
 The MVP is covered by synthetic unit tests:

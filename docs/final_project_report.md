@@ -247,6 +247,8 @@ The batch prediction CLI is designed to write generated outputs under `local_out
 
 `v0.9.4-three-step-video-analysis-job-flow` documents and tests the three-step video analysis job flow from `predict_video.py` to `track_video.py` to the Video Analysis Center. It validates the file-contract chain without real ByteTrack or tracked video rendering.
 
+`v0.9.5-analytics-on-tracks-job` adds analytics execution on existing tracks inside the Video Analysis Center job. Existing `tracks.csv` can now produce `count_events.csv`, `roi_frame_counts.csv`, `events.jsonl`, and an updated `video_analysis_summary.json`; it does not run YOLO, run a real tracker, or render tracked video.
+
 This MVP does not include real ByteTrack/DeepSORT integration, full `track_video.py` runtime integration, tracked video rendering, Streamlit video result pages, FastAPI video jobs, database integration, or real video benchmarks.
 
 References:
