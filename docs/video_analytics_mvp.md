@@ -64,7 +64,7 @@ Still out of scope for v0.8.0:
 Recommended next phases:
 
 - after `v0.8.2`: add real video reading and YOLO frame inference skeletons before tracker adapter integration.
-- `v0.9.0`: add real ByteTrack/DeepSORT integration plus Streamlit and FastAPI video analysis workflows.
+- after `v0.9.0`: integrate real ByteTrack/DeepSORT dependencies, then add Streamlit and FastAPI video analysis workflows.
 
 ## v0.8.1 Synthetic Pipeline
 
@@ -193,7 +193,7 @@ Tests use pytest `tmp_path` and keep generated files outside the repository tree
 Recommended next phases:
 
 - `v0.8.5`: add lightweight synthetic CLI demo docs or sample command docs.
-- `v0.9.0`: add YOLO frame inference plus tracker adapter.
+- `v0.9.0`: add CSV-first YOLO video detection export plus a tracker adapter interface skeleton.
 - Later: connect Streamlit and FastAPI video workflows.
 
 ## v0.8.5 CLI Smoke Documentation
@@ -206,6 +206,51 @@ Documented modes:
 - video metadata-only mode
 
 This is a documentation-only step. It adds no new runtime code and still does not run YOLO, integrate ByteTrack/DeepSORT, or perform real video tracking.
+
+## v0.9.0 Real Video Detection and Tracking Foundation
+
+`v0.9.0-real-video-detection-tracking-foundation` adds the first real-video detection and tracking foundation pieces while keeping the runtime safe and testable. It introduces CSV-first video detection export and a tracking adapter interface skeleton without integrating real ByteTrack/DeepSORT dependencies or rendering tracked videos.
+
+Detection foundation:
+
+- `src/predict_video.py` defaults to writing `detections.csv`.
+- YOLO is lazy-loaded so importing the module does not require `ultralytics`.
+- Tests use monkeypatch/fake YOLO and do not require real model weights, GPU access, or real inference.
+- The default path does not save annotated video.
+- Annotated video output remains explicit opt-in behavior only.
+
+`detections.csv` fields:
+
+```text
+video_id, frame_index, timestamp_sec, detection_id, class_id, class_name, confidence, xmin, ymin, xmax, ymax
+```
+
+Tracking adapter foundation:
+
+- `BaseTrackerAdapter`
+- `SyntheticTrackerAdapter`
+- `ByteTrackAdapter` placeholder
+- `DeepSORTAdapter` placeholder
+- `create_tracker_adapter`
+- `detections_to_tracker_input`
+- `tracker_outputs_to_track_rows`
+
+`SyntheticTrackerAdapter` validates the `detections.csv` to `tracks.csv` contract conversion with fake detections. `ByteTrackAdapter` and `DeepSORTAdapter` are placeholders only; their `update(...)` methods raise `NotImplementedError` because the real tracker dependencies are not integrated yet.
+
+Still out of scope after v0.9.0:
+
+- real ByteTrack dependency integration
+- real DeepSORT dependency integration
+- full `track_video.py` real runtime
+- tracked video rendering
+- Streamlit video pages
+- FastAPI video jobs
+- real video smoke demo
+
+Recommended next phases:
+
+- `v0.9.1`: connect `predict_video.py` CSV output to `track_video.py` synthetic tracker mode or the Video Analysis Center.
+- `v1.0` candidate: integrate a real ByteTrack adapter and run a controlled real video smoke demo without committing generated artifacts.
 
 ## Test Summary
 
@@ -220,6 +265,8 @@ The MVP is covered by synthetic unit tests:
 - `tests/test_synthetic_video_analysis_pipeline.py`
 - `tests/test_track_video.py`
 - `tests/test_video_reader.py`
+- `tests/test_predict_video.py`
+- `tests/test_tracking_adapters.py`
 
 ## Current Baseline
 

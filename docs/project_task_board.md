@@ -215,18 +215,21 @@ Pending after v0.8.5 Step 1:
 - [ ] FastAPI video result query endpoints / FastAPI 视频结果查询接口 — Target: v0.9.0 — Status: Pending
 - [ ] Real video smoke demo / 真实视频冒烟演示 — Target: v0.9.0 — Status: Pending
 
-## v0.9.0-real-video-detection-tracking-runtime / 真实视频检测与跟踪运行时
+## v0.9.0-real-video-detection-tracking-foundation / 真实视频检测与跟踪基础
 
-- [x] Step 1 YOLO video `detections.csv` skeleton / Step 1 YOLO 视频 `detections.csv` 骨架 — Priority: P0 — Status: Completed — Output: `src/predict_video.py`, `tests/test_predict_video.py`, `docs/project_task_board.md` — Commit: TBD
-- [x] Step 2 ByteTrack/DeepSORT adapter interface skeleton / Step 2 ByteTrack/DeepSORT adapter 接口骨架 — Priority: P0 — Status: Completed — Output: `src/tracking/adapters.py`, `tests/test_tracking_adapters.py`, `docs/project_task_board.md` — Commit: TBD
+- [x] Step 1 YOLO video `detections.csv` skeleton / Step 1 YOLO 视频 `detections.csv` 骨架 — Priority: P0 — Status: Completed — Output: `src/predict_video.py`, `tests/test_predict_video.py`, `docs/project_task_board.md` — Commit: `fcbd20e`
+- [x] Step 2 ByteTrack/DeepSORT adapter interface skeleton / Step 2 ByteTrack/DeepSORT adapter 接口骨架 — Priority: P0 — Status: Completed — Output: `src/tracking/adapters.py`, `tests/test_tracking_adapters.py`, `docs/project_task_board.md` — Commit: `c6c4646`
 
 Current scope:
 
 - `predict_video.py` supports CSV-first video detection export
 - writes `detections.csv`
+- `detections.csv` fields are fixed as `video_id`, `frame_index`, `timestamp_sec`, `detection_id`, `class_id`, `class_name`, `confidence`, `xmin`, `ymin`, `xmax`, `ymax`
+- YOLO is lazy-loaded and tested with monkeypatch/mock YOLO
 - tracking adapter interface is defined
 - `SyntheticTrackerAdapter` validates `detections.csv` to `tracks.csv` contract conversion
 - `ByteTrackAdapter` and `DeepSORTAdapter` are placeholders only
+- placeholder `update(...)` methods raise `NotImplementedError`
 - tests use monkeypatch/mock YOLO, fake detections, and pytest `tmp_path`
 - no tracker integration
 - no real ByteTrack/DeepSORT dependency integration
@@ -276,5 +279,5 @@ Pending after v0.9.0 Step 2:
 
 ## Next Recommended Task
 
-1. v0.9.0 Step 3 track_video real runtime skeleton / v0.9.0 Step 3 `track_video.py` 真实运行时骨架
-2. v0.9.0 real ByteTrack/DeepSORT dependency integration planning / v0.9.0 真实 ByteTrack/DeepSORT 依赖集成规划
+1. v0.9.1 connect `predict_video.py` CSV output to `track_video.py` synthetic tracker mode or Video Analysis Center / v0.9.1 将 `predict_video.py` CSV 输出接入 `track_video.py` synthetic tracker 模式或 Video Analysis Center
+2. v1.0 candidate real ByteTrack dependency integration planning / v1.0 候选真实 ByteTrack 依赖集成规划

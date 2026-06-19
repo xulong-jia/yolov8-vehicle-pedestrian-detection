@@ -237,7 +237,9 @@ The batch prediction CLI is designed to write generated outputs under `local_out
 
 `v0.8.5-cli-smoke-docs` documents safe smoke commands for the `track_video.py` skeleton. The commands validate current contracts without committing generated outputs or running real inference/tracking.
 
-This MVP does not include real ByteTrack/DeepSORT integration, `track_video.py` runtime integration, Streamlit video result pages, FastAPI video jobs, database integration, or real video benchmarks.
+`v0.9.0-real-video-detection-tracking-foundation` adds CSV-first `predict_video.py` video detection export and a tracking adapter interface skeleton. It defines the `detections.csv` contract and placeholder ByteTrack/DeepSORT adapters while keeping tests based on fake detections and monkeypatched YOLO.
+
+This MVP does not include real ByteTrack/DeepSORT integration, full `track_video.py` runtime integration, tracked video rendering, Streamlit video result pages, FastAPI video jobs, database integration, or real video benchmarks.
 
 Reference: [Video analytics MVP](video_analytics_mvp.md)
 

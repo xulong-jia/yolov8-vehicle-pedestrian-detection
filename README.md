@@ -129,7 +129,9 @@ Completed experiments and recorded results:
 
 `v0.8.5-cli-smoke-docs` documents safe smoke commands for the skeleton CLI. See [track_video.py CLI usage](docs/track_video_cli_usage.md) for synthetic detections-to-tracks mode and metadata-only video mode. The CLI remains a skeleton and does not run YOLO, ByteTrack/DeepSORT, or real tracking.
 
-This phase does not include real tracker integration, `track_video.py` runtime integration, video UI pages, FastAPI video jobs, database integration, or real video benchmarks.
+`v0.9.0-real-video-detection-tracking-foundation` adds CSV-first `predict_video.py` video detection export and a tracking adapter interface skeleton. It defines the `detections.csv` contract and placeholder ByteTrack/DeepSORT adapters, but does not yet integrate real tracker dependencies, run full `track_video.py` real tracking, or render tracked video.
+
+This phase does not include real ByteTrack/DeepSORT integration, full `track_video.py` runtime integration, video UI pages, FastAPI video jobs, database integration, tracked video rendering, or real video benchmarks.
 
 Details: [Video analytics MVP](docs/video_analytics_mvp.md)
 
