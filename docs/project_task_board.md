@@ -77,7 +77,7 @@
 - [x] Step 1 configs + contracts / Step 1 配置与数据契约 — Priority: P0 — Status: Done — Output: `configs/tracking.yaml`, `configs/analytics.yaml`, `docs/video_analytics_mvp.md`, `docs/project_task_board.md` — Commit: TBD
 - [x] Step 2 geometry TDD / Step 2 几何工具 TDD — Priority: P0 — Status: Done — Output: `src/analytics/__init__.py`, `src/analytics/geometry.py`, `tests/test_geometry.py` — Commit: TBD
 - [x] Step 3 line counter TDD / Step 3 穿线计数 TDD — Priority: P0 — Status: Done — Output: `src/analytics/line_counter.py`, `tests/test_line_counter.py` — Commit: TBD
-- [ ] Step 4 ROI counter TDD / Step 4 ROI 计数 TDD — Priority: P0 — Status: Pending — Output: `src/analytics/roi_counter.py`, `tests/test_roi_counter.py` — Commit: TBD
+- [x] Step 4 ROI counter TDD / Step 4 ROI 计数 TDD — Priority: P0 — Status: Done — Output: `src/analytics/roi_counter.py`, `tests/test_roi_counter.py` — Commit: TBD
 - [ ] Step 5 event rules TDD / Step 5 事件规则 TDD — Priority: P0 — Status: Pending — Output: `src/analytics/event_rules.py`, `tests/test_event_rules.py` — Commit: TBD
 - [ ] Step 6 track writer / Step 6 轨迹写出器 — Priority: P0 — Status: Pending — Output: `src/tracking/track_writer.py` — Commit: TBD
 - [ ] Step 6 Video Analysis Center skeleton / Step 6 分析结果中心骨架 — Priority: P0 — Status: Pending — Output: `src/services/video_analysis_center.py` — Commit: TBD
@@ -122,6 +122,6 @@ Deferred beyond v0.8.0:
 
 ## Next Recommended Task
 
-1. v0.8.0 Step 4 ROI counter TDD / v0.8.0 Step 4 ROI 计数 TDD
-2. v0.8.0 Step 5 event rules TDD / v0.8.0 Step 5 事件规则 TDD
-3. v0.8.0 Step 6 track writer / v0.8.0 Step 6 轨迹写出器
+1. v0.8.0 Step 5 event rules TDD / v0.8.0 Step 5 事件规则 TDD
+2. v0.8.0 Step 6 track writer / v0.8.0 Step 6 轨迹写出器
+3. v0.8.0 Step 6 Video Analysis Center skeleton / v0.8.0 Step 6 分析结果中心骨架
