@@ -110,6 +110,28 @@ Pending after v0.8.1 Step 1:
 - [ ] Database integration / 数据库集成 — Target: v0.9.0+ — Status: Pending
 - [ ] Real video benchmark / 真实视频基准测试 — Target: v0.9.0+ — Status: Pending
 
+## v0.8.2-track-video-skeleton / track_video 骨架
+
+- [x] Step 1 `track_video.py` skeleton + CLI contract / Step 1 `track_video.py` 骨架与 CLI 契约 — Priority: P0 — Status: Done — Output: `src/track_video.py`, `tests/test_track_video.py`, `docs/project_task_board.md` — Commit: TBD
+
+Current scope:
+
+- synthetic detections-to-tracks conversion only
+- reads `detections.csv`
+- writes `tracks.csv`
+- no real video reading
+- no YOLO frame inference
+- no ByteTrack/DeepSORT adapter
+
+Pending after v0.8.2 Step 1:
+
+- [ ] Real video reading / 真实视频读取 — Target: v0.8.2/v0.9.0 — Status: Pending
+- [ ] YOLO frame inference / YOLO 帧级推理 — Target: v0.8.2/v0.9.0 — Status: Pending
+- [ ] ByteTrack/DeepSORT adapter integration / ByteTrack/DeepSORT adapter 接入 — Target: v0.8.2/v0.9.0 — Status: Pending
+- [ ] Streamlit video analysis pages / Streamlit 视频分析页面 — Target: v0.9.0 — Status: Pending
+- [ ] FastAPI video jobs / FastAPI 视频任务接口 — Target: v0.9.0 — Status: Pending
+- [ ] Real video smoke demo / 真实视频冒烟演示 — Target: v0.9.0 — Status: Pending
+
 ## P3 — Optional Future Experiments / 可选未来实验
 
 - [x] Run YOLOv8s official test split validation if weight is available / 在权重可用时运行 YOLOv8s 官方测试集验证 — Priority: P3 — Status: Done — Output: `docs/experiments/yolov8s_640_50epochs_retrain/`, `docs/evaluation/yolov8s_640_50epochs_official/` — Result: P `0.865`, R `0.838`, mAP50 `0.876`, mAP50-95 `0.601` — Commit: `e4d5adb`
@@ -141,5 +163,5 @@ Pending after v0.8.1 Step 1:
 
 ## Next Recommended Task
 
-1. v0.8.1 Step 2 `track_video.py` skeleton with synthetic CSV-style inputs / v0.8.1 Step 2 使用合成 CSV 风格输入的 `track_video.py` 骨架
+1. v0.8.2 Step 2 real tracker adapter contract or real video reading plan / v0.8.2 Step 2 真实跟踪器 adapter 契约或真实视频读取方案
 2. v0.9.0 real ByteTrack/DeepSORT plus Streamlit/FastAPI video workflow / v0.9.0 真实跟踪器与视频分析 UI/API 工作流
