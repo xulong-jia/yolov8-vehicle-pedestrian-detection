@@ -64,6 +64,7 @@ def test_docker_deployment_docs_cover_manual_acceptance_commands() -> None:
         "Docker Deployment",
         "v0.14.1 static acceptance",
         "v0.14.4",
+        "v1.4.1",
         "requirements-api.txt",
         "docker build",
         "docker run",
@@ -105,6 +106,7 @@ def test_deployment_guide_mentions_local_and_docker_paths() -> None:
         "video_jobs.sqlite3",
         "Actual Docker build/run smoke later passed",
         "mounted-weight container `/predict` passed",
+        "Docker v1 API Smoke Result",
     ]
     for term in required_terms:
         assert term in text
@@ -118,13 +120,17 @@ def test_docker_docs_reflect_final_passed_status() -> None:
             "docs/docker_deployment.md",
             "docs/deployment_guide.md",
             "docs/final_acceptance_checklist.md",
+            "docs/docker_v1_api_smoke_result.md",
         ]
     )
     required_terms = [
         "docs/docker_actual_smoke_result.md",
+        "docs/docker_v1_api_smoke_result.md",
         "Docker Actual Smoke Passed",
+        "Docker v1 API Smoke Result",
         "mounted-weight `/predict` passed",
         "v0.14.5",
+        "v1.4.1",
     ]
     forbidden_terms = [
         "actual build/run smoke remains " + "pending",

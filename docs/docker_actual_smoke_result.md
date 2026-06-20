@@ -224,3 +224,23 @@ Streamlit container smoke passed. Mounted-weight /predict passed with
 
 The previous `v0.14.4` state was partial because `local_weights/best.pt` was not
 yet prepared. `v0.14.5` closes that mounted-weight `/predict` acceptance item.
+
+## v1.4.1 Docker v1 API Smoke Refresh
+
+`v1.4.1-docker-v1-api-smoke-refresh` refreshes Docker runtime smoke for the
+post-final API additions from `v1.1` through `v1.4`.
+
+Covered checks:
+
+- Docker build passed.
+- Docker FastAPI container run passed.
+- `/health` passed.
+- `/model-status` saw mounted `/app/local_weights/best.pt`.
+- `/predict` passed with mounted weight and a temporary blank `/tmp` image.
+- `/api/videos/analyze` attach-mode fake run passed without YOLO/ByteTrack.
+- `/api/videos/jobs/{job_id}` returned the attached job.
+- SQLite job metadata was written to mounted local output storage.
+- `/api/videos/jobs/{job_id}/artifacts/summary/download` returned `200`.
+- `/api/bad-cases` POST/GET passed.
+
+Detailed result: [Docker v1 API Smoke Result](docker_v1_api_smoke_result.md).

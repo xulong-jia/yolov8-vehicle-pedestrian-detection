@@ -3,7 +3,7 @@
 ## Release Identity
 
 - Original final release: v1.0.0-final-release-summary
-- Current latest documented state: v1.4.0-artifact-download-endpoints
+- Current latest documented state: v1.4.1-docker-v1-api-smoke-refresh
 - Based on original final tag: v0.14.6-final-doc-consistency-pass
 - Project name: YOLOv8 Vehicle and Pedestrian Detection System
 - Repository: yolov8-vehicle-pedestrian-detection
@@ -11,7 +11,7 @@
 
 ## Post-Final Enhancements
 
-After the original `v1.0.0-final-release-summary`, the repository added five
+After the original `v1.0.0-final-release-summary`, the repository added six
 bounded enhancements:
 
 - `v1.1.0-async-video-job`: FastAPI async video job execution and Streamlit
@@ -24,10 +24,12 @@ bounded enhancements:
   for the SQLite video job metadata index, using attach-mode fake artifacts.
 - `v1.4.0-artifact-download-endpoints`: safe FastAPI artifact download
   endpoints for files already registered in a job's `artifact_paths`.
+- `v1.4.1-docker-v1-api-smoke-refresh`: Docker runtime smoke refresh for the
+  v1.1-v1.4 API additions.
 
 The SQLite index is unit-tested and has been verified with a real local FastAPI
-process restart smoke. Docker actual smoke was completed for the v0.14/v1.0 API
-surface and has not yet been rerun for all v1.1-v1.4 API additions.
+process restart smoke. Docker actual smoke was refreshed for the v1.1-v1.4 API
+surface.
 
 ## What Is Delivered
 
@@ -48,6 +50,7 @@ surface and has not yet been rerun for all v1.1-v1.4 API additions.
 - Bad Case schema/report foundation and metadata collection scaffold
 - GT evaluation scaffold for tracking/counting/ROI/event artifacts
 - FastAPI artifact download endpoints for registered video job artifacts
+- Docker v1 API smoke refresh
 - Docker build/run smoke
 - mounted-weight Docker `/predict` smoke
 - final acceptance checklist

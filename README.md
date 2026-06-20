@@ -6,7 +6,7 @@ This project is a YOLOv8-based vehicle and pedestrian detection system. It cover
 
 Current final delivery state:
 
-- Current latest documented state: `v1.4.0-artifact-download-endpoints`
+- Current latest documented state: `v1.4.1-docker-v1-api-smoke-refresh`
 - Original final release tag: `v1.0.0-final-release-summary`
 - Final status: `Go for final local/Docker acceptance`
 - Docker Actual Smoke: `Passed`
@@ -233,7 +233,9 @@ Completed experiments and recorded results:
 
 `v1.4.0-artifact-download-endpoints` adds safe FastAPI artifact download endpoints for files already registered in a job's `artifact_paths`. It complements the JSON preview endpoints and does not allow arbitrary path downloads.
 
-This phase does not include DeepSORT integration, ByteTrack production hardening, production database integration beyond the local SQLite metadata index, full-length tracked video validation, Docker smoke refresh for v1.1-v1.4 API additions, or real video benchmarks.
+`v1.4.1-docker-v1-api-smoke-refresh` refreshes Docker runtime smoke for the v1.1-v1.4 API surface. Docker build/run passed, mounted-weight `/predict` passed, attach-mode `/api/videos/analyze` passed, SQLite metadata was written on a mounted `/tmp` output volume, artifact summary download returned `200`, and `/api/bad-cases` POST/GET passed. See [Docker v1 API Smoke Result](docs/docker_v1_api_smoke_result.md).
+
+This phase does not include DeepSORT integration, ByteTrack production hardening, production database integration beyond the local SQLite metadata index, full-length tracked video validation, React frontend, API key/auth/logging, or real video benchmarks.
 
 Details: [Video analytics MVP](docs/video_analytics_mvp.md)
 

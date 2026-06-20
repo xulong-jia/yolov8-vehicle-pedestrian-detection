@@ -907,7 +907,7 @@ Pending after v0.13.0 Step 1:
 - [x] Video analyze async execution / 视频分析异步执行 — Target: v1.1.0 — Status: Completed — Commit: `a9798ff`
 - [x] Bad-case metadata API / Bad Case 元数据接口 — Target: v1.3.0 — Status: Completed — Commit: `e994a0e`
 - [ ] Rules/ROI config APIs and evaluation API / 规则、ROI 配置接口与评测 API — Target: Future — Status: Pending
-- [ ] Docker v1 API smoke refresh / v1 API Docker 冒烟刷新 — Target: Future — Status: Pending
+- [x] Docker v1 API smoke refresh / v1 API Docker 冒烟刷新 — Target: v1.4.1 — Status: Completed — Output: `docs/docker_v1_api_smoke_result.md` — Commit: TBD
 
 ## v0.13.1-fastapi-video-job-results-skeleton / FastAPI 视频任务结果查询骨架
 
@@ -936,7 +936,7 @@ Post-v0.13.1 status:
 - [x] Bad-case metadata API / Bad Case 元数据接口 — Target: v1.3.0 — Status: Completed — Commit: `e994a0e`
 - [x] Streamlit job launcher / Streamlit 任务启动器 — Target: v1.1.0 — Status: Completed — Commit: `a9798ff`
 - [ ] Rules/ROI config APIs and evaluation API / 规则、ROI 配置接口与评测 API — Target: Future — Status: Pending
-- [ ] Docker v1 API smoke refresh / v1 API Docker 冒烟刷新 — Target: Future — Status: Pending
+- [x] Docker v1 API smoke refresh / v1 API Docker 冒烟刷新 — Target: v1.4.1 — Status: Completed — Output: `docs/docker_v1_api_smoke_result.md` — Commit: TBD
 
 ## v0.14.0-bad-case-schema-report-foundation / Bad Case schema 与报告基础
 
@@ -1152,7 +1152,7 @@ Pending after v1.0.0 release docs:
 - [x] Bad Case metadata collection + GT evaluation scaffold / Bad Case 元数据收集与 GT 评测脚手架 — Target: v1.3.0 — Status: Completed — Output: `src/services/bad_case_service.py`, `src/evaluation/video_eval_scaffold.py`, `docs/evaluation/gt_templates.md` — Commit: `e994a0e`
 - [x] SQLite real FastAPI process restart smoke / SQLite 真实 FastAPI 进程重启冒烟 — Target: v1.3.2 — Status: Completed — Output: `docs/sqlite_job_restart_smoke_result.md` — Commit: TBD
 - [x] Artifact download endpoints / artifact 下载端点 — Target: v1.4.0 — Status: Completed — Output: `src/api.py`, `tests/test_api_video_jobs.py`, `docs/api_usage.md` — Commit: TBD
-- [ ] Docker smoke refresh for v1.1-v1.4 APIs / v1.1-v1.4 API Docker 冒烟刷新 — Target: Future — Status: Pending
+- [x] Docker smoke refresh for v1.1-v1.4 APIs / v1.1-v1.4 API Docker 冒烟刷新 — Target: v1.4.1 — Status: Completed — Output: `docs/docker_v1_api_smoke_result.md` — Commit: TBD
 - [ ] Large reviewed Bad Case collection / 大规模人工审核 Bad Case 收集 — Target: Future — Status: Pending
 - [ ] Real GT quantitative evaluation / 真实 GT 定量评测 — Target: Future — Status: Pending
 - [ ] React frontend / React 前端 — Target: Future — Status: Pending

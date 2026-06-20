@@ -6,7 +6,7 @@
 | --- | --- |
 | Project name | YOLOv8 Vehicle and Pedestrian Detection |
 | Repository name | yolov8-vehicle-pedestrian-detection |
-| Current checklist version | v1.4.0-artifact-download-endpoints |
+| Current checklist version | v1.4.1-docker-v1-api-smoke-refresh |
 | Original final release tag | v1.0.0-final-release-summary |
 | Latest stable tag before this refresh | v1.3.1-final-doc-consistency-refresh |
 | Status date | 2026-06-20 |
@@ -48,6 +48,7 @@ and artifact download endpoints.
 | v1.3.0-badcase-gt-eval-scaffold | Bad Case metadata collection and GT evaluation scaffold accepted. |
 | v1.3.2-sqlite-job-restart-smoke | SQLite job metadata verified through real local FastAPI process restart smoke. |
 | v1.4.0-artifact-download-endpoints | Registered video job artifact download endpoints accepted. |
+| v1.4.1-docker-v1-api-smoke-refresh | Docker runtime smoke refreshed for v1.1-v1.4 API surface. |
 
 ## Environment assumptions
 
@@ -147,7 +148,7 @@ DeepSORT is optional/future and is not required for this checklist status.
 | Status | Basic API, async video job execution, SQLite-backed job metadata with restart smoke, Bad Case metadata API, video result query endpoints, and registered artifact download endpoints tested. |
 | Evidence files | `src/api.py`, `src/core/config.py`, `src/core/model_loader.py`, `src/core/schemas.py`, `src/services/image_inference_service.py`, `src/services/video_job_service.py`, `src/services/job_store.py`, `src/services/bad_case_service.py`, `tests/test_api.py`, `tests/test_api_video_jobs.py`, `tests/test_bad_case_service.py`, `docs/api_usage.md` |
 | Manual command | `uvicorn src.api:app --host 0.0.0.0 --port 8000` |
-| Limitations | Docker smoke has not yet been rerun for all v1.1-v1.4 API additions. |
+| Limitations | Docker v1 API smoke passed for async jobs, SQLite metadata, artifact download, and Bad Case metadata. Full real video YOLO/ByteTrack execution inside Docker remains outside this smoke. |
 
 Accepted endpoints:
 
@@ -187,9 +188,9 @@ Accepted endpoints:
 | Field | Status |
 | --- | --- |
 | Status | Passed for local Docker actual smoke. |
-| Evidence files | `Dockerfile`, `.dockerignore`, `docs/docker_deployment.md`, `docs/deployment_guide.md`, `docs/docker_actual_smoke_plan.md`, `docs/docker_actual_smoke_result.md`, `tests/test_docker_deployment_docs.py` |
+| Evidence files | `Dockerfile`, `.dockerignore`, `docs/docker_deployment.md`, `docs/deployment_guide.md`, `docs/docker_actual_smoke_plan.md`, `docs/docker_actual_smoke_result.md`, `docs/docker_v1_api_smoke_result.md`, `tests/test_docker_deployment_docs.py` |
 | Tests/checks | `tests/test_docker_deployment_docs.py` verifies documented build/run commands, `MODEL_PATH`, weight mounting, and exclusions. |
-| Limitations | `v0.14.4` image build passed. After installing `requirements-api.txt`, FastAPI `/health`, `/config`, `/model-status`, and `/api/videos/analyze` passed. Streamlit smoke passed. `v0.14.5` mounted-weight `/predict` passed with local ignored `local_weights/best.pt` mounted read-only. Production deployment hardening remains environment-specific future work. |
+| Limitations | `v0.14.4` image build passed. After installing `requirements-api.txt`, FastAPI `/health`, `/config`, `/model-status`, and `/api/videos/analyze` passed. Streamlit smoke passed. `v0.14.5` mounted-weight `/predict` passed with local ignored `local_weights/best.pt` mounted read-only. `v1.4.1` refreshed Docker smoke for async attach-mode jobs, SQLite metadata, artifact summary download, and Bad Case metadata. Production deployment hardening remains environment-specific future work. |
 
 ## Manual pending acceptance
 
@@ -197,7 +198,6 @@ Accepted endpoints:
 - optional large reviewed Bad Case collection
 - optional DeepSORT runtime extension
 - optional full-length production validation
-- Docker smoke refresh for v1.1-v1.4 API additions
 - React frontend
 
 ## Asset safety checks
@@ -257,6 +257,7 @@ make list-large-docs
 
 - Docker actual smoke result is documented in `docs/docker_actual_smoke_result.md`; Docker image build, FastAPI smoke, Streamlit smoke, and mounted-weight `/predict` passed.
 - Docker actual smoke: passed.
+- Docker v1 API smoke refresh is documented in `docs/docker_v1_api_smoke_result.md`; async attach-mode job, SQLite metadata, artifact download, and Bad Case metadata passed.
 - Async video execution is implemented; SQLite real FastAPI process restart smoke passed in `v1.3.2`.
 - Artifact downloads are limited to registered video job artifact paths and do not provide arbitrary path access.
 - Full production tracking hardening pending.

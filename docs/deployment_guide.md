@@ -126,6 +126,7 @@ Current FastAPI endpoints:
 - `GET /api/videos/jobs/{job_id}/tracks`
 - `GET /api/videos/jobs/{job_id}/analytics`
 - `GET /api/videos/jobs/{job_id}/events`
+- `GET /api/videos/jobs/{job_id}/artifacts/{artifact_name}/download`
 
 The video job API can create async video analysis jobs, persist job metadata in
 SQLite, and query existing result artifacts. The SQLite index is stored at:
@@ -135,8 +136,8 @@ local_outputs/api_video_jobs/video_jobs.sqlite3
 ```
 
 The SQLite index stores metadata only. It does not store CSV, JSON, JSONL,
-images, videos, or model weights. A real FastAPI process restart smoke for the
-SQLite index remains pending.
+images, videos, or model weights. A real local FastAPI process restart smoke
+for the SQLite index passed in `v1.3.2`.
 
 ### Run Batch Prediction CLI
 
@@ -151,7 +152,8 @@ Generated outputs should go under `local_outputs/`, which is ignored by Git.
 `v0.14.1` adds Docker deployment static acceptance. The following commands are
 documented and statically checked. Actual Docker build/run smoke later passed
 locally in `v0.14.4`, and mounted-weight container `/predict` passed in
-`v0.14.5`.
+`v0.14.5`. Docker runtime smoke for the v1.1-v1.4 API surface passed in
+`v1.4.1`; see [Docker v1 API Smoke Result](docker_v1_api_smoke_result.md).
 
 ### Build
 

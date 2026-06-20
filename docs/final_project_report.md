@@ -690,9 +690,30 @@ It rejects unknown artifact names, missing files, unknown jobs, and
 path-traversal-style artifact names. It does not allow arbitrary path downloads
 and does not read large files into memory.
 
+## v1.4.1 Docker v1 API Smoke Refresh
+
+`v1.4.1-docker-v1-api-smoke-refresh` refreshes Docker runtime smoke for the
+post-final API additions from `v1.1` through `v1.4`.
+
+Validated checks:
+
+- Docker build passed.
+- Docker FastAPI container run passed.
+- `/health` and `/model-status` passed.
+- Mounted-weight `/predict` passed with `MODEL_PATH=/app/local_weights/best.pt`.
+- `/api/videos/analyze` attach-mode fake run passed without full video
+  YOLO/ByteTrack.
+- `/api/videos/jobs/{job_id}` returned the attached job.
+- SQLite job metadata was written on a mounted `/tmp` output volume.
+- `/api/videos/jobs/{job_id}/artifacts/summary/download` returned `200`.
+- `/api/bad-cases` POST/GET passed.
+
+The smoke used local `/tmp` runtime outputs and did not commit the SQLite DB,
+Bad Case CSV/JSONL, temporary image, response JSON, Docker image layers,
+weights, source videos, or run artifacts.
+
 ## Current Post-Final Future Work
 
-- Docker smoke refresh for v1.1-v1.4 API additions.
 - Large reviewed Bad Case collection.
 - Reviewed GT labels and full tracking/counting/ROI/event quantitative
   evaluation.

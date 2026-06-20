@@ -334,7 +334,6 @@ The following remain outside the current API scope:
 - production database integration beyond the local SQLite metadata index
 - full reviewed Bad Case dataset collection
 - evaluation API endpoints
-- Docker smoke refresh for v1.1-v1.4 API additions
 - React frontend
 
 ## Tests
