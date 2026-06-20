@@ -42,6 +42,10 @@ always returns `X-Request-ID` in the response headers. Structured request logs
 use standard-library logging and include timestamp, level, request id, method,
 path, status code, and duration in milliseconds.
 
+The optional React frontend in `frontend/` can call these endpoints when the
+FastAPI service is running. It supports `VITE_API_BASE_URL`, optional
+`X-API-Key`, and `X-Request-ID` display.
+
 ## Configuration
 
 Defaults come from `src/core/config.py` and can be overridden with environment
@@ -369,7 +373,7 @@ The following remain outside the current API scope:
 - production database integration beyond the local SQLite metadata index
 - full reviewed Bad Case dataset collection
 - evaluation API endpoints
-- React frontend
+- production React dashboard beyond the minimal optional frontend
 - OAuth/JWT or multi-user permissions
 - Prometheus/Grafana monitoring
 

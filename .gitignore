@@ -13,6 +13,11 @@ env/
 .idea/
 .vscode/
 
+# Frontend local dependencies/build outputs
+frontend/node_modules/
+frontend/dist/
+frontend/tsconfig.tsbuildinfo
+
 # YOLO / training outputs
 runs/
 *.pt

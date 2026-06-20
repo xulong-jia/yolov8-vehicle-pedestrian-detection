@@ -1156,9 +1156,10 @@ Pending after v1.0.0 release docs:
 - [x] API key auth + request ID + structured logging / API key 鉴权、请求 ID 与结构化日志 — Target: v1.5.0 — Status: Completed — Output: `src/core/security.py`, `src/core/logging_config.py`, `tests/test_api_security_logging.py` — Commit: TBD
 - [x] Small reviewed Bad Case collection / 小规模人工审核 Bad Case 样例集 — Target: v1.6.0 — Status: Completed in working tree — Output: `docs/error_case_gallery/reviewed_bad_cases.csv`, `tests/test_bad_cases_schema_docs.py` — Commit: TBD
 - [x] Small reviewed GT quantitative evaluation / 小规模人工审核 GT 定量评测样例 — Target: v1.7.0 — Status: Completed in working tree — Output: `docs/evaluation/reviewed_gt_samples/`, `docs/evaluation/reviewed_gt_eval_result/`, `docs/evaluation/reviewed_gt_eval_result.md`, `tests/test_video_eval_scaffold.py` — Commit: TBD
+- [x] Minimal React video job frontend / 最小 React 视频任务前端 — Target: v1.8.0 — Status: Completed in working tree — Output: `frontend/`, `frontend/README.md` — Commit: TBD
 - [ ] Large reviewed Bad Case collection beyond sample / 超出样例集的大规模人工审核 Bad Case 收集 — Target: Future — Status: Pending
 - [ ] Large-scale real GT quantitative evaluation beyond sample / 超出样例集的大规模真实 GT 定量评测 — Target: Future — Status: Pending
-- [ ] React frontend / React 前端 — Target: Future — Status: Pending
+- [ ] Production React dashboard beyond minimal frontend / 超出最小前端的生产级 React dashboard — Target: Future — Status: Pending
 - [ ] OAuth/JWT, multi-user permissions, Prometheus/Grafana / OAuth/JWT、多用户权限与外部监控 — Target: Future — Status: Pending
 - [ ] Optional DeepSORT runtime / 可选 DeepSORT 运行时 — Target: Future — Status: Pending
 - [ ] Optional full-length production validation / 可选全长生产验证 — Target: Future — Status: Pending

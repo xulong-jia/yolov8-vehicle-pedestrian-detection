@@ -6,7 +6,7 @@
 | --- | --- |
 | Project name | YOLOv8 Vehicle and Pedestrian Detection |
 | Repository name | yolov8-vehicle-pedestrian-detection |
-| Current checklist version | v1.7.0-gt-quantitative-evaluation |
+| Current checklist version | v1.8.0-react-video-job-frontend |
 | Original final release tag | v1.0.0-final-release-summary |
 | Latest stable tag before this refresh | v1.3.1-final-doc-consistency-refresh |
 | Status date | 2026-06-20 |
@@ -21,7 +21,8 @@ documentation state. Post-final enhancements through `v1.4.0` add async video
 jobs, SQLite job metadata plus restart smoke, Bad Case/GT evaluation scaffolds,
 artifact download endpoints, optional API key logging hardening, a small
 reviewed Bad Case sample collection, and a small reviewed GT quantitative
-evaluation sample pack.
+evaluation sample pack. `v1.8.0` adds a minimal optional React frontend for the
+existing FastAPI service.
 
 ## Version/tag history
 
@@ -54,6 +55,7 @@ evaluation sample pack.
 | v1.5.0-api-key-and-structured-logging | Optional API key auth, request id middleware, and structured logs accepted. |
 | v1.6.0-reviewed-bad-case-collection | Small reviewed Bad Case sample collection accepted. |
 | v1.7.0-gt-quantitative-evaluation | Small reviewed GT quantitative evaluation sample pack accepted. |
+| v1.8.0-react-video-job-frontend | Minimal optional React frontend accepted. |
 
 ## Environment assumptions
 
@@ -146,6 +148,15 @@ DeepSORT is optional/future and is not required for this checklist status.
 | Tests/checks | Catalog tests validate artifact discovery; FastAPI video job tests cover the job-launch/query backend used by the Streamlit launcher. |
 | Limitations | The page now includes a FastAPI Video Job Launcher, but it remains a local demo rather than a production dashboard. |
 
+## React frontend acceptance
+
+| Field | Status |
+| --- | --- |
+| Status | Minimal optional frontend accepted. |
+| Evidence files | `frontend/package.json`, `frontend/src/App.tsx`, `frontend/src/components/`, `frontend/README.md` |
+| Tests/checks | `npm install` and `npm run build` passed locally. Python test suite remains separate. |
+| Limitations | React frontend depends on FastAPI running separately. It does not include a video player, multi-user permissions, production auth, DeepSORT, complex routing, or a production dashboard. |
+
 ## FastAPI acceptance
 
 | Field | Status |
@@ -219,7 +230,7 @@ events `precision=0.5`, `recall=0.6666666666666666`; tracking
 - optional large reviewed Bad Case collection beyond the small reviewed sample
 - optional DeepSORT runtime extension
 - optional full-length production validation
-- React frontend
+- production React dashboard beyond the minimal optional frontend
 - OAuth/JWT, multi-user permission model, Prometheus/Grafana, and external
   monitoring
 

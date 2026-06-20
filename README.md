@@ -6,7 +6,7 @@ This project is a YOLOv8-based vehicle and pedestrian detection system. It cover
 
 Current final delivery state:
 
-- Current latest documented state: `v1.7.0-gt-quantitative-evaluation`
+- Current latest documented state: `v1.8.0-react-video-job-frontend`
 - Original final release tag: `v1.0.0-final-release-summary`
 - Final status: `Go for final local/Docker acceptance`
 - Docker Actual Smoke: `Passed`
@@ -37,10 +37,11 @@ Completed system capabilities:
 - Small reviewed GT quantitative evaluation sample pack
 - Docker build/run smoke
 - mounted-weight Docker `/predict` smoke
+- Minimal optional React frontend for FastAPI video jobs and Bad Cases
 - final acceptance checklist
 - release summary / delivery notes
 
-Future / optional work is non-blocking and includes large reviewed Bad Case labeling, reviewed GT dataset creation, optional DeepSORT production runtime, OAuth/JWT or multi-user security, external monitoring, and full GT-based tracking/counting/ROI/event quantitative evaluation.
+Future / optional work is non-blocking and includes large reviewed Bad Case labeling, reviewed GT dataset creation, optional DeepSORT production runtime, OAuth/JWT or multi-user security, external monitoring, production React dashboard hardening, and full GT-based tracking/counting/ROI/event quantitative evaluation.
 
 ## Final Delivery Entry Points
 
@@ -242,7 +243,9 @@ Completed experiments and recorded results:
 
 `v1.7.0-gt-quantitative-evaluation` adds a small reviewed GT quantitative evaluation sample pack. It includes lightweight GT and prediction CSV samples under [Reviewed GT Samples](docs/evaluation/reviewed_gt_samples/) plus committed reviewed sample metrics under [Reviewed GT Evaluation Result](docs/evaluation/reviewed_gt_eval_result.md). The sample reports counting `MAE=1.0`, ROI `frame_count_mae=1.0`, event `precision=0.5` and `recall=0.6666666666666666`, and tracking engineering metrics with `gt_required_for_idf1=true`. This is not a production benchmark and does not include full MOT IDF1/MOTA.
 
-This phase does not include DeepSORT integration, ByteTrack production hardening, production database integration beyond the local SQLite metadata index, full-length tracked video validation, React frontend, OAuth/JWT, multi-user authorization, Prometheus/Grafana, or real video benchmarks.
+`v1.8.0-react-video-job-frontend` adds a minimal optional Vite + React + TypeScript frontend in [frontend](frontend/). It can call FastAPI health/model-status, create/query video jobs, show artifact download links, create/list Bad Cases, send optional `X-API-Key`, and display `X-Request-ID`. It depends on FastAPI running separately and does not include a video player, multi-user permissions, production auth, DeepSORT, or a production dashboard.
+
+This phase does not include DeepSORT integration, ByteTrack production hardening, production database integration beyond the local SQLite metadata index, full-length tracked video validation, OAuth/JWT, multi-user authorization, Prometheus/Grafana, production React dashboard hardening, or real video benchmarks.
 
 Details: [Video analytics MVP](docs/video_analytics_mvp.md)
 

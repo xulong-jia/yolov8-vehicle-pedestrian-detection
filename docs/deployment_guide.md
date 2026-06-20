@@ -118,6 +118,36 @@ response includes `X-Request-ID`, either echoing the incoming header or a
 generated UUID. Structured logs include request id, method, path, status code,
 duration, and video job/artifact/bad-case identifiers where relevant.
 
+### Run Minimal React Frontend
+
+The optional React frontend is under `frontend/` and depends on FastAPI running
+separately.
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Default API base URL:
+
+```text
+http://localhost:8000
+```
+
+Override with:
+
+```bash
+VITE_API_BASE_URL=http://localhost:8000 npm run dev
+```
+
+If FastAPI API key auth is enabled, enter the key in the frontend so requests
+send `X-API-Key`. The frontend also sends and displays `X-Request-ID`.
+
+This React frontend is minimal and optional. It does not include a video
+player, multi-user permissions, production auth, DeepSORT, or a production
+dashboard. Streamlit remains available as the local demo path.
+
 Useful smoke commands:
 
 ```bash

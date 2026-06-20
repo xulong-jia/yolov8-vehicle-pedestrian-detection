@@ -3,7 +3,7 @@
 ## Release Identity
 
 - Original final release: v1.0.0-final-release-summary
-- Current latest documented state: v1.7.0-gt-quantitative-evaluation
+- Current latest documented state: v1.8.0-react-video-job-frontend
 - Based on original final tag: v0.14.6-final-doc-consistency-pass
 - Project name: YOLOv8 Vehicle and Pedestrian Detection System
 - Repository: yolov8-vehicle-pedestrian-detection
@@ -11,7 +11,7 @@
 
 ## Post-Final Enhancements
 
-After the original `v1.0.0-final-release-summary`, the repository added nine
+After the original `v1.0.0-final-release-summary`, the repository added ten
 bounded enhancements:
 
 - `v1.1.0-async-video-job`: FastAPI async video job execution and Streamlit
@@ -33,6 +33,9 @@ bounded enhancements:
 - `v1.7.0-gt-quantitative-evaluation`: small reviewed GT sample pack and
   scaffold-generated quantitative metrics for counting, ROI, events, and
   tracking engineering metrics.
+- `v1.8.0-react-video-job-frontend`: minimal optional Vite + React +
+  TypeScript frontend for FastAPI status, video jobs, artifact links, and Bad
+  Case metadata.
 
 The SQLite index is unit-tested and has been verified with a real local FastAPI
 process restart smoke. Docker actual smoke was refreshed for the v1.1-v1.4 API
@@ -61,6 +64,7 @@ surface.
 - FastAPI artifact download endpoints for registered video job artifacts
 - Docker v1 API smoke refresh
 - Optional API key authentication and request/operation structured logs
+- Minimal optional React frontend for FastAPI video jobs and Bad Cases
 - Docker build/run smoke
 - mounted-weight Docker `/predict` smoke
 - final acceptance checklist
@@ -154,6 +158,7 @@ registered in job metadata; arbitrary path downloads are not supported.
   reviewed sample
 - optional DeepSORT runtime
 - OAuth/JWT, multi-user permissions, and external monitoring
+- production React dashboard hardening
 - optional full-length production validation
 
 ## Suggested Evaluator Walkthrough

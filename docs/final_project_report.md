@@ -781,12 +781,33 @@ rendering. It does not commit large images, videos, weights, `local_outputs`,
 `runs`, sqlite files, or large runtime outputs. It is a small reviewed sample
 for demonstration and evaluation planning, not a production benchmark.
 
+## v1.8.0 React Video Job Frontend
+
+`v1.8.0-react-video-job-frontend` adds a minimal optional Vite + React +
+TypeScript frontend under `frontend/`.
+
+The frontend covers the current FastAPI surface at a small demo level:
+
+- health and model status checks
+- video job creation through `POST /api/videos/analyze`
+- video job lookup through `GET /api/videos/jobs/{job_id}`
+- registered artifact download links
+- Bad Case metadata creation and listing
+- optional `X-API-Key`
+- `X-Request-ID` input and response display
+
+The React frontend depends on the FastAPI backend running separately. It keeps
+Streamlit as an existing local demo path and does not replace it. This phase
+does not add a video player, multi-user permission system, OAuth/JWT,
+production dashboard, DeepSORT runtime, complex routing, or a new backend
+capability.
+
 ## Current Post-Final Future Work
 
 - Larger reviewed Bad Case collection beyond the 24-case sample.
 - Larger reviewed GT labels and full tracking/counting/ROI/event quantitative
   evaluation beyond the small reviewed sample.
 - Optional DeepSORT production runtime.
-- Optional React frontend.
+- Production React dashboard hardening beyond the minimal optional frontend.
 - OAuth/JWT, multi-user job management, external monitoring, and production
   observability hardening.
