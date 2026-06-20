@@ -85,6 +85,9 @@ def test_references_docker_smoke_status_and_predict_passed() -> None:
     required_terms = [
         "v0.14.6-final-doc-consistency-pass",
         "v0.14.5-mounted-weight-container-predict-smoke",
+        "v1.1.0-async-video-job",
+        "v1.2.0-sqlite-video-job-index",
+        "v1.3.0-badcase-gt-eval-scaffold",
         "Docker build/run has been executed locally",
         "Docker Actual Smoke Passed",
         "FastAPI `/health`, `/config`, `/model-status`, and `/api/videos/analyze` passed",
@@ -92,6 +95,8 @@ def test_references_docker_smoke_status_and_predict_passed() -> None:
         "mounted-weight `/predict` passed",
         "Docker actual smoke: passed",
         "Mounted-weight container inference passed",
+        "SQLite real FastAPI process restart smoke remains pending",
+        "GT evaluation scaffold exists",
         "Go for final local/Docker acceptance",
         "MODEL_PATH",
     ]

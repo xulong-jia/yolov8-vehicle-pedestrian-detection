@@ -2,11 +2,29 @@
 
 ## Release Identity
 
-- Release: v1.0.0-final-release-summary
-- Based on stable tag: v0.14.6-final-doc-consistency-pass
+- Original final release: v1.0.0-final-release-summary
+- Current latest tag: v1.3.0-badcase-gt-eval-scaffold
+- Based on original final tag: v0.14.6-final-doc-consistency-pass
 - Project name: YOLOv8 Vehicle and Pedestrian Detection System
 - Repository: yolov8-vehicle-pedestrian-detection
 - Final status: Go for final local/Docker acceptance, subject to normal environment-specific deployment checks
+
+## Post-Final Enhancements
+
+After the original `v1.0.0-final-release-summary`, the repository added three
+bounded enhancements:
+
+- `v1.1.0-async-video-job`: FastAPI async video job execution and Streamlit
+  Video Job Launcher.
+- `v1.2.0-sqlite-video-job-index`: SQLite-backed video job metadata index under
+  `local_outputs/api_video_jobs/video_jobs.sqlite3`.
+- `v1.3.0-badcase-gt-eval-scaffold`: Bad Case metadata collection plus GT
+  evaluation scaffold.
+
+The SQLite index is unit-tested for persistence and restart-style lookup through
+new store/registry instances; real FastAPI process restart smoke remains pending.
+Docker actual smoke was completed for the v0.14/v1.0 API surface and
+has not yet been rerun for all v1.1-v1.3 API additions.
 
 ## What Is Delivered
 
@@ -82,7 +100,8 @@ not artifact file contents.
 
 ## Validation Summary
 
-- Full safe pytest matrix: 300 passed, 1 warning.
+- v1.0 release-doc safe pytest matrix: 300 passed, 1 warning.
+- v1.3 scaffold safe pytest matrix: 337 passed, 1 warning.
 - `make check`: passed.
 - `make api-check`: passed.
 - `make danger-check`: passed.

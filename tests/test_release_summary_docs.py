@@ -30,6 +30,9 @@ def test_release_summary_includes_final_release_contract() -> None:
         "No `runs/` or `local_outputs/` committed",
         "SQLite-backed video job/result metadata index",
         "video_jobs.sqlite3",
+        "v1.3.0-badcase-gt-eval-scaffold",
+        "real FastAPI process restart smoke remains pending",
+        "GT evaluation scaffold",
     ]
 
     for term in required_terms:

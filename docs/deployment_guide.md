@@ -94,9 +94,9 @@ prediction outputs by default.
 .venv/bin/streamlit run app/streamlit_video_demo.py
 ```
 
-This page is read-only. It browses existing local Video Analysis Center and
-tracked-video artifacts. It does not run YOLO, ByteTrack, analytics, or
-rendering.
+This page browses existing local Video Analysis Center and tracked-video
+artifacts. It also includes a FastAPI Video Job Launcher that can submit/query
+jobs when the FastAPI service is running separately.
 
 ### Run FastAPI
 
@@ -127,7 +127,16 @@ Current FastAPI endpoints:
 - `GET /api/videos/jobs/{job_id}/analytics`
 - `GET /api/videos/jobs/{job_id}/events`
 
-The video job API is a safe result-query skeleton. real async video execution remains future work.
+The video job API can create async video analysis jobs, persist job metadata in
+SQLite, and query existing result artifacts. The SQLite index is stored at:
+
+```text
+local_outputs/api_video_jobs/video_jobs.sqlite3
+```
+
+The SQLite index stores metadata only. It does not store CSV, JSON, JSONL,
+images, videos, or model weights. A real FastAPI process restart smoke for the
+SQLite index remains pending.
 
 ### Run Batch Prediction CLI
 
@@ -172,19 +181,20 @@ docker run --rm -p 8501:8501 \
 
 ### Attach Existing Video Artifacts
 
-The video job result API can attach to existing artifacts only if those
-artifacts are mounted into the container:
+The video job result API can attach to existing artifacts if those artifacts are
+mounted into the container. Full async video execution also needs mounted model
+weights, mounted source videos, and writable local outputs:
 
 ```bash
 docker run --rm -p 8000:8000 \
   -e MODEL_PATH=/app/local_weights/best.pt \
   -v "$PWD/local_weights:/app/local_weights:ro" \
-  -v "$PWD/local_outputs:/app/local_outputs:ro" \
+  -v "$PWD/local_outputs:/app/local_outputs:rw" \
   yolov8-vehicle-pedestrian:latest \
   uvicorn src.api:app --host 0.0.0.0 --port 8000
 ```
 
-Then create a skeleton job:
+Then create an attach-mode job:
 
 ```bash
 curl -X POST http://localhost:8000/api/videos/analyze \
@@ -194,16 +204,32 @@ curl -X POST http://localhost:8000/api/videos/analyze \
 
 ## Bad Case Documentation
 
-The project has a Bad Case schema and report foundation:
+The project has a Bad Case schema/report foundation and a metadata-only Bad
+Case collection API:
 
 - `docs/bad_cases_schema.md`
 - `docs/bad_case_report.md`
 - `docs/error_taxonomy.md`
 - `docs/hard_examples.md`
 - `docs/error_case_gallery/README.md`
+- `POST /api/bad-cases`
+- `GET /api/bad-cases`
 
 The current Bad Case gallery CSV is a tiny hand-written documentation sample,
-not a full real bad case dataset.
+not a full real bad case dataset. Local collection records are written under
+`local_outputs/bad_cases/` and remain ignored by Git.
+
+## GT Evaluation Scaffold
+
+Ground Truth templates for tracking, counting, ROI, and event evaluation are
+documented in `docs/evaluation/gt_templates.md`. The scaffold CLI is:
+
+```bash
+python -m src.evaluation.video_eval_scaffold --help
+```
+
+This is a scaffold only; reviewed GT labels and full quantitative evaluation
+remain future work.
 
 ## Run Checks
 

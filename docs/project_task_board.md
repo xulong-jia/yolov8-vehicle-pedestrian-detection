@@ -880,8 +880,8 @@ Scope:
 Pending after v0.12.0 Step 1:
 
 - [ ] Full-length ByteTrack validation / 全长 ByteTrack 验证 — Target: v1.0 candidate — Status: Pending
-- [ ] Streamlit job launcher / Streamlit 任务启动器 — Target: Future only after runtime policy — Status: Pending
-- [ ] FastAPI video jobs / FastAPI 视频任务 — Target: v1.0 candidate — Status: Pending
+- [x] Streamlit job launcher / Streamlit 任务启动器 — Target: v1.1.0 — Status: Completed — Output: `app/streamlit_video_demo.py` — Commit: `a9798ff`
+- [x] FastAPI video jobs / FastAPI 视频任务 — Target: v1.1.0 — Status: Completed — Output: `src/api.py`, `src/services/video_job_service.py` — Commit: `a9798ff`
 - [ ] Docker/deployment update for video workflow / 视频工作流 Docker/部署更新 — Target: Future — Status: Pending
 - [ ] Full product demo script / 完整产品演示脚本 — Target: v1.0 candidate — Status: Pending
 
@@ -904,9 +904,10 @@ Scope:
 Pending after v0.13.0 Step 1:
 
 - [x] Video job/result query skeleton / 视频任务和结果查询骨架 — Target: v0.13.1 — Status: Completed in working tree
-- [ ] Video analyze async execution / 视频分析异步执行 — Target: Future — Status: Pending
-- [ ] Rules, bad-case, and evaluation APIs / 规则、坏例和评估接口 — Target: Future — Status: Pending
-- [ ] Docker production validation / Docker 生产验证 — Target: Future — Status: Pending
+- [x] Video analyze async execution / 视频分析异步执行 — Target: v1.1.0 — Status: Completed — Commit: `a9798ff`
+- [x] Bad-case metadata API / Bad Case 元数据接口 — Target: v1.3.0 — Status: Completed — Commit: `e994a0e`
+- [ ] Rules/ROI config APIs and evaluation API / 规则、ROI 配置接口与评测 API — Target: Future — Status: Pending
+- [ ] Docker v1 API smoke refresh / v1 API Docker 冒烟刷新 — Target: Future — Status: Pending
 
 ## v0.13.1-fastapi-video-job-results-skeleton / FastAPI 视频任务结果查询骨架
 
@@ -928,13 +929,14 @@ Scope:
 - does not write repository outputs
 - does not use a database or background worker
 
-Pending after v0.13.1 Step 1:
+Post-v0.13.1 status:
 
-- [ ] Real async video analyze execution / 真实异步视频分析执行 — Target: Future — Status: Pending
-- [ ] Persisted job registry or database / 持久化任务 registry 或数据库 — Target: Future — Status: Pending
-- [ ] Rules, ROI, bad-case, and evaluation APIs / 规则、ROI、坏例和评估接口 — Target: Future — Status: Pending
-- [ ] Streamlit job launcher / Streamlit 任务启动器 — Target: Future — Status: Pending
-- [ ] Docker production validation / Docker 生产验证 — Target: Future — Status: Pending
+- [x] Real async video analyze execution / 真实异步视频分析执行 — Target: v1.1.0 — Status: Completed — Commit: `a9798ff`
+- [x] Persisted job registry or database / 持久化任务 registry 或数据库 — Target: v1.2.0 — Status: Completed with SQLite metadata index — Commit: `4900fb3`
+- [x] Bad-case metadata API / Bad Case 元数据接口 — Target: v1.3.0 — Status: Completed — Commit: `e994a0e`
+- [x] Streamlit job launcher / Streamlit 任务启动器 — Target: v1.1.0 — Status: Completed — Commit: `a9798ff`
+- [ ] Rules/ROI config APIs and evaluation API / 规则、ROI 配置接口与评测 API — Target: Future — Status: Pending
+- [ ] Docker v1 API smoke refresh / v1 API Docker 冒烟刷新 — Target: Future — Status: Pending
 
 ## v0.14.0-bad-case-schema-report-foundation / Bad Case schema 与报告基础
 
@@ -949,17 +951,17 @@ Scope:
 - defines allowed `module`, `case_type`, and recommended `tags`
 - keeps `docs/error_case_gallery/cases.csv` as a tiny hand-written documentation sample
 - does not create a full real `bad_cases.csv`
-- does not implement `/api/bad-cases`
+- does not implement `/api/bad-cases` at v0.14.0; metadata-only endpoints were added later in v1.3.0
 - does not run YOLO, ByteTrack, DeepSORT, analytics, or rendering
 - does not generate outputs
 
 Pending after v0.14.0 Step 1:
 
-- [ ] Real Bad Case collection / 真实 Bad Case 收集 — Target: Future — Status: Pending
-- [ ] `/api/bad-cases` endpoints / Bad Case API — Target: Future — Status: Pending
+- [x] `/api/bad-cases` endpoints / Bad Case API — Target: v1.3.0 — Status: Completed metadata-only scaffold — Commit: `e994a0e`
+- [x] GT evaluation scaffold / GT 评测脚手架 — Target: v1.3.0 — Status: Completed — Commit: `e994a0e`
+- [ ] Large reviewed Bad Case collection / 大规模人工审核 Bad Case 收集 — Target: Future — Status: Pending
 - [ ] Evaluation API / 评测 API — Target: Future — Status: Pending
 - [ ] Docker production verification / Docker 生产验证 — Target: Future — Status: Pending
-- [ ] Real async video execution / 真实异步视频执行 — Target: Future — Status: Pending
 
 ## v0.14.1-docker-deployment-static-acceptance / Docker 部署静态验收
 
@@ -1094,7 +1096,7 @@ Local result summary:
 Pending after v0.14.5:
 
 - [ ] Optional production hardening / 可选生产部署加固 — Target: Future — Status: Pending
-- [ ] Optional real async video execution API / 可选真实异步视频执行 API — Target: Future — Status: Pending
+- [x] Real async video execution API / 真实异步视频执行 API — Target: v1.1.0 — Status: Completed — Commit: `a9798ff`
 - [ ] Optional DeepSORT runtime / 可选 DeepSORT 运行时 — Target: Future — Status: Pending
 
 ## v0.14.6-final-doc-consistency-pass / 最终文档一致性收尾
@@ -1118,8 +1120,9 @@ Scope:
 Pending after v0.14.6:
 
 - [ ] Optional production hardening / 可选生产部署加固 — Target: Future — Status: Pending
-- [ ] Optional real async video execution API / 可选真实异步视频执行 API — Target: Future — Status: Pending
-- [ ] Optional real Bad Case collection / 可选真实 Bad Case 收集 — Target: Future — Status: Pending
+- [x] Real async video execution API / 真实异步视频执行 API — Target: v1.1.0 — Status: Completed — Commit: `a9798ff`
+- [x] Bad Case metadata collection scaffold / Bad Case 元数据收集脚手架 — Target: v1.3.0 — Status: Completed — Commit: `e994a0e`
+- [ ] Large reviewed Bad Case collection / 大规模人工审核 Bad Case 收集 — Target: Future — Status: Pending
 - [ ] Optional DeepSORT runtime / 可选 DeepSORT 运行时 — Target: Future — Status: Pending
 - [ ] Optional full-length production validation / 可选全长生产验证 — Target: Future — Status: Pending
 
@@ -1144,8 +1147,15 @@ Scope:
 Pending after v1.0.0 release docs:
 
 - [ ] Optional production hardening / 可选生产部署加固 — Target: Future — Status: Pending
-- [ ] Optional real async video execution API / 可选真实异步视频执行 API — Target: Future — Status: Pending
-- [ ] Optional real Bad Case collection / 可选真实 Bad Case 收集 — Target: Future — Status: Pending
+- [x] Real async video execution API / 真实异步视频执行 API — Target: v1.1.0 — Status: Completed — Output: `src/services/video_job_service.py`, `src/api.py`, `app/streamlit_video_demo.py` — Commit: `a9798ff`
+- [x] SQLite-backed video job metadata index / SQLite 视频任务元数据索引 — Target: v1.2.0 — Status: Completed — Output: `src/services/job_store.py`, `tests/test_api_video_jobs.py` — Commit: `4900fb3`
+- [x] Bad Case metadata collection + GT evaluation scaffold / Bad Case 元数据收集与 GT 评测脚手架 — Target: v1.3.0 — Status: Completed — Output: `src/services/bad_case_service.py`, `src/evaluation/video_eval_scaffold.py`, `docs/evaluation/gt_templates.md` — Commit: `e994a0e`
+- [ ] SQLite real FastAPI process restart smoke / SQLite 真实 FastAPI 进程重启冒烟 — Target: Future — Status: Pending
+- [ ] Docker smoke refresh for v1.1-v1.3 APIs / v1.1-v1.3 API Docker 冒烟刷新 — Target: Future — Status: Pending
+- [ ] Large reviewed Bad Case collection / 大规模人工审核 Bad Case 收集 — Target: Future — Status: Pending
+- [ ] Real GT quantitative evaluation / 真实 GT 定量评测 — Target: Future — Status: Pending
+- [ ] Artifact download endpoints / artifact 下载端点 — Target: Future — Status: Pending
+- [ ] React frontend / React 前端 — Target: Future — Status: Pending
 - [ ] Optional DeepSORT runtime / 可选 DeepSORT 运行时 — Target: Future — Status: Pending
 - [ ] Optional full-length production validation / 可选全长生产验证 — Target: Future — Status: Pending
 

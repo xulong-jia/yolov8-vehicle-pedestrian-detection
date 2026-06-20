@@ -34,6 +34,12 @@ ignored `local_weights/best.pt` was mounted read-only at
 `/app/local_weights/best.pt`, `/predict` returned JSON with the required fields,
 and the final Docker actual smoke status is `Docker Actual Smoke Passed`.
 
+Post-final note: `v1.1.0` adds async FastAPI video jobs, `v1.2.0` adds the
+SQLite-backed job metadata index at
+`local_outputs/api_video_jobs/video_jobs.sqlite3`, and `v1.3.0` adds Bad Case
+metadata plus GT evaluation scaffolds. The Docker smoke recorded here has not
+yet been rerun for the complete v1.1-v1.3 API surface.
+
 ## Prerequisites
 
 - Docker installed on the host machine.
@@ -92,16 +98,27 @@ curl -X POST "http://localhost:8000/predict?conf=0.25&imgsz=640&device=cpu" \
   -F "file=@sample.jpg"
 ```
 
-Video job skeleton smoke:
+Video job smoke:
 
 ```bash
 curl -X POST http://localhost:8000/api/videos/analyze \
   -H "Content-Type: application/json" \
-  -d '{"video_id":"demo","run_name":"demo_run"}'
+  -d '{
+    "video_id":"demo",
+    "run_name":"demo_run",
+    "model_path":"/app/local_weights/best.pt",
+    "source":"/app/local_videos/source/demo.mp4",
+    "conf":0.25,
+    "imgsz":640,
+    "device":"cpu"
+  }'
 ```
 
-The video job endpoint creates an in-memory skeleton job unless an existing
-Video Analysis Center `run_dir` is provided.
+The video job endpoint creates an async job, records metadata in SQLite, and
+delegates execution to the existing four-step local flow. For Docker use, mount
+source videos and `local_outputs` explicitly if you intend to run this workflow.
+The SQLite file and generated artifacts remain local-only under
+`local_outputs/api_video_jobs/`.
 
 ## Artifact Attach Smoke
 
@@ -112,7 +129,7 @@ container-visible path:
 docker run --rm -p 8000:8000 \
   -e MODEL_PATH=/app/local_weights/best.pt \
   -v "$PWD/local_weights:/app/local_weights:ro" \
-  -v "$PWD/local_outputs:/app/local_outputs:ro" \
+  -v "$PWD/local_outputs:/app/local_outputs:rw" \
   yolov8-vehicle-pedestrian:latest \
   uvicorn src.api:app --host 0.0.0.0 --port 8000
 ```
@@ -126,8 +143,9 @@ curl -X POST http://localhost:8000/api/videos/analyze \
 ```
 
 Only attach directories that already contain existing Video Analysis Center
-artifacts. The API skeleton reads existing files; it does not run YOLO,
-ByteTrack, analytics, or rendering.
+artifacts when using `run_dir` attach mode. Full async execution requires local
+model/video paths visible inside the container and a writable `local_outputs`
+mount for job artifacts and `video_jobs.sqlite3`.
 
 ## Run Streamlit Container
 
@@ -208,6 +226,8 @@ Actual Docker build/run smoke has been run locally for `v0.14.4`:
 - Streamlit container smoke on port `8501` passed.
 - Mounted-weight `/predict` smoke passed in `v0.14.5` with
   `local_weights/best.pt` mounted read-only.
+- Docker smoke has not yet been refreshed for the v1.1-v1.3 async video job,
+  SQLite metadata, Bad Case metadata, and GT evaluation scaffold additions.
 
 See `docs/docker_actual_smoke_plan.md` for the current preflight result,
 manual prerequisites, success criteria, and failure handling.

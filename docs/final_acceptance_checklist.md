@@ -6,8 +6,9 @@
 | --- | --- |
 | Project name | YOLOv8 Vehicle and Pedestrian Detection |
 | Repository name | yolov8-vehicle-pedestrian-detection |
-| Current checklist version | v0.14.6-final-doc-consistency-pass |
-| Latest stable tag before this work | v0.14.5-mounted-weight-container-predict-smoke |
+| Current checklist version | v1.3.0-badcase-gt-eval-scaffold |
+| Original final release tag | v1.0.0-final-release-summary |
+| Latest stable tag before this refresh | v1.3.0-badcase-gt-eval-scaffold |
 | Status date | 2026-06-20 |
 | Acceptance mode | Final local/Docker acceptance |
 | Related acceptance docs | `README.md`, `docs/final_project_report.md`, `docs/project_task_board.md` |
@@ -15,7 +16,9 @@
 This checklist consolidates final acceptance evidence for the execution manual's
 Stage 8 and Chapter 21 acceptance areas. Docker build/run, FastAPI container
 smoke, Streamlit container smoke, and mounted-weight container `/predict`
-passed locally by `v0.14.5`; `v0.14.6` reconciles the final documentation state.
+passed locally by `v0.14.5`; `v0.14.6` reconciled the original final
+documentation state. Post-final enhancements through `v1.3.0` add async video
+jobs, SQLite job metadata, and Bad Case/GT evaluation scaffolds.
 
 ## Version/tag history
 
@@ -39,6 +42,9 @@ passed locally by `v0.14.5`; `v0.14.6` reconciles the final documentation state.
 | v0.14.5-mounted-weight-container-predict-smoke | Mounted-weight container `/predict` smoke passed; Docker actual smoke is complete for local acceptance. |
 | v0.14.6-final-doc-consistency-pass | Final docs reconciled after Docker Actual Smoke Passed. |
 | v1.0.0-final-release-summary | Final release summary and delivery notes prepared. |
+| v1.1.0-async-video-job | FastAPI async video job execution and Streamlit Video Job Launcher accepted. |
+| v1.2.0-sqlite-video-job-index | SQLite-backed video job metadata index unit-tested. |
+| v1.3.0-badcase-gt-eval-scaffold | Bad Case metadata collection and GT evaluation scaffold accepted. |
 
 ## Environment assumptions
 
@@ -128,17 +134,17 @@ DeepSORT is optional/future and is not required for this checklist status.
 | Status | Accepted; local Streamlit container smoke passed in Docker actual smoke. |
 | Evidence files | `app.py`, `app/streamlit_video_demo.py`, `src/services/video_demo_catalog.py`, `tests/test_video_demo_catalog.py`, `docs/streamlit_video_demo.md` |
 | Manual command | `streamlit run app.py` |
-| Tests/checks | Catalog tests validate read-only demo artifact discovery. |
-| Limitations | Streamlit job launcher is future work; current page is a read-only demo. |
+| Tests/checks | Catalog tests validate artifact discovery; FastAPI video job tests cover the job-launch/query backend used by the Streamlit launcher. |
+| Limitations | The page now includes a FastAPI Video Job Launcher, but it remains a local demo rather than a production dashboard. |
 
 ## FastAPI acceptance
 
 | Field | Status |
 | --- | --- |
-| Status | Basic API tested; video job/result skeleton tested. |
-| Evidence files | `src/api.py`, `src/core/config.py`, `src/core/model_loader.py`, `src/core/schemas.py`, `src/services/image_inference_service.py`, `src/services/video_job_service.py`, `tests/test_api.py`, `tests/test_api_video_jobs.py`, `docs/api_usage.md` |
+| Status | Basic API, async video job execution, SQLite-backed job metadata, Bad Case metadata API, and video result query endpoints tested. |
+| Evidence files | `src/api.py`, `src/core/config.py`, `src/core/model_loader.py`, `src/core/schemas.py`, `src/services/image_inference_service.py`, `src/services/video_job_service.py`, `src/services/job_store.py`, `src/services/bad_case_service.py`, `tests/test_api.py`, `tests/test_api_video_jobs.py`, `tests/test_bad_case_service.py`, `docs/api_usage.md` |
 | Manual command | `uvicorn src.api:app --host 0.0.0.0 --port 8000` |
-| Limitations | Real async video execution remains future work. |
+| Limitations | SQLite persistence is unit-tested, but a real FastAPI process restart smoke is still pending. Docker smoke has not yet been rerun for all v1.1-v1.3 API additions. |
 
 Accepted endpoints:
 
@@ -152,15 +158,25 @@ Accepted endpoints:
 - `/tracks`
 - `/analytics`
 - `/events`
+- `/api/bad-cases`
 
 ## Bad Case acceptance
 
 | Field | Status |
 | --- | --- |
-| Status | Schema/report foundation accepted. |
-| Evidence files | `docs/bad_cases_schema.md`, `docs/bad_case_report.md`, `docs/error_taxonomy.md`, `docs/hard_examples.md`, `docs/error_case_gallery/README.md`, `docs/error_case_gallery/cases.csv`, `tests/test_bad_cases_schema_docs.py` |
-| Tests/checks | `tests/test_bad_cases_schema_docs.py` validates required documentation contracts. |
-| Limitations | Real Bad Case collection is future work. |
+| Status | Schema/report foundation plus metadata collection scaffold accepted. |
+| Evidence files | `docs/bad_cases_schema.md`, `docs/bad_case_report.md`, `docs/error_taxonomy.md`, `docs/hard_examples.md`, `docs/error_case_gallery/README.md`, `docs/error_case_gallery/cases.csv`, `src/services/bad_case_service.py`, `tests/test_bad_case_service.py`, `tests/test_bad_cases_schema_docs.py` |
+| Tests/checks | Bad Case docs and service/API tests validate metadata-only collection. |
+| Limitations | Large reviewed Bad Case collection is future work. |
+
+## GT evaluation scaffold acceptance
+
+| Field | Status |
+| --- | --- |
+| Status | Scaffold accepted for template-driven future evaluation. |
+| Evidence files | `docs/evaluation/gt_templates.md`, `src/evaluation/video_eval_scaffold.py`, `tests/test_video_eval_scaffold.py` |
+| Tests/checks | Tests cover counting MAE, ROI MAE, event exact/time-window match, tracking engineering metrics, CLI help, and output directory creation with `tmp_path`. |
+| Limitations | This is not a real large-scale GT quantitative evaluation. Reviewed GT labels and formal MOT metrics remain future work. |
 
 ## Docker/deployment acceptance
 
@@ -173,11 +189,14 @@ Accepted endpoints:
 
 ## Manual pending acceptance
 
-- optional real async video execution API
 - optional production deployment hardening
-- optional real Bad Case collection
+- optional large reviewed Bad Case collection
 - optional DeepSORT runtime extension
 - optional full-length production validation
+- SQLite real FastAPI process restart smoke
+- Docker smoke refresh for v1.1-v1.3 API additions
+- artifact download endpoints
+- React frontend
 
 ## Asset safety checks
 
@@ -217,6 +236,12 @@ Full safe test command used in recent versions:
 PYTHONPYCACHEPREFIX=/private/tmp/yolov8_pycache .venv/bin/python -m pytest tests/test_geometry.py tests/test_line_counter.py tests/test_roi_counter.py tests/test_event_rules.py tests/test_track_writer.py tests/test_video_analysis_center.py tests/test_synthetic_video_analysis_pipeline.py tests/test_track_video.py tests/test_video_reader.py tests/test_predict_video.py tests/test_tracking_adapters.py tests/test_predict_to_track_smoke_flow.py tests/test_video_analysis_job.py tests/test_three_step_video_analysis_job_flow.py tests/test_four_step_video_analysis_flow.py tests/test_run_video_analysis_smoke.py tests/test_smoke_preflight.py tests/test_cli_module_invocation.py tests/test_analytics_only_rerun.py tests/test_render_tracked_video.py tests/test_bytetrack_discovery.py tests/test_track_video_bytetrack_spike.py tests/test_bytetrack_runtime_contract.py tests/test_validate_bytetrack_pipeline.py tests/test_video_demo_catalog.py tests/test_api.py tests/test_api_video_jobs.py tests/test_bad_cases_schema_docs.py tests/test_docker_deployment_docs.py tests/test_final_acceptance_checklist.py -q
 ```
 
+Current v1.3 scaffold full safe test command:
+
+```bash
+PYTHONPYCACHEPREFIX=/private/tmp/yolov8_pycache .venv/bin/python -m pytest tests -q
+```
+
 Project checks:
 
 ```bash
@@ -230,10 +255,11 @@ make list-large-docs
 
 - Docker actual smoke result is documented in `docs/docker_actual_smoke_result.md`; Docker image build, FastAPI smoke, Streamlit smoke, and mounted-weight `/predict` passed.
 - Docker actual smoke: passed.
-- Real async video execution not implemented.
+- Async video execution is implemented; SQLite real FastAPI process restart smoke remains pending.
 - Full production tracking hardening pending.
 - DeepSORT optional/future.
-- Real Bad Case collection pending.
+- Large reviewed Bad Case collection pending.
+- GT evaluation scaffold exists; real reviewed GT quantitative evaluation pending.
 - Mounted-weight container inference passed in `v0.14.5`.
 
 ## Final go/no-go status

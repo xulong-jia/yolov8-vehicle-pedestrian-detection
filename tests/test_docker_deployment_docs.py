@@ -101,7 +101,8 @@ def test_deployment_guide_mentions_local_and_docker_paths() -> None:
         "/analytics",
         "/events",
         "Bad Case",
-        "real async video execution remains future",
+        "async video analysis jobs",
+        "video_jobs.sqlite3",
         "Actual Docker build/run smoke later passed",
         "mounted-weight container `/predict` passed",
     ]

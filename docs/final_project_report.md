@@ -471,8 +471,10 @@ taxonomy, hard examples, and error case gallery:
 This reduces the final acceptance gap around Bad Case reporting, but it does
 not claim that a full real Bad Case dataset has already been collected. The
 current gallery CSV remains a small hand-written documentation sample. Future
-work should collect reviewed real cases, add `/api/bad-cases`, link Bad Cases
-to evaluation reports, and build a selected regression set.
+work should collect reviewed real cases, link Bad Cases to evaluation reports,
+and build a selected regression set. Post-final `v1.3.0` adds metadata-only
+`/api/bad-cases` endpoints and a GT evaluation scaffold; it still does not claim
+a full reviewed Bad Case dataset.
 
 ## v0.14.1 Docker Deployment Static Acceptance
 
@@ -575,8 +577,9 @@ Observed result:
 Final Docker status:
 
 - Docker actual smoke: passed for local acceptance.
-- Production hardening, real async video execution, and optional DeepSORT remain
-  future work.
+- At that point, production hardening and optional DeepSORT remained future
+  work. Real async video execution was not part of the `v0.14.5` Docker smoke
+  scope, and was later added in `v1.1.0`.
 
 No Docker image layers, model weights, videos, CSV, JSON, JSONL, MP4,
 `runs`, `local_outputs`, or `/tmp` outputs were committed. Final local/Docker
@@ -588,9 +591,9 @@ acceptance is Go, subject to normal environment-specific deployment checks.
 smoke closure. It updates README, final report, final checklist, task board,
 and deployment documentation so they consistently state that Docker image
 build, FastAPI container smoke, Streamlit container smoke, and mounted-weight
-container `/predict` all passed locally. Future work is limited to production
-hardening, real async video execution, real Bad Case collection, optional
-DeepSORT runtime, and optional full-length production validation.
+container `/predict` all passed locally. At that stage, async video execution
+and real Bad Case collection were still future work; those were partially
+closed by `v1.1.0` and `v1.3.0` respectively.
 
 ## v1.0.0 Final Release Summary
 
@@ -610,3 +613,60 @@ Final review should start from `README.md`, then continue through
 `docs/release_summary.md`, `docs/delivery_notes.md`,
 `docs/final_acceptance_checklist.md`, and
 `docs/docker_actual_smoke_result.md`.
+
+## v1.1.0 Async Video Job Execution
+
+`v1.1.0-async-video-job` upgrades `POST /api/videos/analyze` from a skeleton
+result-query surface into an async video execution API. The endpoint creates a
+job, launches the existing four-step local video analysis flow in a background
+task, and exposes job status through `GET /api/videos/jobs/{job_id}`. The
+Streamlit video demo page also adds a FastAPI Video Job Launcher for local
+job submission and status lookup.
+
+This enhancement reuses existing video detection, tracking, analytics, and
+VideoAnalysisCenter logic. It does not add React, DeepSORT, production
+authentication, monitoring, or production-grade job orchestration.
+
+## v1.2.0 SQLite Video Job Index
+
+`v1.2.0-sqlite-video-job-index` adds a SQLite-backed metadata index for video
+jobs at `local_outputs/api_video_jobs/video_jobs.sqlite3`. The index stores job
+metadata, status, summary path, and artifact paths as JSON metadata. It does
+not store artifact file contents, videos, model weights, CSV bodies, JSONL
+bodies, or generated media.
+
+The SQLite store and registry behavior are unit-tested, including create,
+running, succeeded, failed, artifact path encode/decode, and lookup through a
+new store/registry instance. A real FastAPI process restart smoke remains
+pending and should be tracked separately from the unit-tested persistence
+contract.
+
+## v1.3.0 Bad Case Collection and GT Evaluation Scaffold
+
+`v1.3.0-badcase-gt-eval-scaffold` adds metadata-only Bad Case collection and a
+lightweight GT evaluation scaffold:
+
+- `src/services/bad_case_service.py`
+- `POST /api/bad-cases`
+- `GET /api/bad-cases`
+- `docs/evaluation/gt_templates.md`
+- `src/evaluation/video_eval_scaffold.py`
+
+Bad Case records default to ignored local paths under
+`local_outputs/bad_cases/`. The evaluation scaffold can read predicted and GT
+CSV/JSONL artifacts and produce small metrics files for counting, ROI, events,
+and tracking engineering metrics. This is not a full real GT dataset and does
+not claim formal MOT metrics such as IDF1/MOTA.
+
+## Current Post-Final Future Work
+
+- SQLite real FastAPI process restart smoke.
+- Docker smoke refresh for v1.1-v1.3 API additions.
+- Large reviewed Bad Case collection.
+- Reviewed GT labels and full tracking/counting/ROI/event quantitative
+  evaluation.
+- Optional DeepSORT production runtime.
+- Optional artifact download endpoints.
+- Optional React frontend.
+- Production hardening, authentication, structured logging, monitoring, and
+  multi-user job management.

@@ -6,7 +6,8 @@ This project is a YOLOv8-based vehicle and pedestrian detection system. It cover
 
 Current final delivery state:
 
-- Latest final tag: `v1.0.0-final-release-summary`
+- Current latest tag: `v1.3.0-badcase-gt-eval-scaffold`
+- Original final release tag: `v1.0.0-final-release-summary`
 - Final status: `Go for final local/Docker acceptance`
 - Docker Actual Smoke: `Passed`
 - Mounted-weight Docker `/predict`: `Passed`
@@ -224,9 +225,9 @@ Completed experiments and recorded results:
 
 `v1.1.0-async-video-job` adds real async video execution through `POST /api/videos/analyze` and a Streamlit Video Job Launcher. Jobs write local artifacts under `local_outputs/api_video_jobs/<job_id>/`; outputs remain ignored and local-only.
 
-`v1.1.x-sqlite-job-index` adds a SQLite-backed job/result metadata index at `local_outputs/api_video_jobs/video_jobs.sqlite3`. It persists job status, summary path, and artifact paths across service restarts without storing artifact file contents.
+`v1.2.0-sqlite-video-job-index` adds a SQLite-backed job/result metadata index at `local_outputs/api_video_jobs/video_jobs.sqlite3`. It persists job status, summary path, and artifact paths across service restarts without storing artifact file contents. The persistence layer is unit-tested; a real FastAPI process restart smoke remains pending.
 
-`v1.2.x-bad-case-gt-evaluation-scaffold` adds metadata-only Bad Case collection and a lightweight GT evaluation scaffold. Bad Cases can be written locally under `local_outputs/bad_cases/` or through `/api/bad-cases`; GT templates are documented in [Video Analytics GT Templates](docs/evaluation/gt_templates.md). This does not add a full reviewed GT dataset or run real YOLO/ByteTrack validation.
+`v1.3.0-badcase-gt-eval-scaffold` adds metadata-only Bad Case collection and a lightweight GT evaluation scaffold. Bad Cases can be written locally under `local_outputs/bad_cases/` or through `/api/bad-cases`; GT templates are documented in [Video Analytics GT Templates](docs/evaluation/gt_templates.md). This does not add a full reviewed GT dataset or run real YOLO/ByteTrack validation.
 
 This phase does not include DeepSORT integration, ByteTrack production hardening, production database integration beyond the local SQLite metadata index, full-length tracked video validation, or real video benchmarks.
 

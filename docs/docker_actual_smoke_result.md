@@ -120,6 +120,13 @@ FastAPI after-fix results:
 
 Video job skeleton response summary:
 
+Historical note: this response reflects the `v0.14.4` Docker smoke, when the
+video API was still a skeleton. Starting in `v1.1.0`, `POST
+/api/videos/analyze` supports async video job execution; `v1.2.0` adds
+SQLite-backed job metadata; `v1.3.0` adds Bad Case metadata and GT evaluation
+scaffolds. Docker smoke has not yet been rerun for the full v1.1-v1.3 API
+surface.
+
 ```json
 {
   "status": "created",

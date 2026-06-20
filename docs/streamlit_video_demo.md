@@ -1,8 +1,9 @@
 # Streamlit Video Demo Page
 
-`v0.12.0` adds a read-only Streamlit page for browsing existing video analysis
-artifacts. The page is a presentation layer only: it does not run YOLO, does
-not run ByteTrack, does not run analytics, and does not render new videos.
+`v0.12.0` added a read-only Streamlit page for browsing existing video analysis
+artifacts. `v1.1.0` added a FastAPI Video Job Launcher to the same page. The
+page is still a local demo surface: it either browses existing artifacts or
+submits a job to an already running FastAPI service.
 
 ## What It Shows
 
@@ -18,7 +19,8 @@ The page can load local artifact paths and display:
 
 Core parsing logic lives in `src/services/video_demo_catalog.py`. Tests cover
 that pure-Python catalog service with synthetic `tmp_path` artifacts and do not
-depend on Streamlit.
+depend on Streamlit. Job execution is handled by FastAPI, not directly by the
+Streamlit process.
 
 ## Run Command
 
@@ -26,7 +28,11 @@ depend on Streamlit.
 .venv/bin/streamlit run app/streamlit_video_demo.py
 ```
 
-Then enter local artifact paths in the sidebar and click **Load artifacts**.
+Then either:
+
+- enter local artifact paths in the sidebar and click **Load artifacts**, or
+- expand **Start or query FastAPI video jobs**, set the FastAPI base URL, model
+  path, video path, and runtime parameters, then submit/query a job.
 
 Example local inputs from the ByteTrack validation workflow:
 
@@ -41,28 +47,43 @@ Tracking comparison JSON path:
 /tmp/yolov8_tracking_comparison.json
 ```
 
+## FastAPI Job Launcher
+
+The launcher depends on a running FastAPI service, for example:
+
+```bash
+.venv/bin/uvicorn src.api:app --host 0.0.0.0 --port 8000
+```
+
+The launcher calls:
+
+- `POST /api/videos/analyze`
+- `GET /api/videos/jobs/{job_id}`
+
+FastAPI writes job artifacts under `local_outputs/api_video_jobs/<job_id>/`.
+Those outputs are local-only and ignored by Git.
+
 ## Safety Boundary
 
-- The page is read-only.
-- It does not run YOLO.
-- It does not run ByteTrack.
-- It does not run analytics.
-- It does not generate videos.
+- The artifact browser does not run YOLO, ByteTrack, analytics, or rendering.
+- The job launcher does not execute video analysis inside Streamlit; it delegates
+  to FastAPI.
 - It does not copy `/tmp` outputs into the repository.
 - Do not commit local `detections.csv`, `tracks.csv`, JSON, JSONL, MP4,
   model weights, source videos, or generated run directories.
 
 ## Current Limits
 
-- This is not a job launcher.
+- The launcher requires FastAPI to be running separately.
 - It does not validate full-length tracked video quality.
-- It does not provide FastAPI endpoints.
-- It does not provide database persistence.
-- It expects artifact files to already exist locally.
+- It is not a production dashboard with authentication, monitoring, or
+  multi-user job management.
+- SQLite job metadata persistence is provided by FastAPI; a real FastAPI process
+  restart smoke for the SQLite index remains pending.
 
 ## Recommended Next Steps
 
 - Use this page for local demo review of ByteTrack validation artifacts.
-- Add a FastAPI video job endpoint later if productized serving is required.
-- Add Streamlit job-launch controls only after the safe local runtime and output
-  policy are finalized.
+- Use the FastAPI launcher for local controlled video analysis jobs.
+- Add production dashboard behavior only after authentication, output retention,
+  and monitoring policies are defined.
