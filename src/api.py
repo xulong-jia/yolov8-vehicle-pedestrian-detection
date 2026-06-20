@@ -14,6 +14,8 @@ from src.core.config import (
 )
 from src.core.model_loader import model_loader
 from src.core.schemas import (
+    BadCaseRequest,
+    BadCaseResponse,
     ConfigResponse,
     HealthResponse,
     ModelStatusResponse,
@@ -22,12 +24,14 @@ from src.core.schemas import (
     VideoArtifactResponse,
     VideoJobResponse,
 )
+from src.services.bad_case_service import BadCaseService
 from src.services import image_inference_service
 from src.services.image_inference_service import decode_image_size, format_detections
 from src.services.video_job_service import get_job_artifact, registry
 
 
 SERVICE_NAME = "yolov8-vehicle-pedestrian-api"
+bad_case_service = BadCaseService()
 
 
 def short_error(exc: Exception, max_length: int = 180) -> str:
@@ -155,6 +159,15 @@ def create_app() -> FastAPI:
             "confidence_threshold": float(config_data["confidence_threshold"]),
             "image_size": int(config_data["image_size"]),
         }
+
+    @app.post("/api/bad-cases", response_model=BadCaseResponse)
+    def create_bad_case(request: BadCaseRequest) -> dict[str, str]:
+        payload = request.model_dump() if hasattr(request, "model_dump") else request.dict()
+        return bad_case_service.add_case(payload)
+
+    @app.get("/api/bad-cases", response_model=list[BadCaseResponse])
+    def list_bad_cases() -> list[dict[str, str]]:
+        return bad_case_service.list_cases()
 
     @app.post("/predict", response_model=PredictResponse)
     async def predict(

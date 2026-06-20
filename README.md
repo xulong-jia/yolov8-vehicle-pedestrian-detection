@@ -31,13 +31,14 @@ Completed system capabilities:
 - Streamlit local demo
 - FastAPI basic endpoints
 - FastAPI async video execution and SQLite-backed job/result index
-- Bad Case schema/report foundation
+- Bad Case schema/report foundation and metadata collection scaffold
+- GT evaluation scaffold for tracking/counting/ROI/event artifacts
 - Docker build/run smoke
 - mounted-weight Docker `/predict` smoke
 - final acceptance checklist
 - release summary / delivery notes
 
-Future / optional work is non-blocking and includes real Bad Case collection, optional DeepSORT production runtime, production hardening/observability, and GT-based tracking/counting/ROI/event quantitative evaluation.
+Future / optional work is non-blocking and includes reviewed real Bad Case labeling, reviewed GT dataset creation, optional DeepSORT production runtime, production hardening/observability, and full GT-based tracking/counting/ROI/event quantitative evaluation.
 
 ## Final Delivery Entry Points
 
@@ -224,6 +225,8 @@ Completed experiments and recorded results:
 `v1.1.0-async-video-job` adds real async video execution through `POST /api/videos/analyze` and a Streamlit Video Job Launcher. Jobs write local artifacts under `local_outputs/api_video_jobs/<job_id>/`; outputs remain ignored and local-only.
 
 `v1.1.x-sqlite-job-index` adds a SQLite-backed job/result metadata index at `local_outputs/api_video_jobs/video_jobs.sqlite3`. It persists job status, summary path, and artifact paths across service restarts without storing artifact file contents.
+
+`v1.2.x-bad-case-gt-evaluation-scaffold` adds metadata-only Bad Case collection and a lightweight GT evaluation scaffold. Bad Cases can be written locally under `local_outputs/bad_cases/` or through `/api/bad-cases`; GT templates are documented in [Video Analytics GT Templates](docs/evaluation/gt_templates.md). This does not add a full reviewed GT dataset or run real YOLO/ByteTrack validation.
 
 This phase does not include DeepSORT integration, ByteTrack production hardening, production database integration beyond the local SQLite metadata index, full-length tracked video validation, or real video benchmarks.
 
@@ -571,6 +574,7 @@ ONNX Runtime benchmark/check:
 ### 2026-06-18
 
 - Added Bad Case schema/report foundation.
+- Added Bad Case metadata collection and GT evaluation scaffold.
 - Added Docker deployment static acceptance.
 - Added final acceptance checklist.
 - Added Docker actual build smoke preflight.
@@ -636,6 +640,7 @@ ONNX Runtime benchmark/check:
 - [Streamlit Video Demo Page](docs/streamlit_video_demo.md)
 - [Bad Case Schema](docs/bad_cases_schema.md)
 - [Bad Case Report](docs/bad_case_report.md)
+- [Video Analytics GT Templates](docs/evaluation/gt_templates.md)
 - [Final Acceptance Checklist](docs/final_acceptance_checklist.md)
 - [Final Project Report](docs/final_project_report.md)
 - [Release Summary](docs/release_summary.md)
@@ -696,11 +701,10 @@ Policy:
 
 ## Known Limitations / Future Work
 
-- Real async video execution API.
-- Real Bad Case collection.
+- Reviewed real Bad Case labeling and curated GT dataset creation.
 - Optional DeepSORT production runtime.
 - Production hardening, security, and observability.
-- GT-based tracking/counting/ROI/event quantitative reports.
+- Full GT-based tracking/counting/ROI/event quantitative reports.
 - Optional full-length production validation.
 - Optional YOLOv8m PyTorch and ONNX Runtime speed benchmarking if model-family latency completeness is needed.
 - Optional ONNX Runtime mAP/NMS evaluation if a separate evaluation protocol is defined.

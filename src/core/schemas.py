@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class HealthResponse(BaseModel):
@@ -57,6 +57,40 @@ class PredictResponse(BaseModel):
 
 class ErrorResponse(BaseModel):
     detail: str | dict[str, Any]
+
+
+class BadCaseRequest(BaseModel):
+    module: str
+    case_type: str
+    video_id: str = ""
+    image_name: str = ""
+    frame_index: int | str | None = ""
+    timestamp_sec: float | str | None = ""
+    track_id: int | str | None = ""
+    expected_result: str
+    actual_result: str
+    root_cause: str
+    tags: list[str] | str = Field(default_factory=list)
+    snapshot_path: str = ""
+    added_to_eval_set: bool = False
+
+
+class BadCaseResponse(BaseModel):
+    case_id: str
+    module: str
+    case_type: str
+    video_id: str
+    image_name: str
+    frame_index: str
+    timestamp_sec: str
+    track_id: str
+    expected_result: str
+    actual_result: str
+    root_cause: str
+    tags: str
+    snapshot_path: str
+    added_to_eval_set: str
+    created_at: str
 
 
 class VideoAnalyzeRequest(BaseModel):

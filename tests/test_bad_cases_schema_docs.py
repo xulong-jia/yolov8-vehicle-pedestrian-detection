@@ -26,6 +26,7 @@ REQUIRED_FIELDS = [
     "tags",
     "snapshot_path",
     "added_to_eval_set",
+    "created_at",
 ]
 
 ALLOWED_MODULES = [
@@ -61,7 +62,6 @@ ALLOWED_CASE_TYPES = [
 ]
 
 FORBIDDEN_OUTPUT_MARKERS = [
-    "local_outputs/",
     "runs/",
     ".pt",
     ".onnx",
@@ -141,3 +141,6 @@ def test_schema_and_report_do_not_reference_forbidden_generated_outputs():
 
     for marker in FORBIDDEN_OUTPUT_MARKERS:
         assert marker not in combined
+
+    assert "local_outputs/bad_cases/bad_cases.csv" in combined
+    assert "must not be committed" in combined

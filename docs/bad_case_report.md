@@ -10,6 +10,8 @@ final execution manual:
 - error case gallery exists in `docs/error_case_gallery/README.md`
 - v0.14.0 adds the unified `bad_cases.csv` schema in
   `docs/bad_cases_schema.md`
+- the current scaffold adds metadata-only Bad Case collection through
+  `src/services/bad_case_service.py` and `/api/bad-cases`
 
 This report is a foundation document. It does not claim that a complete real
 Bad Case dataset has already been collected or fully labeled.
@@ -58,13 +60,15 @@ The gallery and hard examples are sources for review. They are not a complete
 - Gallery and hard examples link back to the schema/report.
 - Root-cause analysis is represented by `root_cause`.
 - Regression intent is represented by `added_to_eval_set`.
+- Metadata-only collection can write local ignored CSV/JSONL records.
+- `/api/bad-cases` can create and list Bad Case metadata records.
 - Large videos, weights, generated run directories, and bulk outputs remain
   outside Git.
 
 ## Current Limitations
 
 - No full real Bad Case collection has been completed.
-- No `/api/bad-cases` endpoint is implemented yet.
+- `/api/bad-cases` is metadata-only and does not upload large files.
 - No evaluation API is implemented yet.
 - Existing gallery labels are qualitative and often count-based, not
   object-level IoU review.
@@ -75,7 +79,6 @@ The gallery and hard examples are sources for review. They are not a complete
 
 - Collect a reviewed real `bad_cases.csv` from detector, tracker, counter, ROI,
   event, API, deployment, and documentation failures.
-- Add `/api/bad-cases` for creating and querying Bad Case records.
 - Link Bad Cases to evaluation reports and Video Analysis Center summaries.
 - Build a regression set from selected confirmed hard cases.
 - Add evaluation API endpoints after the evaluation contract is fixed.

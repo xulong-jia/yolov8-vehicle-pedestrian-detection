@@ -237,6 +237,41 @@ curl "http://localhost:8000/api/videos/jobs/job_000001/events?max_rows=100"
 
 Reads an existing `events.jsonl` from the attached run directory.
 
+## Bad Case Metadata Endpoints
+
+### POST /api/bad-cases
+
+```bash
+curl -X POST "http://localhost:8000/api/bad-cases" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "module": "tracker",
+    "case_type": "id_switch",
+    "video_id": "demo",
+    "frame_index": 120,
+    "timestamp_sec": 4.0,
+    "track_id": 7,
+    "expected_result": "single stable track",
+    "actual_result": "track id changed",
+    "root_cause": "temporary occlusion",
+    "tags": ["occlusion", "needs_review"],
+    "snapshot_path": "/tmp/review/frame_120.jpg",
+    "added_to_eval_set": false
+  }'
+```
+
+The endpoint records metadata only. It does not upload or copy snapshot files,
+videos, weights, CSVs, or JSON artifacts. By default records are written to
+ignored local paths under `local_outputs/bad_cases/`.
+
+### GET /api/bad-cases
+
+```bash
+curl "http://localhost:8000/api/bad-cases"
+```
+
+Lists locally collected Bad Case metadata records.
+
 ## Runtime Behavior
 
 - The model is lazy-loaded on the first valid `/predict` call.
@@ -248,6 +283,7 @@ Reads an existing `events.jsonl` from the attached run directory.
 - `POST /api/videos/analyze` can start background execution of the existing
   four-step local flow.
 - The SQLite index stores metadata only and does not store artifact file contents.
+- Bad Case endpoints store metadata only under ignored local output paths.
 - Error responses are short and point to the failed input or runtime condition.
 
 ## Out of Scope
@@ -257,13 +293,15 @@ The following remain outside the current API scope:
 - DeepSORT production integration
 - tracked video rendering from API requests
 - production database integration beyond the local SQLite metadata index
+- full reviewed Bad Case dataset collection
+- evaluation API endpoints
 - Docker production validation
 - React frontend
 
 ## Tests
 
 ```bash
-PYTHONPYCACHEPREFIX=/private/tmp/yolov8_pycache .venv/bin/python -m pytest tests/test_api.py tests/test_api_video_jobs.py -q
+PYTHONPYCACHEPREFIX=/private/tmp/yolov8_pycache .venv/bin/python -m pytest tests/test_api.py tests/test_api_video_jobs.py tests/test_bad_case_service.py -q
 ```
 
 Tests use FastAPI `TestClient`, in-memory images, and monkeypatched services.
@@ -277,6 +315,8 @@ analytics, or render videos.
 - `src/core/model_loader.py`
 - `src/core/schemas.py`
 - `src/services/image_inference_service.py`
+- `src/services/bad_case_service.py`
 - `src/services/video_job_service.py`
 - `tests/test_api.py`
 - `tests/test_api_video_jobs.py`
+- `tests/test_bad_case_service.py`

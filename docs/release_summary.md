@@ -23,7 +23,8 @@
 - FastAPI basic endpoints
 - FastAPI async video execution API
 - SQLite-backed video job/result metadata index
-- Bad Case schema/report foundation
+- Bad Case schema/report foundation and metadata collection scaffold
+- GT evaluation scaffold for tracking/counting/ROI/event artifacts
 - Docker build/run smoke
 - mounted-weight Docker `/predict` smoke
 - final acceptance checklist
@@ -57,6 +58,17 @@ SQLite, and query status/results across service restarts. The SQLite index lives
 under `local_outputs/api_video_jobs/video_jobs.sqlite3` and stores metadata only,
 not artifact file contents.
 
+## Bad Case and Evaluation Scaffold Summary
+
+- `POST /api/bad-cases` records lightweight Bad Case metadata.
+- `GET /api/bad-cases` lists collected Bad Case metadata.
+- Default local collection paths are under `local_outputs/bad_cases/`.
+- The evaluation scaffold can compare prediction CSV/JSONL artifacts against
+  small reviewed GT templates for counting, ROI, events, and tracking
+  engineering metrics.
+- GT templates are documented in [Video Analytics GT Templates](evaluation/gt_templates.md).
+- No full reviewed GT dataset or large generated evaluation output is committed.
+
 ## Docker Summary
 
 - Docker build passed.
@@ -89,8 +101,8 @@ not artifact file contents.
 
 ## Known Limitations / Future Work
 
-- Streamlit job launcher
-- real Bad Case collection
+- reviewed real Bad Case labeling and curated GT dataset creation
+- full GT-based tracking/counting/ROI/event evaluation on reviewed labels
 - optional DeepSORT runtime
 - production hardening/security/observability
 - optional full-length production validation

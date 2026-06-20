@@ -26,6 +26,19 @@ commit bulk prediction outputs as Bad Case data.
 | `tags` | yes | Comma-separated labels. |
 | `snapshot_path` | yes | Screenshot or example path; may be empty. |
 | `added_to_eval_set` | yes | `yes` or `no`. |
+| `created_at` | yes | UTC creation timestamp. |
+
+## Local Collection Paths
+
+The runtime Bad Case service writes metadata-only records to ignored local
+paths by default:
+
+- `local_outputs/bad_cases/bad_cases.csv`
+- `local_outputs/bad_cases/bad_cases.jsonl`
+
+These files are collection artifacts and must not be committed. They can be
+reviewed, filtered, and later promoted into a deliberately small documented
+sample if needed.
 
 ## Allowed module
 
@@ -95,8 +108,9 @@ BC-0001,detector,false_positive,sample.jpg,,,,,No extra Person,Extra Person box,
   or local output directories as Bad Case evidence.
 - `added_to_eval_set` is only a review marker. It does not automatically copy
   data into a dataset split or regression set.
-- Real Bad Case collection, `/api/bad-cases`, and evaluation API endpoints are
-  future phases.
+- `/api/bad-cases` supports lightweight metadata create/list operations.
+- Full reviewed Bad Case collection and evaluation API endpoints remain future
+  phases.
 
 ## Related Files
 
