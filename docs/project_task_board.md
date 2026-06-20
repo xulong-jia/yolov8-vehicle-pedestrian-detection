@@ -1123,6 +1123,32 @@ Pending after v0.14.6:
 - [ ] Optional DeepSORT runtime / 可选 DeepSORT 运行时 — Target: Future — Status: Pending
 - [ ] Optional full-length production validation / 可选全长生产验证 — Target: Future — Status: Pending
 
+## v1.0.0-final-release-summary / 最终交付说明
+
+- [x] Release summary / 发布摘要 — Priority: P0 — Status: Completed in working tree — Output: `docs/release_summary.md` — Commit: TBD
+- [x] Delivery notes / 交付说明 — Priority: P0 — Status: Completed in working tree — Output: `docs/delivery_notes.md` — Commit: TBD
+- [x] Final handoff docs test / 最终交付文档测试 — Priority: P0 — Status: Completed in working tree — Output: `tests/test_release_summary_docs.py` — Commit: TBD
+- [x] Main entrypoint links / 主入口链接 — Priority: P0 — Status: Completed in working tree — Output: `README.md`, final report, final checklist — Commit: TBD
+
+Scope:
+
+- consolidates delivered capabilities, validation status, Docker actual smoke,
+  mounted-weight `/predict`, release tags, run commands, and asset policy
+- prepares final handoff docs only
+- does not modify source code, app code, Dockerfile, `.dockerignore`, or
+  requirements
+- does not run Docker, YOLO, ByteTrack, analytics, or rendering
+- does not generate or commit weights, videos, CSV, JSON, JSONL, MP4, Docker
+  images, `runs`, `local_outputs`, or `/tmp` outputs
+
+Pending after v1.0.0 release docs:
+
+- [ ] Optional production hardening / 可选生产部署加固 — Target: Future — Status: Pending
+- [ ] Optional real async video execution API / 可选真实异步视频执行 API — Target: Future — Status: Pending
+- [ ] Optional real Bad Case collection / 可选真实 Bad Case 收集 — Target: Future — Status: Pending
+- [ ] Optional DeepSORT runtime / 可选 DeepSORT 运行时 — Target: Future — Status: Pending
+- [ ] Optional full-length production validation / 可选全长生产验证 — Target: Future — Status: Pending
+
 ## P3 — Optional Future Experiments / 可选未来实验
 
 - [x] Run YOLOv8s official test split validation if weight is available / 在权重可用时运行 YOLOv8s 官方测试集验证 — Priority: P3 — Status: Done — Output: `docs/experiments/yolov8s_640_50epochs_retrain/`, `docs/evaluation/yolov8s_640_50epochs_official/` — Result: P `0.865`, R `0.838`, mAP50 `0.876`, mAP50-95 `0.601` — Commit: `e4d5adb`

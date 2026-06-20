@@ -18,6 +18,18 @@ Current project scope includes:
 - pure-Python video analytics MVP contracts and core testable logic
 - project documentation and safety policy
 
+## Final Release Entry Points
+
+For final review, start with:
+
+- [Release Summary](docs/release_summary.md)
+- [Delivery Notes](docs/delivery_notes.md)
+- [Final Acceptance Checklist](docs/final_acceptance_checklist.md)
+- [Docker Actual Smoke Result](docs/docker_actual_smoke_result.md)
+
+Final status: Go for final local/Docker acceptance, subject to normal
+environment-specific deployment checks.
+
 ## Key Features
 
 ### Dataset and Label Validation
@@ -180,6 +192,8 @@ Completed experiments and recorded results:
 `v0.14.4-docker-actual-build-smoke` records the first actual Docker build/run smoke. The initial FastAPI container run failed because `fastapi` was missing inside the built image; the Dockerfile now installs `requirements-api.txt`, and the rerun passed `/health`, `/config`, `/model-status`, and `/api/videos/analyze`. Streamlit container smoke returned `HTTP/1.1 200 OK`. Mounted-weight `/predict` was still open at that point and was later closed by `v0.14.5`. See [Docker Actual Smoke Result](docs/docker_actual_smoke_result.md).
 
 `v0.14.5-mounted-weight-container-predict-smoke` closes the Docker deployment smoke loop. A local ignored `local_weights/best.pt` was mounted read-only into `/app/local_weights/best.pt`, `/predict` returned JSON with `image_name`, `image_size`, `model_path`, `num_detections`, and `detections`, and the final Docker actual smoke status is `Docker Actual Smoke Passed`. The temporary `/tmp` image and response were not committed. See [Docker Actual Smoke Result](docs/docker_actual_smoke_result.md).
+
+`v1.0.0-final-release-summary` prepares final delivery documentation. It adds [Release Summary](docs/release_summary.md) and [Delivery Notes](docs/delivery_notes.md) as the final handoff entry points. No code, weights, videos, generated outputs, Docker images, or runtime artifacts are included in this release-doc step.
 
 This phase does not include DeepSORT integration, ByteTrack production hardening, Streamlit job launching, real async FastAPI video execution, database integration, full-length tracked video validation, or real video benchmarks.
 

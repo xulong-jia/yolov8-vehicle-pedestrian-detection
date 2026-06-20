@@ -591,3 +591,22 @@ build, FastAPI container smoke, Streamlit container smoke, and mounted-weight
 container `/predict` all passed locally. Future work is limited to production
 hardening, real async video execution, real Bad Case collection, optional
 DeepSORT runtime, and optional full-length production validation.
+
+## v1.0.0 Final Release Summary
+
+`v1.0.0-final-release-summary` prepares the final handoff entry points:
+
+- [Release Summary](release_summary.md)
+- [Delivery Notes](delivery_notes.md)
+
+The release summary consolidates delivered capabilities, model and dataset
+selection, API surface, Docker smoke results, validation status, asset-safety
+policy, known limitations, and suggested evaluator walkthrough. Delivery notes
+describe the package contents, excluded local assets, local weight preparation,
+local run commands, Docker commands, test commands, release tags to inspect, and
+final handoff status.
+
+Final review should start from `README.md`, then continue through
+`docs/release_summary.md`, `docs/delivery_notes.md`,
+`docs/final_acceptance_checklist.md`, and
+`docs/docker_actual_smoke_result.md`.

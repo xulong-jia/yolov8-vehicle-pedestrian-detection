@@ -38,6 +38,7 @@ passed locally by `v0.14.5`; `v0.14.6` reconciles the final documentation state.
 | v0.14.4-docker-actual-build-smoke | Docker image build, FastAPI smoke, and Streamlit smoke passed after installing API requirements; mounted-weight `/predict` was still open at that point. |
 | v0.14.5-mounted-weight-container-predict-smoke | Mounted-weight container `/predict` smoke passed; Docker actual smoke is complete for local acceptance. |
 | v0.14.6-final-doc-consistency-pass | Final docs reconciled after Docker Actual Smoke Passed. |
+| v1.0.0-final-release-summary | Final release summary and delivery notes prepared. |
 
 ## Environment assumptions
 
@@ -239,6 +240,8 @@ make list-large-docs
 
 - Overall status: Go for final local/Docker acceptance, subject to normal environment-specific deployment checks.
 - Docker deployment status: Go for local Docker smoke acceptance.
+- Final release entry points: `docs/release_summary.md` and
+  `docs/delivery_notes.md`.
 
 No-Go conditions:
 
