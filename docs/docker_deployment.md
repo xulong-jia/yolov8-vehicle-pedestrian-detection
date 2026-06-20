@@ -37,8 +37,9 @@ and the final Docker actual smoke status is `Docker Actual Smoke Passed`.
 Post-final note: `v1.1.0` adds async FastAPI video jobs, `v1.2.0` adds the
 SQLite-backed job metadata index at
 `local_outputs/api_video_jobs/video_jobs.sqlite3`, and `v1.3.0` adds Bad Case
-metadata plus GT evaluation scaffolds. The Docker smoke recorded here has not
-yet been rerun for the complete v1.1-v1.3 API surface.
+metadata plus GT evaluation scaffolds. `v1.4.0` adds registered artifact
+download endpoints. The Docker smoke recorded here has not yet been rerun for
+the complete v1.1-v1.4 API surface.
 
 ## Prerequisites
 
@@ -226,8 +227,9 @@ Actual Docker build/run smoke has been run locally for `v0.14.4`:
 - Streamlit container smoke on port `8501` passed.
 - Mounted-weight `/predict` smoke passed in `v0.14.5` with
   `local_weights/best.pt` mounted read-only.
-- Docker smoke has not yet been refreshed for the v1.1-v1.3 async video job,
-  SQLite metadata, Bad Case metadata, and GT evaluation scaffold additions.
+- Docker smoke has not yet been refreshed for the v1.1-v1.4 async video job,
+  SQLite metadata, Bad Case metadata, GT evaluation scaffold, and artifact
+  download endpoint additions.
 
 See `docs/docker_actual_smoke_plan.md` for the current preflight result,
 manual prerequisites, success criteria, and failure handling.

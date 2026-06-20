@@ -6,7 +6,7 @@ This project is a YOLOv8-based vehicle and pedestrian detection system. It cover
 
 Current final delivery state:
 
-- Current latest tag: `v1.3.0-badcase-gt-eval-scaffold`
+- Current latest documented state: `v1.4.0-artifact-download-endpoints`
 - Original final release tag: `v1.0.0-final-release-summary`
 - Final status: `Go for final local/Docker acceptance`
 - Docker Actual Smoke: `Passed`
@@ -225,11 +225,15 @@ Completed experiments and recorded results:
 
 `v1.1.0-async-video-job` adds real async video execution through `POST /api/videos/analyze` and a Streamlit Video Job Launcher. Jobs write local artifacts under `local_outputs/api_video_jobs/<job_id>/`; outputs remain ignored and local-only.
 
-`v1.2.0-sqlite-video-job-index` adds a SQLite-backed job/result metadata index at `local_outputs/api_video_jobs/video_jobs.sqlite3`. It persists job status, summary path, and artifact paths across service restarts without storing artifact file contents. The persistence layer is unit-tested; a real FastAPI process restart smoke remains pending.
+`v1.2.0-sqlite-video-job-index` adds a SQLite-backed job/result metadata index at `local_outputs/api_video_jobs/video_jobs.sqlite3`. It persists job status, summary path, and artifact paths across service restarts without storing artifact file contents.
 
 `v1.3.0-badcase-gt-eval-scaffold` adds metadata-only Bad Case collection and a lightweight GT evaluation scaffold. Bad Cases can be written locally under `local_outputs/bad_cases/` or through `/api/bad-cases`; GT templates are documented in [Video Analytics GT Templates](docs/evaluation/gt_templates.md). This does not add a full reviewed GT dataset or run real YOLO/ByteTrack validation.
 
-This phase does not include DeepSORT integration, ByteTrack production hardening, production database integration beyond the local SQLite metadata index, full-length tracked video validation, or real video benchmarks.
+`v1.3.2-sqlite-job-restart-smoke` verifies the SQLite job metadata index with a real local FastAPI process restart using an attach-mode fake run. The same `job_id` remained queryable after restart; no YOLO, ByteTrack, Docker, model weights, source videos, or generated artifact contents were committed. See [SQLite Job Restart Smoke Result](docs/sqlite_job_restart_smoke_result.md).
+
+`v1.4.0-artifact-download-endpoints` adds safe FastAPI artifact download endpoints for files already registered in a job's `artifact_paths`. It complements the JSON preview endpoints and does not allow arbitrary path downloads.
+
+This phase does not include DeepSORT integration, ByteTrack production hardening, production database integration beyond the local SQLite metadata index, full-length tracked video validation, Docker smoke refresh for v1.1-v1.4 API additions, or real video benchmarks.
 
 Details: [Video analytics MVP](docs/video_analytics_mvp.md)
 
@@ -375,10 +379,12 @@ Current API scope:
 - `GET /api/videos/jobs/{job_id}/tracks`
 - `GET /api/videos/jobs/{job_id}/analytics`
 - `GET /api/videos/jobs/{job_id}/events`
+- `GET /api/videos/jobs/{job_id}/artifacts/{artifact_name}/download`
 - `/predict` accepts multipart image upload and returns JSON detections.
 - YOLO is lazy-loaded from `MODEL_PATH` or the configured default model path on the first prediction request.
 - The video job/result API can launch the existing four-step local video analysis flow and query status/results.
 - Video job metadata is persisted in `local_outputs/api_video_jobs/video_jobs.sqlite3`; artifact file contents remain on disk and are not stored in SQLite.
+- Artifact downloads are limited to registered `artifact_paths` keys such as `metadata`, `detections`, `tracks`, `count_events`, `roi_frame_counts`, `events`, `summary`, `detections_csv`, and `tracks_csv`.
 - Uploaded images and prediction outputs are not saved to the repository.
 - No model is loaded at import time.
 

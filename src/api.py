@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from fastapi import BackgroundTasks, FastAPI, File, HTTPException, Query, UploadFile, status
+from fastapi.responses import FileResponse
 
 from src.core.config import (
     PROJECT_NAME,
@@ -133,6 +134,31 @@ def _artifact_or_404(
     if "row_count" in artifact:
         response["row_count"] = artifact.get("row_count")
     return response
+
+
+def _artifact_download_path_or_404(job_id: str, artifact_name: str) -> Path:
+    if "/" in artifact_name or "\\" in artifact_name or artifact_name in {"", ".", ".."}:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid artifact name",
+        )
+
+    job = _get_video_job_or_404(job_id)
+    artifact_paths = job.get("artifact_paths") or {}
+    artifact_path = artifact_paths.get(artifact_name)
+    if not artifact_path:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Artifact not found",
+        )
+
+    path = Path(str(artifact_path))
+    if not path.is_file():
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Artifact file not found",
+        )
+    return path
 
 
 def create_app() -> FastAPI:
@@ -285,6 +311,11 @@ def create_app() -> FastAPI:
         max_rows: int = Query(default=100, ge=0),
     ) -> dict[str, Any]:
         return _artifact_or_404(job_id, "events", max_rows=max_rows)
+
+    @app.get("/api/videos/jobs/{job_id}/artifacts/{artifact_name}/download")
+    def download_video_artifact(job_id: str, artifact_name: str) -> FileResponse:
+        path = _artifact_download_path_or_404(job_id, artifact_name)
+        return FileResponse(path, filename=path.name)
 
     return app
 

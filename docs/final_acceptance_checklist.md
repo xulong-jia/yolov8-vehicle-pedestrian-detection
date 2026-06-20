@@ -6,9 +6,9 @@
 | --- | --- |
 | Project name | YOLOv8 Vehicle and Pedestrian Detection |
 | Repository name | yolov8-vehicle-pedestrian-detection |
-| Current checklist version | v1.3.0-badcase-gt-eval-scaffold |
+| Current checklist version | v1.4.0-artifact-download-endpoints |
 | Original final release tag | v1.0.0-final-release-summary |
-| Latest stable tag before this refresh | v1.3.0-badcase-gt-eval-scaffold |
+| Latest stable tag before this refresh | v1.3.1-final-doc-consistency-refresh |
 | Status date | 2026-06-20 |
 | Acceptance mode | Final local/Docker acceptance |
 | Related acceptance docs | `README.md`, `docs/final_project_report.md`, `docs/project_task_board.md` |
@@ -17,8 +17,9 @@ This checklist consolidates final acceptance evidence for the execution manual's
 Stage 8 and Chapter 21 acceptance areas. Docker build/run, FastAPI container
 smoke, Streamlit container smoke, and mounted-weight container `/predict`
 passed locally by `v0.14.5`; `v0.14.6` reconciled the original final
-documentation state. Post-final enhancements through `v1.3.0` add async video
-jobs, SQLite job metadata, and Bad Case/GT evaluation scaffolds.
+documentation state. Post-final enhancements through `v1.4.0` add async video
+jobs, SQLite job metadata plus restart smoke, Bad Case/GT evaluation scaffolds,
+and artifact download endpoints.
 
 ## Version/tag history
 
@@ -45,6 +46,8 @@ jobs, SQLite job metadata, and Bad Case/GT evaluation scaffolds.
 | v1.1.0-async-video-job | FastAPI async video job execution and Streamlit Video Job Launcher accepted. |
 | v1.2.0-sqlite-video-job-index | SQLite-backed video job metadata index unit-tested. |
 | v1.3.0-badcase-gt-eval-scaffold | Bad Case metadata collection and GT evaluation scaffold accepted. |
+| v1.3.2-sqlite-job-restart-smoke | SQLite job metadata verified through real local FastAPI process restart smoke. |
+| v1.4.0-artifact-download-endpoints | Registered video job artifact download endpoints accepted. |
 
 ## Environment assumptions
 
@@ -141,10 +144,10 @@ DeepSORT is optional/future and is not required for this checklist status.
 
 | Field | Status |
 | --- | --- |
-| Status | Basic API, async video job execution, SQLite-backed job metadata, Bad Case metadata API, and video result query endpoints tested. |
+| Status | Basic API, async video job execution, SQLite-backed job metadata with restart smoke, Bad Case metadata API, video result query endpoints, and registered artifact download endpoints tested. |
 | Evidence files | `src/api.py`, `src/core/config.py`, `src/core/model_loader.py`, `src/core/schemas.py`, `src/services/image_inference_service.py`, `src/services/video_job_service.py`, `src/services/job_store.py`, `src/services/bad_case_service.py`, `tests/test_api.py`, `tests/test_api_video_jobs.py`, `tests/test_bad_case_service.py`, `docs/api_usage.md` |
 | Manual command | `uvicorn src.api:app --host 0.0.0.0 --port 8000` |
-| Limitations | SQLite persistence is unit-tested, but a real FastAPI process restart smoke is still pending. Docker smoke has not yet been rerun for all v1.1-v1.3 API additions. |
+| Limitations | Docker smoke has not yet been rerun for all v1.1-v1.4 API additions. |
 
 Accepted endpoints:
 
@@ -158,6 +161,7 @@ Accepted endpoints:
 - `/tracks`
 - `/analytics`
 - `/events`
+- `/artifacts/{artifact_name}/download`
 - `/api/bad-cases`
 
 ## Bad Case acceptance
@@ -193,9 +197,7 @@ Accepted endpoints:
 - optional large reviewed Bad Case collection
 - optional DeepSORT runtime extension
 - optional full-length production validation
-- SQLite real FastAPI process restart smoke
-- Docker smoke refresh for v1.1-v1.3 API additions
-- artifact download endpoints
+- Docker smoke refresh for v1.1-v1.4 API additions
 - React frontend
 
 ## Asset safety checks
@@ -255,7 +257,8 @@ make list-large-docs
 
 - Docker actual smoke result is documented in `docs/docker_actual_smoke_result.md`; Docker image build, FastAPI smoke, Streamlit smoke, and mounted-weight `/predict` passed.
 - Docker actual smoke: passed.
-- Async video execution is implemented; SQLite real FastAPI process restart smoke remains pending.
+- Async video execution is implemented; SQLite real FastAPI process restart smoke passed in `v1.3.2`.
+- Artifact downloads are limited to registered video job artifact paths and do not provide arbitrary path access.
 - Full production tracking hardening pending.
 - DeepSORT optional/future.
 - Large reviewed Bad Case collection pending.

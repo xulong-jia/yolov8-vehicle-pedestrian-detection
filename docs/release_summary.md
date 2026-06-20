@@ -3,7 +3,7 @@
 ## Release Identity
 
 - Original final release: v1.0.0-final-release-summary
-- Current latest tag: v1.3.0-badcase-gt-eval-scaffold
+- Current latest documented state: v1.4.0-artifact-download-endpoints
 - Based on original final tag: v0.14.6-final-doc-consistency-pass
 - Project name: YOLOv8 Vehicle and Pedestrian Detection System
 - Repository: yolov8-vehicle-pedestrian-detection
@@ -11,7 +11,7 @@
 
 ## Post-Final Enhancements
 
-After the original `v1.0.0-final-release-summary`, the repository added three
+After the original `v1.0.0-final-release-summary`, the repository added five
 bounded enhancements:
 
 - `v1.1.0-async-video-job`: FastAPI async video job execution and Streamlit
@@ -20,11 +20,14 @@ bounded enhancements:
   `local_outputs/api_video_jobs/video_jobs.sqlite3`.
 - `v1.3.0-badcase-gt-eval-scaffold`: Bad Case metadata collection plus GT
   evaluation scaffold.
+- `v1.3.2-sqlite-job-restart-smoke`: real local FastAPI process restart smoke
+  for the SQLite video job metadata index, using attach-mode fake artifacts.
+- `v1.4.0-artifact-download-endpoints`: safe FastAPI artifact download
+  endpoints for files already registered in a job's `artifact_paths`.
 
-The SQLite index is unit-tested for persistence and restart-style lookup through
-new store/registry instances; real FastAPI process restart smoke remains pending.
-Docker actual smoke was completed for the v0.14/v1.0 API surface and
-has not yet been rerun for all v1.1-v1.3 API additions.
+The SQLite index is unit-tested and has been verified with a real local FastAPI
+process restart smoke. Docker actual smoke was completed for the v0.14/v1.0 API
+surface and has not yet been rerun for all v1.1-v1.4 API additions.
 
 ## What Is Delivered
 
@@ -41,8 +44,10 @@ has not yet been rerun for all v1.1-v1.3 API additions.
 - FastAPI basic endpoints
 - FastAPI async video execution API
 - SQLite-backed video job/result metadata index
+- SQLite job metadata restart smoke result
 - Bad Case schema/report foundation and metadata collection scaffold
 - GT evaluation scaffold for tracking/counting/ROI/event artifacts
+- FastAPI artifact download endpoints for registered video job artifacts
 - Docker build/run smoke
 - mounted-weight Docker `/predict` smoke
 - final acceptance checklist
@@ -69,12 +74,14 @@ Delivered endpoints:
 - `GET /api/videos/jobs/{job_id}/tracks`
 - `GET /api/videos/jobs/{job_id}/analytics`
 - `GET /api/videos/jobs/{job_id}/events`
+- `GET /api/videos/jobs/{job_id}/artifacts/{artifact_name}/download`
 
 `/predict` lazy-loads the model on first use. The video job/result API can
 launch the existing four-step local video analysis flow, persist job metadata in
 SQLite, and query status/results across service restarts. The SQLite index lives
 under `local_outputs/api_video_jobs/video_jobs.sqlite3` and stores metadata only,
-not artifact file contents.
+not artifact file contents. Artifact downloads stream files that are already
+registered in job metadata; arbitrary path downloads are not supported.
 
 ## Bad Case and Evaluation Scaffold Summary
 

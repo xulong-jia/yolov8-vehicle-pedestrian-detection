@@ -201,6 +201,12 @@ curl http://localhost:8000/api/videos/jobs/job_000001
 
 Returns the SQLite-backed job record. Unknown jobs return `404`.
 
+The SQLite-backed index has been verified with a real local FastAPI process
+restart smoke in `v1.3.2` using attach-mode fake artifacts. The generated
+`local_outputs/api_video_jobs/video_jobs.sqlite3` file remains local-only and is
+not committed. See
+[`docs/sqlite_job_restart_smoke_result.md`](sqlite_job_restart_smoke_result.md).
+
 ### GET /api/videos/jobs/{job_id}/detections
 
 ```bash
@@ -236,6 +242,37 @@ curl "http://localhost:8000/api/videos/jobs/job_000001/events?max_rows=100"
 ```
 
 Reads an existing `events.jsonl` from the attached run directory.
+
+### GET /api/videos/jobs/{job_id}/artifacts/{artifact_name}/download
+
+```bash
+curl -OJ http://localhost:8000/api/videos/jobs/job_000001/artifacts/summary/download
+```
+
+Downloads a registered artifact file without reading the whole file into API
+memory. This endpoint complements the JSON preview endpoints above.
+
+Allowed `artifact_name` values are the keys present in the job's
+`artifact_paths`, commonly:
+
+- `metadata`
+- `detections`
+- `tracks`
+- `count_events`
+- `roi_frame_counts`
+- `events`
+- `summary`
+- `detections_csv`
+- `tracks_csv`
+
+Safety behavior:
+
+- the endpoint only serves files already registered in the selected job's
+  `artifact_paths`
+- arbitrary path parameters are not accepted
+- path traversal-style artifact names are rejected
+- unknown jobs, unknown artifact names, and missing files return `404`
+- artifact file contents are streamed from disk and are not stored in SQLite
 
 ## Bad Case Metadata Endpoints
 
@@ -283,6 +320,8 @@ Lists locally collected Bad Case metadata records.
 - `POST /api/videos/analyze` can start background execution of the existing
   four-step local flow.
 - The SQLite index stores metadata only and does not store artifact file contents.
+- Artifact download endpoints stream registered files from `artifact_paths` and
+  do not allow arbitrary path downloads.
 - Bad Case endpoints store metadata only under ignored local output paths.
 - Error responses are short and point to the failed input or runtime condition.
 
@@ -295,7 +334,7 @@ The following remain outside the current API scope:
 - production database integration beyond the local SQLite metadata index
 - full reviewed Bad Case dataset collection
 - evaluation API endpoints
-- Docker smoke refresh for v1.1-v1.3 API additions
+- Docker smoke refresh for v1.1-v1.4 API additions
 - React frontend
 
 ## Tests

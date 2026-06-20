@@ -637,9 +637,7 @@ bodies, or generated media.
 
 The SQLite store and registry behavior are unit-tested, including create,
 running, succeeded, failed, artifact path encode/decode, and lookup through a
-new store/registry instance. A real FastAPI process restart smoke remains
-pending and should be tracked separately from the unit-tested persistence
-contract.
+new store/registry instance.
 
 ## v1.3.0 Bad Case Collection and GT Evaluation Scaffold
 
@@ -658,15 +656,47 @@ CSV/JSONL artifacts and produce small metrics files for counting, ROI, events,
 and tracking engineering metrics. This is not a full real GT dataset and does
 not claim formal MOT metrics such as IDF1/MOTA.
 
+## v1.3.2 SQLite Job Restart Smoke
+
+`v1.3.2-sqlite-job-restart-smoke` verifies the SQLite video job metadata index
+with a real local FastAPI process restart. The smoke used an attach-mode fake
+VideoAnalysisCenter run under `/tmp`, created a job through
+`POST /api/videos/analyze`, stopped and restarted FastAPI, then queried the same
+`job_id` successfully.
+
+The accepted job was:
+
+- `job_id`: `548680e9422447068ac92e1ff76ace37`
+- `status`: `attached`
+- `run_dir`: `/tmp/yolov8_sqlite_restart_smoke/demo_run`
+- `summary_path`: `/tmp/yolov8_sqlite_restart_smoke/demo_run/video_analysis_summary.json`
+
+The smoke did not run YOLO, ByteTrack/DeepSORT, analytics execution, rendering,
+or Docker. The generated SQLite database remained local-only under
+`local_outputs/api_video_jobs/video_jobs.sqlite3` and was not committed.
+
+## v1.4.0 Artifact Download Endpoints
+
+`v1.4.0-artifact-download-endpoints` adds a safe FastAPI download endpoint:
+
+```text
+GET /api/videos/jobs/{job_id}/artifacts/{artifact_name}/download
+```
+
+The endpoint streams files already registered in the selected job's
+`artifact_paths`, such as `metadata`, `detections`, `tracks`, `count_events`,
+`roi_frame_counts`, `events`, `summary`, `detections_csv`, and `tracks_csv`.
+It rejects unknown artifact names, missing files, unknown jobs, and
+path-traversal-style artifact names. It does not allow arbitrary path downloads
+and does not read large files into memory.
+
 ## Current Post-Final Future Work
 
-- SQLite real FastAPI process restart smoke.
-- Docker smoke refresh for v1.1-v1.3 API additions.
+- Docker smoke refresh for v1.1-v1.4 API additions.
 - Large reviewed Bad Case collection.
 - Reviewed GT labels and full tracking/counting/ROI/event quantitative
   evaluation.
 - Optional DeepSORT production runtime.
-- Optional artifact download endpoints.
 - Optional React frontend.
 - Production hardening, authentication, structured logging, monitoring, and
   multi-user job management.

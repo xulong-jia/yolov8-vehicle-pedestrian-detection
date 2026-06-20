@@ -158,6 +158,8 @@ class VideoJobRegistry:
                 if has_artifacts
                 else "Run directory has no known artifacts."
             )
+            job["artifact_paths"] = collect_existing_run_artifact_paths(path)
+            job["summary_path"] = job["artifact_paths"].get("summary")
             job["updated_at"] = _utc_now_iso()
             stored = dict(job)
         self.store.upsert_job(stored)
@@ -280,6 +282,14 @@ def discover_run_artifacts(run_dir: str | Path) -> dict[str, dict[str, Any]]:
             "path": str(base / filename),
         }
         for key, filename in EXPECTED_ARTIFACTS.items()
+    }
+
+
+def collect_existing_run_artifact_paths(run_dir: str | Path) -> dict[str, str]:
+    return {
+        key: str(item["path"])
+        for key, item in discover_run_artifacts(run_dir).items()
+        if item.get("exists")
     }
 
 

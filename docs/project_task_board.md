@@ -1150,11 +1150,11 @@ Pending after v1.0.0 release docs:
 - [x] Real async video execution API / 真实异步视频执行 API — Target: v1.1.0 — Status: Completed — Output: `src/services/video_job_service.py`, `src/api.py`, `app/streamlit_video_demo.py` — Commit: `a9798ff`
 - [x] SQLite-backed video job metadata index / SQLite 视频任务元数据索引 — Target: v1.2.0 — Status: Completed — Output: `src/services/job_store.py`, `tests/test_api_video_jobs.py` — Commit: `4900fb3`
 - [x] Bad Case metadata collection + GT evaluation scaffold / Bad Case 元数据收集与 GT 评测脚手架 — Target: v1.3.0 — Status: Completed — Output: `src/services/bad_case_service.py`, `src/evaluation/video_eval_scaffold.py`, `docs/evaluation/gt_templates.md` — Commit: `e994a0e`
-- [ ] SQLite real FastAPI process restart smoke / SQLite 真实 FastAPI 进程重启冒烟 — Target: Future — Status: Pending
-- [ ] Docker smoke refresh for v1.1-v1.3 APIs / v1.1-v1.3 API Docker 冒烟刷新 — Target: Future — Status: Pending
+- [x] SQLite real FastAPI process restart smoke / SQLite 真实 FastAPI 进程重启冒烟 — Target: v1.3.2 — Status: Completed — Output: `docs/sqlite_job_restart_smoke_result.md` — Commit: TBD
+- [x] Artifact download endpoints / artifact 下载端点 — Target: v1.4.0 — Status: Completed — Output: `src/api.py`, `tests/test_api_video_jobs.py`, `docs/api_usage.md` — Commit: TBD
+- [ ] Docker smoke refresh for v1.1-v1.4 APIs / v1.1-v1.4 API Docker 冒烟刷新 — Target: Future — Status: Pending
 - [ ] Large reviewed Bad Case collection / 大规模人工审核 Bad Case 收集 — Target: Future — Status: Pending
 - [ ] Real GT quantitative evaluation / 真实 GT 定量评测 — Target: Future — Status: Pending
-- [ ] Artifact download endpoints / artifact 下载端点 — Target: Future — Status: Pending
 - [ ] React frontend / React 前端 — Target: Future — Status: Pending
 - [ ] Optional DeepSORT runtime / 可选 DeepSORT 运行时 — Target: Future — Status: Pending
 - [ ] Optional full-length production validation / 可选全长生产验证 — Target: Future — Status: Pending

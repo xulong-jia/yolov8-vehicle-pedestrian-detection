@@ -450,6 +450,89 @@ def test_get_events_respects_max_rows(tmp_path):
     assert body["data"][0]["event_type"] == "long_stay"
 
 
+def test_download_summary_artifact(tmp_path):
+    run_dir = _make_run_dir(tmp_path)
+    client = _client()
+    job = client.post("/api/videos/analyze", json={"run_dir": str(run_dir)}).json()
+
+    response = client.get(
+        f"/api/videos/jobs/{job['job_id']}/artifacts/summary/download",
+    )
+
+    assert response.status_code == 200
+    assert response.headers["content-disposition"].endswith(
+        'filename="video_analysis_summary.json"'
+    )
+    assert response.json()["track_count"] == 2
+
+
+def test_download_registered_csv_artifacts(tmp_path):
+    run_dir = _make_run_dir(tmp_path)
+    client = _client()
+    job = client.post("/api/videos/analyze", json={"run_dir": str(run_dir)}).json()
+
+    detections = client.get(
+        f"/api/videos/jobs/{job['job_id']}/artifacts/detections/download",
+    )
+    tracks = client.get(
+        f"/api/videos/jobs/{job['job_id']}/artifacts/tracks/download",
+    )
+
+    assert detections.status_code == 200
+    assert "class_name" in detections.text
+    assert "Person" in detections.text
+    assert tracks.status_code == 200
+    assert "track_id" in tracks.text
+
+
+def test_download_unknown_artifact_returns_404(tmp_path):
+    run_dir = _make_run_dir(tmp_path)
+    client = _client()
+    job = client.post("/api/videos/analyze", json={"run_dir": str(run_dir)}).json()
+
+    response = client.get(
+        f"/api/videos/jobs/{job['job_id']}/artifacts/not_registered/download",
+    )
+
+    assert response.status_code == 404
+    assert "artifact" in response.json()["detail"].lower()
+
+
+def test_download_registered_missing_file_returns_404(tmp_path):
+    run_dir = _make_run_dir(tmp_path)
+    client = _client()
+    job = client.post("/api/videos/analyze", json={"run_dir": str(run_dir)}).json()
+    (run_dir / "tracks.csv").unlink()
+
+    response = client.get(
+        f"/api/videos/jobs/{job['job_id']}/artifacts/tracks/download",
+    )
+
+    assert response.status_code == 404
+    assert "file not found" in response.json()["detail"].lower()
+
+
+def test_download_rejects_path_traversal_artifact_name(tmp_path):
+    run_dir = _make_run_dir(tmp_path)
+    client = _client()
+    job = client.post("/api/videos/analyze", json={"run_dir": str(run_dir)}).json()
+
+    response = client.get(
+        f"/api/videos/jobs/{job['job_id']}/artifacts/%2E%2E/download",
+    )
+
+    assert response.status_code in {400, 404}
+
+
+def test_download_unknown_job_returns_404():
+    client = _client()
+
+    response = client.get("/api/videos/jobs/missing/artifacts/summary/download")
+
+    assert response.status_code == 404
+    assert "not found" in response.json()["detail"].lower()
+
+
 def test_missing_artifact_returns_404(tmp_path):
     run_dir = tmp_path / "empty_run"
     run_dir.mkdir()
