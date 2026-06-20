@@ -885,6 +885,29 @@ Pending after v0.12.0 Step 1:
 - [ ] Docker/deployment update for video workflow / 视频工作流 Docker/部署更新 — Target: Future — Status: Pending
 - [ ] Full product demo script / 完整产品演示脚本 — Target: v1.0 candidate — Status: Pending
 
+## v0.13.0-fastapi-basic-service-acceptance / FastAPI 基础服务验收
+
+- [x] `GET /health` / 健康检查接口 — Priority: P0 — Status: Completed in working tree — Output: `src/api.py`, `tests/test_api.py` — Commit: TBD
+- [x] `GET /config` / 配置接口 — Priority: P0 — Status: Completed in working tree — Output: `src/core/config.py`, `src/core/schemas.py` — Commit: TBD
+- [x] `GET /model-status` / 模型状态接口 — Priority: P0 — Status: Completed in working tree — Output: `src/core/model_loader.py`, `src/api.py` — Commit: TBD
+- [x] `POST /predict` / 图片预测接口 — Priority: P0 — Status: Completed in working tree — Output: `src/services/image_inference_service.py`, `src/api.py` — Commit: TBD
+- [x] FastAPI TestClient tests / FastAPI TestClient 测试 — Priority: P0 — Status: Completed in working tree — Output: `tests/test_api.py` — Commit: TBD
+
+Scope:
+
+- API import does not load YOLO
+- `/health`, `/config`, and `/model-status` do not load YOLO
+- `/predict` lazy-loads through the model loader layer
+- uploaded images are decoded in memory and are not written to the repository
+- tests use monkeypatch/fake services and do not load real weights
+
+Pending after v0.13.0 Step 1:
+
+- [ ] Video analyze async job endpoints / 视频分析异步任务接口 — Target: Future — Status: Pending
+- [ ] Result query endpoints / 结果查询接口 — Target: Future — Status: Pending
+- [ ] Rules, bad-case, and evaluation APIs / 规则、坏例和评估接口 — Target: Future — Status: Pending
+- [ ] Docker production validation / Docker 生产验证 — Target: Future — Status: Pending
+
 ## P3 — Optional Future Experiments / 可选未来实验
 
 - [x] Run YOLOv8s official test split validation if weight is available / 在权重可用时运行 YOLOv8s 官方测试集验证 — Priority: P3 — Status: Done — Output: `docs/experiments/yolov8s_640_50epochs_retrain/`, `docs/evaluation/yolov8s_640_50epochs_official/` — Result: P `0.865`, R `0.838`, mAP50 `0.876`, mAP50-95 `0.601` — Commit: `e4d5adb`

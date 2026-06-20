@@ -403,3 +403,24 @@ This closes an important demo gap: the local ByteTrack validation artifacts can
 now be reviewed through a lightweight UI while generated CSV, JSON, JSONL, MP4,
 weights, and source videos remain local-only and uncommitted. See
 [Streamlit Video Demo Page](streamlit_video_demo.md).
+
+## v0.13.0 FastAPI Basic Service Acceptance
+
+The project now includes the FastAPI basic service surface required by the
+execution manual:
+
+- `GET /health`
+- `GET /config`
+- `GET /model-status`
+- `POST /predict`
+
+The API is intentionally thin. It does not import or load YOLO at app import
+time, and `/health`, `/config`, and `/model-status` do not load model weights.
+Model loading is isolated in `src/core/model_loader.py` with lazy caching, and
+image decoding plus inference are handled in
+`src/services/image_inference_service.py`. Uploaded images are decoded in memory
+and are not written to the repository.
+
+FastAPI tests use `TestClient`, in-memory images, and monkeypatched services, so
+they do not load real weights or run real inference. Video analyze jobs, result
+query endpoints, database integration, and Docker validation remain future work.

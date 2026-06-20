@@ -851,3 +851,22 @@ Recommended next phases:
 - FastAPI video job endpoint after the CLI workflow is stable
 - Streamlit job-launch controls only after output policy and runtime safety are
   finalized
+
+## v0.13.0 FastAPI Basic Service Acceptance
+
+`v0.13.0` adds the execution-manual FastAPI basics:
+
+- `GET /health`
+- `GET /config`
+- `GET /model-status`
+- `POST /predict`
+
+The API is ready for single-image service acceptance. `src.api` does not load
+YOLO on import, and status/config endpoints do not load weights. `/predict`
+uses the lazy `src/core/model_loader.py` path and
+`src/services/image_inference_service.py` for in-memory image decoding and
+inference.
+
+Video analysis endpoints are planned later. `v0.13.0` does not add async video
+jobs, result-query endpoints, database integration, Docker production
+validation, or Streamlit job launching.

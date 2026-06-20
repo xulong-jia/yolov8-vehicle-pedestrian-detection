@@ -1,81 +1,36 @@
-# API Usage
+# FastAPI Usage
 
 ## Purpose
 
-This document describes the FastAPI service for local YOLOv8 image inference. The API is intended for lightweight local testing and integration preparation, not production deployment.
+The FastAPI service exposes basic image inference endpoints for local and
+integration use. It follows the project rule that the API layer does not call
+YOLO directly: model loading is isolated in `src/core/model_loader.py`, and image
+decoding plus inference live in `src/services/image_inference_service.py`.
 
-## Current Scope
-
-The API includes:
-
-- health check
-- config endpoint
-- model status endpoint
-- real single-image `/predict` endpoint
-
-The `/predict` endpoint accepts one uploaded image, runs YOLOv8 inference lazily, and returns JSON detections. It does not save uploaded files, prediction images, CSV files, or `runs/` outputs.
-
-## Install Dependencies
-
-Install API dependencies:
+## Run Locally
 
 ```bash
-pip install -r requirements-api.txt
+.venv/bin/uvicorn src.api:app --host 0.0.0.0 --port 8000
 ```
 
-Install the main inference/runtime dependencies separately:
+The app can also be imported as `src.api:app` by Uvicorn. Importing `src.api`
+does not load model weights and does not import Ultralytics.
 
-```bash
-pip install -r requirements.txt
-```
+## Configuration
 
-For development and tests:
+Defaults come from `src/core/config.py` and can be overridden with environment
+variables:
 
-```bash
-pip install -r requirements-dev.txt
-```
+- `MODEL_PATH`
+- `YOLO_DEVICE`
+- `YOLO_CONF`
+- `YOLO_IMGSZ`
 
-Dependency split:
-
-- `requirements.txt`: main YOLOv8, Streamlit, and runtime dependencies
-- `requirements-dev.txt`: development and pytest dependencies
-- `requirements-api.txt`: FastAPI, multipart upload, Pillow, and TestClient support
-
-## Run API Locally
-
-Example command:
-
-```bash
-uvicorn src.api:app --host 0.0.0.0 --port 8000
-```
-
-This starts a local development server. It should not be treated as production deployment.
-
-## Model Path Strategy
-
-Model path priority:
-
-1. `MODEL_PATH` environment variable
-2. `configs/default.yaml` value at `paths.default_model`
-3. fallback path `local_weights/yolov8n_640_50epochs/best.pt`
-
-Default local model path:
-
-```text
-local_weights/yolov8n_640_50epochs/best.pt
-```
-
-Model weights are not committed to Git. For Docker-style local runs, weights can be mounted at `/models/best.pt` and exposed with:
-
-```bash
-MODEL_PATH=/models/best.pt
-```
+Model weights must be local or mounted. They are not committed to Git.
 
 ## Endpoints
 
 ### GET /health
-
-Example:
 
 ```bash
 curl http://localhost:8000/health
@@ -92,8 +47,6 @@ Example response:
 
 ### GET /config
 
-Example:
-
 ```bash
 curl http://localhost:8000/config
 ```
@@ -102,51 +55,50 @@ Example response:
 
 ```json
 {
-  "default_model_path": "local_weights/yolov8n_640_50epochs/best.pt",
-  "model_path_env": "",
+  "project_name": "YOLOv8 Vehicle and Pedestrian Detection System",
+  "model_path": "local_weights/yolov8s_640_50epochs/best.pt",
+  "device": "cpu",
+  "confidence_threshold": 0.25,
   "image_size": 640,
-  "confidence": 0.25,
-  "device": "cpu"
+  "supported_image_types": ["jpg", "jpeg", "png", "bmp", "webp"]
 }
 ```
 
 ### GET /model-status
 
-Example:
-
 ```bash
 curl http://localhost:8000/model-status
 ```
 
-This endpoint checks whether the configured model path exists. It does not load the model.
+This endpoint checks path existence and loader cache status. It does not load
+YOLO.
 
 Example response:
 
 ```json
 {
-  "model_path": "local_weights/yolov8n_640_50epochs/best.pt",
-  "exists": true,
-  "loaded": false
+  "model_path": "local_weights/yolov8s_640_50epochs/best.pt",
+  "exists": false,
+  "loaded": false,
+  "device": "cpu",
+  "confidence_threshold": 0.25,
+  "image_size": 640
 }
 ```
 
 ### POST /predict
 
-The `/predict` endpoint accepts multipart image upload and returns JSON detections.
-
-Request parameters:
-
-- `file`: uploaded image file in `multipart/form-data`
-- `conf`: optional confidence threshold
-- `imgsz`: optional inference image size
-- `device`: optional device, defaulting to config value such as `cpu`
-
-Example:
-
 ```bash
 curl -X POST "http://localhost:8000/predict?conf=0.25&imgsz=640&device=cpu" \
-  -F "file=@docs/error_case_gallery/images/<sample>.jpg"
+  -F "file=@sample.jpg"
 ```
+
+Optional query parameters:
+
+- `model_path`
+- `conf`
+- `imgsz`
+- `device`
 
 Example response:
 
@@ -157,7 +109,7 @@ Example response:
     "width": 1280,
     "height": 720
   },
-  "model_path": "local_weights/yolov8n_640_50epochs/best.pt",
+  "model_path": "local_weights/yolov8s_640_50epochs/best.pt",
   "confidence_threshold": 0.25,
   "image_size_requested": 640,
   "device": "cpu",
@@ -178,7 +130,7 @@ Example response:
 }
 ```
 
-If no objects are detected, the endpoint returns:
+No detections are returned as:
 
 ```json
 {
@@ -189,54 +141,39 @@ If no objects are detected, the endpoint returns:
 
 ## Runtime Behavior
 
-- The YOLO model is loaded lazily on the first `/predict` call.
-- `ultralytics` is not imported when `src.api` is imported.
-- Uploaded images are decoded in memory.
-- Uploaded images are not saved to disk.
-- Prediction visualizations are not saved to disk.
-- CSV files are not generated by the API.
-- The API does not create `runs/` outputs.
-- Small CPU tests are acceptable.
-- GPU is recommended only for large-scale or latency-sensitive inference.
+- The model is lazy-loaded on the first valid `/predict` call.
+- `/health`, `/config`, and `/model-status` do not load YOLO.
+- Uploads are read and decoded in memory.
+- Uploaded images are not written to the repository.
+- The API does not write `runs/`, `local_outputs/`, CSV, JSON, or image outputs.
+- Error responses are short and point to the failed input or runtime condition.
 
-## Error Behavior
+## Out of Scope for v0.13.0
 
-- Missing model weight returns a clear error with the expected model path.
-- Invalid or corrupted image bytes return HTTP 400.
-- Missing `ultralytics` dependency returns a clear HTTP 500 error.
-- Model loading or inference failures return short error messages without long tracebacks.
+The following are planned later and are not part of the basic service
+acceptance step:
 
-## Testing
+- video analyze async jobs
+- result query endpoints
+- database integration
+- Docker production validation
+- React frontend
+- Streamlit job launching
 
-Syntax checks:
-
-```bash
-make api-check
-```
-
-API-specific tests:
+## Tests
 
 ```bash
-make api-test
+PYTHONPYCACHEPREFIX=/private/tmp/yolov8_pycache .venv/bin/python -m pytest tests/test_api.py -q
 ```
 
-The API tests do not load YOLO and do not run real inference.
-
-## Safety Notes
-
-- do not commit weights
-- do not commit datasets
-- do not commit `local_outputs/`
-- do not commit `runs/`
-- do not commit videos
-- do not save uploaded files from the API
-- do not expose private file paths in public docs
+Tests use FastAPI `TestClient`, in-memory images, and monkeypatched services.
+They do not load real YOLO weights and do not run real inference.
 
 ## Related Files
 
 - `src/api.py`
-- `docs/model_loading_strategy.md`
-- `docs/deployment_guide.md`
-- `docs/docker_deployment.md`
-- `configs/default.yaml`
-- `docs/model_weight_policy.md`
+- `src/core/config.py`
+- `src/core/model_loader.py`
+- `src/core/schemas.py`
+- `src/services/image_inference_service.py`
+- `tests/test_api.py`

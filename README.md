@@ -165,6 +165,8 @@ Completed experiments and recorded results:
 
 `v0.12.0-streamlit-video-demo-page` adds a read-only Streamlit page for browsing existing ByteTrack, analytics, comparison, and tracked-preview artifacts. It does not run YOLO, run ByteTrack, rerun analytics, or render new videos. See [Streamlit Video Demo Page](docs/streamlit_video_demo.md).
 
+`v0.13.0-fastapi-basic-service-acceptance` completes the FastAPI basic service acceptance surface required by the execution manual: `GET /health`, `GET /config`, `GET /model-status`, and `POST /predict`. The API keeps YOLO loading lazy, routes model loading through `src/core/model_loader.py`, runs image inference through `src/services/image_inference_service.py`, and decodes uploads in memory without writing files. See [API usage guide](docs/api_usage.md).
+
 This phase does not include DeepSORT integration, ByteTrack production hardening, Streamlit job launching, FastAPI video jobs, database integration, full-length tracked video validation, or real video benchmarks.
 
 Details: [Video analytics MVP](docs/video_analytics_mvp.md)
@@ -198,6 +200,7 @@ yolov8-vehicle-pedestrian-detection/
   local_weights/            # local model weights, ignored
   src/
     analytics/
+    core/
     services/
     tracking/
     analyze_dataset.py
