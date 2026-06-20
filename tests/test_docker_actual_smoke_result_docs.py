@@ -17,9 +17,9 @@ def test_result_contains_required_summary() -> None:
     text = _read(RESULT)
     required_terms = [
         "Docker Actual Smoke Result",
-        "v0.14.4-docker-actual-build-smoke",
+        "v0.14.5-mounted-weight-container-predict-smoke",
         "Final status",
-        "Partial Docker Actual Smoke Passed",
+        "Docker Actual Smoke Passed",
         "After dependency fix",
         "docker build -t yolov8-vehicle-pedestrian:latest .",
         "requirements-api.txt",
@@ -42,6 +42,16 @@ def test_result_contains_fastapi_and_streamlit_smoke_details() -> None:
         "status=created",
         "Streamlit container smoke",
         "streamlit run app.py",
+        "mounted-weight `/predict`",
+        "local_weights/best.pt",
+        "/app/local_weights/best.pt",
+        "1eb1360fc3d59cc955384912389ea835e218ba62af72bcf96386e0ea6f34af47",
+        "image_name",
+        "image_size",
+        "model_path",
+        "num_detections",
+        "detections",
+        "temporary `/tmp",
     ]
 
     for term in required_terms:
@@ -76,6 +86,20 @@ def test_primary_docs_link_docker_actual_smoke_result() -> None:
 
     for doc in docs:
         assert "docs/docker_actual_smoke_result.md" in _read(doc)
+        assert "v0.14.5" in _read(doc)
+
+
+def test_final_checklist_records_mounted_predict_passed() -> None:
+    checklist = _read(ROOT / "docs" / "final_acceptance_checklist.md")
+
+    required_terms = [
+        "mounted-weight `/predict` passed",
+        "Docker actual smoke: passed",
+        "Go for final local/Docker acceptance",
+    ]
+
+    for term in required_terms:
+        assert term in checklist
 
 
 def test_result_does_not_suggest_committing_assets() -> None:

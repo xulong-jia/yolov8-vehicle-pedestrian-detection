@@ -5,6 +5,10 @@ ENV MODEL_PATH=/models/best.pt
 
 WORKDIR /app
 
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends libglib2.0-0 libgl1 libxcb1 \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY requirements.txt requirements-api.txt ./
 RUN pip install --no-cache-dir -r requirements.txt -r requirements-api.txt
 

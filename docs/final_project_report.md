@@ -549,6 +549,31 @@ Observed result:
 - Mounted-weight `/predict` was skipped because `local_weights/best.pt` was not
   present.
 
+## v0.14.5 Mounted-Weight Container Predict Smoke
+
+`v0.14.5` closes the mounted-weight Docker `/predict` acceptance item.
+
+Observed result:
+
+- Local ignored `local_weights/best.pt` was mounted read-only into the container
+  at `/app/local_weights/best.pt`.
+- Weight sha256:
+  `1eb1360fc3d59cc955384912389ea835e218ba62af72bcf96386e0ea6f34af47`.
+- FastAPI `/health`, `/config`, and `/model-status` passed before predict;
+  model status showed `exists=true` and `loaded=false`.
+- `/predict` returned JSON containing `image_name`, `image_size`,
+  `model_path`, `num_detections`, and `detections`.
+- The smoke image was a temporary blank `/tmp` image and was not committed.
+- Model status after predict showed `exists=true` and `loaded=true`.
+- No weights, temporary image, response JSON, Docker image layers, or generated
+  outputs were committed.
+
+Final Docker status:
+
+- Docker actual smoke: passed for local acceptance.
+- Production hardening, real async video execution, and optional DeepSORT remain
+  future work.
+
 No Docker image layers, model weights, videos, CSV, JSON, JSONL, MP4,
 `runs`, `local_outputs`, or `/tmp` outputs were committed. The next deployment
 step should fix the container dependency surface and rerun FastAPI container

@@ -34,15 +34,16 @@ build/run was executed in this step.
 | v0.14.0-bad-case-schema-report-foundation | Bad Case schema/report foundation accepted. |
 | v0.14.1-docker-deployment-static-acceptance | Docker/deployment static acceptance accepted. |
 | v0.14.3-docker-actual-build-smoke-preflight | Docker actual build/run preflight planned; Docker CLI/daemon unavailable. |
-| v0.14.4-docker-actual-build-smoke | Docker image build, FastAPI smoke, and Streamlit smoke passed after installing API requirements; mounted-weight `/predict` remains pending. |
+| v0.14.4-docker-actual-build-smoke | Docker image build, FastAPI smoke, and Streamlit smoke passed after installing API requirements; mounted-weight `/predict` was still open at that point. |
+| v0.14.5-mounted-weight-container-predict-smoke | Mounted-weight container `/predict` smoke passed; Docker actual smoke is complete for local acceptance. |
 
 ## Environment assumptions
 
 - Local Python virtual environment is available for tests and local operation.
 - Model weights are kept outside Git, typically under `local_weights/`.
 - Local source videos are kept outside Git, typically under `local_videos/source/`.
-- Docker build/run has been executed locally in `v0.14.4`; mounted-weight
-  `/predict` remains pending because `local_weights/best.pt` is absent.
+- Docker build/run has been executed locally, including mounted-weight
+  `/predict` in `v0.14.5`.
 - GPU is optional; CPU paths remain documented for local smoke and API usage.
 - `MODEL_PATH` is mounted or configured at runtime for FastAPI, Streamlit, and
   Docker examples.
@@ -162,14 +163,13 @@ Accepted endpoints:
 
 | Field | Status |
 | --- | --- |
-| Status | Partial actual smoke passed; mounted-weight `/predict` remains pending. |
+| Status | Passed for local Docker actual smoke. |
 | Evidence files | `Dockerfile`, `.dockerignore`, `docs/docker_deployment.md`, `docs/deployment_guide.md`, `docs/docker_actual_smoke_plan.md`, `docs/docker_actual_smoke_result.md`, `tests/test_docker_deployment_docs.py` |
 | Tests/checks | `tests/test_docker_deployment_docs.py` verifies documented build/run commands, `MODEL_PATH`, weight mounting, and exclusions. |
-| Limitations | `v0.14.4` image build passed. After installing `requirements-api.txt`, FastAPI `/health`, `/config`, `/model-status`, and `/api/videos/analyze` passed. Streamlit smoke passed. Mounted-weight `/predict` was skipped because `local_weights/best.pt` was absent. |
+| Limitations | `v0.14.4` image build passed. After installing `requirements-api.txt`, FastAPI `/health`, `/config`, `/model-status`, and `/api/videos/analyze` passed. Streamlit smoke passed. `v0.14.5` mounted-weight `/predict` passed with local ignored `local_weights/best.pt` mounted read-only. Production deployment hardening remains environment-specific future work. |
 
 ## Manual pending acceptance
 
-- rerun mounted-weight `/predict` inside container after `local_weights/best.pt` is available
 - optional full-length video pipeline validation
 - optional real Bad Case collection
 - optional real async video execution API
@@ -225,7 +225,8 @@ make list-large-docs
 
 ## Known limitations
 
-- Docker actual smoke result is documented in `docs/docker_actual_smoke_result.md`; Docker image build, FastAPI smoke, and Streamlit smoke passed after the dependency fix.
+- Docker actual smoke result is documented in `docs/docker_actual_smoke_result.md`; Docker image build, FastAPI smoke, Streamlit smoke, and mounted-weight `/predict` passed.
+- Docker actual smoke: passed.
 - Real async video execution not implemented.
 - Full production tracking hardening pending.
 - DeepSORT optional/future.
@@ -234,8 +235,8 @@ make list-large-docs
 
 ## Final go/no-go status
 
-- Overall status: Conditional Go for documentation/static acceptance.
-- Docker deployment status: Conditional Go for API/Streamlit container startup; mounted-weight `/predict` remains pending.
+- Overall status: Go for final local/Docker acceptance, subject to normal environment-specific deployment checks.
+- Docker deployment status: Go for local Docker smoke acceptance.
 
 No-Go conditions:
 
@@ -243,4 +244,4 @@ No-Go conditions:
 - missing volume mounts
 - committed assets/outputs
 - failed tests
-- failed mounted-weight container `/predict` smoke
+- failed deployment-environment-specific checks

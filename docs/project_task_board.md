@@ -1071,6 +1071,28 @@ Pending after v0.14.4 Step 2:
 
 - [ ] Rerun mounted-weight `/predict` smoke / 重新运行挂载权重 `/predict` 冒烟 — Target: Future/manual — Status: Pending
 
+## v0.14.5-mounted-weight-container-predict-smoke / 挂载权重容器预测冒烟
+
+- [x] Prepare ignored local `best.pt` / 准备被忽略的本地权重 — Priority: P0 — Status: Completed locally — Output: `local_weights/best.pt` ignored — Commit: Not committed
+- [x] Mount `best.pt` read-only into FastAPI container / 只读挂载权重到 FastAPI 容器 — Priority: P0 — Status: Passed locally — Output: `/app/local_weights/best.pt` — Commit: Not committed
+- [x] FastAPI `/predict` mounted-weight smoke / FastAPI 挂载权重预测冒烟 — Priority: P0 — Status: Passed locally — Output: `docs/docker_actual_smoke_result.md` — Commit: TBD
+- [x] Docker actual smoke status update / Docker 实际冒烟状态更新 — Priority: P0 — Status: Completed in working tree — Output: `docs/docker_actual_smoke_result.md` — Commit: TBD
+
+Local result summary:
+
+- Docker build: passed
+- FastAPI health/config/model-status before predict: passed; `exists=true`, `loaded=false`
+- mounted-weight `/predict`: passed; response contained `image_name`, `image_size`, `model_path`, `num_detections`, `detections`
+- model-status after predict: `exists=true`, `loaded=true`
+- temporary `/tmp` image and response JSON: not committed
+- final Docker actual smoke status: `Docker Actual Smoke Passed`
+
+Pending after v0.14.5:
+
+- [ ] Optional production hardening / 可选生产部署加固 — Target: Future — Status: Pending
+- [ ] Optional real async video execution API / 可选真实异步视频执行 API — Target: Future — Status: Pending
+- [ ] Optional DeepSORT runtime / 可选 DeepSORT 运行时 — Target: Future — Status: Pending
+
 ## P3 — Optional Future Experiments / 可选未来实验
 
 - [x] Run YOLOv8s official test split validation if weight is available / 在权重可用时运行 YOLOv8s 官方测试集验证 — Priority: P3 — Status: Done — Output: `docs/experiments/yolov8s_640_50epochs_retrain/`, `docs/evaluation/yolov8s_640_50epochs_official/` — Result: P `0.865`, R `0.838`, mAP50 `0.876`, mAP50-95 `0.601` — Commit: `e4d5adb`

@@ -4,15 +4,16 @@
 
 | Field | Value |
 | --- | --- |
-| Version | v0.14.4-docker-actual-build-smoke |
+| Version | v0.14.5-mounted-weight-container-predict-smoke |
 | Date | 2026-06-20 |
-| Final status | Partial Docker Actual Smoke Passed — mounted-weight predict pending |
-| Reason | Docker image build passed, FastAPI container smoke passed after installing API requirements in the image, and Streamlit container smoke passed. Mounted-weight `/predict` remains skipped because `local_weights/best.pt` is not present. |
+| Final status | Docker Actual Smoke Passed |
+| Reason | Docker image build passed, FastAPI container smoke passed, Streamlit container smoke passed, and mounted-weight `/predict` passed with read-only `local_weights/best.pt`. |
 
 This result records the first actual Docker build/run smoke attempt after the
-`v0.14.3` preflight plan, plus the dependency-fix rerun for the FastAPI
-container. Docker image layers, weights, videos, CSV, JSON, JSONL, MP4,
-`runs`, `local_outputs`, and `/tmp` outputs remain local-only artifacts.
+`v0.14.3` preflight plan, the `v0.14.4` FastAPI dependency-fix rerun, and the
+`v0.14.5` mounted-weight `/predict` smoke. Docker image layers, weights,
+videos, CSV, JSON, JSONL, MP4, `runs`, `local_outputs`, and `/tmp` outputs
+remain local-only artifacts.
 
 ## Docker availability
 
@@ -66,6 +67,21 @@ Reason:
 - Avoids moving API-specific dependencies into the base project requirements.
 - Keeps the fix limited to Docker image dependency installation.
 - Does not modify `src/`, `app.py`, or business logic.
+
+## OpenCV runtime library fix
+
+The first mounted-weight `/predict` attempt found that `ultralytics` was
+installed in the container but failed while importing OpenCV because
+`libxcb.so.1` was missing. `Dockerfile` now installs the minimal native runtime
+libraries needed by OpenCV in the slim Python image:
+
+```dockerfile
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends libglib2.0-0 libgl1 libxcb1 \
+    && rm -rf /var/lib/apt/lists/*
+```
+
+This does not change project source code, app code, or Python requirements.
 
 ## After dependency fix
 
@@ -133,17 +149,41 @@ Streamlit after-fix result:
 
 Result:
 
-- status: skipped
-- reason: `local_weights/best.pt` was not present
-- classification: `skipped_missing_local_weight`
+- status: passed
+- mounted host file: `local_weights/best.pt`
+- container model path: `/app/local_weights/best.pt`
+- mount mode: read-only
+- sha256: `1eb1360fc3d59cc955384912389ea835e218ba62af72bcf96386e0ea6f34af47`
+- test image: temporary `/tmp/yolov8_mounted_predict_smoke.jpg`, not committed
+- response path: temporary `/tmp/yolov8_mounted_predict_smoke_response.json`, not committed
+- response contained required fields: `image_name`, `image_size`, `model_path`,
+  `num_detections`, and `detections`
+- response status: JSON returned successfully
+- `num_detections`: `0`, expected for the blank white 64x64 temporary smoke image
+- `num_detections=0` is expected for this blank 64x64 smoke image.
 
-No sample image or prediction response was created or committed. A future
-mounted-weight `/predict` smoke requires a local, untracked `best.pt` mounted
-read-only into the container.
+Predict response summary:
+
+```json
+{
+  "image_name": "yolov8_mounted_predict_smoke.jpg",
+  "image_size": {"width": 64, "height": 64},
+  "model_path": "/app/local_weights/best.pt",
+  "num_detections": 0,
+  "detections": []
+}
+```
+
+Model status:
+
+- before `/predict`: `exists=true`, `loaded=false`
+- after `/predict`: `exists=true`, `loaded=true`
+
+No temporary image or prediction response was committed.
 
 ## Cleanup
 
-- FastAPI container stopped.
+- FastAPI predict smoke container stopped.
 - Streamlit container stopped.
 - `docker ps --filter name=yolov8` showed no remaining running `yolov8` containers.
 - Docker image retained locally for manual follow-up; cleanup is optional.
@@ -167,10 +207,13 @@ docker image rm yolov8-vehicle-pedestrian:latest
 
 ## Final status
 
-Final status: Partial Docker Actual Smoke Passed — mounted-weight predict pending.
+Final status: Docker Actual Smoke Passed.
 
-The Docker image build succeeded after installing `requirements-api.txt`.
-FastAPI `/health`, `/config`, `/model-status`, and `/api/videos/analyze`
-passed inside the container. Streamlit container smoke also passed. Full Docker
-deployment acceptance remains incomplete only for mounted-weight `/predict`,
-which is pending until an untracked local `local_weights/best.pt` is available.
+The Docker image build succeeded after installing `requirements-api.txt` and
+the OpenCV native runtime libraries. FastAPI `/health`, `/config`,
+`/model-status`, and `/api/videos/analyze` passed inside the container.
+Streamlit container smoke passed. Mounted-weight /predict passed with
+`local_weights/best.pt` mounted read-only into `/app/local_weights/best.pt`.
+
+The previous `v0.14.4` state was partial because `local_weights/best.pt` was not
+yet prepared. `v0.14.5` closes that mounted-weight `/predict` acceptance item.

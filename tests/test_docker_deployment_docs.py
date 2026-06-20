@@ -22,6 +22,8 @@ def test_dockerfile_exists_and_has_runtime_entrypoint() -> None:
     assert "MODEL_PATH" in text
     assert "requirements-api.txt" in text
     assert "-r requirements-api.txt" in text
+    assert "apt-get install" in text
+    assert "libxcb1" in text
     assert "COPY app.py" in text
     assert "COPY src" in text
     assert "EXPOSE 8501" in text or "EXPOSE 8000" in text

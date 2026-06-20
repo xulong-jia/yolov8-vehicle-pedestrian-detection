@@ -80,13 +80,14 @@ def test_references_critical_fastapi_endpoints() -> None:
         assert endpoint in text
 
 
-def test_references_docker_smoke_status_and_pending_predict() -> None:
+def test_references_docker_smoke_status_and_predict_passed() -> None:
     text = _read(CHECKLIST)
     required_terms = [
         "Docker build/run has been executed locally",
         "FastAPI `/health`, `/config`, `/model-status`, and `/api/videos/analyze` passed",
         "Streamlit smoke passed",
-        "mounted-weight",
+        "mounted-weight `/predict` passed",
+        "Docker actual smoke: passed",
         "MODEL_PATH",
     ]
 
@@ -94,12 +95,12 @@ def test_references_docker_smoke_status_and_pending_predict() -> None:
         assert term in text
 
 
-def test_does_not_claim_full_docker_acceptance_completed() -> None:
+def test_does_not_claim_unbounded_production_deployment_completed() -> None:
     text = _read(CHECKLIST)
     forbidden_claims = [
-        "Docker deployment status: Go",
-        "mounted-weight `/predict` passed",
-        "Docker Actual Smoke Passed",
+        "production deployment hardening completed",
+        "real async video execution completed",
+        "DeepSORT runtime completed",
     ]
 
     for claim in forbidden_claims:

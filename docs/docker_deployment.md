@@ -13,8 +13,8 @@ build/run smoke locally and records the result in
 
 For the consolidated final acceptance status, see
 `docs/final_acceptance_checklist.md`. The checklist preserves actual
-Docker build/run and mounted-weight container prediction as manual pending
-acceptance items.
+Docker build/run and mounted-weight container prediction as manual follow-up
+acceptance items that were later closed by `v0.14.4` and `v0.14.5`.
 
 `v0.14.3` adds `docs/docker_actual_smoke_plan.md`, which records the initial
 Docker availability blocker and the exact future actual smoke commands. That
@@ -28,6 +28,11 @@ Docker build/run smoke. The initial FastAPI container run failed because
 `/model-status`, and `/api/videos/analyze` passed. Streamlit container smoke
 also passed. Mounted-weight `/predict` remains pending because
 `local_weights/best.pt` was not present.
+
+`v0.14.5` completes the mounted-weight container `/predict` smoke. A local
+ignored `local_weights/best.pt` was mounted read-only at
+`/app/local_weights/best.pt`, `/predict` returned JSON with the required fields,
+and the final Docker actual smoke status is `Docker Actual Smoke Passed`.
 
 ## Prerequisites
 
@@ -201,13 +206,13 @@ Actual Docker build/run smoke has been run locally for `v0.14.4`:
 - FastAPI container smoke with `/health`, `/config`, `/model-status`, and
   `/api/videos/analyze` passed after installing `requirements-api.txt`.
 - Streamlit container smoke on port `8501` passed.
-- Mounted-weight predict smoke remains pending until `local_weights/best.pt`
-  exists locally.
+- Mounted-weight `/predict` smoke passed in `v0.14.5` with
+  `local_weights/best.pt` mounted read-only.
 
 See `docs/docker_actual_smoke_plan.md` for the current preflight result,
 manual prerequisites, success criteria, and failure handling.
 See `docs/docker_actual_smoke_result.md` for the first actual smoke result and
-the dependency-fix rerun.
+the mounted-weight `/predict` rerun.
 
 ## Related Files
 
