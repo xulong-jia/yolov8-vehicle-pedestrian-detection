@@ -6,7 +6,7 @@
 | --- | --- |
 | Project name | YOLOv8 Vehicle and Pedestrian Detection |
 | Repository name | yolov8-vehicle-pedestrian-detection |
-| Current checklist version | v1.8.0-react-video-job-frontend |
+| Current checklist version | v1.8.1-final-polish-and-frontend-audit-note |
 | Original final release tag | v1.0.0-final-release-summary |
 | Latest stable tag before this refresh | v1.3.1-final-doc-consistency-refresh |
 | Status date | 2026-06-20 |
@@ -22,7 +22,9 @@ jobs, SQLite job metadata plus restart smoke, Bad Case/GT evaluation scaffolds,
 artifact download endpoints, optional API key logging hardening, a small
 reviewed Bad Case sample collection, and a small reviewed GT quantitative
 evaluation sample pack. `v1.8.0` adds a minimal optional React frontend for the
-existing FastAPI service.
+existing FastAPI service. `v1.8.1` is the final documentation polish and
+frontend audit-note pass. The project can be frozen at `v1.8.1` for final
+delivery.
 
 ## Version/tag history
 
@@ -56,6 +58,7 @@ existing FastAPI service.
 | v1.6.0-reviewed-bad-case-collection | Small reviewed Bad Case sample collection accepted. |
 | v1.7.0-gt-quantitative-evaluation | Small reviewed GT quantitative evaluation sample pack accepted. |
 | v1.8.0-react-video-job-frontend | Minimal optional React frontend accepted. |
+| v1.8.1-final-polish-and-frontend-audit-note | Final polish and frontend npm audit note accepted. |
 
 ## Environment assumptions
 
@@ -155,7 +158,7 @@ DeepSORT is optional/future and is not required for this checklist status.
 | Status | Minimal optional frontend accepted. |
 | Evidence files | `frontend/package.json`, `frontend/src/App.tsx`, `frontend/src/components/`, `frontend/README.md` |
 | Tests/checks | `npm install` and `npm run build` passed locally. Python test suite remains separate. |
-| Limitations | React frontend depends on FastAPI running separately. It does not include a video player, multi-user permissions, production auth, DeepSORT, complex routing, or a production dashboard. |
+| Limitations | React frontend depends on FastAPI running separately. It does not include a video player, multi-user permissions, production auth, DeepSORT, complex routing, or a production dashboard. `npm audit` currently reports 1 moderate and 1 high finding in the Vite/esbuild dev/build dependency path; the suggested fix requires a semver-major Vite 8 upgrade and was not forced in the final polish scope. |
 
 ## FastAPI acceptance
 
@@ -233,6 +236,7 @@ events `precision=0.5`, `recall=0.6666666666666666`; tracking
 - production React dashboard beyond the minimal optional frontend
 - OAuth/JWT, multi-user permission model, Prometheus/Grafana, and external
   monitoring
+- frontend dependency major-version refresh before production deployment
 
 ## Asset safety checks
 
@@ -304,7 +308,9 @@ make list-large-docs
 
 ## Final go/no-go status
 
-- Overall status: Go for final local/Docker acceptance, subject to normal environment-specific deployment checks.
+- Overall status: Go for final local/Docker acceptance and ready for final
+  freeze/delivery at `v1.8.1-final-polish-and-frontend-audit-note`, subject to
+  normal environment-specific deployment checks.
 - Docker deployment status: Go for local Docker smoke acceptance.
 - Final release entry points: `docs/release_summary.md` and
   `docs/delivery_notes.md`.

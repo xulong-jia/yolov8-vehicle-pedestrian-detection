@@ -35,12 +35,15 @@ def test_release_summary_includes_final_release_contract() -> None:
         "v1.4.0-artifact-download-endpoints",
         "v1.4.1-docker-v1-api-smoke-refresh",
         "v1.5.0-api-key-and-structured-logging",
+        "v1.8.1-final-polish-and-frontend-audit-note",
         "real local FastAPI process restart smoke",
         "Docker runtime smoke refresh",
         "Optional API key authentication",
         "X-Request-ID",
         "artifact download endpoints",
         "GT evaluation scaffold",
+        "npm audit",
+        "Vite 8",
     ]
 
     for term in required_terms:

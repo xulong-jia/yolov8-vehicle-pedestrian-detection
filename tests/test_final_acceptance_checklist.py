@@ -92,6 +92,7 @@ def test_references_docker_smoke_status_and_predict_passed() -> None:
         "v1.4.0-artifact-download-endpoints",
         "v1.4.1-docker-v1-api-smoke-refresh",
         "v1.5.0-api-key-and-structured-logging",
+        "v1.8.1-final-polish-and-frontend-audit-note",
         "Docker build/run has been executed locally",
         "Docker Actual Smoke Passed",
         "FastAPI `/health`, `/config`, `/model-status`, and `/api/videos/analyze` passed",
@@ -105,6 +106,8 @@ def test_references_docker_smoke_status_and_predict_passed() -> None:
         "API_KEY_AUTH_ENABLED=true",
         "X-Request-ID",
         "GT evaluation scaffold exists",
+        "npm audit",
+        "semver-major Vite 8",
         "Go for final local/Docker acceptance",
         "MODEL_PATH",
     ]

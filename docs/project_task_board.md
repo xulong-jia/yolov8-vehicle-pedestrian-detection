@@ -6,6 +6,9 @@
 - `[ ]` means pending.
 - After completing a task, update the checkbox and add the commit hash.
 - Do not track model weights, full dataset, large videos, or full runs outputs in Git.
+- Early pending entries are historical for their original phase; current
+  delivery status is summarized in the post-v1.0/v1.x section near the end of
+  this board.
 
 ## Current Completed Milestones / 当前已完成里程碑
 
@@ -1157,6 +1160,7 @@ Pending after v1.0.0 release docs:
 - [x] Small reviewed Bad Case collection / 小规模人工审核 Bad Case 样例集 — Target: v1.6.0 — Status: Completed in working tree — Output: `docs/error_case_gallery/reviewed_bad_cases.csv`, `tests/test_bad_cases_schema_docs.py` — Commit: TBD
 - [x] Small reviewed GT quantitative evaluation / 小规模人工审核 GT 定量评测样例 — Target: v1.7.0 — Status: Completed in working tree — Output: `docs/evaluation/reviewed_gt_samples/`, `docs/evaluation/reviewed_gt_eval_result/`, `docs/evaluation/reviewed_gt_eval_result.md`, `tests/test_video_eval_scaffold.py` — Commit: TBD
 - [x] Minimal React video job frontend / 最小 React 视频任务前端 — Target: v1.8.0 — Status: Completed in working tree — Output: `frontend/`, `frontend/README.md` — Commit: TBD
+- [x] Final polish and frontend audit note / 最终文档 polish 与前端 audit 说明 — Target: v1.8.1 — Status: Completed in working tree — Output: `README.md`, `docs/release_summary.md`, `frontend/README.md`, status docs — Commit: TBD
 - [ ] Large reviewed Bad Case collection beyond sample / 超出样例集的大规模人工审核 Bad Case 收集 — Target: Future — Status: Pending
 - [ ] Large-scale real GT quantitative evaluation beyond sample / 超出样例集的大规模真实 GT 定量评测 — Target: Future — Status: Pending
 - [ ] Production React dashboard beyond minimal frontend / 超出最小前端的生产级 React dashboard — Target: Future — Status: Pending

@@ -3,7 +3,7 @@
 ## Release Identity
 
 - Original final release: v1.0.0-final-release-summary
-- Current latest documented state: v1.8.0-react-video-job-frontend
+- Current latest documented state: v1.8.1-final-polish-and-frontend-audit-note
 - Based on original final tag: v0.14.6-final-doc-consistency-pass
 - Project name: YOLOv8 Vehicle and Pedestrian Detection System
 - Repository: yolov8-vehicle-pedestrian-detection
@@ -11,7 +11,7 @@
 
 ## Post-Final Enhancements
 
-After the original `v1.0.0-final-release-summary`, the repository added ten
+After the original `v1.0.0-final-release-summary`, the repository added eleven
 bounded enhancements:
 
 - `v1.1.0-async-video-job`: FastAPI async video job execution and Streamlit
@@ -36,6 +36,8 @@ bounded enhancements:
 - `v1.8.0-react-video-job-frontend`: minimal optional Vite + React +
   TypeScript frontend for FastAPI status, video jobs, artifact links, and Bad
   Case metadata.
+- `v1.8.1-final-polish-and-frontend-audit-note`: final documentation polish,
+  stale status correction, and frontend audit note.
 
 The SQLite index is unit-tested and has been verified with a real local FastAPI
 process restart smoke. Docker actual smoke was refreshed for the v1.1-v1.4 API
@@ -65,6 +67,7 @@ surface.
 - Docker v1 API smoke refresh
 - Optional API key authentication and request/operation structured logs
 - Minimal optional React frontend for FastAPI video jobs and Bad Cases
+- Final documentation polish and frontend dependency audit note
 - Docker build/run smoke
 - mounted-weight Docker `/predict` smoke
 - final acceptance checklist
@@ -130,6 +133,19 @@ registered in job metadata; arbitrary path downloads are not supported.
 - Docker image/layers are not committed.
 - `local_weights/best.pt` is ignored and remains local-only.
 - Result details: [Docker Actual Smoke Result](docker_actual_smoke_result.md)
+- Docker v1 API smoke was refreshed in `v1.4.1` for FastAPI API capabilities.
+  It does not cover the later React frontend runtime.
+
+## Frontend Audit Summary
+
+The optional React frontend builds successfully with `npm run build`. During
+the final `v1.8.1` polish pass, `npm audit` reported 1 moderate and 1 high
+finding in the Vite/esbuild development/build dependency path. The npm
+suggested fix requires a semver-major upgrade to Vite 8, so `npm audit fix
+--force` was not run in this documentation-only freeze step.
+
+Production deployment should review and upgrade frontend dependencies in a
+separate dependency-refresh phase.
 
 ## Validation Summary
 
@@ -159,6 +175,7 @@ registered in job metadata; arbitrary path downloads are not supported.
 - optional DeepSORT runtime
 - OAuth/JWT, multi-user permissions, and external monitoring
 - production React dashboard hardening
+- frontend dependency major-version refresh before production deployment
 - optional full-length production validation
 
 ## Suggested Evaluator Walkthrough

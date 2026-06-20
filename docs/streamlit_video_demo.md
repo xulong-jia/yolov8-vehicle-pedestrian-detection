@@ -78,8 +78,9 @@ Those outputs are local-only and ignored by Git.
 - It does not validate full-length tracked video quality.
 - It is not a production dashboard with authentication, monitoring, or
   multi-user job management.
-- SQLite job metadata persistence is provided by FastAPI; a real FastAPI process
-  restart smoke for the SQLite index remains pending.
+- SQLite job metadata persistence is provided by FastAPI. The real FastAPI
+  process restart smoke for the SQLite index passed in `v1.3.2`; see
+  `docs/sqlite_job_restart_smoke_result.md`.
 
 ## Recommended Next Steps
 

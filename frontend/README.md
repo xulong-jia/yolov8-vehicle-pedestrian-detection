@@ -65,3 +65,20 @@ The FastAPI backend must be running separately, for example:
 ```bash
 uvicorn src.api:app --host 127.0.0.1 --port 8000
 ```
+
+## npm Audit Note
+
+At the `v1.8.1-final-polish-and-frontend-audit-note` documentation pass,
+`npm audit` reports:
+
+- 1 moderate finding
+- 1 high finding
+- affected path: Vite/esbuild development/build dependency chain
+
+The npm suggested fix requires a semver-major upgrade to Vite 8. This project
+does not run `npm audit fix --force` in the final polish scope because that
+would be a dependency-major migration rather than a documentation-only freeze
+step.
+
+Production deployment should review and upgrade frontend dependencies in a
+separate controlled dependency-refresh phase.

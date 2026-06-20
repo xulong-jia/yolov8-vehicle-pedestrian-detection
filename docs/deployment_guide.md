@@ -275,8 +275,10 @@ documented in `docs/evaluation/gt_templates.md`. The scaffold CLI is:
 python -m src.evaluation.video_eval_scaffold --help
 ```
 
-This is a scaffold only; reviewed GT labels and full quantitative evaluation
-remain future work.
+`v1.7.0` adds a small reviewed GT sample evaluation under
+`docs/evaluation/reviewed_gt_samples/` and
+`docs/evaluation/reviewed_gt_eval_result/`. Large-scale/full benchmark
+evaluation and complete MOT IDF1/MOTA remain future work.
 
 ## Run Checks
 
