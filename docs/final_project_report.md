@@ -490,3 +490,22 @@ This is static acceptance only. No Docker image was built, no Docker container
 was run, no YOLO/ByteTrack/analytics/render step was executed, and no generated
 CSV, JSON, JSONL, MP4, weights, or source videos were committed. Actual Docker
 build/run smoke remains pending manual verification.
+
+## v0.14.2 Final Acceptance Checklist
+
+`v0.14.2` adds `docs/final_acceptance_checklist.md` as the consolidated final
+acceptance record for the execution manual's Stage 8 and Chapter 21 acceptance
+areas. The checklist summarizes:
+
+- project metadata and version/tag history
+- evidence files for dataset, training/evaluation, prediction, tracking,
+  analytics, rendering, Streamlit, FastAPI, Bad Case, and Docker/deployment
+- test command matrix for docs, API, analytics, and static project checks
+- asset-safety checks for weights, local videos, dataset splits, generated
+  outputs, and large documentation assets
+- manual pending acceptance items
+- final Conditional Go status for documentation/static acceptance
+
+This step does not claim actual Docker build/run completion. Docker build,
+FastAPI container smoke, Streamlit container smoke, and mounted-weight
+container prediction remain manual pending acceptance items.

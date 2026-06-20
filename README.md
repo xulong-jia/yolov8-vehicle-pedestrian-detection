@@ -173,6 +173,8 @@ Completed experiments and recorded results:
 
 `v0.14.1-docker-deployment-static-acceptance` aligns the Docker and deployment documentation with the final execution manual's Stage 8 acceptance items. It documents FastAPI and Streamlit Docker run commands, `MODEL_PATH` weight mounting, large-asset exclusions, and static checks for `Dockerfile` and `.dockerignore`. This is static acceptance only; actual `docker build` / `docker run` smoke remains pending. See [Docker deployment guide](docs/docker_deployment.md) and [Local deployment guide](docs/deployment_guide.md).
 
+`v0.14.2-final-acceptance-checklist` adds the final acceptance checklist for the execution manual's Stage 8 and Chapter 21 acceptance areas. It consolidates evidence files, test commands, version tags, manual pending items, asset-safety checks, and a Conditional Go status for documentation/static acceptance. Actual Docker build/run and mounted-weight container prediction remain manual pending. See [Final Acceptance Checklist](docs/final_acceptance_checklist.md).
+
 This phase does not include DeepSORT integration, ByteTrack production hardening, Streamlit job launching, real async FastAPI video execution, database integration, full-length tracked video validation, or real video benchmarks.
 
 Details: [Video analytics MVP](docs/video_analytics_mvp.md)
@@ -495,6 +497,7 @@ ONNX Runtime benchmark/check:
 - [Streamlit Video Demo Page](docs/streamlit_video_demo.md)
 - [Bad Case Schema](docs/bad_cases_schema.md)
 - [Bad Case Report](docs/bad_case_report.md)
+- [Final Acceptance Checklist](docs/final_acceptance_checklist.md)
 - [Project task board](docs/project_task_board.md)
 
 ## v0.11.5 ByteTrack Pipeline Validation
@@ -550,6 +553,7 @@ Policy:
 ## Current Limitations
 
 - Docker deployment static acceptance is documented, but actual Docker build/run smoke remains pending.
+- Final acceptance is Conditional Go for documentation/static acceptance; manual Docker build/run and mounted-weight container prediction remain pending.
 - Full real Bad Case collection and `/api/bad-cases` are not implemented yet.
 - YOLOv8m PyTorch speed benchmark has not yet been run.
 - YOLOv8m ONNX Runtime benchmark has not yet been run.

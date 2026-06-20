@@ -986,6 +986,35 @@ Pending after v0.14.1 Step 1:
 - [ ] Mounted-weight predict smoke / 挂载权重后的预测冒烟 — Target: Future/manual — Status: Pending
 - [ ] Final acceptance checklist / 最终验收清单 — Target: Future — Status: Pending
 
+## v0.14.2-final-acceptance-checklist / 最终验收清单
+
+- [x] Final acceptance checklist / 最终验收清单 — Priority: P0 — Status: Completed in working tree — Output: `docs/final_acceptance_checklist.md` — Commit: TBD
+- [x] Version/tag history summary / 版本与 tag 历史汇总 — Priority: P0 — Status: Completed in working tree — Output: `docs/final_acceptance_checklist.md` — Commit: TBD
+- [x] Evidence matrix / 验收证据矩阵 — Priority: P0 — Status: Completed in working tree — Output: `docs/final_acceptance_checklist.md` — Commit: TBD
+- [x] Manual pending acceptance list / 手动待验收清单 — Priority: P0 — Status: Completed in working tree — Output: `docs/final_acceptance_checklist.md` — Commit: TBD
+- [x] Checklist docs test / 验收清单文档测试 — Priority: P0 — Status: Completed in working tree — Output: `tests/test_final_acceptance_checklist.py` — Commit: TBD
+
+Scope:
+
+- follows the final execution manual Stage 8 and Chapter 21 acceptance areas
+- consolidates evidence files, test commands, version tags, manual pending
+  items, asset-safety checks, and final go/no-go status
+- marks the project as Conditional Go for documentation/static acceptance
+- does not run Docker build
+- does not run Docker run
+- does not run YOLO, ByteTrack, DeepSORT, analytics, or rendering
+- does not generate CSV, JSON, JSONL, MP4, or local outputs
+
+Pending after v0.14.2 Step 1:
+
+- [ ] Actual docker build / 实际 Docker build — Target: Future/manual — Status: Pending
+- [ ] Actual docker run FastAPI smoke / 实际 Docker FastAPI 冒烟 — Target: Future/manual — Status: Pending
+- [ ] Actual docker run Streamlit smoke / 实际 Docker Streamlit 冒烟 — Target: Future/manual — Status: Pending
+- [ ] Mounted-weight container predict / 挂载权重后的容器预测 — Target: Future/manual — Status: Pending
+- [ ] Optional full-length video pipeline validation / 可选全长视频链路验证 — Target: Future/manual — Status: Pending
+- [ ] Optional real Bad Case collection / 可选真实 Bad Case 收集 — Target: Future/manual — Status: Pending
+- [ ] Final manual deployment go/no-go / 最终手动部署 go/no-go — Target: Future/manual — Status: Pending
+
 ## P3 — Optional Future Experiments / 可选未来实验
 
 - [x] Run YOLOv8s official test split validation if weight is available / 在权重可用时运行 YOLOv8s 官方测试集验证 — Priority: P3 — Status: Done — Output: `docs/experiments/yolov8s_640_50epochs_retrain/`, `docs/evaluation/yolov8s_640_50epochs_official/` — Result: P `0.865`, R `0.838`, mAP50 `0.876`, mAP50-95 `0.601` — Commit: `e4d5adb`

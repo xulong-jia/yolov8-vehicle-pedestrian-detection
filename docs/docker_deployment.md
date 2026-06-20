@@ -11,6 +11,11 @@ This is static acceptance only. It does not claim that an actual Docker build or
 Docker run smoke test has been completed. Actual build/run verification remains
 pending actual build work for a later manual check or release step.
 
+For the consolidated final acceptance status, see
+`docs/final_acceptance_checklist.md`. The checklist preserves actual
+Docker build/run and mounted-weight container prediction as manual pending
+acceptance items.
+
 ## Prerequisites
 
 - Docker installed on the host machine.
@@ -189,5 +194,6 @@ should run:
 - `.dockerignore`
 - `docs/deployment_guide.md`
 - `docs/api_usage.md`
+- `docs/final_acceptance_checklist.md`
 - `docs/model_loading_strategy.md`
 - `docs/model_weight_policy.md`
