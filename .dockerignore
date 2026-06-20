@@ -14,6 +14,7 @@ runs/
 local_outputs/
 local_weights/
 local_videos/
+local_videos/source/
 docs/video_demos/
 
 *.pt
@@ -23,6 +24,7 @@ docs/video_demos/
 *.avi
 *.mov
 *.mkv
+*.zip
 
 .env
 .DS_Store

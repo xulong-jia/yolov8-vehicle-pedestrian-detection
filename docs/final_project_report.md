@@ -469,3 +469,24 @@ not claim that a full real Bad Case dataset has already been collected. The
 current gallery CSV remains a small hand-written documentation sample. Future
 work should collect reviewed real cases, add `/api/bad-cases`, link Bad Cases
 to evaluation reports, and build a selected regression set.
+
+## v0.14.1 Docker Deployment Static Acceptance
+
+`v0.14.1` aligns Docker and deployment documentation with the final execution
+manual's Stage 8 acceptance items. The update documents:
+
+- Docker build command.
+- FastAPI Docker run command with `MODEL_PATH` and read-only `local_weights`
+  volume mount.
+- Streamlit Docker run command with the same mounted-weight policy.
+- FastAPI smoke commands for `/health`, `/config`, `/model-status`, `/predict`,
+  and the video job skeleton.
+- Artifact attach guidance for existing Video Analysis Center runs mounted into
+  the container.
+- `.dockerignore` exclusions for weights, source videos, dataset splits,
+  generated outputs, archives, and large video formats.
+
+This is static acceptance only. No Docker image was built, no Docker container
+was run, no YOLO/ByteTrack/analytics/render step was executed, and no generated
+CSV, JSON, JSONL, MP4, weights, or source videos were committed. Actual Docker
+build/run smoke remains pending manual verification.

@@ -1,90 +1,193 @@
 # Docker Deployment
 
-## Purpose
+## Current Status
 
-This document describes the Docker scaffold for local Streamlit or future API deployment preparation. The Docker image is designed to include application code and lightweight documentation assets only.
+`v0.14.1 static acceptance` adds Docker deployment static acceptance for the final execution
+manual's Stage 8 requirements. This means the Dockerfile, `.dockerignore`, and
+deployment documentation are checked for the expected build/run commands, weight
+mount policy, and large-asset exclusions.
 
-The image does not include model weights, the full dataset, generated outputs, or large videos.
+This is static acceptance only. It does not claim that an actual Docker build or
+Docker run smoke test has been completed. Actual build/run verification remains
+pending actual build work for a later manual check or release step.
 
-## Safety Design
+## Prerequisites
 
-- Weights are mounted at runtime.
-- Docker image does not include `local_weights/`.
-- Docker image does not include full dataset splits.
-- Docker image does not include `runs/` or `local_outputs/`.
-- Large videos are excluded.
-- The dataset directory is ignored for Docker build context; the image does not include dataset files.
+- Docker installed on the host machine.
+- Local model weights available on the host and mounted at runtime.
+- Model weights are never committed and are never baked into the image.
+- Optional local videos, Video Analysis Center runs, and tracked-preview
+  artifacts should be mounted only when needed for local review.
 
 ## Build Command
 
-Example command:
-
 ```bash
-docker build -t yolov8-vehicle-pedestrian-demo .
+docker build -t yolov8-vehicle-pedestrian:latest .
 ```
 
-Do not treat this as a completed deployment record unless the image has actually been built and tested.
+The image should include code, configs, and lightweight documentation assets
+only. It should not include `local_weights/`, dataset split folders, generated
+outputs, or large videos.
+
+## Run FastAPI Container
+
+Use Docker command override to start the FastAPI service:
+
+```bash
+docker run --rm -p 8000:8000 \
+  -e MODEL_PATH=/app/local_weights/best.pt \
+  -v "$PWD/local_weights:/app/local_weights:ro" \
+  yolov8-vehicle-pedestrian:latest \
+  uvicorn src.api:app --host 0.0.0.0 --port 8000
+```
+
+The `local_weights` volume mount is read-only. Replace the mounted directory or
+`MODEL_PATH` value if your local weight file uses a different path.
+
+## FastAPI Smoke Commands
+
+Health:
+
+```bash
+curl http://localhost:8000/health
+```
+
+Config and model status:
+
+```bash
+curl http://localhost:8000/config
+curl http://localhost:8000/model-status
+```
+
+Image predict smoke:
+
+```bash
+curl -X POST "http://localhost:8000/predict?conf=0.25&imgsz=640&device=cpu" \
+  -F "file=@sample.jpg"
+```
+
+Video job skeleton smoke:
+
+```bash
+curl -X POST http://localhost:8000/api/videos/analyze \
+  -H "Content-Type: application/json" \
+  -d '{"video_id":"demo","run_name":"demo_run"}'
+```
+
+The video job endpoint creates an in-memory skeleton job unless an existing
+Video Analysis Center `run_dir` is provided.
+
+## Artifact Attach Smoke
+
+To attach an existing run directory, mount it into the container and pass the
+container-visible path:
+
+```bash
+docker run --rm -p 8000:8000 \
+  -e MODEL_PATH=/app/local_weights/best.pt \
+  -v "$PWD/local_weights:/app/local_weights:ro" \
+  -v "$PWD/local_outputs:/app/local_outputs:ro" \
+  yolov8-vehicle-pedestrian:latest \
+  uvicorn src.api:app --host 0.0.0.0 --port 8000
+```
+
+Then:
+
+```bash
+curl -X POST http://localhost:8000/api/videos/analyze \
+  -H "Content-Type: application/json" \
+  -d '{"video_id":"demo","run_name":"demo_run","run_dir":"/app/local_outputs/run1"}'
+```
+
+Only attach directories that already contain existing Video Analysis Center
+artifacts. The API skeleton reads existing files; it does not run YOLO,
+ByteTrack, analytics, or rendering.
 
 ## Run Streamlit Container
 
-Example command:
+Use Docker command override to start the Streamlit image demo:
 
 ```bash
-docker run --rm -p 8501:8501 -v /absolute/path/to/best.pt:/models/best.pt:ro yolov8-vehicle-pedestrian-demo
+docker run --rm -p 8501:8501 \
+  -e MODEL_PATH=/app/local_weights/best.pt \
+  -v "$PWD/local_weights:/app/local_weights:ro" \
+  yolov8-vehicle-pedestrian:latest \
+  streamlit run app.py --server.address 0.0.0.0 --server.port 8501
 ```
 
-Replace `/absolute/path/to/best.pt` with the real local model weight path on the host machine.
+The default Dockerfile command also starts Streamlit on port `8501`.
 
-Inside the container, the default environment variable is:
+## Asset Policy
 
-```text
-MODEL_PATH=/models/best.pt
-```
+- Never bake weights into the Docker image.
+- Mount `local_weights` read-only at runtime.
+- Do not commit generated outputs.
+- Keep `local_outputs/`, `runs/`, source videos, and full datasets outside Git.
+- Do not commit CSV, JSON, JSONL, MP4, model weights, ONNX files, or Docker
+  build artifacts generated by local smoke runs.
 
-The current Streamlit app still allows the model path to be entered in the UI. A future update can connect the app or API service directly to `MODEL_PATH`.
+## Dockerfile Static Acceptance Checklist
 
-## What Is Not Included
+- `Dockerfile` exists.
+- `MODEL_PATH` is defined as an environment variable.
+- Application code and configs are copied into `/app`.
+- The default command can start Streamlit.
+- FastAPI can be started with Docker command override using
+  `uvicorn src.api:app --host 0.0.0.0 --port 8000`.
 
-- `local_weights/`
-- `dataset/train/`
-- `dataset/valid/`
-- `dataset/test/`
-- `runs/`
-- `local_outputs/`
-- video demos
-- raw local videos
+## .dockerignore Static Acceptance Checklist
 
-## Development Notes
+`.dockerignore` must exclude:
 
-- Do not copy model weights into the Docker image.
-- Do not commit `.env` files.
-- Do not commit Docker build cache or generated outputs.
-- Future FastAPI service can reuse the same mount-based model path strategy.
-- Keep deployment artifacts lightweight and reproducible.
+- `.venv`
+- `__pycache__`
+- `runs`
+- `local_outputs`
+- `local_weights`
+- `local_videos/source`
+- `dataset/train`
+- `dataset/valid`
+- `dataset/test`
+- `*.pt`
+- `*.pth`
+- `*.onnx`
+- `*.mp4`
+- `*.avi`
+- `*.mov`
+- `*.mkv`
+- `*.zip`
 
-## Validation Checklist
+## Validation Commands
 
 Before committing Docker-related changes, run:
 
 ```bash
-make check
+PYTHONPYCACHEPREFIX=/private/tmp/yolov8_pycache .venv/bin/python -m pytest tests/test_docker_deployment_docs.py -q
+PYTHONPYCACHEPREFIX=/private/tmp/yolov8_pycache make check
+PYTHONPYCACHEPREFIX=/private/tmp/yolov8_pycache make api-check
 make danger-check
 make list-large-docs
 ```
 
-Also check staged files before committing:
+`make list-large-docs` may report the known retained demo video under
+`docs/video_demos/`.
 
-```bash
-git diff --cached --name-only | grep -E '\.pt$|\.pth$|\.onnx$|\.mp4$|\.avi$|\.mov$|\.mkv$|^local_weights/|^local_videos/source/|^dataset/train/|^dataset/valid/|^dataset/test/|^runs/|^\.venv/|^local_outputs/' || true
-```
+## Pending Actual Build
 
-The risk check should produce no output.
+Actual Docker build/run smoke remains pending. A future manual or release step
+should run:
+
+- `docker build -t yolov8-vehicle-pedestrian:latest .`
+- FastAPI container smoke with `/health`, `/config`, `/model-status`, and
+  `/predict`.
+- Streamlit container smoke on port `8501`.
+- Mounted-weight predict smoke without copying weights into the image.
 
 ## Related Files
 
 - `Dockerfile`
 - `.dockerignore`
-- `docs/model_loading_strategy.md`
 - `docs/deployment_guide.md`
+- `docs/api_usage.md`
+- `docs/model_loading_strategy.md`
 - `docs/model_weight_policy.md`
-- `configs/default.yaml`

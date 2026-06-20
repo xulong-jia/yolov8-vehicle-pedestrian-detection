@@ -171,6 +171,8 @@ Completed experiments and recorded results:
 
 `v0.14.0-bad-case-schema-report-foundation` adds the execution-manual Bad Case foundation. It defines the `bad_cases.csv` schema, adds a Bad Case report, and aligns the existing taxonomy, hard examples, and error gallery with a stable review contract. This does not collect a full real Bad Case dataset and does not add `/api/bad-cases`; those remain future work. See [Bad Case Schema](docs/bad_cases_schema.md) and [Bad Case Report](docs/bad_case_report.md).
 
+`v0.14.1-docker-deployment-static-acceptance` aligns the Docker and deployment documentation with the final execution manual's Stage 8 acceptance items. It documents FastAPI and Streamlit Docker run commands, `MODEL_PATH` weight mounting, large-asset exclusions, and static checks for `Dockerfile` and `.dockerignore`. This is static acceptance only; actual `docker build` / `docker run` smoke remains pending. See [Docker deployment guide](docs/docker_deployment.md) and [Local deployment guide](docs/deployment_guide.md).
+
 This phase does not include DeepSORT integration, ByteTrack production hardening, Streamlit job launching, real async FastAPI video execution, database integration, full-length tracked video validation, or real video benchmarks.
 
 Details: [Video analytics MVP](docs/video_analytics_mvp.md)
@@ -308,21 +310,37 @@ Current API scope:
 - Uploaded images and prediction outputs are not saved to the repository.
 - No model is loaded at import time.
 
-### 7. Docker Scaffold
+### 7. Docker / Deployment Static Acceptance
 
 Build example:
 
 ```bash
-docker build -t yolov8-vehicle-pedestrian-demo .
+docker build -t yolov8-vehicle-pedestrian:latest .
 ```
 
-Run example:
+Run FastAPI example:
 
 ```bash
-docker run --rm -p 8501:8501 -v /absolute/path/to/best.pt:/models/best.pt:ro yolov8-vehicle-pedestrian-demo
+docker run --rm -p 8000:8000 \
+  -e MODEL_PATH=/app/local_weights/best.pt \
+  -v "$PWD/local_weights:/app/local_weights:ro" \
+  yolov8-vehicle-pedestrian:latest \
+  uvicorn src.api:app --host 0.0.0.0 --port 8000
 ```
 
-Do not copy weights into the Docker image. Mount weights at runtime.
+Run Streamlit example:
+
+```bash
+docker run --rm -p 8501:8501 \
+  -e MODEL_PATH=/app/local_weights/best.pt \
+  -v "$PWD/local_weights:/app/local_weights:ro" \
+  yolov8-vehicle-pedestrian:latest \
+  streamlit run app.py --server.address 0.0.0.0 --server.port 8501
+```
+
+Do not copy weights into the Docker image. Mount weights read-only at runtime.
+`v0.14.1` adds static Docker deployment acceptance; actual Docker build/run
+smoke remains pending unless performed explicitly.
 
 ## Makefile Commands
 
@@ -531,7 +549,7 @@ Policy:
 
 ## Current Limitations
 
-- Docker scaffold has not been built or deployed as a verified production image.
+- Docker deployment static acceptance is documented, but actual Docker build/run smoke remains pending.
 - Full real Bad Case collection and `/api/bad-cases` are not implemented yet.
 - YOLOv8m PyTorch speed benchmark has not yet been run.
 - YOLOv8m ONNX Runtime benchmark has not yet been run.

@@ -961,6 +961,31 @@ Pending after v0.14.0 Step 1:
 - [ ] Docker production verification / Docker 生产验证 — Target: Future — Status: Pending
 - [ ] Real async video execution / 真实异步视频执行 — Target: Future — Status: Pending
 
+## v0.14.1-docker-deployment-static-acceptance / Docker 部署静态验收
+
+- [x] Docker deployment docs aligned / Docker 部署文档对齐 — Priority: P0 — Status: Completed in working tree — Output: `docs/docker_deployment.md` — Commit: TBD
+- [x] Deployment guide updated / 部署指南更新 — Priority: P0 — Status: Completed in working tree — Output: `docs/deployment_guide.md` — Commit: TBD
+- [x] Dockerfile and `.dockerignore` static checks / Dockerfile 与 `.dockerignore` 静态检查 — Priority: P0 — Status: Completed in working tree — Output: `tests/test_docker_deployment_docs.py` — Commit: TBD
+- [x] FastAPI and Streamlit Docker commands documented / FastAPI 与 Streamlit Docker 命令文档化 — Priority: P0 — Status: Completed in working tree — Output: `README.md`, `docs/docker_deployment.md`, `docs/deployment_guide.md` — Commit: TBD
+
+Scope:
+
+- follows the final execution manual Stage 8 Docker/deployment acceptance items
+- documents `docker build`, FastAPI `docker run`, Streamlit `docker run`, `MODEL_PATH`, and read-only `local_weights` volume mount
+- keeps Docker validation static only
+- does not run Docker build
+- does not run Docker run
+- does not run YOLO, ByteTrack, DeepSORT, analytics, or rendering
+- does not generate outputs
+
+Pending after v0.14.1 Step 1:
+
+- [ ] Actual docker build / 实际 Docker build — Target: Future/manual — Status: Pending
+- [ ] Actual docker run FastAPI smoke / 实际 Docker FastAPI 冒烟 — Target: Future/manual — Status: Pending
+- [ ] Actual docker run Streamlit smoke / 实际 Docker Streamlit 冒烟 — Target: Future/manual — Status: Pending
+- [ ] Mounted-weight predict smoke / 挂载权重后的预测冒烟 — Target: Future/manual — Status: Pending
+- [ ] Final acceptance checklist / 最终验收清单 — Target: Future — Status: Pending
+
 ## P3 — Optional Future Experiments / 可选未来实验
 
 - [x] Run YOLOv8s official test split validation if weight is available / 在权重可用时运行 YOLOv8s 官方测试集验证 — Priority: P3 — Status: Done — Output: `docs/experiments/yolov8s_640_50epochs_retrain/`, `docs/evaluation/yolov8s_640_50epochs_official/` — Result: P `0.865`, R `0.838`, mAP50 `0.876`, mAP50-95 `0.601` — Commit: `e4d5adb`
