@@ -161,7 +161,6 @@ Validation command:
   --run-name bytetrack_validation \
   --video-id demo \
   --render-preview \
-  --overlay-plan-json /tmp/yolov8_real_smoke/analytics_overlay_plan.json \
   --max-frames 300
 ```
 
@@ -188,8 +187,8 @@ Still pending after v0.11.5:
 
 ## v0.11.6 Synthetic vs ByteTrack Comparison
 
-`v0.11.6` adds `src.compare_tracking_outputs` and documents the comparison in
-[Synthetic vs ByteTrack Tracking Comparison](tracking_comparison.md).
+`v0.11.6` records the synthetic-vs-ByteTrack conclusion in the main project
+documentation.
 
 Local result:
 

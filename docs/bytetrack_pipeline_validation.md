@@ -24,7 +24,6 @@ from already generated local artifacts:
   --run-name bytetrack_validation \
   --video-id demo \
   --render-preview \
-  --overlay-plan-json /tmp/yolov8_real_smoke/analytics_overlay_plan.json \
   --max-frames 300
 ```
 
@@ -80,8 +79,8 @@ Preview summary:
 
 ## v0.11.6 Tracking Comparison
 
-The follow-up [Synthetic vs ByteTrack Tracking Comparison](tracking_comparison.md)
-compares the standard ByteTrack tracks with the earlier synthetic tracks.
+The follow-up synthetic-vs-ByteTrack review compares the standard ByteTrack
+tracks with the earlier synthetic tracks.
 
 Local summary:
 
@@ -99,8 +98,8 @@ the local ByteTrack validation artifacts from this workflow:
   `/tmp/yolov8_bytetrack_pipeline_validation/analytics/bytetrack_validation`
 - tracked preview video, for example
   `/tmp/yolov8_bytetrack_pipeline_validation/bytetrack_tracked_preview_300.mp4`
-- optional synthetic-vs-ByteTrack comparison JSON, for example
-  `/tmp/yolov8_tracking_comparison.json`
+- optional synthetic-vs-ByteTrack summary JSON, for example
+  `/tmp/yolov8_tracking_summary.json`
 
 The page only reads existing artifacts. It does not run YOLO, does not run
 ByteTrack, does not rerun analytics, and does not render new videos.

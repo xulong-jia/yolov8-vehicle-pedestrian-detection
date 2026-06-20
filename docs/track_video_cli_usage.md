@@ -360,20 +360,13 @@ Expected output:
 - checks for `model_path`, `video_path`, `output_dir`, `ultralytics`, and `cv2`
 - command previews for `predict_video.py`, `track_video.py --tracker synthetic`, and `run_video_analysis_smoke.py`
 
-## Analytics config suggestion from tracks.csv
+## Analytics config review
 
-After a smoke run has produced `tracks.csv`, use the analytics config suggester to inspect coordinate distributions and generate a starting-point config suggestion.
-
-```bash
-.venv/bin/python -m src.analytics_config_suggester \
-  --tracks-csv /tmp/yolov8_real_smoke/tracking/tracks.csv \
-  --video-id demo \
-  --output-json /tmp/yolov8_real_smoke/suggested_analytics_config.json
-```
-
-This command does not rerun YOLO, does not run a tracker, and only reads the existing `tracks.csv`. Keep the suggested JSON under `/tmp` or another ignored local path. Do not commit generated `tracks.csv`, suggested config JSON, real videos, model weights, or smoke outputs.
-
-Details: [Analytics Config Tuning](analytics_config_tuning.md)
+After a smoke run has produced `tracks.csv`, review line, ROI, and event-rule
+settings against the tracked preview before claiming analytics accuracy. The
+old one-off tuning helper has been pruned; keep any generated local config JSON
+under `/tmp` or another ignored path and do not commit generated CSV, JSON,
+JSONL, videos, model weights, or smoke outputs.
 
 ## Analytics-only rerun
 
@@ -392,20 +385,6 @@ After generating a suggested analytics config, rerun only the analytics layer ag
 
 This command does not run YOLO, does not run a tracker, and does not generate tracked video. Inputs are existing `detections.csv`, `tracks.csv`, and config JSON. Write outputs to `/tmp` or another ignored path, and do not commit generated CSV, JSON, JSONL, videos, or weights.
 
-## Analytics overlay plan
-
-Before rendering overlays, generate a JSON plan that validates the suggested line and ROI against `tracks.csv` coordinate distributions:
-
-```bash
-.venv/bin/python -m src.analytics_overlay_plan \
-  --tracks-csv /tmp/yolov8_real_smoke/tracking/tracks.csv \
-  --config-json /tmp/yolov8_real_smoke/suggested_analytics_config.json \
-  --video-id demo \
-  --output-json /tmp/yolov8_real_smoke/analytics_overlay_plan.json
-```
-
-This command does not run YOLO, does not run a tracker, does not read or render video frames, and does not generate tracked video. Keep the JSON output under `/tmp` or another ignored path, and do not commit generated overlay plans.
-
 ## Tracked video rendering
 
 After a source video and `tracks.csv` already exist, render a local tracked preview:
@@ -416,7 +395,6 @@ After a source video and `tracks.csv` already exist, render a local tracked prev
   --tracks-csv /tmp/yolov8_real_smoke/tracking/tracks.csv \
   --output-video /tmp/yolov8_real_smoke/tracked_preview_300.mp4 \
   --config-json /tmp/yolov8_real_smoke/suggested_analytics_config.json \
-  --overlay-plan-json /tmp/yolov8_real_smoke/analytics_overlay_plan.json \
   --max-frames 300
 ```
 
@@ -450,8 +428,7 @@ The recommended next implementation path is a short, explicitly approved Ultraly
   --device cpu \
   --max-frames 300 \
   --render-preview \
-  --config-json /tmp/yolov8_real_smoke/suggested_analytics_config.json \
-  --overlay-plan-json /tmp/yolov8_real_smoke/analytics_overlay_plan.json
+  --config-json /tmp/yolov8_real_smoke/suggested_analytics_config.json
 ```
 
 Expected outputs, when the local ByteTrack runtime dependencies are available:
@@ -485,8 +462,7 @@ Successful local command:
   --device cpu \
   --max-frames 300 \
   --render-preview \
-  --config-json /tmp/yolov8_real_smoke/suggested_analytics_config.json \
-  --overlay-plan-json /tmp/yolov8_real_smoke/analytics_overlay_plan.json
+  --config-json /tmp/yolov8_real_smoke/suggested_analytics_config.json
 ```
 
 Local output summary:
@@ -609,7 +585,6 @@ analytics-only rerun and optionally renders a tracked preview.
   --run-name bytetrack_validation \
   --video-id demo \
   --render-preview \
-  --overlay-plan-json /tmp/yolov8_real_smoke/analytics_overlay_plan.json \
   --max-frames 300
 ```
 
@@ -623,24 +598,12 @@ Local v0.11.5 result:
 - analytics rerun succeeded with `track_count=25`
 - renderer wrote a readable 300-frame ByteTrack preview
 
-## Compare synthetic and ByteTrack tracks
+## Synthetic and ByteTrack interpretation
 
-`v0.11.6` adds a comparison helper for existing synthetic and ByteTrack
-`tracks.csv` outputs:
-
-```bash
-.venv/bin/python -m src.compare_tracking_outputs \
-  --synthetic-tracks /tmp/yolov8_real_smoke/tracking/tracks.csv \
-  --bytetrack-tracks /tmp/yolov8_track_video_bytetrack/tracks.csv \
-  --synthetic-summary /tmp/yolov8_real_smoke_analytics_rerun/suggested_config_rerun/video_analysis_summary.json \
-  --bytetrack-summary /tmp/yolov8_bytetrack_pipeline_validation/analytics/bytetrack_validation/video_analysis_summary.json \
-  --video-id demo \
-  --output-json /tmp/yolov8_tracking_comparison.json
-```
-
-The command does not run YOLO, does not run ByteTrack, and does not render
-video. Write `--output-json` to `/tmp` or another ignored path and do not commit
-the generated comparison JSON.
+Synthetic tracks remain useful for deterministic tests and fallback behavior.
+ByteTrack tracks should be used for runtime/demo because they carry real MOT
+`track_id` semantics. No MOTA/IDF1 claim is made without ground-truth tracking
+labels.
 
 ## Browse Local Video Artifacts with Streamlit
 

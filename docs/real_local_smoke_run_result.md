@@ -122,9 +122,10 @@ Do not commit these generated CSV, JSON, or JSONL files.
 
 ## v0.10.1 Follow-up
 
-The first real smoke run produced analytics artifacts, but the default smoke analytics config did not trigger line, ROI, or event counts. `src.analytics_config_suggester` was added to suggest line, ROI, and event-rule settings from the existing `tracks.csv` coordinate distribution.
-
-See [Analytics Config Tuning](analytics_config_tuning.md).
+The first real smoke run produced analytics artifacts, but the default smoke
+analytics config did not trigger line, ROI, or event counts. The useful lesson
+is that analytics configuration must be reviewed against real track geometry
+before claiming count or event accuracy.
 
 ## v0.10.2 Analytics-only Rerun Follow-up
 
@@ -144,11 +145,12 @@ Local-only rerun summary from `/tmp/yolov8_real_smoke_analytics_rerun`:
 
 These are statistics only. Generated CSV, JSON, and JSONL files remain local-only and are not committed.
 
-## v0.10.3 Overlay Plan Follow-up
+## v0.10.3 Geometry Review Follow-up
 
-The overlay plan validates suggested line and ROI geometry before any renderer is added. It reads existing `tracks.csv` and `suggested_analytics_config.json`, infers coordinate ranges from bbox data, and reports line/ROI placement recommendations.
+The local geometry review checked suggested line and ROI placement against
+observed bbox coordinate ranges before tracked-video rendering.
 
-Local-only overlay plan summary from `/tmp/yolov8_real_smoke/analytics_overlay_plan.json`:
+Local-only geometry review summary:
 
 - `row_count`: `21988`
 - `track_count`: `34`
@@ -266,7 +268,6 @@ This follow-up did not rerun YOLO and did not rerun ByteTrack. It consumed:
 - `/tmp/yolov8_real_smoke/detections.csv`
 - `/tmp/yolov8_track_video_bytetrack/tracks.csv`
 - `/tmp/yolov8_real_smoke/suggested_analytics_config.json`
-- `/tmp/yolov8_real_smoke/analytics_overlay_plan.json`
 
 Local-only result under `/tmp/yolov8_bytetrack_pipeline_validation`:
 
@@ -288,8 +289,9 @@ and MP4 outputs remain local-only and are not committed.
 
 ## v0.11.6 Synthetic vs ByteTrack Comparison Follow-up
 
-`src.compare_tracking_outputs` compared the earlier synthetic tracks with the
-standard ByteTrack tracks using existing local CSV and summary JSON artifacts.
+The local synthetic-vs-ByteTrack review compared the earlier synthetic tracks
+with the standard ByteTrack tracks using existing local CSV and summary JSON
+artifacts.
 
 Local-only comparison summary:
 

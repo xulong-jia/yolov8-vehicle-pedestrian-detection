@@ -27,7 +27,6 @@ Keep output videos under `/tmp` or another ignored local path. Do not commit gen
   --tracks-csv /tmp/yolov8_real_smoke/tracking/tracks.csv \
   --output-video /tmp/yolov8_real_smoke/tracked_preview_300.mp4 \
   --config-json /tmp/yolov8_real_smoke/suggested_analytics_config.json \
-  --overlay-plan-json /tmp/yolov8_real_smoke/analytics_overlay_plan.json \
   --max-frames 300
 ```
 

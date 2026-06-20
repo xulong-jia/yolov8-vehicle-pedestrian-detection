@@ -257,11 +257,9 @@ The batch prediction CLI is designed to write generated outputs under `local_out
 
 `v0.10.0-cli-module-invocation-ergonomics` documents and tests module-style CLI invocation for local smoke tools. The recommended local command is `.venv/bin/python -m src.run_video_analysis_smoke ...`; `src.smoke_preflight` is also callable with `.venv/bin/python -m src.smoke_preflight ...`.
 
-`v0.10.1-real-smoke-analytics-config-tuning` adds an analytics config tuning helper. It summarizes `tracks.csv` coordinate distributions and suggests line, ROI, and event-rule config so real smoke analytics can be tuned without rerunning YOLO.
+`v0.10.1` through `v0.10.3` captured local analytics tuning lessons: line, ROI, and event-rule settings need visual review against real track geometry before counts are meaningful. The one-off tuning and overlay helpers have been pruned; the retained guidance is now part of the main analytics, Video Analysis Center, tracked rendering, and Streamlit demo documentation.
 
 `v0.10.2-analytics-only-rerun-with-suggested-config` adds analytics-only rerun support. It applies suggested analytics config to existing `detections.csv` and `tracks.csv` without rerunning YOLO or tracking, producing fresh Video Analysis Center artifacts.
-
-`v0.10.3-suggested-analytics-overlay-plan` adds overlay planning and geometry validation for suggested analytics config. It checks line/ROI placement against `tracks.csv` coordinate distributions and prepares a JSON plan for a future renderer without rendering video.
 
 `v0.10.4-tracked-video-rendering` adds tracked video rendering from existing tracks. It renders local preview videos with bbox, track labels, line overlays, and ROI overlays without rerunning YOLO.
 
@@ -283,7 +281,6 @@ References:
 - [ByteTrack integration plan](bytetrack_integration_plan.md)
 - [track_video.py CLI usage](track_video_cli_usage.md)
 - [Real local smoke run result](real_local_smoke_run_result.md)
-- [Analytics config tuning](analytics_config_tuning.md)
 
 ## 7. Deployment and Serving Preparation
 
@@ -391,8 +388,7 @@ ByteTrack rows across `25` tracks and `261` frames with rows.
 The key conclusion is that synthetic tracks are appropriate for deterministic
 tests and fallback behavior, while ByteTrack tracks should be used for
 runtime/demo because they carry real MOT `track_id` semantics. No MOTA/IDF1
-claim is made because no ground-truth tracking labels are available. See
-[Synthetic vs ByteTrack Tracking Comparison](tracking_comparison.md).
+claim is made because no ground-truth tracking labels are available.
 
 ## v0.12.0 Streamlit Video Demo Page
 

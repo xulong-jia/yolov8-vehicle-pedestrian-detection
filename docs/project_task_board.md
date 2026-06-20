@@ -518,7 +518,7 @@ Pending after v0.10.0 Step 1:
 
 ## v0.10.1-real-smoke-analytics-config-tuning / 真实 smoke analytics 配置调优辅助
 
-- [x] Step 1 analytics config suggester / Step 1 analytics 配置建议器 — Priority: P0 — Status: Completed in working tree — Output: `src/analytics_config_suggester.py`, `tests/test_analytics_config_suggester.py`, `docs/analytics_config_tuning.md`, `docs/real_local_smoke_run_result.md`, `docs/track_video_cli_usage.md`, `docs/video_analytics_mvp.md`, `docs/project_task_board.md`, `README.md`, `docs/final_project_report.md` — Commit: TBD
+- [x] Step 1 analytics config tuning lesson / Step 1 analytics 配置调优经验 — Priority: P0 — Status: Folded into mainline docs — Output: main analytics and reporting docs — Commit: TBD
 
 Current scope:
 
@@ -543,7 +543,7 @@ Pending after v0.10.1 Step 1:
 
 ## v0.10.2-analytics-only-rerun-with-suggested-config / 建议配置 analytics-only 重跑
 
-- [x] Step 1 analytics-only rerun tool / Step 1 仅 analytics 重跑工具 — Priority: P0 — Status: Completed in working tree — Output: `src/analytics_only_rerun.py`, `tests/test_analytics_only_rerun.py`, `docs/analytics_config_tuning.md`, `docs/real_local_smoke_run_result.md`, `docs/track_video_cli_usage.md`, `docs/video_analytics_mvp.md`, `docs/project_task_board.md`, `README.md`, `docs/final_project_report.md` — Commit: TBD
+- [x] Step 1 analytics-only rerun tool / Step 1 仅 analytics 重跑工具 — Priority: P0 — Status: Completed in working tree — Output: `src/analytics_only_rerun.py`, `tests/test_analytics_only_rerun.py`, main analytics and reporting docs — Commit: TBD
 - [x] Real smoke analytics rerun performed locally / 本地执行真实 smoke analytics 重跑 — Priority: P0 — Status: Completed locally — Output: `/tmp/yolov8_real_smoke_analytics_rerun` — Commit: Not committed
 
 Current scope:
@@ -580,8 +580,8 @@ Pending after v0.10.2 Step 1:
 
 ## v0.10.3-suggested-analytics-overlay-plan / 建议 analytics overlay plan
 
-- [x] Step 1 overlay plan and geometry validation / Step 1 overlay plan 与几何校验 — Priority: P0 — Status: Completed in working tree — Output: `src/analytics_overlay_plan.py`, `tests/test_analytics_overlay_plan.py`, `docs/analytics_config_tuning.md`, `docs/real_local_smoke_run_result.md`, `docs/track_video_cli_usage.md`, `docs/video_analytics_mvp.md`, `docs/project_task_board.md`, `README.md`, `docs/final_project_report.md` — Commit: TBD
-- [x] Real smoke overlay plan generated locally / 本地生成真实 smoke overlay plan — Priority: P0 — Status: Completed locally — Output: `/tmp/yolov8_real_smoke/analytics_overlay_plan.json` — Commit: Not committed
+- [x] Step 1 geometry review lesson / Step 1 几何复查经验 — Priority: P0 — Status: Folded into mainline docs — Output: main analytics and rendering docs — Commit: TBD
+- [x] Real smoke geometry review completed locally / 本地完成真实 smoke 几何复查 — Priority: P0 — Status: Completed locally — Output: local-only review summary — Commit: Not committed
 
 Current scope:
 
@@ -838,10 +838,8 @@ Pending after v0.11.5 Step 1:
 
 ## v0.11.6-synthetic-vs-bytetrack-comparison / synthetic 与 ByteTrack 对比
 
-- [x] Comparison helper / 对比 helper — Priority: P0 — Status: Completed in working tree — Output: `src/compare_tracking_outputs.py` — Commit: TBD
-- [x] Comparison tests / 对比测试 — Priority: P0 — Status: Completed in working tree — Output: `tests/test_compare_tracking_outputs.py` — Commit: TBD
-- [x] Local comparison summary / 本地对比摘要 — Priority: P0 — Status: Completed locally — Output: `/tmp/yolov8_tracking_comparison.json` — Commit: Not committed
-- [x] Comparison docs / 对比文档 — Priority: P0 — Status: Completed in working tree — Output: `docs/tracking_comparison.md` — Commit: TBD
+- [x] Synthetic vs ByteTrack conclusion / synthetic 与 ByteTrack 结论 — Priority: P0 — Status: Folded into mainline docs — Output: README, report, and video analytics docs — Commit: TBD
+- [x] Local comparison summary / 本地对比摘要 — Priority: P0 — Status: Completed locally — Output: local-only summary under `/tmp` — Commit: Not committed
 
 Local result summary:
 

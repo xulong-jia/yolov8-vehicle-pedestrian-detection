@@ -149,11 +149,7 @@ Completed experiments and recorded results:
 
 `v0.10.0-cli-module-invocation-ergonomics` documents and tests module-style CLI invocation for local smoke tools. Prefer `.venv/bin/python -m src.run_video_analysis_smoke ...` and `.venv/bin/python -m src.smoke_preflight ...` for local runs. See [track_video.py CLI usage](docs/track_video_cli_usage.md) and [Real Local Smoke Run Result](docs/real_local_smoke_run_result.md).
 
-`v0.10.1-real-smoke-analytics-config-tuning` adds an analytics config tuning helper. It summarizes `tracks.csv` coordinate distributions and suggests line, ROI, and event-rule config for tuning real smoke analytics without rerunning YOLO. See [Analytics Config Tuning](docs/analytics_config_tuning.md).
-
-`v0.10.2-analytics-only-rerun-with-suggested-config` adds analytics-only rerun support. It applies suggested analytics config to existing `detections.csv` and `tracks.csv` without rerunning YOLO or tracking, producing fresh Video Analysis Center artifacts. See [Analytics Config Tuning](docs/analytics_config_tuning.md) and [Real Local Smoke Run Result](docs/real_local_smoke_run_result.md).
-
-`v0.10.3-suggested-analytics-overlay-plan` adds overlay planning and geometry validation for suggested analytics config. It checks line/ROI placement against `tracks.csv` coordinate distributions and prepares a JSON plan for a future renderer without rendering video. See [Analytics Config Tuning](docs/analytics_config_tuning.md).
+`v0.10.1` through `v0.10.3` captured local analytics tuning lessons: real smoke tracks need reviewed line, ROI, and event-rule settings before counts are meaningful. The one-off tuning and overlay helpers have been pruned; the useful guidance is folded into the main analytics, Video Analysis Center, rendering, and Streamlit documentation.
 
 `v0.10.4-tracked-video-rendering` adds tracked video rendering from existing tracks. It renders local preview videos with bbox, track labels, line overlays, and ROI overlays without rerunning YOLO. See [Tracked Video Rendering](docs/tracked_video_rendering.md).
 
@@ -470,7 +466,6 @@ ONNX Runtime benchmark/check:
 - [ONNX Runtime benchmark](docs/onnx_runtime_benchmark.md)
 - [Video analytics MVP](docs/video_analytics_mvp.md)
 - [ByteTrack pipeline validation](docs/bytetrack_pipeline_validation.md)
-- [Synthetic vs ByteTrack tracking comparison](docs/tracking_comparison.md)
 - [Streamlit Video Demo Page](docs/streamlit_video_demo.md)
 - [Project task board](docs/project_task_board.md)
 
@@ -488,8 +483,7 @@ YOLO or the tracker. The local 300-frame validation used `746` ByteTrack rows,
 `v0.11.6` compares synthetic and ByteTrack tracking outputs. The comparison
 shows that ByteTrack tracks are much sparser but carry real MOT semantics, so
 ByteTrack should be used for runtime/demo while synthetic tracking remains the
-deterministic fallback/test path. See
-[Synthetic vs ByteTrack tracking comparison](docs/tracking_comparison.md).
+deterministic fallback/test path.
 
 ## v0.12.0 Streamlit Video Demo Page
 
