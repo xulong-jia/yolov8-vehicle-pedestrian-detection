@@ -2,30 +2,55 @@
 
 ## Overview
 
-This project is a YOLOv8-based vehicle and pedestrian detection system. It covers the full workflow from dataset preparation and label validation to model experiments, image/video inference demos, qualitative error analysis, local application demos, and deployment scaffolding.
+This project is a YOLOv8-based vehicle and pedestrian detection system. It covers the full workflow from dataset preparation and label validation to model experiments, image/video inference, ByteTrack tracking, video analytics, qualitative error analysis, local application demos, FastAPI serving, and Docker deployment acceptance.
 
-Current project scope includes:
+Current final delivery state:
 
-- dataset preparation
-- label validation and cleaning
-- YOLOv8n / YOLOv8s experiments
-- image inference and video inference demo
-- qualitative error analysis
-- Streamlit image detection demo
-- batch prediction CLI
-- FastAPI real image prediction endpoint
-- Docker scaffold
-- pure-Python video analytics MVP contracts and core testable logic
-- project documentation and safety policy
+- Latest final tag: `v1.0.0-final-release-summary`
+- Final status: `Go for final local/Docker acceptance`
+- Docker Actual Smoke: `Passed`
+- Mounted-weight Docker `/predict`: `Passed`
+- Streamlit container smoke: `Passed`
+- FastAPI container smoke: `Passed`
+- Recommended final model: `YOLOv8s`
+- Weights policy: `local_weights/best.pt` is local-only and ignored by Git
 
-## Final Release Entry Points
+Completed system capabilities:
 
-For final review, start with:
+- Dataset/data quality checks
+- YOLOv8 training/evaluation
+- Image prediction
+- Video prediction
+- ByteTrack tracking runtime
+- `tracks.csv`
+- Tracked video rendering
+- Line counter
+- ROI counter
+- Event rules
+- VideoAnalysisCenter
+- Streamlit local demo
+- FastAPI basic endpoints
+- FastAPI video job/result query skeleton
+- Bad Case schema/report foundation
+- Docker build/run smoke
+- mounted-weight Docker `/predict` smoke
+- final acceptance checklist
+- release summary / delivery notes
+
+Future / optional work is non-blocking and includes real async video execution API, Streamlit job launching, real Bad Case collection, optional DeepSORT production runtime, production hardening/observability, and GT-based tracking/counting/ROI/event quantitative evaluation.
+
+## Final Delivery Entry Points
+
+For final review, read in this order:
 
 - [Release Summary](docs/release_summary.md)
 - [Delivery Notes](docs/delivery_notes.md)
 - [Final Acceptance Checklist](docs/final_acceptance_checklist.md)
+- [Final Project Report](docs/final_project_report.md)
 - [Docker Actual Smoke Result](docs/docker_actual_smoke_result.md)
+- [API Usage Guide](docs/api_usage.md)
+- [Bad Case Report](docs/bad_case_report.md)
+- [Video Analytics MVP](docs/video_analytics_mvp.md)
 
 Final status: Go for final local/Docker acceptance, subject to normal
 environment-specific deployment checks.
@@ -121,11 +146,12 @@ Completed experiments and recorded results:
 
 - Local deployment guide.
 - Model loading strategy.
-- FastAPI service with health/config/model-status endpoints and a real `/predict` image inference endpoint.
+- FastAPI service with health/config/model-status endpoints, a real `/predict` image inference endpoint, and video job/result query skeleton endpoints.
 - API usage documentation.
 - Dockerfile without model weights.
 - `.dockerignore` excluding weights, dataset splits, local outputs, runs, and videos.
 - Docker image is designed to exclude model weights and the full dataset.
+- Docker build/run smoke, FastAPI container smoke, Streamlit container smoke, and mounted-weight `/predict` smoke passed locally.
 
 ### Video Analytics MVP
 
@@ -135,13 +161,13 @@ Completed experiments and recorded results:
 
 `v0.8.2-track-video-skeleton` adds a `track_video.py` skeleton CLI for synthetic detections-to-tracks conversion. It validates the CLI and `tracks.csv` contract without reading real video, running YOLO, or integrating ByteTrack/DeepSORT.
 
-`v0.8.3-real-video-reading-skeleton` adds a video reader skeleton for safe video path validation, metadata extraction, and frame-index construction. It does not yet run YOLO, read frames for inference, or integrate ByteTrack/DeepSORT.
+`v0.8.3-real-video-reading-skeleton` adds a video reader skeleton for safe video path validation, metadata extraction, and frame-index construction. At that stage, it did not run YOLO, read frames for inference, or integrate ByteTrack/DeepSORT.
 
 `v0.8.4-video-reader-track-video-integration` connects the video reader skeleton to `track_video.py`. The CLI now supports metadata-only video mode and synthetic detections-to-tracks mode, but still does not run YOLO, perform real tracking, or render tracked video.
 
 `v0.8.5-cli-smoke-docs` documents safe smoke commands for the skeleton CLI. See [track_video.py CLI usage](docs/track_video_cli_usage.md) for synthetic detections-to-tracks mode and metadata-only video mode. The CLI remains a skeleton and does not run YOLO, ByteTrack/DeepSORT, or real tracking.
 
-`v0.9.0-real-video-detection-tracking-foundation` adds CSV-first `predict_video.py` video detection export and a tracking adapter interface skeleton. It defines the `detections.csv` contract and placeholder ByteTrack/DeepSORT adapters, but does not yet integrate real tracker dependencies, run full `track_video.py` real tracking, or render tracked video.
+`v0.9.0-real-video-detection-tracking-foundation` adds CSV-first `predict_video.py` video detection export and a tracking adapter interface skeleton. It defines the `detections.csv` contract and placeholder ByteTrack/DeepSORT adapters; real tracker dependencies, full `track_video.py` real tracking, and tracked video rendering came later.
 
 `v0.9.1-predict-to-track-synthetic-runtime` connects `track_video.py` detections-to-tracks mode to the tracking adapter factory. The synthetic tracker is available through the adapter interface; ByteTrack/DeepSORT remain placeholders. See [track_video.py CLI usage](docs/track_video_cli_usage.md) and [Video analytics MVP](docs/video_analytics_mvp.md).
 
@@ -165,7 +191,7 @@ Completed experiments and recorded results:
 
 `v0.10.4-tracked-video-rendering` adds tracked video rendering from existing tracks. It renders local preview videos with bbox, track labels, line overlays, and ROI overlays without rerunning YOLO. See [Tracked Video Rendering](docs/tracked_video_rendering.md).
 
-`v0.11.0-bytetrack-discovery-spike` adds a ByteTrack integration discovery helper and plan. It does not run real ByteTrack yet; it defines how Ultralytics `model.track`-style outputs can be normalized into the existing `tracks.csv` contract. See [ByteTrack Integration Plan](docs/bytetrack_integration_plan.md).
+`v0.11.0-bytetrack-discovery-spike` adds a ByteTrack integration discovery helper and plan. It did not run real ByteTrack; it defined how Ultralytics `model.track`-style outputs can be normalized into the existing `tracks.csv` contract. See [ByteTrack Integration Plan](docs/bytetrack_integration_plan.md).
 
 `v0.11.1-ultralytics-bytetrack-short-video-spike` adds `src/track_video_bytetrack_spike.py`, a max-frame-limited Ultralytics `model.track(..., tracker="bytetrack.yaml")` spike tool for exporting real ByteTrack-style `tracks.csv` under `/tmp`. The local attempt was blocked by missing `lap`; no generated CSV or preview video is committed. See [ByteTrack Integration Plan](docs/bytetrack_integration_plan.md).
 
@@ -272,11 +298,16 @@ pip install -r requirements.txt
 
 ### 2. Prepare Model Weights
 
-Model weights are not included in GitHub. Place the YOLOv8n baseline weight locally at:
+Model weights are not included in GitHub. For final local/Docker acceptance,
+place the recommended YOLOv8s weight locally at:
 
 ```text
-local_weights/yolov8n_640_50epochs/best.pt
+local_weights/best.pt
 ```
+
+Historical experiment weights may also live under versioned local-only folders
+such as `local_weights/yolov8s_640_50epochs/best.pt`; do not commit either
+form.
 
 ### 3. Run Setup Check
 
@@ -301,7 +332,7 @@ make streamlit
 Example command:
 
 ```bash
-python3 src/batch_predict.py --model local_weights/yolov8n_640_50epochs/best.pt --source docs/error_case_gallery/images --output-csv local_outputs/batch_predictions/detections.csv
+python3 src/batch_predict.py --model local_weights/best.pt --source docs/error_case_gallery/images --output-csv local_outputs/batch_predictions/detections.csv
 ```
 
 Notes:
@@ -326,13 +357,24 @@ uvicorn src.api:app --host 0.0.0.0 --port 8000
 
 Current API scope:
 
-- `/health`, `/config`, and `/model-status` are available.
+- `GET /health`
+- `GET /config`
+- `GET /model-status`
+- `POST /predict`
+- `POST /api/videos/analyze`
+- `GET /api/videos/jobs/{job_id}`
+- `GET /api/videos/jobs/{job_id}/detections`
+- `GET /api/videos/jobs/{job_id}/tracks`
+- `GET /api/videos/jobs/{job_id}/analytics`
+- `GET /api/videos/jobs/{job_id}/events`
 - `/predict` accepts multipart image upload and returns JSON detections.
 - YOLO is lazy-loaded from `MODEL_PATH` or the configured default model path on the first prediction request.
+- The video job/result API is a skeleton/result-query layer for existing VideoAnalysisCenter artifacts.
+- Real async video execution remains future work.
 - Uploaded images and prediction outputs are not saved to the repository.
 - No model is loaded at import time.
 
-### 7. Docker / Deployment Static Acceptance
+### 7. Docker / Deployment Acceptance
 
 Build example:
 
@@ -361,13 +403,18 @@ docker run --rm -p 8501:8501 \
 ```
 
 Do not copy weights into the Docker image. Mount weights read-only at runtime.
-`v0.14.1` added static Docker deployment acceptance, and `v0.14.3`
-documented the Docker actual smoke preflight. Actual Docker build/run was later
-performed successfully in `v0.14.4`.
-`v0.14.5` records the mounted-weight container `/predict` smoke: image build,
-FastAPI container smoke, Streamlit container smoke, and mounted-weight
-`/predict` all passed. The local model weight was mounted read-only and was not
-committed.
+Docker build passed. FastAPI container smoke passed. Streamlit container smoke
+passed. Mounted-weight `/predict` passed with `local_weights/best.pt` mounted
+read-only at `/app/local_weights/best.pt`. The Docker image is local-only and is
+not committed. Full details are in
+[Docker Actual Smoke Result](docs/docker_actual_smoke_result.md).
+
+Mounted `/predict` curl example:
+
+```bash
+curl -X POST "http://localhost:8000/predict?conf=0.25&imgsz=640&device=cpu" \
+  -F "file=@sample.jpg"
+```
 
 ## Makefile Commands
 
@@ -407,8 +454,8 @@ Model family comparison:
 - YOLOv8m completed training and official test evaluation, but did not outperform YOLOv8s on official test mAP50-95.
 - YOLOv8m vs YOLOv8s official test delta: Precision `-0.013`, Recall `-0.018`, mAP50 `-0.004`, mAP50-95 `-0.007`.
 - YOLOv8n remains the fastest measured model.
-- YOLOv8m PyTorch speed benchmark has not yet been run.
-- YOLOv8m ONNX Runtime benchmark has not yet been run.
+- YOLOv8m PyTorch speed benchmark is optional and was not run.
+- YOLOv8m ONNX Runtime benchmark is optional and was not run.
 - Details: [YOLOv8 model family comparison](docs/model_family_comparison.md)
 
 Image size ablation:
@@ -489,6 +536,67 @@ ONNX Runtime benchmark/check:
 - Added YOLOv8n image size ablation documentation.
 - Added YOLOv8m training and official test lightweight docs.
 - Added YOLOv8 model family comparison.
+- Added real video reading and `track_video.py` integration.
+- Added CLI smoke documentation.
+- Added real video detection/tracking foundation.
+- Added predict-to-track smoke flow.
+- Added video analysis job skeleton and three/four-step local flow.
+- Added local smoke preflight and result documentation.
+
+### 2026-06-15
+
+- Added CLI module invocation ergonomics.
+- Added analytics config tuning and tracked video rendering.
+- Added ByteTrack discovery and runtime integration planning.
+
+### 2026-06-16
+
+- Integrated ByteTrack runtime into `track_video.py`.
+- Validated ByteTrack analytics and rendering pipeline.
+- Added synthetic vs ByteTrack comparison.
+- Added Streamlit video demo page.
+- Began pruning non-manual helper tools and historical documents.
+
+### 2026-06-17
+
+- Pruned non-manual helper tools.
+- Pruned ByteTrack validation history docs.
+- Added FastAPI basic service endpoints.
+- Added FastAPI video job/result query skeleton.
+
+### 2026-06-18
+
+- Added Bad Case schema/report foundation.
+- Added Docker deployment static acceptance.
+- Added final acceptance checklist.
+- Added Docker actual build smoke preflight.
+
+### 2026-06-19
+
+- Performed Docker actual smoke.
+- Fixed Docker FastAPI dependency installation.
+- Recorded partial Docker actual smoke with mounted predict still open at that point.
+- Prepared local YOLOv8s `best.pt` for mounted-weight smoke.
+
+### 2026-06-20
+
+- Ran mounted-weight Docker `/predict` smoke successfully.
+- Updated final documentation consistency after Docker smoke.
+- Added final release summary and delivery notes.
+- Published final tag `v1.0.0-final-release-summary`.
+
+## Version / Tag History
+
+- `v0.13.0-fastapi-basic-service-acceptance`
+- `v0.13.1-fastapi-video-job-results-skeleton`
+- `v0.14.0-bad-case-schema-report-foundation`
+- `v0.14.1-docker-deployment-static-acceptance`
+- `v0.14.2-final-acceptance-checklist`
+- `v0.14.3-docker-actual-build-smoke-preflight`
+- `v0.14.4-docker-actual-build-smoke`
+- `v0.14.5-mounted-weight-container-predict-smoke`
+- `v0.14.6-final-doc-consistency-pass`
+- `v1.0.0-final-release-summary`
 
 ## Documentation Index
 
@@ -525,6 +633,9 @@ ONNX Runtime benchmark/check:
 - [Bad Case Schema](docs/bad_cases_schema.md)
 - [Bad Case Report](docs/bad_case_report.md)
 - [Final Acceptance Checklist](docs/final_acceptance_checklist.md)
+- [Final Project Report](docs/final_project_report.md)
+- [Release Summary](docs/release_summary.md)
+- [Delivery Notes](docs/delivery_notes.md)
 - [Project task board](docs/project_task_board.md)
 
 ## v0.11.5 ByteTrack Pipeline Validation
@@ -566,8 +677,8 @@ Do not commit:
 - `dataset/test/`
 - `runs/`
 - `local_outputs/`
-- `local_videos/`
-- `docs/video_demos/*.avi` or other large videos
+- `local_videos/source/`
+- new large videos
 - `.venv/`
 
 Policy:
@@ -575,26 +686,25 @@ Policy:
 - Model weights are local-only.
 - Full dataset splits are local-only.
 - Generated outputs are local-only.
+- Docker images/layers are local-only and are not committed.
+- The only known retained large demo asset is `docs/video_demos/yolov8n_640_50epochs/pexels_crosswalk_traffic_demo.avi`.
 - GitHub contains code, docs, configs, summaries, and selected lightweight demo assets only.
 
-## Current Limitations
+## Known Limitations / Future Work
 
-- Docker deployment static acceptance is documented, and Docker build/FastAPI/Streamlit container smoke has run locally.
-- Docker actual smoke result is documented; mounted-weight `/predict` passed with a local ignored `best.pt`.
-- Final acceptance is Go for final local/Docker acceptance, subject to normal environment-specific deployment checks.
-- Full real Bad Case collection and `/api/bad-cases` are not implemented yet.
-- YOLOv8m PyTorch speed benchmark has not yet been run.
-- YOLOv8m ONNX Runtime benchmark has not yet been run.
-- No ONNX Runtime mAP/NMS evaluation has been completed.
-- Full model weights are not included in the repository.
-- ONNX files are not included in the repository.
-- Full dataset split folders are not included in the repository.
+- Real async video execution API.
+- Streamlit job launcher.
+- Real Bad Case collection.
+- Optional DeepSORT production runtime.
+- Production hardening, security, and observability.
+- GT-based tracking/counting/ROI/event quantitative reports.
+- Optional full-length production validation.
+- Optional YOLOv8m PyTorch and ONNX Runtime speed benchmarking if model-family latency completeness is needed.
+- Optional ONNX Runtime mAP/NMS evaluation if a separate evaluation protocol is defined.
 
 ## Next Steps
 
 - Add README badges if needed.
 - Update presentation or portfolio summary materials.
-- Optionally run YOLOv8m PyTorch speed benchmark if model-family latency completeness is needed.
-- Optionally run YOLOv8m ONNX Runtime benchmark if deployment completeness is needed.
-- Optionally run ONNX Runtime mAP/NMS evaluation only if a separate evaluation protocol is defined.
-- Continue video analytics after v0.8.5 with YOLO frame inference planning before tracker adapter and Streamlit/FastAPI workflow integration.
+- Use [Release Summary](docs/release_summary.md), [Delivery Notes](docs/delivery_notes.md), and [Final Acceptance Checklist](docs/final_acceptance_checklist.md) as the final handoff entry points.
+- Keep future work separated from the accepted v1.0.0 delivery package.
