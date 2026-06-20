@@ -448,3 +448,24 @@ a database, or start background workers.
 Tests use FastAPI `TestClient` and pytest `tmp_path` artifacts. They verify job
 creation, result lookup, missing-artifact errors, row limits, and that video job
 endpoints do not import the real prediction, tracking, or rendering modules.
+
+## v0.14.0 Bad Case Schema and Report Foundation
+
+`v0.14.0` adds the Bad Case foundation required by the final execution manual.
+The new `docs/bad_cases_schema.md` defines a stable `bad_cases.csv` contract
+with required fields for module attribution, case type, expected result, actual
+result, root cause, tags, evidence path, and `added_to_eval_set`.
+
+The new `docs/bad_case_report.md` connects that schema to the existing
+taxonomy, hard examples, and error case gallery:
+
+- `docs/error_taxonomy.md`
+- `docs/hard_examples.md`
+- `docs/error_case_gallery/README.md`
+- `docs/error_case_gallery/cases.csv`
+
+This reduces the final acceptance gap around Bad Case reporting, but it does
+not claim that a full real Bad Case dataset has already been collected. The
+current gallery CSV remains a small hand-written documentation sample. Future
+work should collect reviewed real cases, add `/api/bad-cases`, link Bad Cases
+to evaluation reports, and build a selected regression set.

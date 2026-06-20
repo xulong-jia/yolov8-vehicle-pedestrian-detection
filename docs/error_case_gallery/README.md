@@ -28,6 +28,18 @@ Cases were selected to cover both successful detections and common qualitative e
 
 The labels are based on Day 6 image-level GT and prediction count comparisons. Exact object-level false positives, false negatives, duplicate boxes, and class confusion still require manual visual inspection.
 
+## Bad Case Schema Alignment
+
+The gallery table is aligned with the mainline Bad Case schema in
+`docs/bad_cases_schema.md`. Gallery examples should use the same fields as
+future `bad_cases.csv` records, including `module`, `case_type`, `root_cause`,
+`tags`, `snapshot_path`, and `added_to_eval_set`.
+
+The gallery is intentionally lightweight. Do not commit large images, videos,
+model weights, `runs/`, or `local_outputs/` as evidence. Use small
+documentation examples under `docs/error_case_gallery/images/` or external/local
+paths described in text.
+
 ## Case Table
 
 | Case | Image | Category | Suggested Caption |
@@ -57,3 +69,10 @@ This gallery is qualitative analysis only. It is not official metric evaluation 
 - Exact false-positive boxes, missed objects, duplicate boxes, and class-confusion locations require manual visual inspection.
 - The selected examples come from a 50-image sample, not the full test set.
 - Some predictions may be reasonable even when GT labels are incomplete or ambiguous.
+
+## Related Files
+
+- `docs/bad_cases_schema.md`
+- `docs/bad_case_report.md`
+- `docs/error_taxonomy.md`
+- `docs/hard_examples.md`

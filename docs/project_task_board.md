@@ -936,6 +936,31 @@ Pending after v0.13.1 Step 1:
 - [ ] Streamlit job launcher / Streamlit 任务启动器 — Target: Future — Status: Pending
 - [ ] Docker production validation / Docker 生产验证 — Target: Future — Status: Pending
 
+## v0.14.0-bad-case-schema-report-foundation / Bad Case schema 与报告基础
+
+- [x] `bad_cases.csv` schema / Bad Case CSV 数据契约 — Priority: P0 — Status: Completed in working tree — Output: `docs/bad_cases_schema.md` — Commit: TBD
+- [x] Bad Case report / Bad Case 报告 — Priority: P0 — Status: Completed in working tree — Output: `docs/bad_case_report.md` — Commit: TBD
+- [x] Taxonomy, gallery, and hard examples alignment / taxonomy、gallery、hard examples 对齐 — Priority: P0 — Status: Completed in working tree — Output: `docs/error_taxonomy.md`, `docs/hard_examples.md`, `docs/error_case_gallery/README.md`, `docs/error_case_gallery/cases.csv` — Commit: TBD
+- [x] Bad Case docs consistency test / Bad Case 文档一致性测试 — Priority: P0 — Status: Completed in working tree — Output: `tests/test_bad_cases_schema_docs.py` — Commit: TBD
+
+Scope:
+
+- follows the final execution manual Bad Case fields and process
+- defines allowed `module`, `case_type`, and recommended `tags`
+- keeps `docs/error_case_gallery/cases.csv` as a tiny hand-written documentation sample
+- does not create a full real `bad_cases.csv`
+- does not implement `/api/bad-cases`
+- does not run YOLO, ByteTrack, DeepSORT, analytics, or rendering
+- does not generate outputs
+
+Pending after v0.14.0 Step 1:
+
+- [ ] Real Bad Case collection / 真实 Bad Case 收集 — Target: Future — Status: Pending
+- [ ] `/api/bad-cases` endpoints / Bad Case API — Target: Future — Status: Pending
+- [ ] Evaluation API / 评测 API — Target: Future — Status: Pending
+- [ ] Docker production verification / Docker 生产验证 — Target: Future — Status: Pending
+- [ ] Real async video execution / 真实异步视频执行 — Target: Future — Status: Pending
+
 ## P3 — Optional Future Experiments / 可选未来实验
 
 - [x] Run YOLOv8s official test split validation if weight is available / 在权重可用时运行 YOLOv8s 官方测试集验证 — Priority: P3 — Status: Done — Output: `docs/experiments/yolov8s_640_50epochs_retrain/`, `docs/evaluation/yolov8s_640_50epochs_official/` — Result: P `0.865`, R `0.838`, mAP50 `0.876`, mAP50-95 `0.601` — Commit: `e4d5adb`

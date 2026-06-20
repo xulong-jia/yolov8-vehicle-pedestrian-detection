@@ -904,3 +904,32 @@ Next recommended FastAPI work:
 - add real async job execution only after a runtime policy is defined
 - add rules/ROI/bad-case/evaluation APIs
 - add Docker/deployment validation after the API surface is stable
+
+## v0.14.0 Bad Case Foundation
+
+`v0.14.0` connects the video analytics artifacts to the final execution
+manual's Bad Case workflow.
+
+Bad Cases can reference Video Analysis Center outputs with:
+
+- `video_id`
+- `frame_index`
+- `timestamp_sec`
+- `track_id`
+- `snapshot_path`
+
+Counting failures map to `module=counter`; ROI membership or configuration
+failures map to `module=roi`; event-rule failures map to `module=event`.
+Detector and tracker failures remain tied to detection rows and `tracks.csv`.
+
+Relevant documents:
+
+- `docs/bad_cases_schema.md`
+- `docs/bad_case_report.md`
+- `docs/error_taxonomy.md`
+- `docs/hard_examples.md`
+- `docs/error_case_gallery/README.md`
+
+This phase does not collect a full real Bad Case dataset, does not implement
+`/api/bad-cases`, and does not add evaluation API endpoints. It establishes the
+schema and report foundation for later review and regression work.

@@ -169,6 +169,8 @@ Completed experiments and recorded results:
 
 `v0.13.1-fastapi-video-job-results-skeleton` adds the execution-manual FastAPI video job/result query skeleton: `POST /api/videos/analyze`, `GET /api/videos/jobs/{job_id}`, and result readers for detections, tracks, analytics, and events. The API uses an in-memory job registry and can attach to existing VideoAnalysisCenter run directories; it does not run YOLO, run ByteTrack/DeepSORT, execute analytics, render videos, or write generated artifacts from API calls. See [API usage guide](docs/api_usage.md).
 
+`v0.14.0-bad-case-schema-report-foundation` adds the execution-manual Bad Case foundation. It defines the `bad_cases.csv` schema, adds a Bad Case report, and aligns the existing taxonomy, hard examples, and error gallery with a stable review contract. This does not collect a full real Bad Case dataset and does not add `/api/bad-cases`; those remain future work. See [Bad Case Schema](docs/bad_cases_schema.md) and [Bad Case Report](docs/bad_case_report.md).
+
 This phase does not include DeepSORT integration, ByteTrack production hardening, Streamlit job launching, real async FastAPI video execution, database integration, full-length tracked video validation, or real video benchmarks.
 
 Details: [Video analytics MVP](docs/video_analytics_mvp.md)
@@ -473,6 +475,8 @@ ONNX Runtime benchmark/check:
 - [ByteTrack integration plan](docs/bytetrack_integration_plan.md)
 - [Tracked Video Rendering](docs/tracked_video_rendering.md)
 - [Streamlit Video Demo Page](docs/streamlit_video_demo.md)
+- [Bad Case Schema](docs/bad_cases_schema.md)
+- [Bad Case Report](docs/bad_case_report.md)
 - [Project task board](docs/project_task_board.md)
 
 ## v0.11.5 ByteTrack Pipeline Validation
@@ -528,6 +532,7 @@ Policy:
 ## Current Limitations
 
 - Docker scaffold has not been built or deployed as a verified production image.
+- Full real Bad Case collection and `/api/bad-cases` are not implemented yet.
 - YOLOv8m PyTorch speed benchmark has not yet been run.
 - YOLOv8m ONNX Runtime benchmark has not yet been run.
 - No ONNX Runtime mAP/NMS evaluation has been completed.

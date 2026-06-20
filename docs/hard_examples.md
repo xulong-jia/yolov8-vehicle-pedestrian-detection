@@ -41,12 +41,31 @@ The current hard examples cover:
 
 Key patterns include crowded Person scenes, dense traffic scenes, and Car / Truck / mini-truck confusion candidates. Exact object-level errors still require manual visual inspection because the source labels are based on image-level count comparisons.
 
+## Mapping to bad_cases.csv Schema
+
+Hard examples are candidate sources for future Bad Case records. When a hard
+example is promoted to `bad_cases.csv`, it should use the schema in
+`docs/bad_cases_schema.md`:
+
+- use `module=detector` for image/video detection errors
+- map count-based missed objects to `case_type=false_negative`
+- map extra or duplicate boxes to `case_type=false_positive` or
+  `case_type=duplicate_detection`
+- map Car / Truck / mini-truck shifts to `case_type=class_confusion`
+- keep the qualitative cause in `root_cause`
+- use comma-separated schema tags such as `crowded_scene`, `small_object`, or
+  `needs_threshold_tuning`
+
+Hard examples are a review queue, not a complete `bad_cases.csv` dataset.
+
 ## Files
 
 - Hard examples table: `docs/hard_examples.csv`
 - Error taxonomy: `docs/error_taxonomy.md`
 - Gallery case table: `docs/error_case_gallery/cases.csv`
 - Gallery images: `docs/error_case_gallery/images/`
+- Bad Case schema: `docs/bad_cases_schema.md`
+- Bad Case report: `docs/bad_case_report.md`
 
 ## Safety Note
 

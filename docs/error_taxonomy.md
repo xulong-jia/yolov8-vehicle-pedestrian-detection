@@ -176,8 +176,51 @@ Increasing the confidence threshold may remove low-confidence false positives, b
 - `low_confidence_correct_detection`
 - `needs_manual_review`
 
+## Bad Case Schema Alignment
+
+`v0.14.0` introduces the mainline Bad Case schema in
+`docs/bad_cases_schema.md`. The schema keeps error attribution explicit with a
+`module` field and a controlled `case_type` field.
+
+Allowed `module` values:
+
+- `detector`
+- `tracker`
+- `counter`
+- `roi`
+- `event`
+- `api`
+- `streamlit`
+- `dataset`
+- `deployment`
+- `documentation`
+
+Allowed `case_type` values:
+
+- `false_positive`
+- `false_negative`
+- `class_confusion`
+- `localization_error`
+- `duplicate_detection`
+- `missed_track`
+- `id_switch`
+- `fragmented_track`
+- `count_error`
+- `line_crossing_error`
+- `roi_config_error`
+- `rule_error`
+- `api_contract_error`
+- `data_quality_issue`
+- `deployment_issue`
+- `documentation_gap`
+
+This taxonomy remains qualitative. The schema provides the stable CSV contract
+for future reviewed cases and API work.
+
 ## Related Files
 
+- `docs/bad_cases_schema.md`
+- `docs/bad_case_report.md`
 - `docs/error_case_gallery/README.md`
 - `docs/error_case_gallery/cases.csv`
 - `docs/per_class_failure_analysis.md`
