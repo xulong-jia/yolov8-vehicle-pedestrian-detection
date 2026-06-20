@@ -93,7 +93,8 @@ gt_evt_1,wrong_direction,demo,90,3.0,12,Person,,crosswalk_line,warning,example r
 ```
 
 For the current scaffold, JSONL is also supported for predicted and GT event
-inputs. The minimal matching rule is:
+inputs. CSV event inputs are also supported for small reviewed samples. The
+minimal matching rule is:
 
 - same `event_type`
 - absolute `timestamp_sec` difference within the configured time window
@@ -125,3 +126,27 @@ Outputs:
 
 Keep these outputs local unless a small reviewed sample is intentionally added
 as documentation.
+
+## Reviewed GT Sample Pack
+
+`v1.7.0-gt-quantitative-evaluation` adds a small reviewed sample pack under:
+
+- `docs/evaluation/reviewed_gt_samples/`
+- `docs/evaluation/reviewed_gt_eval_result/`
+- `docs/evaluation/reviewed_gt_eval_result.md`
+
+The sample pack includes lightweight CSV files for counting, ROI, events, and
+tracking. It demonstrates a reviewable GT-to-prediction-to-metrics loop using
+`src.evaluation.video_eval_scaffold`.
+
+The reviewed sample result is:
+
+- counting: `gt_count=9`, `pred_count=10`, `abs_error=1`, `MAE=1.0`
+- ROI: `compared_rows=4`, `frame_count_mae=1.0`
+- events: `gt_events=3`, `pred_events=4`, `matched_events=2`,
+  `precision=0.5`, `recall=0.6666666666666666`
+- tracking: `track_count=5`, `avg_track_length=2.0`,
+  `short_track_ratio=0.6`, `gt_required_for_idf1=true`
+
+This is not a large benchmark, does not include complete MOT IDF1/MOTA, and
+does not replace production GT evaluation.

@@ -1,0 +1,5 @@
+event_id,event_type,video_id,frame_index,timestamp_sec,track_id,class_name,roi_id,line_id,severity,notes
+pred_evt_001,crowd_warning,demo_crosswalk_reviewed,221,7.6,7,Person,waiting_area,,warning,Matches crowd warning within time window
+pred_evt_002,long_stay,demo_crosswalk_reviewed,240,15.8,12,Person,waiting_area,,warning,Outside one-second match window
+pred_evt_003,wrong_direction,demo_traffic_reviewed,246,8.4,18,Car,,traffic_line,warning,Matches wrong-direction within time window
+pred_evt_004,threshold_error,demo_traffic_reviewed,260,8.7,22,Car,,traffic_line,warning,Extra unstable short-track event

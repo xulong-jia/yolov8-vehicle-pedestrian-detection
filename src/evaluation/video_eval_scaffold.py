@@ -35,6 +35,15 @@ def read_jsonl_rows(path: str | Path | None) -> list[dict[str, Any]]:
     return rows
 
 
+def read_event_rows(path: str | Path | None) -> list[dict[str, Any]]:
+    if not path:
+        return []
+    input_path = Path(path)
+    if input_path.suffix.lower() == ".jsonl":
+        return read_jsonl_rows(input_path)
+    return read_csv_rows(input_path)
+
+
 def evaluate_counting(
     pred_rows: Iterable[dict[str, Any]],
     gt_rows: Iterable[dict[str, Any]],
@@ -137,8 +146,8 @@ def run_video_eval_scaffold(
         read_csv_rows(gt_roi_counts),
     )
     event_metrics = evaluate_events(
-        read_jsonl_rows(pred_events),
-        read_jsonl_rows(gt_events),
+        read_event_rows(pred_events),
+        read_event_rows(gt_events),
     )
 
     _write_metrics_csv(output_path / "tracking_metrics.csv", tracking_metrics)

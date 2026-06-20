@@ -1,0 +1,11 @@
+video_id,frame_index,timestamp_sec,track_id,class_name,xmin,ymin,xmax,ymax,confidence
+demo_crosswalk_reviewed,96,3.20,7,Person,118,82,161,211,0.81
+demo_crosswalk_reviewed,97,3.24,7,Person,119,83,162,212,0.79
+demo_crosswalk_reviewed,98,3.27,7,Person,121,84,163,213,0.76
+demo_crosswalk_reviewed,104,3.47,11,Person,201,91,244,228,0.72
+demo_crosswalk_reviewed,105,3.50,11,Person,203,92,246,229,0.68
+demo_traffic_reviewed,118,3.94,14,Car,301,181,421,299,0.84
+demo_traffic_reviewed,130,4.34,18,Truck,481,191,611,319,0.66
+demo_traffic_reviewed,131,4.37,18,Truck,484,192,614,321,0.63
+demo_traffic_reviewed,132,4.40,18,Truck,487,193,617,323,0.60
+demo_traffic_reviewed,260,8.68,22,Car,520,200,610,290,0.41

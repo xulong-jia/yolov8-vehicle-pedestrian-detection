@@ -6,6 +6,27 @@ import csv
 import json
 import subprocess
 import sys
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[1]
+REVIEWED_SAMPLES = ROOT / "docs" / "evaluation" / "reviewed_gt_samples"
+REVIEWED_RESULT = ROOT / "docs" / "evaluation" / "reviewed_gt_eval_result"
+REVIEWED_REPORT = ROOT / "docs" / "evaluation" / "reviewed_gt_eval_result.md"
+
+RISK_MARKERS = [
+    "local_outputs/",
+    "local_weights/",
+    "runs/",
+    ".pt",
+    ".pth",
+    ".onnx",
+    ".mp4",
+    ".avi",
+    ".mov",
+    ".mkv",
+    ".zip",
+]
 
 
 def _write_csv(path, fieldnames, rows):
@@ -163,3 +184,133 @@ def test_video_eval_scaffold_cli_help_runs():
     assert "--pred-tracks" in result.stdout
     assert "--gt-events" in result.stdout
     assert "--output-dir" in result.stdout
+
+
+def test_read_event_rows_supports_csv_events(tmp_path):
+    from src.evaluation.video_eval_scaffold import read_event_rows
+
+    event_csv = tmp_path / "events.csv"
+    _write_csv(
+        event_csv,
+        ["event_type", "timestamp_sec"],
+        [{"event_type": "wrong_direction", "timestamp_sec": "8.1"}],
+    )
+
+    assert read_event_rows(event_csv) == [
+        {"event_type": "wrong_direction", "timestamp_sec": "8.1"}
+    ]
+
+
+def test_reviewed_gt_samples_exist_and_match_template_fields():
+    required_files = {
+        "counting_gt.csv": ["video_id", "line_id", "class_name", "direction", "count", "notes"],
+        "counting_pred.csv": ["video_id", "line_id", "class_name", "direction", "count", "notes"],
+        "roi_gt.csv": ["video_id", "roi_id", "frame_index", "class_name", "count", "notes"],
+        "roi_pred.csv": ["video_id", "roi_id", "frame_index", "class_name", "count", "notes"],
+        "event_gt.csv": [
+            "event_id",
+            "event_type",
+            "video_id",
+            "frame_index",
+            "timestamp_sec",
+            "track_id",
+            "class_name",
+            "roi_id",
+            "line_id",
+            "severity",
+            "notes",
+        ],
+        "event_pred.csv": [
+            "event_id",
+            "event_type",
+            "video_id",
+            "frame_index",
+            "timestamp_sec",
+            "track_id",
+            "class_name",
+            "roi_id",
+            "line_id",
+            "severity",
+            "notes",
+        ],
+        "tracking_gt.csv": [
+            "video_id",
+            "frame_index",
+            "timestamp_sec",
+            "gt_track_id",
+            "class_name",
+            "xmin",
+            "ymin",
+            "xmax",
+            "ymax",
+            "visibility",
+            "notes",
+        ],
+        "tracking_pred.csv": [
+            "video_id",
+            "frame_index",
+            "timestamp_sec",
+            "track_id",
+            "class_name",
+            "xmin",
+            "ymin",
+            "xmax",
+            "ymax",
+            "confidence",
+        ],
+    }
+
+    assert REVIEWED_SAMPLES.is_dir()
+    for filename, fields in required_files.items():
+        path = REVIEWED_SAMPLES / filename
+        assert path.is_file()
+        assert path.stat().st_size < 20_000
+        with path.open(newline="", encoding="utf-8") as file:
+            reader = csv.DictReader(file)
+            assert reader.fieldnames is not None
+            for field in fields:
+                assert field in reader.fieldnames
+            rows = list(reader)
+        assert rows
+        _assert_rows_do_not_reference_risk_paths(rows)
+
+
+def test_reviewed_gt_eval_result_exists_and_has_expected_metrics():
+    summary_path = REVIEWED_RESULT / "evaluation_summary.json"
+    assert REVIEWED_REPORT.is_file()
+    assert summary_path.is_file()
+    for filename in [
+        "counting_metrics.csv",
+        "roi_metrics.csv",
+        "event_metrics.csv",
+        "tracking_metrics.csv",
+    ]:
+        assert (REVIEWED_RESULT / filename).is_file()
+
+    summary = json.loads(summary_path.read_text(encoding="utf-8"))
+    assert summary["counting"]["MAE"] == 1.0
+    assert summary["counting"]["gt_count"] == 9
+    assert summary["counting"]["pred_count"] == 10
+    assert summary["roi"]["frame_count_mae"] == 1.0
+    assert summary["roi"]["compared_rows"] == 4
+    assert summary["event"]["precision"] == 0.5
+    assert summary["event"]["recall"] == 2 / 3
+    assert summary["event"]["matched_events"] == 2
+    assert summary["tracking"]["gt_required_for_idf1"] is True
+    assert summary["tracking"]["track_count"] == 5
+
+    combined = "\n".join(
+        path.read_text(encoding="utf-8")
+        for path in [REVIEWED_REPORT, summary_path, *REVIEWED_RESULT.glob("*.csv")]
+    )
+    for marker in RISK_MARKERS:
+        assert marker not in combined
+
+
+def _assert_rows_do_not_reference_risk_paths(rows):
+    for row in rows:
+        for value in row.values():
+            lowered = (value or "").lower()
+            assert not lowered.startswith("/")
+            for marker in RISK_MARKERS:
+                assert marker not in lowered

@@ -3,7 +3,7 @@
 ## Release Identity
 
 - Original final release: v1.0.0-final-release-summary
-- Current latest documented state: v1.6.0-reviewed-bad-case-collection
+- Current latest documented state: v1.7.0-gt-quantitative-evaluation
 - Based on original final tag: v0.14.6-final-doc-consistency-pass
 - Project name: YOLOv8 Vehicle and Pedestrian Detection System
 - Repository: yolov8-vehicle-pedestrian-detection
@@ -11,7 +11,7 @@
 
 ## Post-Final Enhancements
 
-After the original `v1.0.0-final-release-summary`, the repository added eight
+After the original `v1.0.0-final-release-summary`, the repository added nine
 bounded enhancements:
 
 - `v1.1.0-async-video-job`: FastAPI async video job execution and Streamlit
@@ -30,6 +30,9 @@ bounded enhancements:
   `X-Request-ID` request correlation, and standard-library structured logs.
 - `v1.6.0-reviewed-bad-case-collection`: small reviewed Bad Case sample
   collection for detector, tracker, counter, ROI, and event examples.
+- `v1.7.0-gt-quantitative-evaluation`: small reviewed GT sample pack and
+  scaffold-generated quantitative metrics for counting, ROI, events, and
+  tracking engineering metrics.
 
 The SQLite index is unit-tested and has been verified with a real local FastAPI
 process restart smoke. Docker actual smoke was refreshed for the v1.1-v1.4 API
@@ -54,6 +57,7 @@ surface.
 - Bad Case schema/report foundation and metadata collection scaffold
 - Small reviewed Bad Case sample collection
 - GT evaluation scaffold for tracking/counting/ROI/event artifacts
+- Small reviewed GT quantitative evaluation sample pack
 - FastAPI artifact download endpoints for registered video job artifacts
 - Docker v1 API smoke refresh
 - Optional API key authentication and request/operation structured logs
@@ -103,8 +107,14 @@ registered in job metadata; arbitrary path downloads are not supported.
 - The evaluation scaffold can compare prediction CSV/JSONL artifacts against
   small reviewed GT templates for counting, ROI, events, and tracking
   engineering metrics.
+- `docs/evaluation/reviewed_gt_samples/` and
+  `docs/evaluation/reviewed_gt_eval_result/` demonstrate a small reviewed
+  GT-to-prediction-to-metrics loop.
 - GT templates are documented in [Video Analytics GT Templates](evaluation/gt_templates.md).
 - No full reviewed GT dataset or large generated evaluation output is committed.
+- Reviewed sample metrics: counting `MAE=1.0`, ROI `frame_count_mae=1.0`,
+  event `precision=0.5`, event `recall=0.6666666666666666`, and tracking
+  `gt_required_for_idf1=true`.
 
 ## Docker Summary
 
@@ -140,7 +150,8 @@ registered in job metadata; arbitrary path downloads are not supported.
 ## Known Limitations / Future Work
 
 - large reviewed Bad Case labeling and curated GT dataset creation
-- full GT-based tracking/counting/ROI/event evaluation on reviewed labels
+- large-scale GT-based tracking/counting/ROI/event evaluation beyond the small
+  reviewed sample
 - optional DeepSORT runtime
 - OAuth/JWT, multi-user permissions, and external monitoring
 - optional full-length production validation

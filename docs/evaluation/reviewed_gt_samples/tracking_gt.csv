@@ -1,0 +1,5 @@
+video_id,frame_index,timestamp_sec,gt_track_id,class_name,xmin,ymin,xmax,ymax,visibility,notes
+demo_crosswalk_reviewed,96,3.20,gt_person_01,Person,120,80,160,210,visible,RBC-0007 reviewed ID switch context
+demo_crosswalk_reviewed,104,3.47,gt_person_02,Person,200,90,245,230,partially_occluded,RBC-0008 reviewed track lost context
+demo_traffic_reviewed,118,3.94,gt_vehicle_01,Car,300,180,420,300,visible,RBC-0009 reviewed ID switch context
+demo_traffic_reviewed,130,4.34,gt_vehicle_02,Truck,480,190,610,320,visible,RBC-0010 reviewed track lost context

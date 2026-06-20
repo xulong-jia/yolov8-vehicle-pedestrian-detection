@@ -1,0 +1,5 @@
+video_id,roi_id,frame_index,class_name,count,notes
+demo_crosswalk_reviewed,waiting_area,184,Person,3,One extra person included by center-point membership
+demo_crosswalk_reviewed,waiting_area,195,Person,2,One waiting-area person missed
+demo_traffic_reviewed,bus_lane,207,Car,1,Matches reviewed traffic ROI sample
+demo_traffic_reviewed,bus_lane,300,Bus,0,Bus lane ROI misses edge lane

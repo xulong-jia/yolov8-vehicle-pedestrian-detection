@@ -1,0 +1,4 @@
+video_id,line_id,class_name,direction,count,notes
+demo_crosswalk_reviewed,crosswalk_line,Person,forward,6,One extra crossing around line boundary
+demo_traffic_reviewed,traffic_line,Car,forward,3,Matches reviewed traffic count sample
+demo_traffic_reviewed,traffic_line,Bus,forward,1,Matches reviewed bus count sample

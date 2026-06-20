@@ -6,7 +6,7 @@ This project is a YOLOv8-based vehicle and pedestrian detection system. It cover
 
 Current final delivery state:
 
-- Current latest documented state: `v1.6.0-reviewed-bad-case-collection`
+- Current latest documented state: `v1.7.0-gt-quantitative-evaluation`
 - Original final release tag: `v1.0.0-final-release-summary`
 - Final status: `Go for final local/Docker acceptance`
 - Docker Actual Smoke: `Passed`
@@ -34,6 +34,7 @@ Completed system capabilities:
 - FastAPI async video execution and SQLite-backed job/result index
 - Bad Case schema/report foundation, metadata collection scaffold, and small reviewed sample collection
 - GT evaluation scaffold for tracking/counting/ROI/event artifacts
+- Small reviewed GT quantitative evaluation sample pack
 - Docker build/run smoke
 - mounted-weight Docker `/predict` smoke
 - final acceptance checklist
@@ -238,6 +239,8 @@ Completed experiments and recorded results:
 `v1.5.0-api-key-and-structured-logging` adds optional API key authentication, `X-Request-ID` request correlation, and standard-library structured logs for FastAPI requests, video jobs, artifact downloads, and Bad Case creation. API key auth is disabled by default for local demo use and can be enabled with `API_KEY_AUTH_ENABLED=true API_KEY=your-secret`.
 
 `v1.6.0-reviewed-bad-case-collection` adds a small reviewed Bad Case sample collection in [Reviewed Bad Cases](docs/error_case_gallery/reviewed_bad_cases.csv). It contains 24 metadata-only records across detector, tracker, counter, ROI, and event modules, reuses existing lightweight gallery images, and does not add new large images, videos, weights, local outputs, or generated result files. This is a reviewed showcase and evaluation-planning seed, not a large production Bad Case dataset.
+
+`v1.7.0-gt-quantitative-evaluation` adds a small reviewed GT quantitative evaluation sample pack. It includes lightweight GT and prediction CSV samples under [Reviewed GT Samples](docs/evaluation/reviewed_gt_samples/) plus committed reviewed sample metrics under [Reviewed GT Evaluation Result](docs/evaluation/reviewed_gt_eval_result.md). The sample reports counting `MAE=1.0`, ROI `frame_count_mae=1.0`, event `precision=0.5` and `recall=0.6666666666666666`, and tracking engineering metrics with `gt_required_for_idf1=true`. This is not a production benchmark and does not include full MOT IDF1/MOTA.
 
 This phase does not include DeepSORT integration, ByteTrack production hardening, production database integration beyond the local SQLite metadata index, full-length tracked video validation, React frontend, OAuth/JWT, multi-user authorization, Prometheus/Grafana, or real video benchmarks.
 
@@ -727,7 +730,7 @@ Policy:
 - Large reviewed Bad Case labeling and curated GT dataset creation.
 - Optional DeepSORT production runtime.
 - OAuth/JWT, multi-user authorization, API key rotation, and external monitoring.
-- Full GT-based tracking/counting/ROI/event quantitative reports.
+- Large-scale GT-based tracking/counting/ROI/event quantitative reports beyond the small reviewed sample.
 - Optional full-length production validation.
 - Optional YOLOv8m PyTorch and ONNX Runtime speed benchmarking if model-family latency completeness is needed.
 - Optional ONNX Runtime mAP/NMS evaluation if a separate evaluation protocol is defined.

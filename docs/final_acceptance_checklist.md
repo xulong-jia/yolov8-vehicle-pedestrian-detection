@@ -6,7 +6,7 @@
 | --- | --- |
 | Project name | YOLOv8 Vehicle and Pedestrian Detection |
 | Repository name | yolov8-vehicle-pedestrian-detection |
-| Current checklist version | v1.6.0-reviewed-bad-case-collection |
+| Current checklist version | v1.7.0-gt-quantitative-evaluation |
 | Original final release tag | v1.0.0-final-release-summary |
 | Latest stable tag before this refresh | v1.3.1-final-doc-consistency-refresh |
 | Status date | 2026-06-20 |
@@ -19,8 +19,9 @@ smoke, Streamlit container smoke, and mounted-weight container `/predict`
 passed locally by `v0.14.5`; `v0.14.6` reconciled the original final
 documentation state. Post-final enhancements through `v1.4.0` add async video
 jobs, SQLite job metadata plus restart smoke, Bad Case/GT evaluation scaffolds,
-artifact download endpoints, optional API key logging hardening, and a small
-reviewed Bad Case sample collection.
+artifact download endpoints, optional API key logging hardening, a small
+reviewed Bad Case sample collection, and a small reviewed GT quantitative
+evaluation sample pack.
 
 ## Version/tag history
 
@@ -52,6 +53,7 @@ reviewed Bad Case sample collection.
 | v1.4.1-docker-v1-api-smoke-refresh | Docker runtime smoke refreshed for v1.1-v1.4 API surface. |
 | v1.5.0-api-key-and-structured-logging | Optional API key auth, request id middleware, and structured logs accepted. |
 | v1.6.0-reviewed-bad-case-collection | Small reviewed Bad Case sample collection accepted. |
+| v1.7.0-gt-quantitative-evaluation | Small reviewed GT quantitative evaluation sample pack accepted. |
 
 ## Environment assumptions
 
@@ -192,10 +194,15 @@ Security/logging scope:
 
 | Field | Status |
 | --- | --- |
-| Status | Scaffold accepted for template-driven future evaluation. |
-| Evidence files | `docs/evaluation/gt_templates.md`, `src/evaluation/video_eval_scaffold.py`, `tests/test_video_eval_scaffold.py` |
-| Tests/checks | Tests cover counting MAE, ROI MAE, event exact/time-window match, tracking engineering metrics, CLI help, and output directory creation with `tmp_path`. |
-| Limitations | This is not a real large-scale GT quantitative evaluation. Reviewed GT labels and formal MOT metrics remain future work. |
+| Status | Scaffold plus small reviewed GT quantitative sample pack accepted. |
+| Evidence files | `docs/evaluation/gt_templates.md`, `docs/evaluation/reviewed_gt_samples/`, `docs/evaluation/reviewed_gt_eval_result/`, `docs/evaluation/reviewed_gt_eval_result.md`, `src/evaluation/video_eval_scaffold.py`, `tests/test_video_eval_scaffold.py` |
+| Tests/checks | Tests cover counting MAE, ROI MAE, event exact/time-window match, tracking engineering metrics, CLI help, output directory creation with `tmp_path`, reviewed sample fields, and reviewed result metrics. |
+| Limitations | This is a small reviewed GT sample evaluation, not a large-scale benchmark. Full MOT IDF1/MOTA remains future work. |
+
+Reviewed sample metrics: counting `MAE=1.0`; ROI `frame_count_mae=1.0`;
+events `precision=0.5`, `recall=0.6666666666666666`; tracking
+`track_count=5`, `avg_track_length=2.0`, `short_track_ratio=0.6`, and
+`gt_required_for_idf1=true`.
 
 ## Docker/deployment acceptance
 
@@ -279,7 +286,9 @@ make list-large-docs
 - Full production tracking hardening pending.
 - DeepSORT optional/future.
 - Large reviewed Bad Case collection beyond the small reviewed sample pending.
-- GT evaluation scaffold exists; real reviewed GT quantitative evaluation pending.
+- GT evaluation scaffold exists; small reviewed GT quantitative evaluation
+  sample exists; large benchmark-scale
+  reviewed GT evaluation pending.
 - Mounted-weight container inference passed in `v0.14.5`.
 
 ## Final go/no-go status

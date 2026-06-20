@@ -1,0 +1,4 @@
+event_id,event_type,video_id,frame_index,timestamp_sec,track_id,class_name,roi_id,line_id,severity,notes
+gt_evt_001,crowd_warning,demo_crosswalk_reviewed,220,7.3,7,Person,waiting_area,,warning,RBC-0017 reviewed crowd warning context
+gt_evt_002,long_stay,demo_crosswalk_reviewed,232,14.5,12,Person,waiting_area,,warning,RBC-0018 reviewed long-stay threshold context
+gt_evt_003,wrong_direction,demo_traffic_reviewed,245,8.1,18,Car,,traffic_line,warning,RBC-0019 reviewed wrong-direction context

@@ -1,0 +1,35 @@
+{
+  "artifact_paths": {
+    "counting_metrics": "docs/evaluation/reviewed_gt_eval_result/counting_metrics.csv",
+    "event_metrics": "docs/evaluation/reviewed_gt_eval_result/event_metrics.csv",
+    "roi_metrics": "docs/evaluation/reviewed_gt_eval_result/roi_metrics.csv",
+    "summary": "docs/evaluation/reviewed_gt_eval_result/evaluation_summary.json",
+    "tracking_metrics": "docs/evaluation/reviewed_gt_eval_result/tracking_metrics.csv"
+  },
+  "counting": {
+    "MAE": 1.0,
+    "abs_error": 1,
+    "gt_count": 9,
+    "pred_count": 10
+  },
+  "event": {
+    "gt_events": 3,
+    "match_rule": "event_type + time_window",
+    "matched_events": 2,
+    "precision": 0.5,
+    "pred_events": 4,
+    "recall": 0.6666666666666666,
+    "time_window_sec": 1.0
+  },
+  "roi": {
+    "compared_rows": 4,
+    "frame_count_mae": 1.0
+  },
+  "tracking": {
+    "avg_track_length": 2.0,
+    "gt_required_for_idf1": true,
+    "gt_rows": 4,
+    "short_track_ratio": 0.6,
+    "track_count": 5
+  }
+}

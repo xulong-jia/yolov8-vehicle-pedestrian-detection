@@ -750,11 +750,42 @@ weights, generated CSV/JSON/JSONL outputs, local run directories, or
 root-cause explanation, and future GT/evaluation planning. It is not a large
 production Bad Case dataset.
 
+## v1.7.0 Reviewed GT Quantitative Evaluation Sample
+
+`v1.7.0-gt-quantitative-evaluation` adds a small reviewed GT quantitative
+evaluation sample pack. It connects reviewed GT CSV rows, prediction CSV rows,
+the existing `src.evaluation.video_eval_scaffold` CLI, metrics CSV outputs, and
+an evaluation summary.
+
+The reviewed sample inputs are stored under
+`docs/evaluation/reviewed_gt_samples/`, and the committed lightweight metrics
+are stored under `docs/evaluation/reviewed_gt_eval_result/`. The result report
+is `docs/evaluation/reviewed_gt_eval_result.md`.
+
+The reviewed sample metrics are:
+
+- counting: `gt_count=9`, `pred_count=10`, `abs_error=1`, `MAE=1.0`
+- ROI: `compared_rows=4`, `frame_count_mae=1.0`
+- event: `gt_events=3`, `pred_events=4`, `matched_events=2`,
+  `precision=0.5`, `recall=0.6666666666666666`
+- tracking: `track_count=5`, `avg_track_length=2.0`,
+  `short_track_ratio=0.6`, `gt_required_for_idf1=true`
+
+The event matching rule is intentionally simple: exact `event_type` and
+`timestamp_sec` within one second. The tracking output remains engineering
+metrics only; full MOT metrics such as IDF1 and MOTA are not implemented in
+this phase.
+
+This stage does not run YOLO, ByteTrack, DeepSORT, Docker, analytics, or
+rendering. It does not commit large images, videos, weights, `local_outputs`,
+`runs`, sqlite files, or large runtime outputs. It is a small reviewed sample
+for demonstration and evaluation planning, not a production benchmark.
+
 ## Current Post-Final Future Work
 
 - Larger reviewed Bad Case collection beyond the 24-case sample.
-- Reviewed GT labels and full tracking/counting/ROI/event quantitative
-  evaluation.
+- Larger reviewed GT labels and full tracking/counting/ROI/event quantitative
+  evaluation beyond the small reviewed sample.
 - Optional DeepSORT production runtime.
 - Optional React frontend.
 - OAuth/JWT, multi-user job management, external monitoring, and production

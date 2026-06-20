@@ -78,6 +78,18 @@ root-cause notes, reviewer notes, and how selected cases can be marked for a
 future evaluation set. It is not a large production Bad Case dataset and is not
 a substitute for a reviewed GT quantitative evaluation.
 
+## Relationship to Reviewed GT Evaluation
+
+`v1.7.0-gt-quantitative-evaluation` adds a small reviewed GT evaluation sample
+pack under `docs/evaluation/reviewed_gt_samples/` with corresponding metrics
+under `docs/evaluation/reviewed_gt_eval_result/`. The sample references reviewed
+Bad Case contexts in notes, for example line-count, ROI, and event cases from
+the `RBC-*` collection.
+
+This closes a lightweight demonstration loop from reviewed case taxonomy to GT
+sample rows and scaffold-generated metrics. It remains intentionally small and
+does not claim a production-scale Bad Case dataset or full GT benchmark.
+
 ## Minimum Acceptance Criteria
 
 - Bad Case schema exists and documents required fields.
@@ -108,5 +120,6 @@ a substitute for a reviewed GT quantitative evaluation.
 - Expand the reviewed sample into a larger real `bad_cases.csv` from detector,
   tracker, counter, ROI, event, API, deployment, and documentation failures.
 - Link Bad Cases to evaluation reports and Video Analysis Center summaries.
-- Build a regression set from selected confirmed hard cases.
+- Expand the reviewed GT sample into a larger regression set from selected
+  confirmed hard cases.
 - Add evaluation API endpoints after the evaluation contract is fixed.

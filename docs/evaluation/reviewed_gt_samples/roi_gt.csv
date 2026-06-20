@@ -1,0 +1,5 @@
+video_id,roi_id,frame_index,class_name,count,notes
+demo_crosswalk_reviewed,waiting_area,184,Person,2,RBC-0014 reviewed ROI membership context
+demo_crosswalk_reviewed,waiting_area,195,Person,3,RBC-0015 reviewed ROI config context
+demo_traffic_reviewed,bus_lane,207,Car,1,RBC-0016 reviewed ROI membership context
+demo_traffic_reviewed,bus_lane,300,Bus,2,RBC-0024 reviewed bus lane context
