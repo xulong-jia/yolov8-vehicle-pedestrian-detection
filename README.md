@@ -6,7 +6,7 @@ This project is a YOLOv8-based vehicle and pedestrian detection system. It cover
 
 Current final delivery state:
 
-- Current latest documented state: `v1.8.1-final-polish-and-frontend-audit-note`
+- Current latest documented state: `v1.8.2-non-technical-user-launcher`
 - Original final release tag: `v1.0.0-final-release-summary`
 - Final status: `Ready for final freeze / delivery`
 - Docker Actual Smoke: `Passed`
@@ -38,6 +38,7 @@ Completed system capabilities:
 - Docker build/run smoke
 - mounted-weight Docker `/predict` smoke
 - Minimal optional React frontend for FastAPI video jobs and Bad Cases
+- macOS/Windows non-technical user launcher scripts
 - final acceptance checklist
 - release summary / delivery notes
 
@@ -58,6 +59,26 @@ For final review, read in this order:
 
 Final status: Go for final local/Docker acceptance, subject to normal
 environment-specific deployment checks.
+
+## For non-technical users
+
+If the maintainer has already prepared `.venv` and `local_weights/best.pt`,
+ordinary users can start the local app without typing Python, Uvicorn,
+Streamlit, React, or Docker commands.
+
+- macOS: double-click `scripts/start_app_macos.command`
+- Windows: double-click `scripts/start_app_windows.bat`
+- User guide: [Non-technical user guide](docs/non_technical_user_guide.md)
+
+On macOS, if the script is not executable, run:
+
+```bash
+chmod +x scripts/start_app_macos.command
+```
+
+The launcher starts FastAPI at `http://localhost:8000`, Streamlit at
+`http://localhost:8501`, and optionally React at `http://localhost:5173` when
+frontend dependencies already exist.
 
 ## Key Features
 
@@ -246,6 +267,8 @@ Completed experiments and recorded results:
 `v1.8.0-react-video-job-frontend` adds a minimal optional Vite + React + TypeScript frontend in [frontend](frontend/). It can call FastAPI health/model-status, create/query video jobs, show artifact download links, create/list Bad Cases, send optional `X-API-Key`, and display `X-Request-ID`. It depends on FastAPI running separately and does not include a video player, multi-user permissions, production auth, DeepSORT, or a production dashboard.
 
 `v1.8.1-final-polish-and-frontend-audit-note` is a final documentation polish pass. It corrects stale Streamlit/SQLite and GT evaluation status notes, records that Docker v1.4.1 smoke does not cover the React frontend runtime, and documents the frontend `npm audit` status without applying a forced major dependency upgrade.
+
+`v1.8.2-non-technical-user-launcher` adds a non-technical user launch path with `scripts/start_app_macos.command`, `scripts/start_app_windows.bat`, and [Non-technical user guide](docs/non_technical_user_guide.md). It does not change YOLO, ByteTrack, DeepSORT, analytics, API behavior, or Docker behavior.
 
 This phase does not include DeepSORT integration, ByteTrack production hardening, production database integration beyond the local SQLite metadata index, full-length tracked video validation, OAuth/JWT, multi-user authorization, Prometheus/Grafana, production React dashboard hardening, or real video benchmarks.
 

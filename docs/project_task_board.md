@@ -1161,6 +1161,7 @@ Pending after v1.0.0 release docs:
 - [x] Small reviewed GT quantitative evaluation / 小规模人工审核 GT 定量评测样例 — Target: v1.7.0 — Status: Completed in working tree — Output: `docs/evaluation/reviewed_gt_samples/`, `docs/evaluation/reviewed_gt_eval_result/`, `docs/evaluation/reviewed_gt_eval_result.md`, `tests/test_video_eval_scaffold.py` — Commit: TBD
 - [x] Minimal React video job frontend / 最小 React 视频任务前端 — Target: v1.8.0 — Status: Completed in working tree — Output: `frontend/`, `frontend/README.md` — Commit: TBD
 - [x] Final polish and frontend audit note / 最终文档 polish 与前端 audit 说明 — Target: v1.8.1 — Status: Completed in working tree — Output: `README.md`, `docs/release_summary.md`, `frontend/README.md`, status docs — Commit: TBD
+- [x] Non-technical user launcher / 普通用户傻瓜式启动入口 — Target: v1.8.2 — Status: Completed in working tree — Output: `scripts/start_app_macos.command`, `scripts/start_app_windows.bat`, `docs/non_technical_user_guide.md`, `tests/test_non_technical_user_launcher.py` — Commit: TBD
 - [ ] Large reviewed Bad Case collection beyond sample / 超出样例集的大规模人工审核 Bad Case 收集 — Target: Future — Status: Pending
 - [ ] Large-scale real GT quantitative evaluation beyond sample / 超出样例集的大规模真实 GT 定量评测 — Target: Future — Status: Pending
 - [ ] Production React dashboard beyond minimal frontend / 超出最小前端的生产级 React dashboard — Target: Future — Status: Pending

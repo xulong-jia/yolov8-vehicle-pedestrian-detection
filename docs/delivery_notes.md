@@ -30,6 +30,23 @@ cp /path/to/best.pt local_weights/best.pt
 
 ## How to Run Locally
 
+For ordinary users, use the launcher scripts after the maintainer has prepared
+`.venv` and `local_weights/best.pt`:
+
+macOS:
+
+```bash
+scripts/start_app_macos.command
+```
+
+Windows:
+
+```text
+scripts/start_app_windows.bat
+```
+
+See [Non-technical user guide](non_technical_user_guide.md).
+
 Streamlit:
 
 ```bash

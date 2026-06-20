@@ -36,6 +36,7 @@ def test_release_summary_includes_final_release_contract() -> None:
         "v1.4.1-docker-v1-api-smoke-refresh",
         "v1.5.0-api-key-and-structured-logging",
         "v1.8.1-final-polish-and-frontend-audit-note",
+        "v1.8.2-non-technical-user-launcher",
         "real local FastAPI process restart smoke",
         "Docker runtime smoke refresh",
         "Optional API key authentication",
@@ -44,6 +45,8 @@ def test_release_summary_includes_final_release_contract() -> None:
         "GT evaluation scaffold",
         "npm audit",
         "Vite 8",
+        "scripts/start_app_macos.command",
+        "docs/non_technical_user_guide.md",
     ]
 
     for term in required_terms:
@@ -61,6 +64,8 @@ def test_delivery_notes_include_handoff_commands_and_asset_policy() -> None:
         "docker run",
         "MODEL_PATH",
         "make danger-check",
+        "scripts/start_app_macos.command",
+        "scripts/start_app_windows.bat",
     ]
 
     for term in required_terms:

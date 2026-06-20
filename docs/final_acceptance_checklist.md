@@ -6,7 +6,7 @@
 | --- | --- |
 | Project name | YOLOv8 Vehicle and Pedestrian Detection |
 | Repository name | yolov8-vehicle-pedestrian-detection |
-| Current checklist version | v1.8.1-final-polish-and-frontend-audit-note |
+| Current checklist version | v1.8.2-non-technical-user-launcher |
 | Original final release tag | v1.0.0-final-release-summary |
 | Latest stable tag before this refresh | v1.3.1-final-doc-consistency-refresh |
 | Status date | 2026-06-20 |
@@ -23,8 +23,8 @@ artifact download endpoints, optional API key logging hardening, a small
 reviewed Bad Case sample collection, and a small reviewed GT quantitative
 evaluation sample pack. `v1.8.0` adds a minimal optional React frontend for the
 existing FastAPI service. `v1.8.1` is the final documentation polish and
-frontend audit-note pass. The project can be frozen at `v1.8.1` for final
-delivery.
+frontend audit-note pass. `v1.8.2` adds non-technical user launch scripts and a
+plain-language guide. The project can be frozen at `v1.8.2` for final delivery.
 
 ## Version/tag history
 
@@ -59,6 +59,7 @@ delivery.
 | v1.7.0-gt-quantitative-evaluation | Small reviewed GT quantitative evaluation sample pack accepted. |
 | v1.8.0-react-video-job-frontend | Minimal optional React frontend accepted. |
 | v1.8.1-final-polish-and-frontend-audit-note | Final polish and frontend npm audit note accepted. |
+| v1.8.2-non-technical-user-launcher | macOS/Windows non-technical launcher scripts and ordinary user guide accepted. |
 
 ## Environment assumptions
 
@@ -159,6 +160,16 @@ DeepSORT is optional/future and is not required for this checklist status.
 | Evidence files | `frontend/package.json`, `frontend/src/App.tsx`, `frontend/src/components/`, `frontend/README.md` |
 | Tests/checks | `npm install` and `npm run build` passed locally. Python test suite remains separate. |
 | Limitations | React frontend depends on FastAPI running separately. It does not include a video player, multi-user permissions, production auth, DeepSORT, complex routing, or a production dashboard. `npm audit` currently reports 1 moderate and 1 high finding in the Vite/esbuild dev/build dependency path; the suggested fix requires a semver-major Vite 8 upgrade and was not forced in the final polish scope. |
+
+## Non-technical launcher acceptance
+
+| Field | Status |
+| --- | --- |
+| Status | Accepted as a convenience launcher for prepared local environments. |
+| Evidence files | `scripts/start_app_macos.command`, `scripts/start_app_windows.bat`, `docs/non_technical_user_guide.md`, `tests/test_non_technical_user_launcher.py` |
+| Tests/checks | Static tests verify script existence, required localhost/service hints, README links, and absence of dangerous commands. |
+| Runtime assumptions | The maintainer has already created `.venv` and placed the local model at `local_weights/best.pt`. |
+| Limitations | The launcher does not install dependencies, download weights, run Docker, or change YOLO/ByteTrack/DeepSORT behavior. |
 
 ## FastAPI acceptance
 
@@ -309,7 +320,7 @@ make list-large-docs
 ## Final go/no-go status
 
 - Overall status: Go for final local/Docker acceptance and ready for final
-  freeze/delivery at `v1.8.1-final-polish-and-frontend-audit-note`, subject to
+  freeze/delivery at `v1.8.2-non-technical-user-launcher`, subject to
   normal environment-specific deployment checks.
 - Docker deployment status: Go for local Docker smoke acceptance.
 - Final release entry points: `docs/release_summary.md` and

@@ -3,7 +3,7 @@
 ## Release Identity
 
 - Original final release: v1.0.0-final-release-summary
-- Current latest documented state: v1.8.1-final-polish-and-frontend-audit-note
+- Current latest documented state: v1.8.2-non-technical-user-launcher
 - Based on original final tag: v0.14.6-final-doc-consistency-pass
 - Project name: YOLOv8 Vehicle and Pedestrian Detection System
 - Repository: yolov8-vehicle-pedestrian-detection
@@ -11,7 +11,7 @@
 
 ## Post-Final Enhancements
 
-After the original `v1.0.0-final-release-summary`, the repository added eleven
+After the original `v1.0.0-final-release-summary`, the repository added twelve
 bounded enhancements:
 
 - `v1.1.0-async-video-job`: FastAPI async video job execution and Streamlit
@@ -38,6 +38,8 @@ bounded enhancements:
   Case metadata.
 - `v1.8.1-final-polish-and-frontend-audit-note`: final documentation polish,
   stale status correction, and frontend audit note.
+- `v1.8.2-non-technical-user-launcher`: macOS/Windows launcher scripts and a
+  plain-language ordinary user guide for starting the existing local app.
 
 The SQLite index is unit-tested and has been verified with a real local FastAPI
 process restart smoke. Docker actual smoke was refreshed for the v1.1-v1.4 API
@@ -68,6 +70,8 @@ surface.
 - Optional API key authentication and request/operation structured logs
 - Minimal optional React frontend for FastAPI video jobs and Bad Cases
 - Final documentation polish and frontend dependency audit note
+- macOS/Windows non-technical user launcher scripts
+- Ordinary user startup guide
 - Docker build/run smoke
 - mounted-weight Docker `/predict` smoke
 - final acceptance checklist
@@ -146,6 +150,20 @@ suggested fix requires a semver-major upgrade to Vite 8, so `npm audit fix
 
 Production deployment should review and upgrade frontend dependencies in a
 separate dependency-refresh phase.
+
+## Non-Technical Launcher Summary
+
+`v1.8.2-non-technical-user-launcher` adds:
+
+- `scripts/start_app_macos.command`
+- `scripts/start_app_windows.bat`
+- `docs/non_technical_user_guide.md`
+
+The launchers check for `.venv` and `local_weights/best.pt`, start the existing
+FastAPI and Streamlit services, optionally start the React frontend when
+`frontend/node_modules` exists, and open the local browser pages. This stage is
+an ease-of-use wrapper only. It does not change YOLO, ByteTrack, DeepSORT,
+analytics, Docker, or API behavior.
 
 ## Validation Summary
 
