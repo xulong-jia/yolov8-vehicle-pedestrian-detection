@@ -18,9 +18,13 @@ from src.core.schemas import (
     HealthResponse,
     ModelStatusResponse,
     PredictResponse,
+    VideoAnalyzeRequest,
+    VideoArtifactResponse,
+    VideoJobResponse,
 )
 from src.services import image_inference_service
 from src.services.image_inference_service import decode_image_size, format_detections
+from src.services.video_job_service import get_job_artifact, registry
 
 
 SERVICE_NAME = "yolov8-vehicle-pedestrian-api"
@@ -91,6 +95,40 @@ def _http_error_for_prediction(exc: Exception) -> HTTPException:
         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
         detail=f"Inference failed: {short_error(exc)}",
     )
+
+
+def _get_video_job_or_404(job_id: str) -> dict[str, Any]:
+    try:
+        return registry.get_job(job_id)
+    except KeyError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Video job not found",
+        ) from exc
+
+
+def _artifact_or_404(
+    job_id: str,
+    artifact_type: str,
+    max_rows: int | None,
+) -> dict[str, Any]:
+    job = _get_video_job_or_404(job_id)
+    artifact = get_job_artifact(job, artifact_type, max_rows=max_rows)
+    if not artifact.get("exists"):
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"{artifact_type} artifact not found",
+        )
+    response = {
+        "job_id": job_id,
+        "artifact_type": artifact_type,
+        "exists": True,
+        "path": str(artifact.get("path", "")),
+        "data": artifact.get("data"),
+    }
+    if "row_count" in artifact:
+        response["row_count"] = artifact.get("row_count")
+    return response
 
 
 def create_app() -> FastAPI:
@@ -171,6 +209,52 @@ def create_app() -> FastAPI:
             )
         except Exception as exc:
             raise _http_error_for_prediction(exc) from exc
+
+    @app.post("/api/videos/analyze", response_model=VideoJobResponse)
+    def create_video_job(request: VideoAnalyzeRequest) -> dict[str, Any]:
+        return registry.create_job(
+            run_dir=request.run_dir,
+            video_id=request.video_id,
+            run_name=request.run_name,
+        )
+
+    @app.get("/api/videos/jobs/{job_id}", response_model=VideoJobResponse)
+    def get_video_job(job_id: str) -> dict[str, Any]:
+        return _get_video_job_or_404(job_id)
+
+    @app.get(
+        "/api/videos/jobs/{job_id}/detections",
+        response_model=VideoArtifactResponse,
+    )
+    def get_video_detections(
+        job_id: str,
+        max_rows: int = Query(default=100, ge=0),
+    ) -> dict[str, Any]:
+        return _artifact_or_404(job_id, "detections", max_rows=max_rows)
+
+    @app.get("/api/videos/jobs/{job_id}/tracks", response_model=VideoArtifactResponse)
+    def get_video_tracks(
+        job_id: str,
+        max_rows: int = Query(default=100, ge=0),
+    ) -> dict[str, Any]:
+        return _artifact_or_404(job_id, "tracks", max_rows=max_rows)
+
+    @app.get(
+        "/api/videos/jobs/{job_id}/analytics",
+        response_model=VideoArtifactResponse,
+    )
+    def get_video_analytics(
+        job_id: str,
+        max_rows: int = Query(default=100, ge=0),
+    ) -> dict[str, Any]:
+        return _artifact_or_404(job_id, "analytics", max_rows=max_rows)
+
+    @app.get("/api/videos/jobs/{job_id}/events", response_model=VideoArtifactResponse)
+    def get_video_events(
+        job_id: str,
+        max_rows: int = Query(default=100, ge=0),
+    ) -> dict[str, Any]:
+        return _artifact_or_404(job_id, "events", max_rows=max_rows)
 
     return app
 

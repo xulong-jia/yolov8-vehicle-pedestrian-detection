@@ -903,9 +903,37 @@ Scope:
 
 Pending after v0.13.0 Step 1:
 
-- [ ] Video analyze async job endpoints / 视频分析异步任务接口 — Target: Future — Status: Pending
-- [ ] Result query endpoints / 结果查询接口 — Target: Future — Status: Pending
+- [x] Video job/result query skeleton / 视频任务和结果查询骨架 — Target: v0.13.1 — Status: Completed in working tree
+- [ ] Video analyze async execution / 视频分析异步执行 — Target: Future — Status: Pending
 - [ ] Rules, bad-case, and evaluation APIs / 规则、坏例和评估接口 — Target: Future — Status: Pending
+- [ ] Docker production validation / Docker 生产验证 — Target: Future — Status: Pending
+
+## v0.13.1-fastapi-video-job-results-skeleton / FastAPI 视频任务结果查询骨架
+
+- [x] In-memory video job registry / 内存视频任务 registry — Priority: P0 — Status: Completed in working tree — Output: `src/services/video_job_service.py` — Commit: TBD
+- [x] `POST /api/videos/analyze` skeleton / 视频分析任务创建骨架 — Priority: P0 — Status: Completed in working tree — Output: `src/api.py`, `src/core/schemas.py` — Commit: TBD
+- [x] `GET /api/videos/jobs/{job_id}` / 任务状态查询 — Priority: P0 — Status: Completed in working tree — Output: `src/api.py` — Commit: TBD
+- [x] Result query endpoints / 结果查询接口 — Priority: P0 — Status: Completed in working tree — Output: detections, tracks, analytics, events endpoints — Commit: TBD
+- [x] FastAPI video job tests / FastAPI 视频任务测试 — Priority: P0 — Status: Completed in working tree — Output: `tests/test_api_video_jobs.py` — Commit: TBD
+
+Scope:
+
+- creates in-memory job records only
+- can attach a job to an existing VideoAnalysisCenter `run_dir`
+- reads existing `detections.csv`, `tracks.csv`, `count_events.csv`, `roi_frame_counts.csv`, `events.jsonl`, and `video_analysis_summary.json`
+- does not run YOLO
+- does not run ByteTrack or DeepSORT
+- does not execute analytics
+- does not render videos
+- does not write repository outputs
+- does not use a database or background worker
+
+Pending after v0.13.1 Step 1:
+
+- [ ] Real async video analyze execution / 真实异步视频分析执行 — Target: Future — Status: Pending
+- [ ] Persisted job registry or database / 持久化任务 registry 或数据库 — Target: Future — Status: Pending
+- [ ] Rules, ROI, bad-case, and evaluation APIs / 规则、ROI、坏例和评估接口 — Target: Future — Status: Pending
+- [ ] Streamlit job launcher / Streamlit 任务启动器 — Target: Future — Status: Pending
 - [ ] Docker production validation / Docker 生产验证 — Target: Future — Status: Pending
 
 ## P3 — Optional Future Experiments / 可选未来实验

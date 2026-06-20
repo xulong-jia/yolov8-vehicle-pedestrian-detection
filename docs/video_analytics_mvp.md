@@ -870,3 +870,37 @@ inference.
 Video analysis endpoints are planned later. `v0.13.0` does not add async video
 jobs, result-query endpoints, database integration, Docker production
 validation, or Streamlit job launching.
+
+## v0.13.1 FastAPI Video Job Result Skeleton
+
+`v0.13.1` adds a FastAPI skeleton for the execution-manual video job and result
+query surface:
+
+- `POST /api/videos/analyze`
+- `GET /api/videos/jobs/{job_id}`
+- `GET /api/videos/jobs/{job_id}/detections`
+- `GET /api/videos/jobs/{job_id}/tracks`
+- `GET /api/videos/jobs/{job_id}/analytics`
+- `GET /api/videos/jobs/{job_id}/events`
+
+The implementation is deliberately non-executing. `POST /api/videos/analyze`
+creates an in-memory job record and can attach it to an existing
+VideoAnalysisCenter run directory. Result endpoints read existing artifacts:
+
+- `detections.csv`
+- `tracks.csv`
+- `count_events.csv`
+- `roi_frame_counts.csv`
+- `events.jsonl`
+- `video_analysis_summary.json`
+
+This step does not run YOLO, run ByteTrack/DeepSORT, execute analytics, render
+tracked video, create local output directories, use a database, or start
+background workers. Tests use FastAPI `TestClient` and synthetic pytest
+`tmp_path` artifacts.
+
+Next recommended FastAPI work:
+
+- add real async job execution only after a runtime policy is defined
+- add rules/ROI/bad-case/evaluation APIs
+- add Docker/deployment validation after the API surface is stable

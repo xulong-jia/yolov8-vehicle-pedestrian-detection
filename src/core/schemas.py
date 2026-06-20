@@ -57,3 +57,28 @@ class PredictResponse(BaseModel):
 
 class ErrorResponse(BaseModel):
     detail: str | dict[str, Any]
+
+
+class VideoAnalyzeRequest(BaseModel):
+    video_id: str = "demo"
+    run_name: str | None = None
+    run_dir: str | None = None
+    note: str | None = None
+
+
+class VideoJobResponse(BaseModel):
+    job_id: str
+    status: str
+    video_id: str
+    run_name: str
+    run_dir: str
+    message: str
+
+
+class VideoArtifactResponse(BaseModel):
+    job_id: str
+    artifact_type: str
+    exists: bool
+    path: str
+    data: Any
+    row_count: int | None = None

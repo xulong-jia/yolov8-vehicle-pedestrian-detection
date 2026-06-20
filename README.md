@@ -167,7 +167,9 @@ Completed experiments and recorded results:
 
 `v0.13.0-fastapi-basic-service-acceptance` completes the FastAPI basic service acceptance surface required by the execution manual: `GET /health`, `GET /config`, `GET /model-status`, and `POST /predict`. The API keeps YOLO loading lazy, routes model loading through `src/core/model_loader.py`, runs image inference through `src/services/image_inference_service.py`, and decodes uploads in memory without writing files. See [API usage guide](docs/api_usage.md).
 
-This phase does not include DeepSORT integration, ByteTrack production hardening, Streamlit job launching, FastAPI video jobs, database integration, full-length tracked video validation, or real video benchmarks.
+`v0.13.1-fastapi-video-job-results-skeleton` adds the execution-manual FastAPI video job/result query skeleton: `POST /api/videos/analyze`, `GET /api/videos/jobs/{job_id}`, and result readers for detections, tracks, analytics, and events. The API uses an in-memory job registry and can attach to existing VideoAnalysisCenter run directories; it does not run YOLO, run ByteTrack/DeepSORT, execute analytics, render videos, or write generated artifacts from API calls. See [API usage guide](docs/api_usage.md).
+
+This phase does not include DeepSORT integration, ByteTrack production hardening, Streamlit job launching, real async FastAPI video execution, database integration, full-length tracked video validation, or real video benchmarks.
 
 Details: [Video analytics MVP](docs/video_analytics_mvp.md)
 

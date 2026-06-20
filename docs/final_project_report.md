@@ -424,3 +424,27 @@ and are not written to the repository.
 FastAPI tests use `TestClient`, in-memory images, and monkeypatched services, so
 they do not load real weights or run real inference. Video analyze jobs, result
 query endpoints, database integration, and Docker validation remain future work.
+
+## v0.13.1 FastAPI Video Job Result Skeleton
+
+`v0.13.1` adds the first FastAPI video workflow surface from the execution
+manual:
+
+- `POST /api/videos/analyze`
+- `GET /api/videos/jobs/{job_id}`
+- `GET /api/videos/jobs/{job_id}/detections`
+- `GET /api/videos/jobs/{job_id}/tracks`
+- `GET /api/videos/jobs/{job_id}/analytics`
+- `GET /api/videos/jobs/{job_id}/events`
+
+This is intentionally a safe skeleton. The API creates an in-memory job record
+and can attach that record to an existing VideoAnalysisCenter run directory. The
+result endpoints read existing `detections.csv`, `tracks.csv`,
+`count_events.csv`, `roi_frame_counts.csv`, `events.jsonl`, and
+`video_analysis_summary.json` artifacts. The API does not run YOLO, run
+ByteTrack/DeepSORT, execute analytics, render videos, create local outputs, use
+a database, or start background workers.
+
+Tests use FastAPI `TestClient` and pytest `tmp_path` artifacts. They verify job
+creation, result lookup, missing-artifact errors, row limits, and that video job
+endpoints do not import the real prediction, tracking, or rendering modules.
