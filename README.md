@@ -175,7 +175,9 @@ Completed experiments and recorded results:
 
 `v0.14.2-final-acceptance-checklist` adds the final acceptance checklist for the execution manual's Stage 8 and Chapter 21 acceptance areas. It consolidates evidence files, test commands, version tags, manual pending items, asset-safety checks, and a Conditional Go status for documentation/static acceptance. Actual Docker build/run and mounted-weight container prediction remain manual pending. See [Final Acceptance Checklist](docs/final_acceptance_checklist.md).
 
-`v0.14.3-docker-actual-build-smoke-preflight` adds the Docker actual smoke preflight plan. The current preflight records Docker CLI/daemon unavailable (`docker_info_exit=127`), so actual Docker build/run remains manual pending. No Docker build/run was executed. See [Docker Actual Smoke Plan](docs/docker_actual_smoke_plan.md).
+`v0.14.3-docker-actual-build-smoke-preflight` adds the Docker actual smoke preflight plan. That preflight recorded Docker CLI/daemon unavailable (`docker_info_exit=127`), so no Docker build/run was executed in that step. See [Docker Actual Smoke Plan](docs/docker_actual_smoke_plan.md).
+
+`v0.14.4-docker-actual-build-smoke` records the first actual Docker build/run smoke. The initial FastAPI container run failed because `fastapi` was missing inside the built image; the Dockerfile now installs `requirements-api.txt`, and the rerun passed `/health`, `/config`, `/model-status`, and `/api/videos/analyze`. Streamlit container smoke returned `HTTP/1.1 200 OK`. Mounted-weight `/predict` remains pending because `local_weights/best.pt` is not present. See [Docker Actual Smoke Result](docs/docker_actual_smoke_result.md).
 
 This phase does not include DeepSORT integration, ByteTrack production hardening, Streamlit job launching, real async FastAPI video execution, database integration, full-length tracked video validation, or real video benchmarks.
 
@@ -347,6 +349,10 @@ Do not copy weights into the Docker image. Mount weights read-only at runtime.
 smoke remains pending unless performed explicitly.
 `v0.14.3` adds a Docker actual smoke preflight plan; actual build/run remains
 blocked until Docker CLI and daemon are available.
+`v0.14.4` records the first actual Docker smoke: image build, FastAPI container
+smoke, and Streamlit container smoke passed after the Dockerfile was updated to
+install `requirements-api.txt`. Mounted-weight `/predict` remains pending
+because `local_weights/best.pt` is not present.
 
 ## Makefile Commands
 
@@ -486,6 +492,7 @@ ONNX Runtime benchmark/check:
 - [Local deployment guide](docs/deployment_guide.md)
 - [Docker deployment guide](docs/docker_deployment.md)
 - [Docker Actual Smoke Plan](docs/docker_actual_smoke_plan.md)
+- [Docker Actual Smoke Result](docs/docker_actual_smoke_result.md)
 - [API usage guide](docs/api_usage.md)
 - [YOLOv8s retrain summary](docs/experiments/yolov8s_640_50epochs_retrain/summary.md)
 - [YOLOv8s official test summary](docs/evaluation/yolov8s_640_50epochs_official/summary.md)
@@ -557,9 +564,9 @@ Policy:
 
 ## Current Limitations
 
-- Docker deployment static acceptance is documented, but actual Docker build/run smoke remains pending.
-- Docker actual smoke preflight is documented, but Docker CLI/daemon is currently unavailable for actual build/run.
-- Final acceptance is Conditional Go for documentation/static acceptance; manual Docker build/run and mounted-weight container prediction remain pending.
+- Docker deployment static acceptance is documented, and Docker build/FastAPI/Streamlit container smoke has run locally.
+- Docker actual smoke result is documented; mounted-weight `/predict` remains pending until `local_weights/best.pt` is available.
+- Final acceptance is Conditional Go for documentation/static acceptance; mounted-weight container prediction remains pending.
 - Full real Bad Case collection and `/api/bad-cases` are not implemented yet.
 - YOLOv8m PyTorch speed benchmark has not yet been run.
 - YOLOv8m ONNX Runtime benchmark has not yet been run.

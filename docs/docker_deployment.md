@@ -7,19 +7,27 @@ manual's Stage 8 requirements. This means the Dockerfile, `.dockerignore`, and
 deployment documentation are checked for the expected build/run commands, weight
 mount policy, and large-asset exclusions.
 
-This is static acceptance only. It does not claim that an actual Docker build or
-Docker run smoke test has been completed. Actual build/run verification remains
-pending actual build work for a later manual check or release step.
+`v0.14.1` was static acceptance only. `v0.14.4` later executed actual Docker
+build/run smoke locally and records the result in
+`docs/docker_actual_smoke_result.md`.
 
 For the consolidated final acceptance status, see
 `docs/final_acceptance_checklist.md`. The checklist preserves actual
 Docker build/run and mounted-weight container prediction as manual pending
 acceptance items.
 
-`v0.14.3` adds `docs/docker_actual_smoke_plan.md`, which records the current
-Docker availability blocker and the exact future actual smoke commands. The
-current preflight found Docker CLI/daemon unavailable (`docker_info_exit=127`),
-so actual build/run remains pending until Docker is available.
+`v0.14.3` adds `docs/docker_actual_smoke_plan.md`, which records the initial
+Docker availability blocker and the exact future actual smoke commands. That
+preflight found Docker CLI/daemon unavailable (`docker_info_exit=127`), so no
+actual build/run was executed in that step.
+
+`v0.14.4` adds `docs/docker_actual_smoke_result.md`, recording the first actual
+Docker build/run smoke. The initial FastAPI container run failed because
+`fastapi` was missing inside the built image. The Dockerfile now installs
+`requirements-api.txt`; after rebuilding, FastAPI `/health`, `/config`,
+`/model-status`, and `/api/videos/analyze` passed. Streamlit container smoke
+also passed. Mounted-weight `/predict` remains pending because
+`local_weights/best.pt` was not present.
 
 ## Prerequisites
 
@@ -38,6 +46,9 @@ docker build -t yolov8-vehicle-pedestrian:latest .
 The image should include code, configs, and lightweight documentation assets
 only. It should not include `local_weights/`, dataset split folders, generated
 outputs, or large videos.
+
+The Docker image installs the base runtime from `requirements.txt` and API
+runtime dependencies from `requirements-api.txt`.
 
 ## Run FastAPI Container
 
@@ -182,19 +193,21 @@ make list-large-docs
 `make list-large-docs` may report the known retained demo video under
 `docs/video_demos/`.
 
-## Pending Actual Build
+## Actual Build Status
 
-Actual Docker build/run smoke remains pending. A future manual or release step
-should run:
+Actual Docker build/run smoke has been run locally for `v0.14.4`:
 
-- `docker build -t yolov8-vehicle-pedestrian:latest .`
+- `docker build -t yolov8-vehicle-pedestrian:latest .` passed.
 - FastAPI container smoke with `/health`, `/config`, `/model-status`, and
-  `/predict`.
-- Streamlit container smoke on port `8501`.
-- Mounted-weight predict smoke without copying weights into the image.
+  `/api/videos/analyze` passed after installing `requirements-api.txt`.
+- Streamlit container smoke on port `8501` passed.
+- Mounted-weight predict smoke remains pending until `local_weights/best.pt`
+  exists locally.
 
 See `docs/docker_actual_smoke_plan.md` for the current preflight result,
 manual prerequisites, success criteria, and failure handling.
+See `docs/docker_actual_smoke_result.md` for the first actual smoke result and
+the dependency-fix rerun.
 
 ## Related Files
 
@@ -203,6 +216,7 @@ manual prerequisites, success criteria, and failure handling.
 - `docs/deployment_guide.md`
 - `docs/api_usage.md`
 - `docs/docker_actual_smoke_plan.md`
+- `docs/docker_actual_smoke_result.md`
 - `docs/final_acceptance_checklist.md`
 - `docs/model_loading_strategy.md`
 - `docs/model_weight_policy.md`

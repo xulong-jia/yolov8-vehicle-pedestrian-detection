@@ -526,3 +526,30 @@ pipeline was executed, and no generated outputs were created. The smoke plan
 documents the exact future build command, FastAPI container smoke, Streamlit
 container smoke, mounted-weight `/predict` smoke, success criteria, failure
 handling, and go/no-go rules.
+
+## v0.14.4 Docker Actual Build Smoke
+
+`v0.14.4` records the first actual Docker build/run smoke in
+`docs/docker_actual_smoke_result.md`.
+
+Observed result:
+
+- Docker CLI available at `/usr/local/bin/docker`.
+- Docker version: `29.5.3`.
+- `docker info` exit code: `0`.
+- Docker Desktop server architecture: `aarch64`.
+- Docker image build passed for `yolov8-vehicle-pedestrian:latest`.
+- Initial FastAPI container smoke failed because `fastapi` was missing inside
+  the built image.
+- The Dockerfile now installs `requirements-api.txt` alongside
+  `requirements.txt`.
+- After rebuilding, FastAPI `/health`, `/config`, `/model-status`, and
+  `/api/videos/analyze` passed inside the container.
+- Streamlit container smoke passed and returned `HTTP/1.1 200 OK`.
+- Mounted-weight `/predict` was skipped because `local_weights/best.pt` was not
+  present.
+
+No Docker image layers, model weights, videos, CSV, JSON, JSONL, MP4,
+`runs`, `local_outputs`, or `/tmp` outputs were committed. The next deployment
+step should fix the container dependency surface and rerun FastAPI container
+smoke before claiming Docker deployment acceptance.

@@ -1043,6 +1043,34 @@ Pending after v0.14.3 Step 1:
 - [ ] Actual Streamlit container smoke / 实际 Streamlit 容器冒烟 — Target: Future/manual — Status: Pending
 - [ ] Mounted-weight `/predict` smoke / 挂载权重后的 `/predict` 冒烟 — Target: Future/manual — Status: Pending
 
+## v0.14.4-docker-actual-build-smoke / Docker 实际构建冒烟
+
+- [x] Docker availability / Docker 可用性 — Priority: P0 — Status: Completed locally — Output: `docs/docker_actual_smoke_result.md` — Commit: TBD
+- [x] Docker image build / Docker 镜像构建 — Priority: P0 — Status: Passed locally — Output: local Docker image `yolov8-vehicle-pedestrian:latest` — Commit: Not committed
+- [x] Docker FastAPI dependency fix / Docker FastAPI 依赖修复 — Priority: P0 — Status: Completed locally — Output: `Dockerfile` — Commit: TBD
+- [x] FastAPI container smoke / FastAPI 容器冒烟 — Priority: P0 — Status: Passed after dependency fix — Output: `docs/docker_actual_smoke_result.md` — Commit: TBD
+- [x] Streamlit container smoke / Streamlit 容器冒烟 — Priority: P0 — Status: Passed locally — Output: `docs/docker_actual_smoke_result.md` — Commit: TBD
+- [ ] Mounted-weight `/predict` smoke / 挂载权重后的 `/predict` 冒烟 — Priority: P0 — Status: Skipped locally — Output: `docs/docker_actual_smoke_result.md` — Commit: TBD
+- [x] Docker actual smoke result docs test / Docker 实际冒烟结果文档测试 — Priority: P0 — Status: Completed in working tree — Output: `tests/test_docker_actual_smoke_result_docs.py` — Commit: TBD
+
+Local result summary:
+
+- Docker CLI available: `/usr/local/bin/docker`
+- Docker version: `29.5.3`
+- `docker info` exit code: `0`
+- image build: passed
+- initial FastAPI container smoke: failed with `ModuleNotFoundError: No module named 'fastapi'`
+- dependency fix: Dockerfile installs `requirements-api.txt` with `requirements.txt`
+- FastAPI container smoke after fix: passed for `/health`, `/config`, `/model-status`
+- video job skeleton smoke after fix: passed and returned `job_id` with `status=created`
+- mounted-weight `/predict`: skipped because `local_weights/best.pt` was absent
+- Streamlit container smoke: passed with `HTTP/1.1 200 OK`
+- no Docker image layers, weights, videos, CSV, JSON, JSONL, MP4, `runs`, `local_outputs`, or `/tmp` outputs committed
+
+Pending after v0.14.4 Step 2:
+
+- [ ] Rerun mounted-weight `/predict` smoke / 重新运行挂载权重 `/predict` 冒烟 — Target: Future/manual — Status: Pending
+
 ## P3 — Optional Future Experiments / 可选未来实验
 
 - [x] Run YOLOv8s official test split validation if weight is available / 在权重可用时运行 YOLOv8s 官方测试集验证 — Priority: P3 — Status: Done — Output: `docs/experiments/yolov8s_640_50epochs_retrain/`, `docs/evaluation/yolov8s_640_50epochs_official/` — Result: P `0.865`, R `0.838`, mAP50 `0.876`, mAP50-95 `0.601` — Commit: `e4d5adb`

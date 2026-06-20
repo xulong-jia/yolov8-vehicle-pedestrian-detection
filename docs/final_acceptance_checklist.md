@@ -34,13 +34,15 @@ build/run was executed in this step.
 | v0.14.0-bad-case-schema-report-foundation | Bad Case schema/report foundation accepted. |
 | v0.14.1-docker-deployment-static-acceptance | Docker/deployment static acceptance accepted. |
 | v0.14.3-docker-actual-build-smoke-preflight | Docker actual build/run preflight planned; Docker CLI/daemon unavailable. |
+| v0.14.4-docker-actual-build-smoke | Docker image build, FastAPI smoke, and Streamlit smoke passed after installing API requirements; mounted-weight `/predict` remains pending. |
 
 ## Environment assumptions
 
 - Local Python virtual environment is available for tests and local operation.
 - Model weights are kept outside Git, typically under `local_weights/`.
 - Local source videos are kept outside Git, typically under `local_videos/source/`.
-- Docker build/run was not executed in this checklist step.
+- Docker build/run has been executed locally in `v0.14.4`; mounted-weight
+  `/predict` remains pending because `local_weights/best.pt` is absent.
 - GPU is optional; CPU paths remain documented for local smoke and API usage.
 - `MODEL_PATH` is mounted or configured at runtime for FastAPI, Streamlit, and
   Docker examples.
@@ -160,18 +162,14 @@ Accepted endpoints:
 
 | Field | Status |
 | --- | --- |
-| Status | Static accepted; actual build/run pending. |
-| Evidence files | `Dockerfile`, `.dockerignore`, `docs/docker_deployment.md`, `docs/deployment_guide.md`, `docs/docker_actual_smoke_plan.md`, `tests/test_docker_deployment_docs.py` |
+| Status | Partial actual smoke passed; mounted-weight `/predict` remains pending. |
+| Evidence files | `Dockerfile`, `.dockerignore`, `docs/docker_deployment.md`, `docs/deployment_guide.md`, `docs/docker_actual_smoke_plan.md`, `docs/docker_actual_smoke_result.md`, `tests/test_docker_deployment_docs.py` |
 | Tests/checks | `tests/test_docker_deployment_docs.py` verifies documented build/run commands, `MODEL_PATH`, weight mounting, and exclusions. |
-| Limitations | `v0.14.3` preflight completed, but Docker CLI/daemon is unavailable; actual Docker build/run and mounted-weight container inference remain manual pending acceptance. |
+| Limitations | `v0.14.4` image build passed. After installing `requirements-api.txt`, FastAPI `/health`, `/config`, `/model-status`, and `/api/videos/analyze` passed. Streamlit smoke passed. Mounted-weight `/predict` was skipped because `local_weights/best.pt` was absent. |
 
 ## Manual pending acceptance
 
-- `docker build`
-- `docker run FastAPI`
-- `docker run Streamlit`
-- mounted-weight `/predict` inside container
-- Docker CLI/daemon availability before actual build/run
+- rerun mounted-weight `/predict` inside container after `local_weights/best.pt` is available
 - optional full-length video pipeline validation
 - optional real Bad Case collection
 - optional real async video execution API
@@ -227,8 +225,7 @@ make list-large-docs
 
 ## Known limitations
 
-- Docker actual build/run not yet executed.
-- Docker actual smoke preflight is documented in `docs/docker_actual_smoke_plan.md`; current status is No-Go while Docker CLI/daemon is unavailable.
+- Docker actual smoke result is documented in `docs/docker_actual_smoke_result.md`; Docker image build, FastAPI smoke, and Streamlit smoke passed after the dependency fix.
 - Real async video execution not implemented.
 - Full production tracking hardening pending.
 - DeepSORT optional/future.
@@ -238,7 +235,7 @@ make list-large-docs
 ## Final go/no-go status
 
 - Overall status: Conditional Go for documentation/static acceptance.
-- Manual deployment Go pending Docker CLI/daemon availability, Docker actual build/run, and mounted-weight smoke.
+- Docker deployment status: Conditional Go for API/Streamlit container startup; mounted-weight `/predict` remains pending.
 
 No-Go conditions:
 
@@ -246,4 +243,4 @@ No-Go conditions:
 - missing volume mounts
 - committed assets/outputs
 - failed tests
-- Docker actual build/run failure
+- failed mounted-weight container `/predict` smoke

@@ -20,6 +20,8 @@ def test_dockerfile_exists_and_has_runtime_entrypoint() -> None:
     assert "FROM python:" in text
     assert "WORKDIR /app" in text
     assert "MODEL_PATH" in text
+    assert "requirements-api.txt" in text
+    assert "-r requirements-api.txt" in text
     assert "COPY app.py" in text
     assert "COPY src" in text
     assert "EXPOSE 8501" in text or "EXPOSE 8000" in text
@@ -59,7 +61,8 @@ def test_docker_deployment_docs_cover_manual_acceptance_commands() -> None:
     required_terms = [
         "Docker Deployment",
         "v0.14.1 static acceptance",
-        "pending actual build",
+        "v0.14.4",
+        "requirements-api.txt",
         "docker build",
         "docker run",
         "uvicorn src.api:app",

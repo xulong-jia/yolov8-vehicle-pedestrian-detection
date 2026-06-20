@@ -5,8 +5,8 @@ ENV MODEL_PATH=/models/best.pt
 
 WORKDIR /app
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements.txt requirements-api.txt ./
+RUN pip install --no-cache-dir -r requirements.txt -r requirements-api.txt
 
 COPY app.py ./app.py
 COPY src ./src
