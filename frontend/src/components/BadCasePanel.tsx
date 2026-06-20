@@ -38,7 +38,7 @@ export default function BadCasePanel({ config, onRequestId }: BadCasePanelProps)
       setRecords((current) => [result.data, ...current]);
       onRequestId(result.requestId);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Unable to create Bad Case");
+      setError(err instanceof Error ? err.message : "无法记录问题样例");
     } finally {
       setLoading(false);
     }
@@ -52,7 +52,7 @@ export default function BadCasePanel({ config, onRequestId }: BadCasePanelProps)
       setRecords(result.data);
       onRequestId(result.requestId);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Unable to load Bad Cases");
+      setError(err instanceof Error ? err.message : "无法加载问题样例列表");
     } finally {
       setLoading(false);
     }
@@ -62,17 +62,17 @@ export default function BadCasePanel({ config, onRequestId }: BadCasePanelProps)
     <section className="panel panel-wide">
       <div className="panel-header">
         <div>
-          <p className="eyebrow">Review</p>
-          <h2>Bad Cases</h2>
+          <p className="eyebrow">复核</p>
+          <h2>问题样例记录（高级/复核用）</h2>
         </div>
         <button type="button" onClick={loadBadCases} disabled={loading}>
-          Load list
+          加载列表
         </button>
       </div>
       <form className="form-grid" onSubmit={submitBadCase}>
         {Object.entries(form).map(([field, value]) => (
           <label key={field}>
-            {field}
+            {badCaseFieldLabels[field] || field} <span className="field-key">{field}</span>
             <input
               value={value}
               onChange={(event) => setForm({ ...form, [field]: event.target.value })}
@@ -81,7 +81,7 @@ export default function BadCasePanel({ config, onRequestId }: BadCasePanelProps)
         ))}
         <div className="form-actions">
           <button type="submit" disabled={loading}>
-            {loading ? "Saving" : "Create Bad Case"}
+            {loading ? "保存中" : "记录问题样例"}
           </button>
         </div>
       </form>
@@ -91,12 +91,12 @@ export default function BadCasePanel({ config, onRequestId }: BadCasePanelProps)
           <table>
             <thead>
               <tr>
-                <th>case_id</th>
-                <th>module</th>
-                <th>case_type</th>
-                <th>video_id</th>
-                <th>expected</th>
-                <th>actual</th>
+                <th>样例编号 case_id</th>
+                <th>模块 module</th>
+                <th>问题类型 case_type</th>
+                <th>视频ID video_id</th>
+                <th>期望 expected</th>
+                <th>实际 actual</th>
               </tr>
             </thead>
             <tbody>
@@ -114,8 +114,21 @@ export default function BadCasePanel({ config, onRequestId }: BadCasePanelProps)
           </table>
         </div>
       ) : (
-        <p className="muted">No Bad Cases loaded.</p>
+        <p className="muted">暂无问题样例</p>
       )}
     </section>
   );
 }
+
+const badCaseFieldLabels: Record<string, string> = {
+  module: "所属模块",
+  case_type: "问题类型",
+  video_id: "视频ID",
+  image_name: "图片名称",
+  frame_index: "帧编号",
+  expected_result: "期望结果",
+  actual_result: "实际结果",
+  root_cause: "原因分析",
+  tags: "标签",
+  reviewer_note: "复核备注"
+};

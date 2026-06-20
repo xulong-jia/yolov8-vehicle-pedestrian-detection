@@ -51,6 +51,12 @@ label {
   font-weight: 600;
 }
 
+.field-key {
+  color: #667085;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
 pre,
 code {
   font-family: "SFMono-Regular", Consolas, monospace;
@@ -96,6 +102,14 @@ code {
   background: #ffffff;
   color: #34445c;
   padding: 8px 12px;
+}
+
+.helper-text {
+  border-left: 3px solid #1d4ed8;
+  background: #eff6ff;
+  color: #34445c;
+  margin: 14px 0 0;
+  padding: 10px 12px;
 }
 
 .control-strip,
