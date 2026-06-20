@@ -5,7 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from fastapi import FastAPI, File, HTTPException, Query, UploadFile, status
+from fastapi import BackgroundTasks, FastAPI, File, HTTPException, Query, UploadFile, status
 
 from src.core.config import (
     PROJECT_NAME,
@@ -211,12 +211,29 @@ def create_app() -> FastAPI:
             raise _http_error_for_prediction(exc) from exc
 
     @app.post("/api/videos/analyze", response_model=VideoJobResponse)
-    def create_video_job(request: VideoAnalyzeRequest) -> dict[str, Any]:
-        return registry.create_job(
-            run_dir=request.run_dir,
+    def create_video_job(
+        request: VideoAnalyzeRequest,
+        background_tasks: BackgroundTasks,
+    ) -> dict[str, Any]:
+        effective_video_path = request.video_path or request.source
+        if request.run_dir and not (request.model_path or effective_video_path):
+            return registry.create_job(
+                run_dir=request.run_dir,
+                video_id=request.video_id,
+                run_name=request.run_name,
+            )
+
+        job = registry.create_execution_job(
+            model_path=request.model_path,
+            video_path=effective_video_path,
             video_id=request.video_id,
             run_name=request.run_name,
+            conf=request.conf,
+            imgsz=request.imgsz,
+            device=request.device,
         )
+        background_tasks.add_task(registry.run_job, job["job_id"])
+        return job
 
     @app.get("/api/videos/jobs/{job_id}", response_model=VideoJobResponse)
     def get_video_job(job_id: str) -> dict[str, Any]:

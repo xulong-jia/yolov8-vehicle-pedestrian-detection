@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import json
 from typing import Any
+from urllib.error import HTTPError, URLError
+from urllib.request import Request, urlopen
 
 import streamlit as st
 
@@ -41,15 +44,103 @@ def _render_csv_preview(title: str, rows: list[dict[str, Any]]) -> None:
         st.caption("No preview rows available.")
 
 
+def _api_request(
+    method: str,
+    url: str,
+    payload: dict[str, Any] | None = None,
+    timeout: float = 5.0,
+) -> dict[str, Any]:
+    data = None
+    headers = {"Accept": "application/json"}
+    if payload is not None:
+        data = json.dumps(payload).encode("utf-8")
+        headers["Content-Type"] = "application/json"
+    request = Request(url, data=data, headers=headers, method=method)
+    try:
+        with urlopen(request, timeout=timeout) as response:
+            body = response.read().decode("utf-8")
+    except HTTPError as exc:
+        detail = exc.read().decode("utf-8", errors="replace")
+        raise RuntimeError(f"API request failed with HTTP {exc.code}: {detail}") from exc
+    except URLError as exc:
+        raise RuntimeError(f"API request failed: {exc.reason}") from exc
+    return json.loads(body) if body else {}
+
+
+def _render_api_job_launcher() -> None:
+    st.header("Video Job Launcher")
+    st.caption(
+        "This launcher calls the FastAPI service. The API writes results under "
+        "`local_outputs/api_video_jobs/<job_id>/`; do not commit those outputs."
+    )
+    api_base_url = st.text_input("FastAPI base URL", value="http://localhost:8000")
+
+    with st.form("video_job_form"):
+        model_path = st.text_input("Model path", value="local_weights/best.pt")
+        video_path = st.text_input("Video path", value="local_videos/source/demo.mp4")
+        run_name = st.text_input("Run name", value="streamlit_run")
+        video_id = st.text_input("Video ID", value="streamlit_demo")
+        conf = st.number_input("Confidence", min_value=0.0, max_value=1.0, value=0.25, step=0.05)
+        imgsz = st.number_input("Image size", min_value=1, value=640, step=32)
+        device = st.text_input("Device", value="cpu")
+        submitted = st.form_submit_button("Submit video job", type="primary")
+
+    if submitted:
+        payload = {
+            "model_path": model_path,
+            "video_path": video_path,
+            "run_name": run_name,
+            "video_id": video_id,
+            "conf": conf,
+            "imgsz": int(imgsz),
+            "device": device,
+        }
+        try:
+            created = _api_request("POST", f"{api_base_url.rstrip('/')}/api/videos/analyze", payload)
+        except RuntimeError as exc:
+            st.error(str(exc))
+        else:
+            st.session_state["video_job_id"] = created.get("job_id", "")
+            st.success(f"Created job {created.get('job_id')} with status {created.get('status')}")
+            st.json(created)
+
+    st.subheader("Query Job")
+    job_id = st.text_input("Job ID", value=st.session_state.get("video_job_id", ""))
+    if st.button("Query job status"):
+        if not job_id.strip():
+            st.warning("Enter a job ID first.")
+        else:
+            try:
+                job = _api_request(
+                    "GET",
+                    f"{api_base_url.rstrip('/')}/api/videos/jobs/{job_id.strip()}",
+                )
+            except RuntimeError as exc:
+                st.error(str(exc))
+            else:
+                st.json(job)
+                if job.get("summary_path"):
+                    st.caption(f"Summary: {job['summary_path']}")
+                artifact_paths = job.get("artifact_paths") or {}
+                if artifact_paths:
+                    st.dataframe(
+                        [{"artifact": key, "path": value} for key, value in artifact_paths.items()],
+                        use_container_width=True,
+                    )
+
+
 def main() -> None:
     st.set_page_config(page_title="YOLOv8 Video Analysis Demo", layout="wide")
     st.title("YOLOv8 Video Analysis Demo")
 
-    st.warning(
-        "This page is read-only. It does not run YOLO, does not run ByteTrack, "
-        "does not run analytics, and does not generate videos. Do not commit "
-        "local output artifacts."
+    st.info(
+        "Use the launcher to submit jobs to the FastAPI service, or use the "
+        "artifact browser to inspect existing outputs. Do not commit local "
+        "output artifacts."
     )
+
+    with st.expander("Start or query FastAPI video jobs", expanded=False):
+        _render_api_job_launcher()
 
     with st.sidebar:
         st.header("Artifacts")

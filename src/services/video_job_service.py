@@ -1,8 +1,4 @@
-"""In-memory video job registry and artifact readers for FastAPI.
-
-This service is intentionally read-only for artifacts. It does not run YOLO,
-does not run tracking, does not run analytics, and does not write files.
-"""
+"""In-memory video job registry, execution wrapper, and artifact readers."""
 
 from __future__ import annotations
 
@@ -10,6 +6,7 @@ import csv
 import json
 from datetime import UTC, datetime
 from pathlib import Path
+import threading
 from typing import Any
 from uuid import uuid4
 
@@ -28,8 +25,10 @@ EXPECTED_ARTIFACTS = {
 class VideoJobRegistry:
     """Store short-lived video job records in memory."""
 
-    def __init__(self) -> None:
+    def __init__(self, base_output_dir: str | Path = "local_outputs/api_video_jobs") -> None:
         self._jobs: dict[str, dict[str, Any]] = {}
+        self.base_output_dir = Path(base_output_dir)
+        self._lock = threading.Lock()
 
     def create_job(
         self,
@@ -48,37 +47,147 @@ class VideoJobRegistry:
             "created_at": _utc_now_iso(),
             "message": "Video execution is not implemented in this skeleton.",
         }
-        self._jobs[job_id] = job
+        self._set_job(job_id, job)
         if run_dir is not None:
             return self.attach_run_dir(job_id, run_dir)
         return dict(job)
 
+    def create_execution_job(
+        self,
+        model_path: str | Path | None,
+        video_path: str | Path | None,
+        video_id: str = "demo",
+        run_name: str | None = None,
+        conf: float = 0.25,
+        imgsz: int = 640,
+        device: str = "cpu",
+    ) -> dict[str, Any]:
+        job_id = uuid4().hex
+        effective_run_name = _safe_run_name(run_name or "api_run")
+        output_dir = self.base_output_dir / job_id
+        run_dir = output_dir / "video_analysis" / effective_run_name
+        job = {
+            "job_id": job_id,
+            "status": "created",
+            "video_id": video_id or "demo",
+            "run_name": effective_run_name,
+            "run_dir": str(run_dir),
+            "output_dir": str(output_dir),
+            "created_at": _utc_now_iso(),
+            "started_at": None,
+            "finished_at": None,
+            "message": "Video analysis job created.",
+            "model_path": str(model_path or ""),
+            "video_path": str(video_path or ""),
+            "conf": float(conf),
+            "imgsz": int(imgsz),
+            "device": str(device),
+            "summary_path": None,
+            "artifact_paths": {},
+            "error": None,
+        }
+        self._set_job(job_id, job)
+        return dict(job)
+
+    def run_job(self, job_id: str) -> dict[str, Any]:
+        job = self.get_job(job_id)
+        self.mark_running(job_id)
+        try:
+            model_path = _require_existing_file(job.get("model_path"), "model_path")
+            video_path = _require_existing_file(
+                job.get("video_path"),
+                "source/video_path",
+            )
+
+            # Keep compute imports lazy so API import and read-only result queries stay light.
+            from src.run_video_analysis_smoke import run_four_step_smoke
+
+            summary = run_four_step_smoke(
+                model_path=model_path,
+                source=video_path,
+                output_dir=job["output_dir"],
+                video_id=job["video_id"],
+                conf=float(job["conf"]),
+                imgsz=int(job["imgsz"]),
+                device=str(job["device"]),
+                run_name=job["run_name"],
+            )
+            return self.mark_succeeded(job_id, summary)
+        except Exception as exc:
+            return self.mark_failed(job_id, _short_error(exc))
+
     def get_job(self, job_id: str) -> dict[str, Any]:
-        if job_id not in self._jobs:
-            raise KeyError(f"Video job not found: {job_id}")
-        return dict(self._jobs[job_id])
+        with self._lock:
+            if job_id not in self._jobs:
+                raise KeyError(f"Video job not found: {job_id}")
+            return dict(self._jobs[job_id])
 
     def list_jobs(self) -> list[dict[str, Any]]:
-        return [dict(job) for job in self._jobs.values()]
+        with self._lock:
+            return [dict(job) for job in self._jobs.values()]
 
     def attach_run_dir(self, job_id: str, run_dir: str | Path) -> dict[str, Any]:
-        if job_id not in self._jobs:
-            raise KeyError(f"Video job not found: {job_id}")
         path = Path(run_dir)
         artifacts = discover_run_artifacts(path)
         has_artifacts = any(item["exists"] for item in artifacts.values())
-        job = self._jobs[job_id]
-        job["run_dir"] = str(path)
-        job["status"] = "attached" if has_artifacts else "missing_artifacts"
-        job["message"] = (
-            "Attached to existing VideoAnalysisCenter artifacts."
-            if has_artifacts
-            else "Run directory has no known artifacts."
+        with self._lock:
+            if job_id not in self._jobs:
+                raise KeyError(f"Video job not found: {job_id}")
+            job = self._jobs[job_id]
+            job["run_dir"] = str(path)
+            job["status"] = "attached" if has_artifacts else "missing_artifacts"
+            job["message"] = (
+                "Attached to existing VideoAnalysisCenter artifacts."
+                if has_artifacts
+                else "Run directory has no known artifacts."
+            )
+            return dict(job)
+
+    def mark_running(self, job_id: str) -> dict[str, Any]:
+        return self._update_job(
+            job_id,
+            status="running",
+            started_at=_utc_now_iso(),
+            message="Video analysis job is running.",
+            error=None,
         )
-        return dict(job)
+
+    def mark_succeeded(self, job_id: str, summary: dict[str, Any]) -> dict[str, Any]:
+        summary_path = Path(self.get_job(job_id)["run_dir"]) / "video_analysis_summary.json"
+        artifact_paths = _collect_artifact_paths(summary_path.parent, summary)
+        return self._update_job(
+            job_id,
+            status="succeeded",
+            finished_at=_utc_now_iso(),
+            message="Video analysis job succeeded.",
+            summary_path=str(summary_path),
+            artifact_paths=artifact_paths,
+            error=None,
+        )
+
+    def mark_failed(self, job_id: str, error: str) -> dict[str, Any]:
+        return self._update_job(
+            job_id,
+            status="failed",
+            finished_at=_utc_now_iso(),
+            message=f"Video analysis job failed: {error}",
+            error=error,
+        )
 
     def clear(self) -> None:
-        self._jobs.clear()
+        with self._lock:
+            self._jobs.clear()
+
+    def _set_job(self, job_id: str, job: dict[str, Any]) -> None:
+        with self._lock:
+            self._jobs[job_id] = dict(job)
+
+    def _update_job(self, job_id: str, **updates: Any) -> dict[str, Any]:
+        with self._lock:
+            if job_id not in self._jobs:
+                raise KeyError(f"Video job not found: {job_id}")
+            self._jobs[job_id].update(updates)
+            return dict(self._jobs[job_id])
 
 
 registry = VideoJobRegistry()
@@ -211,3 +320,43 @@ def _limit_rows(rows: list[Any], max_rows: int | None) -> list[Any]:
 
 def _utc_now_iso() -> str:
     return datetime.now(UTC).replace(microsecond=0).isoformat()
+
+
+def _safe_run_name(run_name: str) -> str:
+    name = str(run_name).strip()
+    if not name or name in {".", ".."}:
+        return "api_run"
+    if "/" in name or "\\" in name:
+        return name.replace("/", "_").replace("\\", "_")
+    return name
+
+
+def _require_existing_file(path: Any, field_name: str) -> Path:
+    if path is None or not str(path).strip():
+        raise FileNotFoundError(f"{field_name} is required")
+    file_path = Path(str(path)).expanduser()
+    if not file_path.is_file():
+        raise FileNotFoundError(f"{field_name} not found: {file_path}")
+    return file_path
+
+
+def _short_error(exc: Exception, max_length: int = 240) -> str:
+    message = str(exc).strip() or exc.__class__.__name__
+    return message if len(message) <= max_length else f"{message[:max_length]}..."
+
+
+def _collect_artifact_paths(run_dir: Path, summary: dict[str, Any]) -> dict[str, str]:
+    paths = {
+        "metadata": str(run_dir / "metadata.json"),
+        "detections": str(run_dir / EXPECTED_ARTIFACTS["detections"]),
+        "tracks": str(run_dir / EXPECTED_ARTIFACTS["tracks"]),
+        "count_events": str(run_dir / EXPECTED_ARTIFACTS["count_events"]),
+        "roi_frame_counts": str(run_dir / EXPECTED_ARTIFACTS["roi_frame_counts"]),
+        "events": str(run_dir / EXPECTED_ARTIFACTS["events"]),
+        "summary": str(run_dir / EXPECTED_ARTIFACTS["summary"]),
+    }
+    for key in ("detections_csv", "tracks_csv"):
+        value = summary.get(key)
+        if value:
+            paths[key] = str(value)
+    return paths

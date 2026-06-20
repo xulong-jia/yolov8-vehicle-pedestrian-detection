@@ -63,6 +63,12 @@ class VideoAnalyzeRequest(BaseModel):
     video_id: str = "demo"
     run_name: str | None = None
     run_dir: str | None = None
+    model_path: str | None = None
+    source: str | None = None
+    video_path: str | None = None
+    conf: float = 0.25
+    imgsz: int = 640
+    device: str = "cpu"
     note: str | None = None
 
 
@@ -73,6 +79,10 @@ class VideoJobResponse(BaseModel):
     run_name: str
     run_dir: str
     message: str
+    output_dir: str | None = None
+    summary_path: str | None = None
+    artifact_paths: dict[str, str] | None = None
+    error: str | None = None
 
 
 class VideoArtifactResponse(BaseModel):

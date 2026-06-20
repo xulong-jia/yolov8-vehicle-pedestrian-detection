@@ -16,8 +16,10 @@ from src.services.video_job_service import registry
 
 @pytest.fixture(autouse=True)
 def clear_video_jobs() -> None:
+    registry.base_output_dir = Path("local_outputs/api_video_jobs")
     registry.clear()
     yield
+    registry.base_output_dir = Path("local_outputs/api_video_jobs")
     registry.clear()
 
 
@@ -98,8 +100,194 @@ def test_create_video_job_without_run_dir_does_not_create_files(tmp_path):
     assert body["status"] == "created"
     assert body["video_id"] == "demo"
     assert body["run_name"] == "demo_run"
-    assert "not implemented" in body["message"]
+    assert "created" in body["message"].lower()
     assert set(tmp_path.rglob("*")) == before
+
+    fetched = client.get(f"/api/videos/jobs/{body['job_id']}")
+    assert fetched.status_code == 200
+    assert fetched.json()["status"] == "failed"
+    assert "model_path is required" in fetched.json()["error"]
+
+
+def test_create_video_job_runs_background_flow_and_records_artifacts(
+    tmp_path,
+    monkeypatch,
+):
+    from src import run_video_analysis_smoke
+
+    model_path = tmp_path / "best.pt"
+    video_path = tmp_path / "demo.mp4"
+    model_path.write_bytes(b"fake model")
+    video_path.write_bytes(b"fake video")
+    registry.base_output_dir = tmp_path / "api_video_jobs"
+    calls = []
+
+    def fake_run_four_step_smoke(**kwargs):
+        calls.append(kwargs)
+        output_dir = Path(kwargs["output_dir"])
+        run_name = kwargs["run_name"]
+        run_dir = output_dir / "video_analysis" / run_name
+        run_dir.mkdir(parents=True)
+        (output_dir / "tracking").mkdir()
+        _write_csv(output_dir / "detections.csv", [{"video_id": "demo", "frame_index": 0}])
+        _write_csv(output_dir / "tracking" / "tracks.csv", [{"video_id": "demo", "track_id": 1}])
+        _write_json(run_dir / "metadata.json", {"video_id": kwargs["video_id"]})
+        _write_csv(run_dir / "detections.csv", [{"video_id": "demo", "frame_index": 0}])
+        _write_csv(run_dir / "tracks.csv", [{"video_id": "demo", "track_id": 1}])
+        _write_csv(run_dir / "count_events.csv", [{"line_id": "main"}])
+        _write_csv(run_dir / "roi_frame_counts.csv", [{"roi_id": "main"}])
+        _write_jsonl(run_dir / "events.jsonl", [{"event_id": "e1"}])
+        _write_json(
+            run_dir / "video_analysis_summary.json",
+            {"video_id": kwargs["video_id"], "track_count": 1},
+        )
+        return {
+            "video_id": kwargs["video_id"],
+            "detections_csv": str(output_dir / "detections.csv"),
+            "tracks_csv": str(output_dir / "tracking" / "tracks.csv"),
+        }
+
+    monkeypatch.setattr(run_video_analysis_smoke, "run_four_step_smoke", fake_run_four_step_smoke)
+    client = _client()
+
+    response = client.post(
+        "/api/videos/analyze",
+        json={
+            "model_path": str(model_path),
+            "video_path": str(video_path),
+            "video_id": "demo",
+            "run_name": "api_run",
+            "conf": 0.3,
+            "imgsz": 320,
+            "device": "cpu",
+        },
+    )
+
+    assert response.status_code == 200
+    created = response.json()
+    assert created["status"] == "created"
+    assert created["output_dir"].endswith(f"api_video_jobs/{created['job_id']}")
+    assert calls[0]["model_path"] == model_path
+    assert calls[0]["source"] == video_path
+    assert calls[0]["conf"] == 0.3
+    assert calls[0]["imgsz"] == 320
+
+    fetched = client.get(f"/api/videos/jobs/{created['job_id']}")
+    assert fetched.status_code == 200
+    job = fetched.json()
+    assert job["status"] == "succeeded"
+    assert job["summary_path"].endswith("video_analysis/api_run/video_analysis_summary.json")
+    assert job["artifact_paths"]["summary"].endswith("video_analysis_summary.json")
+    assert job["artifact_paths"]["detections"].endswith("video_analysis/api_run/detections.csv")
+
+    analytics = client.get(f"/api/videos/jobs/{created['job_id']}/analytics")
+    assert analytics.status_code == 200
+    assert analytics.json()["data"]["summary"]["data"]["track_count"] == 1
+
+
+def test_create_video_job_accepts_source_alias_for_video_path(tmp_path, monkeypatch):
+    from src import run_video_analysis_smoke
+
+    model_path = tmp_path / "best.pt"
+    source_path = tmp_path / "source.mp4"
+    model_path.write_bytes(b"fake model")
+    source_path.write_bytes(b"fake video")
+    registry.base_output_dir = tmp_path / "api_video_jobs"
+    calls = []
+
+    def fake_run_four_step_smoke(**kwargs):
+        calls.append(kwargs)
+        output_dir = Path(kwargs["output_dir"])
+        run_dir = output_dir / "video_analysis" / kwargs["run_name"]
+        run_dir.mkdir(parents=True)
+        _write_json(run_dir / "video_analysis_summary.json", {"video_id": kwargs["video_id"]})
+        return {"video_id": kwargs["video_id"]}
+
+    monkeypatch.setattr(run_video_analysis_smoke, "run_four_step_smoke", fake_run_four_step_smoke)
+    client = _client()
+
+    response = client.post(
+        "/api/videos/analyze",
+        json={
+            "model_path": str(model_path),
+            "source": str(source_path),
+            "video_id": "demo_api",
+            "run_name": "source_alias",
+        },
+    )
+
+    assert response.status_code == 200
+    created = response.json()
+    assert calls[0]["source"] == source_path
+    fetched = client.get(f"/api/videos/jobs/{created['job_id']}")
+    assert fetched.json()["status"] == "succeeded"
+
+
+def test_video_job_state_flow_helpers(tmp_path):
+    registry.base_output_dir = tmp_path / "api_video_jobs"
+    job = registry.create_execution_job(
+        model_path=tmp_path / "best.pt",
+        video_path=tmp_path / "demo.mp4",
+        video_id="demo",
+        run_name="flow",
+    )
+
+    assert job["status"] == "created"
+    assert registry.mark_running(job["job_id"])["status"] == "running"
+    failed = registry.mark_failed(job["job_id"], "clear failure")
+    assert failed["status"] == "failed"
+    assert failed["error"] == "clear failure"
+
+
+def test_create_video_job_missing_model_or_video_fails_clearly(tmp_path):
+    registry.base_output_dir = tmp_path / "api_video_jobs"
+    video_path = tmp_path / "demo.mp4"
+    model_path = tmp_path / "best.pt"
+    video_path.write_bytes(b"fake video")
+    model_path.write_bytes(b"fake model")
+    client = _client()
+
+    response = client.post(
+        "/api/videos/analyze",
+        json={
+            "model_path": str(tmp_path / "missing.pt"),
+            "video_path": str(video_path),
+            "run_name": "missing_model",
+        },
+    )
+
+    assert response.status_code == 200
+    created = response.json()
+    fetched = client.get(f"/api/videos/jobs/{created['job_id']}")
+    assert fetched.status_code == 200
+    body = fetched.json()
+    assert body["status"] == "failed"
+    assert "model_path not found" in body["error"]
+
+    response = client.post(
+        "/api/videos/analyze",
+        json={
+            "model_path": str(video_path),
+            "video_path": str(tmp_path / "missing.mp4"),
+            "run_name": "missing_video",
+        },
+    )
+    created = response.json()
+    body = client.get(f"/api/videos/jobs/{created['job_id']}").json()
+    assert body["status"] == "failed"
+    assert "source/video_path not found" in body["error"]
+
+    response = client.post(
+        "/api/videos/analyze",
+        json={
+            "model_path": str(model_path),
+            "run_name": "missing_source_and_video_path",
+        },
+    )
+    created = response.json()
+    body = client.get(f"/api/videos/jobs/{created['job_id']}").json()
+    assert body["status"] == "failed"
+    assert "source/video_path is required" in body["error"]
 
 
 def test_create_video_job_with_run_dir_attaches_existing_artifacts(tmp_path):
