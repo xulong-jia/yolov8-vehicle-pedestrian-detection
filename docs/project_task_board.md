@@ -467,7 +467,7 @@ Pending after v0.9.8 Step 1:
 
 ## v0.9.9-real-local-smoke-result / 真实本地冒烟结果记录
 
-- [x] Step 1 document real local smoke run result / Step 1 文档化真实本地冒烟运行结果 — Priority: P0 — Status: Completed in working tree — Output: `docs/real_local_smoke_run_result.md`, `docs/track_video_cli_usage.md`, `docs/video_analytics_mvp.md`, `docs/project_task_board.md`, `README.md`, `docs/final_project_report.md` — Commit: TBD
+- [x] Step 1 document real local smoke run result / Step 1 文档化真实本地冒烟运行结果 — Priority: P0 — Status: Completed — Output folded into `docs/track_video_cli_usage.md`, `docs/video_analytics_mvp.md`, `docs/project_task_board.md`, `README.md`, `docs/final_project_report.md` — Commit: Historical
 
 Recorded result:
 
@@ -494,7 +494,7 @@ Pending after v0.9.9 Step 1:
 
 ## v0.10.0-cli-module-invocation-ergonomics / CLI 与模块调用易用性
 
-- [x] Step 1 module invocation documented and tested / Step 1 文档化并测试模块调用 — Priority: P0 — Status: Completed in working tree — Output: `tests/test_cli_module_invocation.py`, `docs/track_video_cli_usage.md`, `docs/real_local_smoke_run_result.md`, `docs/video_analytics_mvp.md`, `docs/project_task_board.md`, `README.md`, `docs/final_project_report.md` — Commit: TBD
+- [x] Step 1 module invocation documented and tested / Step 1 文档化并测试模块调用 — Priority: P0 — Status: Completed — Output: `tests/test_cli_module_invocation.py`, `docs/track_video_cli_usage.md`, `docs/video_analytics_mvp.md`, `docs/project_task_board.md`, `README.md`, `docs/final_project_report.md` — Commit: Historical
 
 Current scope:
 
@@ -619,7 +619,7 @@ Pending after v0.10.3 Step 1:
 
 ## v0.10.4-tracked-video-rendering / 跟踪视频渲染
 
-- [x] Step 1 tracked video renderer / Step 1 跟踪视频渲染器 — Priority: P0 — Status: Completed in working tree — Output: `src/render_tracked_video.py`, `tests/test_render_tracked_video.py`, `docs/tracked_video_rendering.md`, `docs/track_video_cli_usage.md`, `docs/video_analytics_mvp.md`, `docs/project_task_board.md`, `README.md`, `docs/final_project_report.md`, `docs/real_local_smoke_run_result.md` — Commit: TBD
+- [x] Step 1 tracked video renderer / Step 1 跟踪视频渲染器 — Priority: P0 — Status: Completed in working tree — Output: `src/render_tracked_video.py`, `tests/test_render_tracked_video.py`, `docs/tracked_video_rendering.md`, `docs/track_video_cli_usage.md`, `docs/video_analytics_mvp.md`, `docs/project_task_board.md`, `README.md`, `docs/final_project_report.md` — Commit: TBD
 - [x] Local 300-frame tracked preview rendered / 本地 300 帧跟踪预览已渲染 — Priority: P0 — Status: Completed locally — Output: `/tmp/yolov8_real_smoke/tracked_preview_300.mp4` — Commit: Not committed
 
 Current scope:
@@ -748,7 +748,7 @@ Pending after v0.11.2 local verification:
 
 ## v0.11.3-bytetrack-runtime-integration-plan / ByteTrack runtime 接入计划
 
-- [x] Runtime plan doc / runtime 计划文档 — Priority: P0 — Status: Completed in working tree — Output: `docs/bytetrack_runtime_integration_plan.md` — Commit: TBD
+- [x] Runtime plan doc / runtime 计划文档 — Priority: P0 — Status: Folded into retained mainline ByteTrack docs — Output: `docs/bytetrack_integration_plan.md`, `docs/video_analytics_mvp.md`, `docs/track_video_cli_usage.md`, `docs/final_project_report.md` — Commit: TBD
 - [x] Contract helper / 契约 helper — Priority: P0 — Status: Completed in working tree — Output: `src/tracking/bytetrack_runtime_contract.py` — Commit: TBD
 - [x] Contract helper tests / 契约 helper 测试 — Priority: P0 — Status: Completed in working tree — Output: `tests/test_bytetrack_runtime_contract.py` — Commit: TBD
 

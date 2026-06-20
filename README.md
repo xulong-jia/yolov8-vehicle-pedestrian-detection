@@ -145,9 +145,9 @@ Completed experiments and recorded results:
 
 `v0.9.7-four-step-smoke-runner` adds a unified four-step smoke runner. It orchestrates detection export, synthetic tracking, Video Analysis Center job creation, and analytics execution while still using the synthetic tracker and not rendering tracked video. See [track_video.py CLI usage](docs/track_video_cli_usage.md).
 
-`v0.9.9-real-local-smoke-result` documents the first real local smoke run. It validates real YOLO detection export, synthetic tracking, and Video Analysis Center artifacts on a local demo video, producing `21,988` detections and `34` synthetic tracks. Outputs remain local-only and are not committed. See [Real Local Smoke Run Result](docs/real_local_smoke_run_result.md).
+`v0.9.9-real-local-smoke-result` documents the first real local smoke run. It validates real YOLO detection export, synthetic tracking, and Video Analysis Center artifacts on a local demo video, producing `21,988` detections and `34` synthetic tracks. Outputs remain local-only and are not committed. The retained summary now lives in [Video analytics MVP](docs/video_analytics_mvp.md), [track_video.py CLI usage](docs/track_video_cli_usage.md), and the final report.
 
-`v0.10.0-cli-module-invocation-ergonomics` documents and tests module-style CLI invocation for local smoke tools. Prefer `.venv/bin/python -m src.run_video_analysis_smoke ...` and `.venv/bin/python -m src.smoke_preflight ...` for local runs. See [track_video.py CLI usage](docs/track_video_cli_usage.md) and [Real Local Smoke Run Result](docs/real_local_smoke_run_result.md).
+`v0.10.0-cli-module-invocation-ergonomics` documents and tests module-style CLI invocation for local smoke tools. Prefer `.venv/bin/python -m src.run_video_analysis_smoke ...` and `.venv/bin/python -m src.smoke_preflight ...` for local runs. See [track_video.py CLI usage](docs/track_video_cli_usage.md).
 
 `v0.10.1` through `v0.10.3` captured local analytics tuning lessons: real smoke tracks need reviewed line, ROI, and event-rule settings before counts are meaningful. The one-off tuning and overlay helpers have been pruned; the useful guidance is folded into the main analytics, Video Analysis Center, rendering, and Streamlit documentation.
 
@@ -159,7 +159,7 @@ Completed experiments and recorded results:
 
 `v0.11.2-lap-dependency-and-bytetrack-rerun` documents the first successful local ByteTrack short-video spike after installing `lap==0.5.13` into the local `.venv`. The 300-frame run produced `746` ByteTrack track rows, `25` unique tracks, and a local 300-frame ByteTrack tracked preview. Outputs are local-only under `/tmp` and are not committed. See [ByteTrack Integration Plan](docs/bytetrack_integration_plan.md).
 
-`v0.11.3-bytetrack-runtime-integration-plan` prepares promotion of the ByteTrack spike into the standard `track_video.py` runtime. It adds a pure-Python runtime contract helper and a formal [ByteTrack Runtime Integration Plan](docs/bytetrack_runtime_integration_plan.md). No real YOLO or ByteTrack rerun is performed in this step.
+`v0.11.3-bytetrack-runtime-integration-plan` prepares promotion of the ByteTrack spike into the standard `track_video.py` runtime. It adds a pure-Python runtime contract helper and folds the runtime contract into the retained [ByteTrack Integration Plan](docs/bytetrack_integration_plan.md). No real YOLO or ByteTrack rerun is performed in this step.
 
 `v0.11.4-track-video-bytetrack-runtime` promotes the ByteTrack spike into the standard `track_video.py` runtime. It supports `.venv/bin/python -m src.track_video --tracker bytetrack ...` and writes real ByteTrack `tracks.csv` to the requested output directory. Local 300-frame validation produced `746` track rows and `25` unique tracks under `/tmp`; outputs are not committed.
 
@@ -465,7 +465,8 @@ ONNX Runtime benchmark/check:
 - [Inference speed benchmark](docs/inference_speed_benchmark.md)
 - [ONNX Runtime benchmark](docs/onnx_runtime_benchmark.md)
 - [Video analytics MVP](docs/video_analytics_mvp.md)
-- [ByteTrack pipeline validation](docs/bytetrack_pipeline_validation.md)
+- [ByteTrack integration plan](docs/bytetrack_integration_plan.md)
+- [Tracked Video Rendering](docs/tracked_video_rendering.md)
 - [Streamlit Video Demo Page](docs/streamlit_video_demo.md)
 - [Project task board](docs/project_task_board.md)
 
@@ -475,8 +476,9 @@ ONNX Runtime benchmark/check:
 can flow into analytics-only rerun and tracked-video rendering without rerunning
 YOLO or the tracker. The local 300-frame validation used `746` ByteTrack rows,
 `25` unique tracks, and generated local-only analytics artifacts plus a readable
-300-frame preview under `/tmp`. See
-[ByteTrack pipeline validation](docs/bytetrack_pipeline_validation.md).
+300-frame preview under `/tmp`. The retained summary now lives in
+[ByteTrack integration plan](docs/bytetrack_integration_plan.md),
+[Video analytics MVP](docs/video_analytics_mvp.md), and the final report.
 
 ## v0.11.6 Synthetic vs ByteTrack Comparison
 

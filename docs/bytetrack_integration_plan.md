@@ -210,7 +210,8 @@ Recommended next steps:
 
 ## v0.11.3 Runtime Integration Plan and Contract Helper
 
-`v0.11.3` adds the [ByteTrack Runtime Integration Plan](bytetrack_runtime_integration_plan.md) and `src/tracking/bytetrack_runtime_contract.py`.
+`v0.11.3` adds `src/tracking/bytetrack_runtime_contract.py` and folds the
+runtime integration contract into this retained ByteTrack integration plan.
 
 This step does not run YOLO, does not rerun ByteTrack, does not render video, and does not promote ByteTrack into `track_video.py` yet. It captures the future `track_video.py --tracker bytetrack` runtime contract, path planning, config validation, and track-row summarization in a pure-Python helper with fake unit tests.
 
@@ -224,7 +225,8 @@ Recommended implementation step:
 
 ## v0.11.4 Standard track_video ByteTrack Runtime
 
-`v0.11.4` promotes the ByteTrack spike into the standard `track_video.py` CLI. See the [ByteTrack Runtime Integration Plan](bytetrack_runtime_integration_plan.md) for the runtime contract and command details.
+`v0.11.4` promotes the ByteTrack spike into the standard `track_video.py` CLI.
+The runtime contract and command details are retained in this document.
 
 The supported runtime command shape is now:
 
@@ -248,8 +250,6 @@ Still pending: `lap` requirements decision, analytics rerun on ByteTrack tracks,
 `tracks.csv` can flow into analytics-only rerun and tracked-video rendering
 without rerunning YOLO and without rerunning the tracker.
 
-See [ByteTrack Pipeline Validation](bytetrack_pipeline_validation.md).
-
 Local 300-frame result:
 
 - `track_rows=746`
@@ -260,3 +260,17 @@ Local 300-frame result:
 
 Still pending: synthetic vs ByteTrack comparison, full-length ByteTrack
 validation, `lap` requirements decision, and UI/API integration.
+
+The retained conclusion from the validation run is that standard
+`track_video.py --tracker bytetrack` output can flow into analytics-only rerun
+and tracked-video rendering without rerunning YOLO or ByteTrack. The local
+analytics rerun reported `detection_count=21988`, `track_row_count=746`,
+`track_count=25`, `33` ROI frames observed, and `24` long-stay events. The
+preview was readable by cv2 with `300` frames, `29.97 FPS`, and `1280x720`.
+Generated CSV, JSON, JSONL, and MP4 outputs stayed under `/tmp` and were not
+committed.
+
+The synthetic-vs-ByteTrack comparison conclusion is that ByteTrack should be
+used for runtime/demo while synthetic tracking remains the deterministic test
+and fallback path. No MOTA/IDF1 claim is made because ground-truth tracking
+labels are not available.

@@ -471,7 +471,9 @@ Observed result:
 
 The tracker is still synthetic. This is not real ByteTrack/DeepSORT tracking and does not produce tracked video rendering. Generated outputs stay local-only under `/tmp/yolov8_real_smoke` and are not committed.
 
-Result details: [Real Local Smoke Run Result](real_local_smoke_run_result.md)
+The local result summary is retained here, in `docs/track_video_cli_usage.md`,
+and in `docs/final_project_report.md`; the one-off result-history page has
+been pruned.
 
 ## v0.10.0 CLI/Module Invocation Ergonomics
 
@@ -565,7 +567,7 @@ This proves that the Ultralytics ByteTrack dependency path can run locally and t
 
 This step adds:
 
-- [ByteTrack Runtime Integration Plan](bytetrack_runtime_integration_plan.md)
+- runtime contract guidance folded into `docs/bytetrack_integration_plan.md`
 - `src/tracking/bytetrack_runtime_contract.py`
 - fake unit tests for config validation, output path planning, track-row summarization, and future runtime plan objects
 
@@ -590,6 +592,28 @@ Supported command shape:
 The runtime exports real ByteTrack `tracks.csv` rows to the user output directory. The local 300-frame validation produced `track_rows=746`, `unique_tracks=25`, `frames_with_rows=261`, with `Person=720` and `Bus=26`.
 
 This step does not add UI/API workflow, does not make full-length runs the default, does not rerun analytics on ByteTrack tracks, and does not commit generated outputs.
+
+## v0.11.5-v0.11.6 ByteTrack Validation Conclusions
+
+The retained conclusion from the pruned validation-history docs is that standard
+`track_video.py --tracker bytetrack` output can enter the existing downstream
+pipeline:
+
+- analytics-only rerun can consume ByteTrack `tracks.csv`.
+- tracked-video rendering can consume ByteTrack `tracks.csv`.
+- the local 300-frame validation produced `746` track rows, `25` unique tracks,
+  and `261` frames with tracks.
+- class counts were `Person=720` and `Bus=26`.
+- analytics rerun observed `33` ROI frames and `24` long-stay events.
+- the preview was cv2-readable at `300` frames, `29.97 FPS`, `1280x720`.
+
+The synthetic-vs-ByteTrack comparison conclusion is unchanged: ByteTrack should
+be used for runtime/demo because it carries real MOT `track_id` semantics, while
+synthetic tracking remains a deterministic test and fallback path. No MOTA/IDF1
+claim is made because no ground-truth tracking labels are available.
+
+`v0.12.2` prunes the one-off ByteTrack validation-history documents after
+folding the useful results into the mainline documentation.
 
 ## Test Summary
 

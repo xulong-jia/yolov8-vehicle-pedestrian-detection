@@ -336,7 +336,9 @@ The runner uses `predict_video.py`, so it runs YOLO when you provide a real mode
 
 For local execution, prefer module-style invocation: `.venv/bin/python -m src.run_video_analysis_smoke ...`. If direct script execution reports `ModuleNotFoundError: No module named 'src'`, use the module entrypoint first. The fallback is `PYTHONPATH=. .venv/bin/python src/run_video_analysis_smoke.py ...`.
 
-The first real local smoke run is documented in [Real Local Smoke Run Result](real_local_smoke_run_result.md). It produced `21988` detections and `34` synthetic tracks using local-only inputs and `/tmp` outputs.
+The first real local smoke run produced `21988` detections and `34` synthetic
+tracks using local-only inputs and `/tmp` outputs. The retained summary is in
+`docs/video_analytics_mvp.md` and `docs/final_project_report.md`.
 
 ## Real local smoke preflight
 

@@ -280,7 +280,6 @@ References:
 - [Video analytics MVP](video_analytics_mvp.md)
 - [ByteTrack integration plan](bytetrack_integration_plan.md)
 - [track_video.py CLI usage](track_video_cli_usage.md)
-- [Real local smoke run result](real_local_smoke_run_result.md)
 
 ## 7. Deployment and Serving Preparation
 
@@ -377,7 +376,9 @@ Local validation summary:
 - preview readable by cv2: `300` frames, `29.97 FPS`, `1280x720`
 
 Generated CSV, JSON, JSONL, and MP4 outputs stayed under `/tmp` and were not
-committed. See [ByteTrack Pipeline Validation](bytetrack_pipeline_validation.md).
+committed. This validation summary is retained in the main ByteTrack,
+video-analytics, CLI, and final-report documentation; the one-off validation
+history page has been pruned.
 
 ## v0.11.6 Synthetic vs ByteTrack Comparison
 
