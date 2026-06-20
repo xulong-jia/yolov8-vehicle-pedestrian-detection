@@ -300,7 +300,8 @@ Important limitations:
 - The YOLO model is lazy-loaded on the first prediction request.
 - No model is loaded at API import time.
 - Uploaded images and prediction outputs are not saved to the repository.
-- Docker scaffold has not been claimed as production deployment.
+- Docker actual build/run smoke passed locally, including FastAPI, Streamlit,
+  and mounted-weight `/predict` checks.
 - Docker image is designed not to include model weights or the full dataset.
 
 ## 8. Safety and Reproducibility
@@ -317,13 +318,16 @@ GitHub tracks code, docs, configs, summaries, and selected lightweight demo asse
 
 ## 9. Current Limitations
 
-- No production API inference endpoint yet.
+- FastAPI image `/predict` exists and the Docker-mounted `/predict` smoke
+  passed with a local ignored `best.pt`.
 - YOLOv8m PyTorch speed benchmark has not yet been run.
 - YOLOv8m ONNX Runtime benchmark has not yet been run.
 - No ONNX Runtime mAP/NMS evaluation.
-- No real Docker build/run validation yet.
+- Docker actual build/run smoke passed locally in `v0.14.4` and `v0.14.5`.
 - Model weights, ONNX files, and full dataset split folders are intentionally not committed.
-- v0.8.0 video analytics is a pure-Python MVP core and does not yet include real tracker integration or a video UI/API workflow.
+- Real async video execution API, Streamlit job launching, production
+  security/observability hardening, real Bad Case collection, and optional
+  DeepSORT runtime remain future work.
 
 ## 10. Recommended Next Steps
 
@@ -504,11 +508,11 @@ areas. The checklist summarizes:
 - asset-safety checks for weights, local videos, dataset splits, generated
   outputs, and large documentation assets
 - manual pending acceptance items
-- final Conditional Go status for documentation/static acceptance
+- initial documentation/static acceptance status
 
-This step does not claim actual Docker build/run completion. Docker build,
+This step did not claim actual Docker build/run completion. Docker build,
 FastAPI container smoke, Streamlit container smoke, and mounted-weight
-container prediction remain manual pending acceptance items.
+container prediction were later closed by `v0.14.4` and `v0.14.5`.
 
 ## v0.14.3 Docker Actual Build Smoke Preflight
 
@@ -575,6 +579,15 @@ Final Docker status:
   future work.
 
 No Docker image layers, model weights, videos, CSV, JSON, JSONL, MP4,
-`runs`, `local_outputs`, or `/tmp` outputs were committed. The next deployment
-step should fix the container dependency surface and rerun FastAPI container
-smoke before claiming Docker deployment acceptance.
+`runs`, `local_outputs`, or `/tmp` outputs were committed. Final local/Docker
+acceptance is Go, subject to normal environment-specific deployment checks.
+
+## v0.14.6 Final Documentation Consistency Pass
+
+`v0.14.6` reconciles final documentation after the `v0.14.5` Docker actual
+smoke closure. It updates README, final report, final checklist, task board,
+and deployment documentation so they consistently state that Docker image
+build, FastAPI container smoke, Streamlit container smoke, and mounted-weight
+container `/predict` all passed locally. Future work is limited to production
+hardening, real async video execution, real Bad Case collection, optional
+DeepSORT runtime, and optional full-length production validation.

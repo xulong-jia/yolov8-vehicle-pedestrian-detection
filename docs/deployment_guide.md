@@ -140,7 +140,9 @@ Generated outputs should go under `local_outputs/`, which is ignored by Git.
 ## Docker Path
 
 `v0.14.1` adds Docker deployment static acceptance. The following commands are
-documented and statically checked, but actual Docker build/run smoke remains pending unless it is explicitly performed later.
+documented and statically checked. Actual Docker build/run smoke later passed
+locally in `v0.14.4`, and mounted-weight container `/predict` passed in
+`v0.14.5`.
 
 ### Build
 

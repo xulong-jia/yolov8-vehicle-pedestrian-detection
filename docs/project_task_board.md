@@ -999,7 +999,8 @@ Scope:
 - follows the final execution manual Stage 8 and Chapter 21 acceptance areas
 - consolidates evidence files, test commands, version tags, manual pending
   items, asset-safety checks, and final go/no-go status
-- marks the project as Conditional Go for documentation/static acceptance
+- marks the project as initial documentation/static acceptance before the later
+  Docker actual smoke closure
 - does not run Docker build
 - does not run Docker run
 - does not run YOLO, ByteTrack, DeepSORT, analytics, or rendering
@@ -1044,6 +1045,9 @@ Pending after v0.14.3 Step 1:
 - [ ] Mounted-weight `/predict` smoke / 挂载权重后的 `/predict` 冒烟 — Target: Future/manual — Status: Pending
 
 ## v0.14.4-docker-actual-build-smoke / Docker 实际构建冒烟
+
+Historical note: this section records the state before `v0.14.5` closed the
+mounted-weight `/predict` acceptance item.
 
 - [x] Docker availability / Docker 可用性 — Priority: P0 — Status: Completed locally — Output: `docs/docker_actual_smoke_result.md` — Commit: TBD
 - [x] Docker image build / Docker 镜像构建 — Priority: P0 — Status: Passed locally — Output: local Docker image `yolov8-vehicle-pedestrian:latest` — Commit: Not committed
@@ -1092,6 +1096,32 @@ Pending after v0.14.5:
 - [ ] Optional production hardening / 可选生产部署加固 — Target: Future — Status: Pending
 - [ ] Optional real async video execution API / 可选真实异步视频执行 API — Target: Future — Status: Pending
 - [ ] Optional DeepSORT runtime / 可选 DeepSORT 运行时 — Target: Future — Status: Pending
+
+## v0.14.6-final-doc-consistency-pass / 最终文档一致性收尾
+
+- [x] Reconcile README Docker status / 对齐 README Docker 状态 — Priority: P0 — Status: Completed in working tree — Output: `README.md` — Commit: TBD
+- [x] Reconcile final project report / 对齐最终报告 — Priority: P0 — Status: Completed in working tree — Output: `docs/final_project_report.md` — Commit: TBD
+- [x] Reconcile final acceptance checklist / 对齐最终验收清单 — Priority: P0 — Status: Completed in working tree — Output: `docs/final_acceptance_checklist.md` — Commit: TBD
+- [x] Reconcile deployment docs / 对齐部署文档 — Priority: P0 — Status: Completed in working tree — Output: `docs/deployment_guide.md`, `docs/docker_deployment.md` — Commit: TBD
+- [x] Sync docs tests / 同步文档测试 — Priority: P0 — Status: Completed in working tree — Output: final checklist and Docker docs tests — Commit: TBD
+
+Scope:
+
+- states that `v0.14.5` closed Docker actual smoke and mounted-weight
+  `/predict`
+- removes old final-status remnants that implied Docker build/run or
+  mounted-weight inference were still pending
+- keeps historical v0.14.4 partial state as historical context only
+- keeps weights, videos, Docker images, CSV, JSON, JSONL, MP4, `runs`,
+  `local_outputs`, and `/tmp` outputs out of Git
+
+Pending after v0.14.6:
+
+- [ ] Optional production hardening / 可选生产部署加固 — Target: Future — Status: Pending
+- [ ] Optional real async video execution API / 可选真实异步视频执行 API — Target: Future — Status: Pending
+- [ ] Optional real Bad Case collection / 可选真实 Bad Case 收集 — Target: Future — Status: Pending
+- [ ] Optional DeepSORT runtime / 可选 DeepSORT 运行时 — Target: Future — Status: Pending
+- [ ] Optional full-length production validation / 可选全长生产验证 — Target: Future — Status: Pending
 
 ## P3 — Optional Future Experiments / 可选未来实验
 

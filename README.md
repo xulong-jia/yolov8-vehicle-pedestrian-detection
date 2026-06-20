@@ -171,13 +171,13 @@ Completed experiments and recorded results:
 
 `v0.14.0-bad-case-schema-report-foundation` adds the execution-manual Bad Case foundation. It defines the `bad_cases.csv` schema, adds a Bad Case report, and aligns the existing taxonomy, hard examples, and error gallery with a stable review contract. This does not collect a full real Bad Case dataset and does not add `/api/bad-cases`; those remain future work. See [Bad Case Schema](docs/bad_cases_schema.md) and [Bad Case Report](docs/bad_case_report.md).
 
-`v0.14.1-docker-deployment-static-acceptance` aligns the Docker and deployment documentation with the final execution manual's Stage 8 acceptance items. It documents FastAPI and Streamlit Docker run commands, `MODEL_PATH` weight mounting, large-asset exclusions, and static checks for `Dockerfile` and `.dockerignore`. This is static acceptance only; actual `docker build` / `docker run` smoke remains pending. See [Docker deployment guide](docs/docker_deployment.md) and [Local deployment guide](docs/deployment_guide.md).
+`v0.14.1-docker-deployment-static-acceptance` aligns the Docker and deployment documentation with the final execution manual's Stage 8 acceptance items. It documents FastAPI and Streamlit Docker run commands, `MODEL_PATH` weight mounting, large-asset exclusions, and static checks for `Dockerfile` and `.dockerignore`. It was the static acceptance step; actual Docker smoke was later closed by `v0.14.4` and `v0.14.5`. See [Docker deployment guide](docs/docker_deployment.md) and [Local deployment guide](docs/deployment_guide.md).
 
-`v0.14.2-final-acceptance-checklist` adds the final acceptance checklist for the execution manual's Stage 8 and Chapter 21 acceptance areas. It consolidates evidence files, test commands, version tags, manual follow-up items, asset-safety checks, and a Conditional Go status for documentation/static acceptance. Docker build/run and mounted-weight container prediction were later closed by `v0.14.4` and `v0.14.5`. See [Final Acceptance Checklist](docs/final_acceptance_checklist.md).
+`v0.14.2-final-acceptance-checklist` adds the final acceptance checklist for the execution manual's Stage 8 and Chapter 21 acceptance areas. It consolidates evidence files, test commands, version tags, manual follow-up items, asset-safety checks, and the initial documentation/static acceptance status. Docker build/run and mounted-weight container prediction were later closed by `v0.14.4` and `v0.14.5`. See [Final Acceptance Checklist](docs/final_acceptance_checklist.md).
 
 `v0.14.3-docker-actual-build-smoke-preflight` adds the Docker actual smoke preflight plan. That preflight recorded Docker CLI/daemon unavailable (`docker_info_exit=127`), so no Docker build/run was executed in that step. See [Docker Actual Smoke Plan](docs/docker_actual_smoke_plan.md).
 
-`v0.14.4-docker-actual-build-smoke` records the first actual Docker build/run smoke. The initial FastAPI container run failed because `fastapi` was missing inside the built image; the Dockerfile now installs `requirements-api.txt`, and the rerun passed `/health`, `/config`, `/model-status`, and `/api/videos/analyze`. Streamlit container smoke returned `HTTP/1.1 200 OK`. Mounted-weight `/predict` remains pending because `local_weights/best.pt` is not present. See [Docker Actual Smoke Result](docs/docker_actual_smoke_result.md).
+`v0.14.4-docker-actual-build-smoke` records the first actual Docker build/run smoke. The initial FastAPI container run failed because `fastapi` was missing inside the built image; the Dockerfile now installs `requirements-api.txt`, and the rerun passed `/health`, `/config`, `/model-status`, and `/api/videos/analyze`. Streamlit container smoke returned `HTTP/1.1 200 OK`. Mounted-weight `/predict` was still open at that point and was later closed by `v0.14.5`. See [Docker Actual Smoke Result](docs/docker_actual_smoke_result.md).
 
 `v0.14.5-mounted-weight-container-predict-smoke` closes the Docker deployment smoke loop. A local ignored `local_weights/best.pt` was mounted read-only into `/app/local_weights/best.pt`, `/predict` returned JSON with `image_name`, `image_size`, `model_path`, `num_detections`, and `detections`, and the final Docker actual smoke status is `Docker Actual Smoke Passed`. The temporary `/tmp` image and response were not committed. See [Docker Actual Smoke Result](docs/docker_actual_smoke_result.md).
 
@@ -347,10 +347,9 @@ docker run --rm -p 8501:8501 \
 ```
 
 Do not copy weights into the Docker image. Mount weights read-only at runtime.
-`v0.14.1` adds static Docker deployment acceptance; actual Docker build/run
-smoke remains pending unless performed explicitly.
-`v0.14.3` adds a Docker actual smoke preflight plan; actual build/run remains
-blocked until Docker CLI and daemon are available.
+`v0.14.1` added static Docker deployment acceptance, and `v0.14.3`
+documented the Docker actual smoke preflight. Actual Docker build/run was later
+performed successfully in `v0.14.4`.
 `v0.14.5` records the mounted-weight container `/predict` smoke: image build,
 FastAPI container smoke, Streamlit container smoke, and mounted-weight
 `/predict` all passed. The local model weight was mounted read-only and was not

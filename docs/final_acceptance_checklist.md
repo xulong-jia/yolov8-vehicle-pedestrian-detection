@@ -6,15 +6,16 @@
 | --- | --- |
 | Project name | YOLOv8 Vehicle and Pedestrian Detection |
 | Repository name | yolov8-vehicle-pedestrian-detection |
-| Current checklist version | v0.14.2-final-acceptance-checklist |
-| Latest stable tag before this work | v0.14.1-docker-deployment-static-acceptance |
+| Current checklist version | v0.14.6-final-doc-consistency-pass |
+| Latest stable tag before this work | v0.14.5-mounted-weight-container-predict-smoke |
 | Status date | 2026-06-20 |
-| Acceptance mode | Documentation/static acceptance |
+| Acceptance mode | Final local/Docker acceptance |
 | Related acceptance docs | `README.md`, `docs/final_project_report.md`, `docs/project_task_board.md` |
 
 This checklist consolidates final acceptance evidence for the execution manual's
-Stage 8 and Chapter 21 acceptance areas. It does not claim that actual Docker
-build/run was executed in this step.
+Stage 8 and Chapter 21 acceptance areas. Docker build/run, FastAPI container
+smoke, Streamlit container smoke, and mounted-weight container `/predict`
+passed locally by `v0.14.5`; `v0.14.6` reconciles the final documentation state.
 
 ## Version/tag history
 
@@ -36,6 +37,7 @@ build/run was executed in this step.
 | v0.14.3-docker-actual-build-smoke-preflight | Docker actual build/run preflight planned; Docker CLI/daemon unavailable. |
 | v0.14.4-docker-actual-build-smoke | Docker image build, FastAPI smoke, and Streamlit smoke passed after installing API requirements; mounted-weight `/predict` was still open at that point. |
 | v0.14.5-mounted-weight-container-predict-smoke | Mounted-weight container `/predict` smoke passed; Docker actual smoke is complete for local acceptance. |
+| v0.14.6-final-doc-consistency-pass | Final docs reconciled after Docker Actual Smoke Passed. |
 
 ## Environment assumptions
 
@@ -52,7 +54,7 @@ build/run was executed in this step.
 
 | Field | Status |
 | --- | --- |
-| Status | Accepted for project documentation/static acceptance. |
+| Status | Accepted for final local/Docker acceptance. |
 | Evidence files | `dataset/data.yaml`, `docs/dataset_card.md`, `docs/model_family_comparison.md` |
 | Tests/checks | Dataset metadata and model comparison docs are retained; asset checks guard full dataset split folders. |
 | Limitations | Full `dataset/train`, `dataset/valid`, and `dataset/test` split folders are local-only and are not committed. |
@@ -122,11 +124,11 @@ DeepSORT is optional/future and is not required for this checklist status.
 
 | Field | Status |
 | --- | --- |
-| Status | Documented/static accepted. |
+| Status | Accepted; local Streamlit container smoke passed in Docker actual smoke. |
 | Evidence files | `app.py`, `app/streamlit_video_demo.py`, `src/services/video_demo_catalog.py`, `tests/test_video_demo_catalog.py`, `docs/streamlit_video_demo.md` |
 | Manual command | `streamlit run app.py` |
 | Tests/checks | Catalog tests validate read-only demo artifact discovery. |
-| Limitations | Actual startup smoke may be manual pending if not run in this step. Streamlit job launcher is future work. |
+| Limitations | Streamlit job launcher is future work; current page is a read-only demo. |
 
 ## FastAPI acceptance
 
@@ -159,7 +161,7 @@ Accepted endpoints:
 | Tests/checks | `tests/test_bad_cases_schema_docs.py` validates required documentation contracts. |
 | Limitations | Real Bad Case collection is future work. |
 
-## Docker/deployment static acceptance
+## Docker/deployment acceptance
 
 | Field | Status |
 | --- | --- |
@@ -170,11 +172,11 @@ Accepted endpoints:
 
 ## Manual pending acceptance
 
-- optional full-length video pipeline validation
-- optional real Bad Case collection
 - optional real async video execution API
-- optional Streamlit job launcher
+- optional production deployment hardening
+- optional real Bad Case collection
 - optional DeepSORT runtime extension
+- optional full-length production validation
 
 ## Asset safety checks
 
@@ -231,7 +233,7 @@ make list-large-docs
 - Full production tracking hardening pending.
 - DeepSORT optional/future.
 - Real Bad Case collection pending.
-- Mounted-weight container inference pending.
+- Mounted-weight container inference passed in `v0.14.5`.
 
 ## Final go/no-go status
 

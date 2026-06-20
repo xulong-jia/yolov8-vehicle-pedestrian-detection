@@ -29,7 +29,7 @@ def test_required_sections_exist() -> None:
         "Streamlit acceptance",
         "FastAPI acceptance",
         "Bad Case acceptance",
-        "Docker/deployment static acceptance",
+        "Docker/deployment acceptance",
         "Manual pending acceptance",
         "Asset safety checks",
         "Test command matrix",
@@ -83,11 +83,16 @@ def test_references_critical_fastapi_endpoints() -> None:
 def test_references_docker_smoke_status_and_predict_passed() -> None:
     text = _read(CHECKLIST)
     required_terms = [
+        "v0.14.6-final-doc-consistency-pass",
+        "v0.14.5-mounted-weight-container-predict-smoke",
         "Docker build/run has been executed locally",
+        "Docker Actual Smoke Passed",
         "FastAPI `/health`, `/config`, `/model-status`, and `/api/videos/analyze` passed",
         "Streamlit smoke passed",
         "mounted-weight `/predict` passed",
         "Docker actual smoke: passed",
+        "Mounted-weight container inference passed",
+        "Go for final local/Docker acceptance",
         "MODEL_PATH",
     ]
 
@@ -105,6 +110,27 @@ def test_does_not_claim_unbounded_production_deployment_completed() -> None:
 
     for claim in forbidden_claims:
         assert claim not in text
+
+
+def test_final_docs_do_not_keep_old_blocking_status() -> None:
+    docs = [
+        ROOT / "README.md",
+        ROOT / "docs" / "final_project_report.md",
+        ROOT / "docs" / "final_acceptance_checklist.md",
+        ROOT / "docs" / "project_task_board.md",
+    ]
+    forbidden_phrases = [
+        "No real Docker build/run validation " + "yet",
+        "No production API inference endpoint " + "yet",
+        "mounted-weight container inference " + "pending",
+        "actual build/run smoke remains " + "pending",
+        "Conditional " + "Go",
+    ]
+
+    for doc in docs:
+        text = _read(doc)
+        for phrase in forbidden_phrases:
+            assert phrase not in text
 
 
 def test_references_asset_safety_checks() -> None:

@@ -26,8 +26,8 @@ Docker build/run smoke. The initial FastAPI container run failed because
 `fastapi` was missing inside the built image. The Dockerfile now installs
 `requirements-api.txt`; after rebuilding, FastAPI `/health`, `/config`,
 `/model-status`, and `/api/videos/analyze` passed. Streamlit container smoke
-also passed. Mounted-weight `/predict` remains pending because
-`local_weights/best.pt` was not present.
+also passed. Mounted-weight `/predict` was still open at that point because
+`local_weights/best.pt` was not present; `v0.14.5` closed it.
 
 `v0.14.5` completes the mounted-weight container `/predict` smoke. A local
 ignored `local_weights/best.pt` was mounted read-only at

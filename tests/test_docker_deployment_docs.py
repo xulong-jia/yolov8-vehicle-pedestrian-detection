@@ -102,10 +102,39 @@ def test_deployment_guide_mentions_local_and_docker_paths() -> None:
         "/events",
         "Bad Case",
         "real async video execution remains future",
-        "actual Docker build/run smoke remains pending",
+        "Actual Docker build/run smoke later passed",
+        "mounted-weight container `/predict` passed",
     ]
     for term in required_terms:
         assert term in text
+
+
+def test_docker_docs_reflect_final_passed_status() -> None:
+    combined = "\n".join(
+        _read(path)
+        for path in [
+            "README.md",
+            "docs/docker_deployment.md",
+            "docs/deployment_guide.md",
+            "docs/final_acceptance_checklist.md",
+        ]
+    )
+    required_terms = [
+        "docs/docker_actual_smoke_result.md",
+        "Docker Actual Smoke Passed",
+        "mounted-weight `/predict` passed",
+        "v0.14.5",
+    ]
+    forbidden_terms = [
+        "actual build/run smoke remains " + "pending",
+        "mounted-weight container inference " + "pending",
+        "No real Docker build/run validation " + "yet",
+    ]
+
+    for term in required_terms:
+        assert term in combined
+    for term in forbidden_terms:
+        assert term not in combined
 
 
 def test_readme_links_deployment_docs_and_runtime_commands() -> None:
