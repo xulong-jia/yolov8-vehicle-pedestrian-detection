@@ -3,7 +3,7 @@
 ## Release Identity
 
 - Original final release: v1.0.0-final-release-summary
-- Current latest documented state: v1.8.2-non-technical-user-launcher
+- Current latest documented state: v1.8.5-final-freeze-identity-cleanup
 - Based on original final tag: v0.14.6-final-doc-consistency-pass
 - Project name: YOLOv8 Vehicle and Pedestrian Detection System
 - Repository: yolov8-vehicle-pedestrian-detection
@@ -11,7 +11,7 @@
 
 ## Post-Final Enhancements
 
-After the original `v1.0.0-final-release-summary`, the repository added twelve
+After the original `v1.0.0-final-release-summary`, the repository added fifteen
 bounded enhancements:
 
 - `v1.1.0-async-video-job`: FastAPI async video job execution and Streamlit
@@ -40,6 +40,12 @@ bounded enhancements:
   stale status correction, and frontend audit note.
 - `v1.8.2-non-technical-user-launcher`: macOS/Windows launcher scripts and a
   plain-language ordinary user guide for starting the existing local app.
+- `v1.8.3-non-technical-ui-labels`: localized React UI labels for ordinary
+  local users.
+- `v1.8.4-react-cors-support`: FastAPI CORS support for local React and
+  Streamlit development origins.
+- `v1.8.5-final-freeze-identity-cleanup`: final freeze identity, ignore
+  policy, and React UI badge cleanup only.
 
 The SQLite index is unit-tested and has been verified with a real local FastAPI
 process restart smoke. Docker actual smoke was refreshed for the v1.1-v1.4 API
@@ -71,6 +77,8 @@ surface.
 - Minimal optional React frontend for FastAPI video jobs and Bad Cases
 - Final documentation polish and frontend dependency audit note
 - macOS/Windows non-technical user launcher scripts
+- Local React/Streamlit CORS support for FastAPI development origins
+- Final freeze identity/ignore/UI badge cleanup only
 - Ordinary user startup guide
 - Docker build/run smoke
 - mounted-weight Docker `/predict` smoke
@@ -139,6 +147,7 @@ registered in job metadata; arbitrary path downloads are not supported.
 - Result details: [Docker Actual Smoke Result](docker_actual_smoke_result.md)
 - Docker v1 API smoke was refreshed in `v1.4.1` for FastAPI API capabilities.
   It does not cover the later React frontend runtime.
+- React CORS support was completed in `v1.8.4` for local development origins.
 
 ## Frontend Audit Summary
 
@@ -165,6 +174,17 @@ FastAPI and Streamlit services, optionally start the React frontend when
 an ease-of-use wrapper only. It does not change YOLO, ByteTrack, DeepSORT,
 analytics, Docker, or API behavior.
 
+## Final Freeze Identity Cleanup Summary
+
+`v1.8.5-final-freeze-identity-cleanup` is a final delivery identity pass. It
+updates current/latest documentation state, repository ignore policy, and the
+React UI badge. It does not change core YOLO, ByteTrack, DeepSORT, Docker,
+FastAPI runtime, analytics, evaluation, or training behavior.
+
+The `npm audit` status remains unchanged: 1 moderate and 1 high finding in the
+Vite/esbuild development/build dependency path. The semver-major Vite 8 fix was
+not forced in this final cleanup scope.
+
 ## Validation Summary
 
 - v1.0 release-doc safe pytest matrix: 300 passed, 1 warning.
@@ -179,7 +199,8 @@ analytics, Docker, or API behavior.
 ## Asset Safety
 
 - No `.pt` files committed.
-- No videos committed except the known retained docs demo AVI.
+- No tracked videos are part of the final delivery state; local/demo videos
+  remain ignored unless explicitly reviewed as lightweight documentation.
 - No `runs/` or `local_outputs/` committed.
 - No `dataset/train`, `dataset/valid`, or `dataset/test` split committed.
 - Docker image/layers are not committed.
@@ -187,12 +208,12 @@ analytics, Docker, or API behavior.
 
 ## Known Limitations / Future Work
 
-- large reviewed Bad Case labeling and curated GT dataset creation
-- large-scale GT-based tracking/counting/ROI/event evaluation beyond the small
-  reviewed sample
+- large reviewed Bad Case labeling and larger reviewed GT dataset expansion
+- large-scale GT benchmark for tracking/counting/ROI/event evaluation beyond
+  the small reviewed sample
 - optional DeepSORT runtime
 - OAuth/JWT, multi-user permissions, and external monitoring
-- production React dashboard hardening
+- production React dashboard/video player hardening
 - frontend dependency major-version refresh before production deployment
 - optional full-length production validation
 
@@ -208,6 +229,7 @@ analytics, Docker, or API behavior.
 
 ## Final Recommendation
 
-This repository is ready for final local/Docker acceptance review.
+This repository is ready for final local/Docker acceptance review at
+`v1.8.5-final-freeze-identity-cleanup`.
 
 Do not commit `local_weights/best.pt` or generated artifacts.

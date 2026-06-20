@@ -4,7 +4,7 @@
 
 This project is a YOLOv8 vehicle and pedestrian detection project for multi-class object detection. It focuses on model training, evaluation, inference demos, qualitative error analysis, and engineering preparation for local deployment.
 
-The project has evolved from a baseline computer vision experiment into a more complete engineering-oriented repository with documented model behavior, safety policies, local demo tooling, CLI utilities, a real FastAPI image prediction endpoint, and Docker scaffold.
+The project has evolved from a baseline computer vision experiment into a more complete engineering-oriented repository with documented model behavior, safety policies, local demo tooling, CLI utilities, a real FastAPI image prediction endpoint, async video job support, a minimal optional React frontend, and Docker acceptance evidence. The current documented delivery state is `v1.8.5-final-freeze-identity-cleanup`.
 
 ## 2. Dataset
 
@@ -325,16 +325,25 @@ GitHub tracks code, docs, configs, summaries, and selected lightweight demo asse
 - No ONNX Runtime mAP/NMS evaluation.
 - Docker actual build/run smoke passed locally in `v0.14.4` and `v0.14.5`.
 - Model weights, ONNX files, and full dataset split folders are intentionally not committed.
-- Real async video execution API, Streamlit job launching, production
-  security/observability hardening, real Bad Case collection, and optional
-  DeepSORT runtime remain future work.
+- Historical pre-v1.1 limitation: before `v1.1.0`, real async video execution
+  API and Streamlit job launching were future work. Current `v1.8.5` status
+  includes async video execution, Streamlit job launching, SQLite metadata,
+  artifact downloads, Bad Case metadata, optional React frontend, API
+  key/request-id/logging support, CORS support, and launcher scripts.
+- Current future work is production security/observability hardening, larger
+  Bad Case and reviewed GT dataset expansion, optional DeepSORT runtime,
+  production React dashboard/video player hardening, frontend dependency
+  refresh, and large-scale GT benchmarking.
 
 ## 10. Recommended Next Steps
 
 - Run YOLOv8m PyTorch speed benchmark only if model-family latency completeness is needed.
 - Run YOLOv8m ONNX Runtime benchmark only if deployment completeness is needed.
 - Add ONNX Runtime mAP/NMS evaluation only if a separate evaluation protocol is defined.
-- Continue video analytics with YOLO frame inference planning before adding tracker adapters and Streamlit/FastAPI video workflows.
+- Expand reviewed Bad Case and GT datasets only if a larger benchmark is needed.
+- Consider optional DeepSORT runtime, production React dashboard/video player,
+  OAuth/JWT, external monitoring, and frontend dependency refresh as separate
+  post-freeze work.
 - Prepare presentation slides or portfolio summary.
 
 ## Related Documents
@@ -802,12 +811,26 @@ does not add a video player, multi-user permission system, OAuth/JWT,
 production dashboard, DeepSORT runtime, complex routing, or a new backend
 capability.
 
+## v1.8.5 Final Freeze Identity Cleanup
+
+`v1.8.5-final-freeze-identity-cleanup` is the current documented delivery
+state. It builds on `v1.8.4-react-cors-support`, which completed local
+React/Streamlit CORS support for FastAPI development origins.
+
+This final cleanup only reconciles delivery identity documentation, ignore
+policy, and the React UI badge. It does not change YOLO inference, ByteTrack,
+DeepSORT, Docker runtime, FastAPI runtime behavior, analytics, evaluation, or
+training logic.
+
 ## Current Post-Final Future Work
 
 - Larger reviewed Bad Case collection beyond the 24-case sample.
-- Larger reviewed GT labels and full tracking/counting/ROI/event quantitative
-  evaluation beyond the small reviewed sample.
+- Larger reviewed GT dataset expansion and large-scale
+  tracking/counting/ROI/event benchmark evaluation beyond the small reviewed
+  sample.
 - Optional DeepSORT production runtime.
-- Production React dashboard hardening beyond the minimal optional frontend.
+- Production React dashboard/video player hardening beyond the minimal optional
+  frontend.
 - OAuth/JWT, multi-user job management, external monitoring, and production
   observability hardening.
+- Frontend dependency refresh before production deployment.

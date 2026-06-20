@@ -21,6 +21,7 @@ frontend/tsconfig.tsbuildinfo
 # YOLO / training outputs
 runs/
 *.pt
+*.pth
 *.onnx
 *.engine
 local_weights/
@@ -32,6 +33,8 @@ dataset/test/
 dataset/label_backups/
 dataset/*/labels.cache
 dataset/*.zip
+*.zip
+*.sqlite3
 results/images/*
 results/videos/*
 results/metrics/*
@@ -42,6 +45,10 @@ local_videos/source/*.mp4
 local_videos/source/*.mov
 local_videos/source/*.avi
 local_videos/source/*.mkv
+*.mp4
+*.avi
+*.mov
+*.mkv
 docs/video_demos/**/*.mp4
 docs/video_demos/**/*.avi
 docs/video_demos/**/*.mov

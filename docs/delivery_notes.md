@@ -1,5 +1,16 @@
 # Delivery Notes
 
+## Current Delivery Note (v1.8.5)
+
+- Current freeze identity: `v1.8.5-final-freeze-identity-cleanup`.
+- Builds on `v1.8.4-react-cors-support`, which completed local React/Streamlit
+  CORS support for FastAPI development origins.
+- `v1.8.5` only updates final identity documentation, ignore policy, and the
+  React UI badge. It does not change YOLO, ByteTrack, DeepSORT, Docker,
+  FastAPI runtime, analytics, training, or evaluation logic.
+- Final status: ready for final freeze/delivery, subject to normal local
+  environment checks.
+
 ## Delivery Package Contents
 
 - source code
@@ -131,8 +142,16 @@ make list-large-docs
 - v0.14.4-docker-actual-build-smoke
 - v0.14.5-mounted-weight-container-predict-smoke
 - v0.14.6-final-doc-consistency-pass
+- v1.0.0-final-release-summary
+- v1.8.0-react-video-job-frontend
+- v1.8.1-final-polish-and-frontend-audit-note
+- v1.8.2-non-technical-user-launcher
+- v1.8.3-non-technical-ui-labels
+- v1.8.4-react-cors-support
+- v1.8.5-final-freeze-identity-cleanup
 
 ## Final Handoff Status
 
-- Go for final local/Docker acceptance.
+- Go for final local/Docker acceptance at
+  `v1.8.5-final-freeze-identity-cleanup`.
 - Future work is clearly separated from the delivered package.

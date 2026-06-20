@@ -6,7 +6,7 @@ This project is a YOLOv8-based vehicle and pedestrian detection system. It cover
 
 Current final delivery state:
 
-- Current latest documented state: `v1.8.4-react-cors-support`
+- Current latest documented state: `v1.8.5-final-freeze-identity-cleanup`
 - Original final release tag: `v1.0.0-final-release-summary`
 - Final status: `Ready for final freeze / delivery`
 - Docker Actual Smoke: `Passed`
@@ -39,11 +39,12 @@ Completed system capabilities:
 - mounted-weight Docker `/predict` smoke
 - Minimal optional React frontend for FastAPI video jobs and Bad Cases
 - Local React/Streamlit CORS support for FastAPI development origins
+- Final freeze identity, ignore policy, and React badge cleanup
 - macOS/Windows non-technical user launcher scripts
 - final acceptance checklist
 - release summary / delivery notes
 
-Future / optional work is non-blocking and includes large reviewed Bad Case labeling, reviewed GT dataset creation, optional DeepSORT production runtime, OAuth/JWT or multi-user security, external monitoring, production React dashboard hardening, and full GT-based tracking/counting/ROI/event quantitative evaluation.
+Future / optional work is non-blocking and includes large reviewed Bad Case labeling, larger reviewed GT dataset expansion, optional DeepSORT production runtime, OAuth/JWT or multi-user security, external monitoring, production React dashboard/video player hardening, and full GT-based tracking/counting/ROI/event quantitative evaluation.
 
 ## Final Delivery Entry Points
 
@@ -273,7 +274,9 @@ Completed experiments and recorded results:
 
 `v1.8.4-react-cors-support` allows local browser frontends to call FastAPI from development origins such as `http://localhost:5173` without browser CORS failures. The default allow-list covers the React dev server plus common Streamlit local ports, and deployments can override it with `CORS_ALLOW_ORIGINS=http://localhost:5173,http://127.0.0.1:5173`.
 
-This phase does not include DeepSORT integration, ByteTrack production hardening, production database integration beyond the local SQLite metadata index, full-length tracked video validation, OAuth/JWT, multi-user authorization, Prometheus/Grafana, production React dashboard hardening, or real video benchmarks.
+`v1.8.5-final-freeze-identity-cleanup` reconciles final delivery identity documentation, ignore policy, and the React UI badge. It does not change YOLO, ByteTrack, DeepSORT, Docker, FastAPI runtime, analytics, training, or evaluation logic.
+
+This phase does not include DeepSORT integration, ByteTrack production hardening, production database integration beyond the local SQLite metadata index, full-length tracked video validation, OAuth/JWT, multi-user authorization, Prometheus/Grafana, production React dashboard/video player hardening, larger reviewed GT dataset expansion, or real video benchmarks.
 
 Details: [Video analytics MVP](docs/video_analytics_mvp.md)
 
@@ -739,6 +742,12 @@ Do not commit:
 - `*.pt`
 - `*.pth`
 - `*.onnx`
+- `*.sqlite3`
+- `*.zip`
+- `*.mp4`
+- `*.avi`
+- `*.mov`
+- `*.mkv`
 - `dataset/train/`
 - `dataset/valid/`
 - `dataset/test/`
@@ -754,12 +763,12 @@ Policy:
 - Full dataset splits are local-only.
 - Generated outputs are local-only.
 - Docker images/layers are local-only and are not committed.
-- The only known retained large demo asset is `docs/video_demos/yolov8n_640_50epochs/pexels_crosswalk_traffic_demo.avi`.
+- Video demo outputs are treated as local/generated assets unless explicitly reviewed as lightweight documentation.
 - GitHub contains code, docs, configs, summaries, and selected lightweight demo assets only.
 
 ## Known Limitations / Future Work
 
-- Large reviewed Bad Case labeling and curated GT dataset creation.
+- Large reviewed Bad Case labeling and larger reviewed GT dataset expansion.
 - Optional DeepSORT production runtime.
 - OAuth/JWT, multi-user authorization, API key rotation, and external monitoring.
 - Large-scale GT-based tracking/counting/ROI/event quantitative reports beyond the small reviewed sample.

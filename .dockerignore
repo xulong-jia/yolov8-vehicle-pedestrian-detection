@@ -20,11 +20,16 @@ docs/video_demos/
 *.pt
 *.pth
 *.onnx
+*.sqlite3
 *.mp4
 *.avi
 *.mov
 *.mkv
 *.zip
+
+frontend/node_modules/
+frontend/dist/
+frontend/tsconfig.tsbuildinfo
 
 .env
 .DS_Store

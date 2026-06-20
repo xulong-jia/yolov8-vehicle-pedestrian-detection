@@ -25,7 +25,7 @@ export default function App() {
           <p className="eyebrow">YOLOv8 本地分析工具</p>
           <h1>YOLOv8 车辆与行人视频分析工具</h1>
         </div>
-        <div className="status-pill">v1.8.3 普通用户中文界面</div>
+        <div className="status-pill">v1.8.5 最终冻结版</div>
       </header>
 
       <section className="control-strip" aria-label="后端连接设置">

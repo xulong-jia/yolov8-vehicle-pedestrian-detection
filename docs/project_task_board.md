@@ -8,7 +8,7 @@
 - Do not track model weights, full dataset, large videos, or full runs outputs in Git.
 - Early pending entries are historical for their original phase; current
   delivery status is summarized in the post-v1.0/v1.x section near the end of
-  this board.
+  this board. Do not read early pending lists as current blockers.
 
 ## Current Completed Milestones / 当前已完成里程碑
 
@@ -1157,14 +1157,17 @@ Pending after v1.0.0 release docs:
 - [x] Artifact download endpoints / artifact 下载端点 — Target: v1.4.0 — Status: Completed — Output: `src/api.py`, `tests/test_api_video_jobs.py`, `docs/api_usage.md` — Commit: TBD
 - [x] Docker smoke refresh for v1.1-v1.4 APIs / v1.1-v1.4 API Docker 冒烟刷新 — Target: v1.4.1 — Status: Completed — Output: `docs/docker_v1_api_smoke_result.md` — Commit: TBD
 - [x] API key auth + request ID + structured logging / API key 鉴权、请求 ID 与结构化日志 — Target: v1.5.0 — Status: Completed — Output: `src/core/security.py`, `src/core/logging_config.py`, `tests/test_api_security_logging.py` — Commit: TBD
-- [x] Small reviewed Bad Case collection / 小规模人工审核 Bad Case 样例集 — Target: v1.6.0 — Status: Completed in working tree — Output: `docs/error_case_gallery/reviewed_bad_cases.csv`, `tests/test_bad_cases_schema_docs.py` — Commit: TBD
-- [x] Small reviewed GT quantitative evaluation / 小规模人工审核 GT 定量评测样例 — Target: v1.7.0 — Status: Completed in working tree — Output: `docs/evaluation/reviewed_gt_samples/`, `docs/evaluation/reviewed_gt_eval_result/`, `docs/evaluation/reviewed_gt_eval_result.md`, `tests/test_video_eval_scaffold.py` — Commit: TBD
-- [x] Minimal React video job frontend / 最小 React 视频任务前端 — Target: v1.8.0 — Status: Completed in working tree — Output: `frontend/`, `frontend/README.md` — Commit: TBD
-- [x] Final polish and frontend audit note / 最终文档 polish 与前端 audit 说明 — Target: v1.8.1 — Status: Completed in working tree — Output: `README.md`, `docs/release_summary.md`, `frontend/README.md`, status docs — Commit: TBD
-- [x] Non-technical user launcher / 普通用户傻瓜式启动入口 — Target: v1.8.2 — Status: Completed in working tree — Output: `scripts/start_app_macos.command`, `scripts/start_app_windows.bat`, `docs/non_technical_user_guide.md`, `tests/test_non_technical_user_launcher.py` — Commit: TBD
+- [x] Small reviewed Bad Case collection / 小规模人工审核 Bad Case 样例集 — Target: v1.6.0 — Status: Completed — Output: `docs/error_case_gallery/reviewed_bad_cases.csv`, `tests/test_bad_cases_schema_docs.py` — Commit: `2234bf2`
+- [x] Small reviewed GT quantitative evaluation / 小规模人工审核 GT 定量评测样例 — Target: v1.7.0 — Status: Completed — Output: `docs/evaluation/reviewed_gt_samples/`, `docs/evaluation/reviewed_gt_eval_result/`, `docs/evaluation/reviewed_gt_eval_result.md`, `tests/test_video_eval_scaffold.py` — Commit: `40991d1`
+- [x] Minimal React video job frontend / 最小 React 视频任务前端 — Target: v1.8.0 — Status: Completed — Output: `frontend/`, `frontend/README.md` — Commit: `997f919`
+- [x] Final polish and frontend audit note / 最终文档 polish 与前端 audit 说明 — Target: v1.8.1 — Status: Completed — Output: `README.md`, `docs/release_summary.md`, `frontend/README.md`, status docs — Commit: `95424d1`
+- [x] Non-technical user launcher / 普通用户傻瓜式启动入口 — Target: v1.8.2 — Status: Completed — Output: `scripts/start_app_macos.command`, `scripts/start_app_windows.bat`, `docs/non_technical_user_guide.md`, `tests/test_non_technical_user_launcher.py` — Commit: `9e69035`
+- [x] Non-technical React UI labels / 普通用户 React 界面标签 — Target: v1.8.3 — Status: Completed — Output: `frontend/src/`, `frontend/README.md` — Commit: `7fe3180`
+- [x] Local React/Streamlit CORS support / 本地 React 与 Streamlit CORS 支持 — Target: v1.8.4 — Status: Completed — Output: `src/api.py`, `README.md`, `docs/api_usage.md`, `frontend/README.md` — Commit: `8c9629a`
+- [x] Final freeze identity cleanup / 最终冻结身份清理 — Target: v1.8.5 — Status: Completed — Output: `README.md`, `docs/release_summary.md`, `docs/final_acceptance_checklist.md`, `docs/final_project_report.md`, `docs/project_task_board.md`, `docs/delivery_notes.md`, `.gitignore`, `.dockerignore`, `frontend/src/App.tsx` — Commit: pending final freeze commit/tag
 - [ ] Large reviewed Bad Case collection beyond sample / 超出样例集的大规模人工审核 Bad Case 收集 — Target: Future — Status: Pending
-- [ ] Large-scale real GT quantitative evaluation beyond sample / 超出样例集的大规模真实 GT 定量评测 — Target: Future — Status: Pending
-- [ ] Production React dashboard beyond minimal frontend / 超出最小前端的生产级 React dashboard — Target: Future — Status: Pending
+- [ ] Large-scale GT benchmark beyond sample / 超出样例集的大规模 GT 基准评测 — Target: Future — Status: Pending
+- [ ] Production React dashboard/video player beyond minimal frontend / 超出最小前端的生产级 React dashboard/video player — Target: Future — Status: Pending
 - [ ] OAuth/JWT, multi-user permissions, Prometheus/Grafana / OAuth/JWT、多用户权限与外部监控 — Target: Future — Status: Pending
 - [ ] Optional DeepSORT runtime / 可选 DeepSORT 运行时 — Target: Future — Status: Pending
 - [ ] Optional full-length production validation / 可选全长生产验证 — Target: Future — Status: Pending

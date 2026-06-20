@@ -6,9 +6,9 @@
 | --- | --- |
 | Project name | YOLOv8 Vehicle and Pedestrian Detection |
 | Repository name | yolov8-vehicle-pedestrian-detection |
-| Current checklist version | v1.8.2-non-technical-user-launcher |
+| Current checklist version | v1.8.5-final-freeze-identity-cleanup |
 | Original final release tag | v1.0.0-final-release-summary |
-| Latest stable tag before this refresh | v1.3.1-final-doc-consistency-refresh |
+| Latest stable tag before this refresh | v1.8.4-react-cors-support |
 | Status date | 2026-06-20 |
 | Acceptance mode | Final local/Docker acceptance |
 | Related acceptance docs | `README.md`, `docs/final_project_report.md`, `docs/project_task_board.md` |
@@ -24,7 +24,10 @@ reviewed Bad Case sample collection, and a small reviewed GT quantitative
 evaluation sample pack. `v1.8.0` adds a minimal optional React frontend for the
 existing FastAPI service. `v1.8.1` is the final documentation polish and
 frontend audit-note pass. `v1.8.2` adds non-technical user launch scripts and a
-plain-language guide. The project can be frozen at `v1.8.2` for final delivery.
+plain-language guide. `v1.8.3` localizes the React UI labels for ordinary users.
+`v1.8.4` completes local React/Streamlit CORS support. `v1.8.5` only reconciles
+final freeze identity docs, ignore policy, and the React UI badge. The project
+can be frozen at `v1.8.5-final-freeze-identity-cleanup` for final delivery.
 
 ## Version/tag history
 
@@ -60,6 +63,9 @@ plain-language guide. The project can be frozen at `v1.8.2` for final delivery.
 | v1.8.0-react-video-job-frontend | Minimal optional React frontend accepted. |
 | v1.8.1-final-polish-and-frontend-audit-note | Final polish and frontend npm audit note accepted. |
 | v1.8.2-non-technical-user-launcher | macOS/Windows non-technical launcher scripts and ordinary user guide accepted. |
+| v1.8.3-non-technical-ui-labels | React UI labels localized for ordinary users. |
+| v1.8.4-react-cors-support | Local React/Streamlit CORS support accepted. |
+| v1.8.5-final-freeze-identity-cleanup | Final identity docs, ignore policy, and React badge cleanup accepted. |
 
 ## Environment assumptions
 
@@ -159,7 +165,7 @@ DeepSORT is optional/future and is not required for this checklist status.
 | Status | Minimal optional frontend accepted. |
 | Evidence files | `frontend/package.json`, `frontend/src/App.tsx`, `frontend/src/components/`, `frontend/README.md` |
 | Tests/checks | `npm install` and `npm run build` passed locally. Python test suite remains separate. |
-| Limitations | React frontend depends on FastAPI running separately. It does not include a video player, multi-user permissions, production auth, DeepSORT, complex routing, or a production dashboard. `npm audit` currently reports 1 moderate and 1 high finding in the Vite/esbuild dev/build dependency path; the suggested fix requires a semver-major Vite 8 upgrade and was not forced in the final polish scope. |
+| Limitations | React frontend depends on FastAPI running separately. It does not include a production video player, multi-user permissions, production auth, DeepSORT, complex routing, or a production dashboard. `v1.8.4` adds local CORS support for React/Streamlit development origins. `npm audit` currently reports 1 moderate and 1 high finding in the Vite/esbuild dev/build dependency path; the suggested fix requires a semver-major Vite 8 upgrade and was not forced in the final polish scope. |
 
 ## Non-technical launcher acceptance
 
@@ -244,9 +250,10 @@ events `precision=0.5`, `recall=0.6666666666666666`; tracking
 - optional large reviewed Bad Case collection beyond the small reviewed sample
 - optional DeepSORT runtime extension
 - optional full-length production validation
-- production React dashboard beyond the minimal optional frontend
+- production React dashboard/video player beyond the minimal optional frontend
 - OAuth/JWT, multi-user permission model, Prometheus/Grafana, and external
   monitoring
+- large-scale GT benchmark beyond the small reviewed sample
 - frontend dependency major-version refresh before production deployment
 
 ## Asset safety checks
@@ -255,7 +262,8 @@ events `precision=0.5`, `recall=0.6666666666666666`; tracking
 - no local videos in git
 - no dataset train/valid/test split in git
 - runs/local_outputs not committed
-- `.dockerignore` protects local assets
+- `.gitignore` and `.dockerignore` protect local assets, SQLite DBs, archives,
+  videos, frontend dependencies, and frontend build outputs
 - `make danger-check`
 - `make list-large-docs`
 - `make list-large-docs` may report only the known retained demo AVI under
@@ -313,14 +321,13 @@ make list-large-docs
 - DeepSORT optional/future.
 - Large reviewed Bad Case collection beyond the small reviewed sample pending.
 - GT evaluation scaffold exists; small reviewed GT quantitative evaluation
-  sample exists; large benchmark-scale
-  reviewed GT evaluation pending.
+  sample exists; large-scale GT benchmark evaluation pending.
 - Mounted-weight container inference passed in `v0.14.5`.
 
 ## Final go/no-go status
 
 - Overall status: Go for final local/Docker acceptance and ready for final
-  freeze/delivery at `v1.8.2-non-technical-user-launcher`, subject to
+  freeze/delivery at `v1.8.5-final-freeze-identity-cleanup`, subject to
   normal environment-specific deployment checks.
 - Docker deployment status: Go for local Docker smoke acceptance.
 - Final release entry points: `docs/release_summary.md` and
