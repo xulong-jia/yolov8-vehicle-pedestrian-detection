@@ -21,7 +21,8 @@
 - VideoAnalysisCenter
 - Streamlit local demo
 - FastAPI basic endpoints
-- FastAPI video job/result query skeleton
+- FastAPI async video execution API
+- SQLite-backed video job/result metadata index
 - Bad Case schema/report foundation
 - Docker build/run smoke
 - mounted-weight Docker `/predict` smoke
@@ -50,8 +51,11 @@ Delivered endpoints:
 - `GET /api/videos/jobs/{job_id}/analytics`
 - `GET /api/videos/jobs/{job_id}/events`
 
-`/predict` lazy-loads the model on first use. The video job/result API is a
-skeleton/result-query layer for existing VideoAnalysisCenter artifacts. Real async video execution remains future work.
+`/predict` lazy-loads the model on first use. The video job/result API can
+launch the existing four-step local video analysis flow, persist job metadata in
+SQLite, and query status/results across service restarts. The SQLite index lives
+under `local_outputs/api_video_jobs/video_jobs.sqlite3` and stores metadata only,
+not artifact file contents.
 
 ## Docker Summary
 
@@ -85,7 +89,6 @@ skeleton/result-query layer for existing VideoAnalysisCenter artifacts. Real asy
 
 ## Known Limitations / Future Work
 
-- real async video execution API
 - Streamlit job launcher
 - real Bad Case collection
 - optional DeepSORT runtime

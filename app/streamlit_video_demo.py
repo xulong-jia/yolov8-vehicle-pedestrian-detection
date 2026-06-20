@@ -119,6 +119,11 @@ def _render_api_job_launcher() -> None:
                 st.error(str(exc))
             else:
                 st.json(job)
+                time_rows = [
+                    {"field": key, "value": job.get(key) or ""}
+                    for key in ("created_at", "updated_at", "started_at", "finished_at")
+                ]
+                st.dataframe(time_rows, use_container_width=True)
                 if job.get("summary_path"):
                     st.caption(f"Summary: {job['summary_path']}")
                 artifact_paths = job.get("artifact_paths") or {}

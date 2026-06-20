@@ -28,7 +28,8 @@ def test_release_summary_includes_final_release_contract() -> None:
         "Mounted-weight `/predict` passed",
         "No `.pt` files committed",
         "No `runs/` or `local_outputs/` committed",
-        "Real async video execution remains future work",
+        "SQLite-backed video job/result metadata index",
+        "video_jobs.sqlite3",
     ]
 
     for term in required_terms:

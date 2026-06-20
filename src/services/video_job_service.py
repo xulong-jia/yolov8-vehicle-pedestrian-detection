@@ -10,6 +10,8 @@ import threading
 from typing import Any
 from uuid import uuid4
 
+from src.services.job_store import SQLiteVideoJobStore
+
 
 EXPECTED_ARTIFACTS = {
     "metadata": "metadata.json",
@@ -25,9 +27,14 @@ EXPECTED_ARTIFACTS = {
 class VideoJobRegistry:
     """Store short-lived video job records in memory."""
 
-    def __init__(self, base_output_dir: str | Path = "local_outputs/api_video_jobs") -> None:
+    def __init__(
+        self,
+        base_output_dir: str | Path = "local_outputs/api_video_jobs",
+        store: SQLiteVideoJobStore | None = None,
+    ) -> None:
         self._jobs: dict[str, dict[str, Any]] = {}
         self.base_output_dir = Path(base_output_dir)
+        self.store = store or SQLiteVideoJobStore()
         self._lock = threading.Lock()
 
     def create_job(
@@ -44,8 +51,13 @@ class VideoJobRegistry:
             "video_id": video_id or "demo",
             "run_name": effective_run_name,
             "run_dir": "",
+            "output_dir": "",
             "created_at": _utc_now_iso(),
+            "updated_at": _utc_now_iso(),
             "message": "Video execution is not implemented in this skeleton.",
+            "summary_path": None,
+            "artifact_paths": {},
+            "error": None,
         }
         self._set_job(job_id, job)
         if run_dir is not None:
@@ -74,6 +86,7 @@ class VideoJobRegistry:
             "run_dir": str(run_dir),
             "output_dir": str(output_dir),
             "created_at": _utc_now_iso(),
+            "updated_at": _utc_now_iso(),
             "started_at": None,
             "finished_at": None,
             "message": "Video analysis job created.",
@@ -117,6 +130,10 @@ class VideoJobRegistry:
             return self.mark_failed(job_id, _short_error(exc))
 
     def get_job(self, job_id: str) -> dict[str, Any]:
+        try:
+            return self.store.get_job(job_id)
+        except KeyError:
+            pass
         with self._lock:
             if job_id not in self._jobs:
                 raise KeyError(f"Video job not found: {job_id}")
@@ -141,13 +158,17 @@ class VideoJobRegistry:
                 if has_artifacts
                 else "Run directory has no known artifacts."
             )
-            return dict(job)
+            job["updated_at"] = _utc_now_iso()
+            stored = dict(job)
+        self.store.upsert_job(stored)
+        return stored
 
     def mark_running(self, job_id: str) -> dict[str, Any]:
         return self._update_job(
             job_id,
             status="running",
             started_at=_utc_now_iso(),
+            updated_at=_utc_now_iso(),
             message="Video analysis job is running.",
             error=None,
         )
@@ -159,6 +180,7 @@ class VideoJobRegistry:
             job_id,
             status="succeeded",
             finished_at=_utc_now_iso(),
+            updated_at=_utc_now_iso(),
             message="Video analysis job succeeded.",
             summary_path=str(summary_path),
             artifact_paths=artifact_paths,
@@ -170,6 +192,7 @@ class VideoJobRegistry:
             job_id,
             status="failed",
             finished_at=_utc_now_iso(),
+            updated_at=_utc_now_iso(),
             message=f"Video analysis job failed: {error}",
             error=error,
         )
@@ -177,17 +200,22 @@ class VideoJobRegistry:
     def clear(self) -> None:
         with self._lock:
             self._jobs.clear()
+        self.store.clear()
 
     def _set_job(self, job_id: str, job: dict[str, Any]) -> None:
+        stored = dict(job)
         with self._lock:
-            self._jobs[job_id] = dict(job)
+            self._jobs[job_id] = dict(stored)
+        self.store.upsert_job(stored)
 
     def _update_job(self, job_id: str, **updates: Any) -> dict[str, Any]:
         with self._lock:
             if job_id not in self._jobs:
-                raise KeyError(f"Video job not found: {job_id}")
+                self._jobs[job_id] = self.store.get_job(job_id)
             self._jobs[job_id].update(updates)
-            return dict(self._jobs[job_id])
+            updated = dict(self._jobs[job_id])
+        self.store.upsert_job(updated)
+        return updated
 
 
 registry = VideoJobRegistry()

@@ -147,31 +147,51 @@ curl -X POST http://localhost:8000/api/videos/analyze \
   -d '{
     "video_id": "demo",
     "run_name": "demo_run",
-    "run_dir": "/tmp/yolov8_real_smoke/video_analysis/demo_run"
+    "model_path": "local_weights/best.pt",
+    "source": "local_videos/source/pexels_crosswalk_traffic_demo.mp4",
+    "conf": 0.25,
+    "imgsz": 640,
+    "device": "cpu"
   }'
 ```
 
-`v0.13.1` implements this as a video job/result query skeleton. It creates an
-in-memory job record and can attach that record to an existing
-VideoAnalysisCenter run directory. It does not run YOLO, ByteTrack, DeepSORT,
-analytics, or video rendering.
+This endpoint creates a video analysis job, records metadata in SQLite, and
+starts the existing four-step local video analysis flow in the background. The
+flow reuses `src.run_video_analysis_smoke` and writes local artifacts under
+`local_outputs/api_video_jobs/<job_id>/`.
+
+Use either `source` or `video_path` for the input video path. `video_path` is
+the clearer field name; `source` remains supported for compatibility.
+
+The SQLite metadata index lives at:
+
+```text
+local_outputs/api_video_jobs/video_jobs.sqlite3
+```
+
+The index stores job metadata only: status, paths, timestamps, error message,
+and artifact paths as a JSON string. It does not store CSV, JSON, JSONL, image,
+video, or model-weight contents. `local_outputs/` remains ignored by Git.
 
 Example response:
 
 ```json
 {
   "job_id": "job_000001",
-  "status": "attached",
+  "status": "created",
   "video_id": "demo",
   "run_name": "demo_run",
-  "run_dir": "/tmp/yolov8_real_smoke/video_analysis/demo_run",
+  "run_dir": "local_outputs/api_video_jobs/job_000001/video_analysis/demo_run",
+  "output_dir": "local_outputs/api_video_jobs/job_000001",
   "created_at": "2026-06-20T00:00:00Z",
-  "message": "Attached to existing VideoAnalysisCenter artifacts."
+  "updated_at": "2026-06-20T00:00:00Z",
+  "message": "Video analysis job created."
 }
 ```
 
-When `run_dir` is omitted, the job is created with `status="created"` only.
-Real async execution is planned later.
+For compatibility, passing `run_dir` without `model_path` or video `source` /
+`video_path` still attaches a job record to an existing VideoAnalysisCenter run
+directory.
 
 ### GET /api/videos/jobs/{job_id}
 
@@ -179,7 +199,7 @@ Real async execution is planned later.
 curl http://localhost:8000/api/videos/jobs/job_000001
 ```
 
-Returns the in-memory job record. Unknown jobs return `404`.
+Returns the SQLite-backed job record. Unknown jobs return `404`.
 
 ### GET /api/videos/jobs/{job_id}/detections
 
@@ -224,23 +244,21 @@ Reads an existing `events.jsonl` from the attached run directory.
 - Uploads are read and decoded in memory.
 - Uploaded images are not written to the repository.
 - The image API does not write `runs/`, `local_outputs/`, CSV, JSON, or image outputs.
-- The video job skeleton uses an in-memory registry and reads existing artifacts
-  only; it does not write files or start background work.
+- Video jobs use a SQLite-backed metadata index under `local_outputs/`.
+- `POST /api/videos/analyze` can start background execution of the existing
+  four-step local flow.
+- The SQLite index stores metadata only and does not store artifact file contents.
 - Error responses are short and point to the failed input or runtime condition.
 
-## Out of Scope for v0.13.1
+## Out of Scope
 
-The following are planned later and are not part of the basic service
-acceptance or video job skeleton steps:
+The following remain outside the current API scope:
 
-- actual video analyze async execution
-- YOLO/ByteTrack execution from API requests
-- analytics execution from API requests
+- DeepSORT production integration
 - tracked video rendering from API requests
-- database integration
+- production database integration beyond the local SQLite metadata index
 - Docker production validation
 - React frontend
-- Streamlit job launching
 
 ## Tests
 

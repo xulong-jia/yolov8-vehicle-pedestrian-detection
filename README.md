@@ -30,14 +30,14 @@ Completed system capabilities:
 - VideoAnalysisCenter
 - Streamlit local demo
 - FastAPI basic endpoints
-- FastAPI video job/result query skeleton
+- FastAPI async video execution and SQLite-backed job/result index
 - Bad Case schema/report foundation
 - Docker build/run smoke
 - mounted-weight Docker `/predict` smoke
 - final acceptance checklist
 - release summary / delivery notes
 
-Future / optional work is non-blocking and includes real async video execution API, Streamlit job launching, real Bad Case collection, optional DeepSORT production runtime, production hardening/observability, and GT-based tracking/counting/ROI/event quantitative evaluation.
+Future / optional work is non-blocking and includes real Bad Case collection, optional DeepSORT production runtime, production hardening/observability, and GT-based tracking/counting/ROI/event quantitative evaluation.
 
 ## Final Delivery Entry Points
 
@@ -146,7 +146,7 @@ Completed experiments and recorded results:
 
 - Local deployment guide.
 - Model loading strategy.
-- FastAPI service with health/config/model-status endpoints, a real `/predict` image inference endpoint, and video job/result query skeleton endpoints.
+- FastAPI service with health/config/model-status endpoints, a real `/predict` image inference endpoint, async video execution, and SQLite-backed video job/result query endpoints.
 - API usage documentation.
 - Dockerfile without model weights.
 - `.dockerignore` excluding weights, dataset splits, local outputs, runs, and videos.
@@ -221,7 +221,11 @@ Completed experiments and recorded results:
 
 `v1.0.0-final-release-summary` prepares final delivery documentation. It adds [Release Summary](docs/release_summary.md) and [Delivery Notes](docs/delivery_notes.md) as the final handoff entry points. No code, weights, videos, generated outputs, Docker images, or runtime artifacts are included in this release-doc step.
 
-This phase does not include DeepSORT integration, ByteTrack production hardening, Streamlit job launching, real async FastAPI video execution, database integration, full-length tracked video validation, or real video benchmarks.
+`v1.1.0-async-video-job` adds real async video execution through `POST /api/videos/analyze` and a Streamlit Video Job Launcher. Jobs write local artifacts under `local_outputs/api_video_jobs/<job_id>/`; outputs remain ignored and local-only.
+
+`v1.1.x-sqlite-job-index` adds a SQLite-backed job/result metadata index at `local_outputs/api_video_jobs/video_jobs.sqlite3`. It persists job status, summary path, and artifact paths across service restarts without storing artifact file contents.
+
+This phase does not include DeepSORT integration, ByteTrack production hardening, production database integration beyond the local SQLite metadata index, full-length tracked video validation, or real video benchmarks.
 
 Details: [Video analytics MVP](docs/video_analytics_mvp.md)
 
@@ -369,8 +373,8 @@ Current API scope:
 - `GET /api/videos/jobs/{job_id}/events`
 - `/predict` accepts multipart image upload and returns JSON detections.
 - YOLO is lazy-loaded from `MODEL_PATH` or the configured default model path on the first prediction request.
-- The video job/result API is a skeleton/result-query layer for existing VideoAnalysisCenter artifacts.
-- Real async video execution remains future work.
+- The video job/result API can launch the existing four-step local video analysis flow and query status/results.
+- Video job metadata is persisted in `local_outputs/api_video_jobs/video_jobs.sqlite3`; artifact file contents remain on disk and are not stored in SQLite.
 - Uploaded images and prediction outputs are not saved to the repository.
 - No model is loaded at import time.
 
@@ -693,7 +697,6 @@ Policy:
 ## Known Limitations / Future Work
 
 - Real async video execution API.
-- Streamlit job launcher.
 - Real Bad Case collection.
 - Optional DeepSORT production runtime.
 - Production hardening, security, and observability.

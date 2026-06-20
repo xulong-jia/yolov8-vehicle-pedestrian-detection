@@ -83,6 +83,15 @@ class VideoJobResponse(BaseModel):
     summary_path: str | None = None
     artifact_paths: dict[str, str] | None = None
     error: str | None = None
+    created_at: str | None = None
+    updated_at: str | None = None
+    started_at: str | None = None
+    finished_at: str | None = None
+    model_path: str | None = None
+    video_path: str | None = None
+    conf: float | None = None
+    imgsz: int | None = None
+    device: str | None = None
 
 
 class VideoArtifactResponse(BaseModel):

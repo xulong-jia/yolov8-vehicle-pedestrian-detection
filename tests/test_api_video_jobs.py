@@ -11,15 +11,17 @@ from fastapi.testclient import TestClient
 import pytest
 
 from src.api import create_app
-from src.services.video_job_service import registry
+from src.services.job_store import SQLiteVideoJobStore
+from src.services.video_job_service import VideoJobRegistry, registry
 
 
 @pytest.fixture(autouse=True)
-def clear_video_jobs() -> None:
-    registry.base_output_dir = Path("local_outputs/api_video_jobs")
+def clear_video_jobs(tmp_path: Path) -> None:
+    registry.base_output_dir = tmp_path / "api_video_jobs"
+    registry.store = SQLiteVideoJobStore(tmp_path / "api_video_jobs" / "video_jobs.sqlite3")
     registry.clear()
     yield
-    registry.base_output_dir = Path("local_outputs/api_video_jobs")
+    registry.base_output_dir = tmp_path / "api_video_jobs"
     registry.clear()
 
 
@@ -176,6 +178,10 @@ def test_create_video_job_runs_background_flow_and_records_artifacts(
     assert fetched.status_code == 200
     job = fetched.json()
     assert job["status"] == "succeeded"
+    assert job["created_at"]
+    assert job["updated_at"]
+    assert job["started_at"]
+    assert job["finished_at"]
     assert job["summary_path"].endswith("video_analysis/api_run/video_analysis_summary.json")
     assert job["artifact_paths"]["summary"].endswith("video_analysis_summary.json")
     assert job["artifact_paths"]["detections"].endswith("video_analysis/api_run/detections.csv")
@@ -183,6 +189,10 @@ def test_create_video_job_runs_background_flow_and_records_artifacts(
     analytics = client.get(f"/api/videos/jobs/{created['job_id']}/analytics")
     assert analytics.status_code == 200
     assert analytics.json()["data"]["summary"]["data"]["track_count"] == 1
+
+    persisted = registry.store.get_job(created["job_id"])
+    assert persisted["status"] == "succeeded"
+    assert persisted["artifact_paths"]["summary"].endswith("video_analysis_summary.json")
 
 
 def test_create_video_job_accepts_source_alias_for_video_path(tmp_path, monkeypatch):
@@ -237,6 +247,65 @@ def test_video_job_state_flow_helpers(tmp_path):
     failed = registry.mark_failed(job["job_id"], "clear failure")
     assert failed["status"] == "failed"
     assert failed["error"] == "clear failure"
+
+    persisted = registry.store.get_job(job["job_id"])
+    assert persisted["status"] == "failed"
+    assert persisted["error"] == "clear failure"
+
+
+def test_new_registry_instance_can_query_persisted_job(tmp_path):
+    db_path = tmp_path / "persisted" / "video_jobs.sqlite3"
+    store = SQLiteVideoJobStore(db_path)
+    first_registry = VideoJobRegistry(base_output_dir=tmp_path / "outputs", store=store)
+
+    job = first_registry.create_execution_job(
+        model_path=tmp_path / "best.pt",
+        video_path=tmp_path / "demo.mp4",
+        video_id="demo",
+        run_name="persisted_run",
+    )
+    first_registry.mark_succeeded(
+        job["job_id"],
+        {"detections_csv": "detections.csv", "tracks_csv": "tracks.csv"},
+    )
+
+    second_registry = VideoJobRegistry(
+        base_output_dir=tmp_path / "outputs",
+        store=SQLiteVideoJobStore(db_path),
+    )
+    restored = second_registry.get_job(job["job_id"])
+
+    assert restored["status"] == "succeeded"
+    assert restored["run_name"] == "persisted_run"
+    assert restored["artifact_paths"]["summary"].endswith("video_analysis_summary.json")
+    assert restored["artifact_paths"]["detections_csv"] == "detections.csv"
+
+
+def test_sqlite_store_round_trips_artifact_paths_and_creates_missing_directory(tmp_path):
+    db_path = tmp_path / "missing" / "nested" / "video_jobs.sqlite3"
+    store = SQLiteVideoJobStore(db_path)
+
+    store.upsert_job(
+        {
+            "job_id": "job-1",
+            "status": "succeeded",
+            "video_id": "demo",
+            "run_name": "run",
+            "run_dir": "run-dir",
+            "output_dir": "output-dir",
+            "summary_path": "summary.json",
+            "artifact_paths": {"summary": "summary.json", "events": "events.jsonl"},
+            "error": None,
+            "message": "ok",
+            "created_at": "2026-06-20T00:00:00+00:00",
+            "updated_at": "2026-06-20T00:00:01+00:00",
+        }
+    )
+
+    assert db_path.is_file()
+    restored = store.get_job("job-1")
+    assert restored["artifact_paths"] == {"summary": "summary.json", "events": "events.jsonl"}
+    assert restored["status"] == "succeeded"
 
 
 def test_create_video_job_missing_model_or_video_fails_clearly(tmp_path):
