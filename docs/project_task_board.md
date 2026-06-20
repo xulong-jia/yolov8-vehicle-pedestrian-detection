@@ -1015,6 +1015,34 @@ Pending after v0.14.2 Step 1:
 - [ ] Optional real Bad Case collection / 可选真实 Bad Case 收集 — Target: Future/manual — Status: Pending
 - [ ] Final manual deployment go/no-go / 最终手动部署 go/no-go — Target: Future/manual — Status: Pending
 
+## v0.14.3-docker-actual-build-smoke-preflight / Docker 实际冒烟前置检查
+
+- [x] Docker availability preflight documented / Docker 可用性前置检查文档化 — Priority: P0 — Status: Completed in working tree — Output: `docs/docker_actual_smoke_plan.md` — Commit: TBD
+- [x] Dockerfile static review / Dockerfile 静态复核 — Priority: P0 — Status: Completed in working tree — Output: `docs/docker_actual_smoke_plan.md` — Commit: TBD
+- [x] `.dockerignore` safety review / `.dockerignore` 资产安全复核 — Priority: P0 — Status: Completed in working tree — Output: `docs/docker_actual_smoke_plan.md` — Commit: TBD
+- [x] Exact build/run smoke commands / 精确 build/run 冒烟命令 — Priority: P0 — Status: Completed in working tree — Output: `docs/docker_actual_smoke_plan.md` — Commit: TBD
+- [x] Success/failure criteria / 成功与失败标准 — Priority: P0 — Status: Completed in working tree — Output: `docs/docker_actual_smoke_plan.md` — Commit: TBD
+- [x] Docker actual smoke plan test / Docker 实际冒烟计划测试 — Priority: P0 — Status: Completed in working tree — Output: `tests/test_docker_actual_smoke_plan.py` — Commit: TBD
+
+Scope:
+
+- records current Docker blocker: Docker CLI/daemon unavailable, `docker_info_exit=127`
+- documents exact future `docker build`, FastAPI container smoke, Streamlit
+  container smoke, mounted-weight `/predict`, and video job skeleton smoke
+- keeps actual Docker validation as manual pending
+- does not run Docker build
+- does not run Docker run
+- does not run YOLO, ByteTrack, DeepSORT, analytics, or rendering
+- does not generate CSV, JSON, JSONL, MP4, or local outputs
+
+Pending after v0.14.3 Step 1:
+
+- [ ] Install/start Docker / 安装或启动 Docker — Target: Future/manual — Status: Pending
+- [ ] Actual docker build / 实际 Docker build — Target: Future/manual — Status: Pending
+- [ ] Actual FastAPI container smoke / 实际 FastAPI 容器冒烟 — Target: Future/manual — Status: Pending
+- [ ] Actual Streamlit container smoke / 实际 Streamlit 容器冒烟 — Target: Future/manual — Status: Pending
+- [ ] Mounted-weight `/predict` smoke / 挂载权重后的 `/predict` 冒烟 — Target: Future/manual — Status: Pending
+
 ## P3 — Optional Future Experiments / 可选未来实验
 
 - [x] Run YOLOv8s official test split validation if weight is available / 在权重可用时运行 YOLOv8s 官方测试集验证 — Priority: P3 — Status: Done — Output: `docs/experiments/yolov8s_640_50epochs_retrain/`, `docs/evaluation/yolov8s_640_50epochs_official/` — Result: P `0.865`, R `0.838`, mAP50 `0.876`, mAP50-95 `0.601` — Commit: `e4d5adb`

@@ -16,6 +16,11 @@ For the consolidated final acceptance status, see
 Docker build/run and mounted-weight container prediction as manual pending
 acceptance items.
 
+`v0.14.3` adds `docs/docker_actual_smoke_plan.md`, which records the current
+Docker availability blocker and the exact future actual smoke commands. The
+current preflight found Docker CLI/daemon unavailable (`docker_info_exit=127`),
+so actual build/run remains pending until Docker is available.
+
 ## Prerequisites
 
 - Docker installed on the host machine.
@@ -188,12 +193,16 @@ should run:
 - Streamlit container smoke on port `8501`.
 - Mounted-weight predict smoke without copying weights into the image.
 
+See `docs/docker_actual_smoke_plan.md` for the current preflight result,
+manual prerequisites, success criteria, and failure handling.
+
 ## Related Files
 
 - `Dockerfile`
 - `.dockerignore`
 - `docs/deployment_guide.md`
 - `docs/api_usage.md`
+- `docs/docker_actual_smoke_plan.md`
 - `docs/final_acceptance_checklist.md`
 - `docs/model_loading_strategy.md`
 - `docs/model_weight_policy.md`

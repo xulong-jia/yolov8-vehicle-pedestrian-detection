@@ -509,3 +509,20 @@ areas. The checklist summarizes:
 This step does not claim actual Docker build/run completion. Docker build,
 FastAPI container smoke, Streamlit container smoke, and mounted-weight
 container prediction remain manual pending acceptance items.
+
+## v0.14.3 Docker Actual Build Smoke Preflight
+
+`v0.14.3` adds `docs/docker_actual_smoke_plan.md` as the preflight record for
+the execution manual's actual Docker build/run acceptance items. The current
+preflight result is:
+
+- Docker CLI unavailable.
+- `docker --version` command not found.
+- `docker info` returned `docker_info_exit=127`.
+- Current blocker: Docker CLI/daemon unavailable.
+
+No Docker build was run, no Docker container was started, no YOLO/ByteTrack
+pipeline was executed, and no generated outputs were created. The smoke plan
+documents the exact future build command, FastAPI container smoke, Streamlit
+container smoke, mounted-weight `/predict` smoke, success criteria, failure
+handling, and go/no-go rules.

@@ -175,6 +175,8 @@ Completed experiments and recorded results:
 
 `v0.14.2-final-acceptance-checklist` adds the final acceptance checklist for the execution manual's Stage 8 and Chapter 21 acceptance areas. It consolidates evidence files, test commands, version tags, manual pending items, asset-safety checks, and a Conditional Go status for documentation/static acceptance. Actual Docker build/run and mounted-weight container prediction remain manual pending. See [Final Acceptance Checklist](docs/final_acceptance_checklist.md).
 
+`v0.14.3-docker-actual-build-smoke-preflight` adds the Docker actual smoke preflight plan. The current preflight records Docker CLI/daemon unavailable (`docker_info_exit=127`), so actual Docker build/run remains manual pending. No Docker build/run was executed. See [Docker Actual Smoke Plan](docs/docker_actual_smoke_plan.md).
+
 This phase does not include DeepSORT integration, ByteTrack production hardening, Streamlit job launching, real async FastAPI video execution, database integration, full-length tracked video validation, or real video benchmarks.
 
 Details: [Video analytics MVP](docs/video_analytics_mvp.md)
@@ -343,6 +345,8 @@ docker run --rm -p 8501:8501 \
 Do not copy weights into the Docker image. Mount weights read-only at runtime.
 `v0.14.1` adds static Docker deployment acceptance; actual Docker build/run
 smoke remains pending unless performed explicitly.
+`v0.14.3` adds a Docker actual smoke preflight plan; actual build/run remains
+blocked until Docker CLI and daemon are available.
 
 ## Makefile Commands
 
@@ -481,6 +485,7 @@ ONNX Runtime benchmark/check:
 - [Model loading strategy](docs/model_loading_strategy.md)
 - [Local deployment guide](docs/deployment_guide.md)
 - [Docker deployment guide](docs/docker_deployment.md)
+- [Docker Actual Smoke Plan](docs/docker_actual_smoke_plan.md)
 - [API usage guide](docs/api_usage.md)
 - [YOLOv8s retrain summary](docs/experiments/yolov8s_640_50epochs_retrain/summary.md)
 - [YOLOv8s official test summary](docs/evaluation/yolov8s_640_50epochs_official/summary.md)
@@ -553,6 +558,7 @@ Policy:
 ## Current Limitations
 
 - Docker deployment static acceptance is documented, but actual Docker build/run smoke remains pending.
+- Docker actual smoke preflight is documented, but Docker CLI/daemon is currently unavailable for actual build/run.
 - Final acceptance is Conditional Go for documentation/static acceptance; manual Docker build/run and mounted-weight container prediction remain pending.
 - Full real Bad Case collection and `/api/bad-cases` are not implemented yet.
 - YOLOv8m PyTorch speed benchmark has not yet been run.
