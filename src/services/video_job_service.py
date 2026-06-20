@@ -10,6 +10,7 @@ import threading
 from typing import Any
 from uuid import uuid4
 
+from src.core.logging_config import get_job_logger, log_event
 from src.services.job_store import SQLiteVideoJobStore
 
 
@@ -22,6 +23,7 @@ EXPECTED_ARTIFACTS = {
     "events": "events.jsonl",
     "summary": "video_analysis_summary.json",
 }
+job_logger = get_job_logger()
 
 
 class VideoJobRegistry:
@@ -166,7 +168,7 @@ class VideoJobRegistry:
         return stored
 
     def mark_running(self, job_id: str) -> dict[str, Any]:
-        return self._update_job(
+        updated = self._update_job(
             job_id,
             status="running",
             started_at=_utc_now_iso(),
@@ -174,11 +176,13 @@ class VideoJobRegistry:
             message="Video analysis job is running.",
             error=None,
         )
+        _log_job_status(updated)
+        return updated
 
     def mark_succeeded(self, job_id: str, summary: dict[str, Any]) -> dict[str, Any]:
         summary_path = Path(self.get_job(job_id)["run_dir"]) / "video_analysis_summary.json"
         artifact_paths = _collect_artifact_paths(summary_path.parent, summary)
-        return self._update_job(
+        updated = self._update_job(
             job_id,
             status="succeeded",
             finished_at=_utc_now_iso(),
@@ -188,9 +192,11 @@ class VideoJobRegistry:
             artifact_paths=artifact_paths,
             error=None,
         )
+        _log_job_status(updated)
+        return updated
 
     def mark_failed(self, job_id: str, error: str) -> dict[str, Any]:
-        return self._update_job(
+        updated = self._update_job(
             job_id,
             status="failed",
             finished_at=_utc_now_iso(),
@@ -198,6 +204,8 @@ class VideoJobRegistry:
             message=f"Video analysis job failed: {error}",
             error=error,
         )
+        _log_job_status(updated)
+        return updated
 
     def clear(self) -> None:
         with self._lock:
@@ -398,3 +406,14 @@ def _collect_artifact_paths(run_dir: Path, summary: dict[str, Any]) -> dict[str,
         if value:
             paths[key] = str(value)
     return paths
+
+
+def _log_job_status(job: dict[str, Any]) -> None:
+    log_event(
+        job_logger,
+        "video_job_status",
+        job_id=job.get("job_id"),
+        video_id=job.get("video_id"),
+        run_name=job.get("run_name"),
+        status=job.get("status"),
+    )

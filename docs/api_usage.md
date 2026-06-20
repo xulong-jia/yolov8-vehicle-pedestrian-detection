@@ -16,6 +16,32 @@ decoding plus inference live in `src/services/image_inference_service.py`.
 The app can also be imported as `src.api:app` by Uvicorn. Importing `src.api`
 does not load model weights and does not import Ultralytics.
 
+Optional API key authentication is disabled by default. To enable it:
+
+```bash
+API_KEY_AUTH_ENABLED=true API_KEY=your-secret \
+  .venv/bin/uvicorn src.api:app --host 0.0.0.0 --port 8000
+```
+
+Protected requests then need:
+
+```bash
+curl -H "X-API-Key: your-secret" http://localhost:8000/api/videos/jobs/job_000001
+```
+
+Public endpoints remain available without a key:
+
+- `/health`
+- `/config`
+- `/model-status`
+- `/docs`
+- `/openapi.json`
+
+The API also accepts optional `X-Request-ID`; if omitted, it generates one and
+always returns `X-Request-ID` in the response headers. Structured request logs
+use standard-library logging and include timestamp, level, request id, method,
+path, status code, and duration in milliseconds.
+
 ## Configuration
 
 Defaults come from `src/core/config.py` and can be overridden with environment
@@ -25,6 +51,8 @@ variables:
 - `YOLO_DEVICE`
 - `YOLO_CONF`
 - `YOLO_IMGSZ`
+- `API_KEY_AUTH_ENABLED`
+- `API_KEY`
 
 Model weights must be local or mounted. They are not committed to Git.
 
@@ -90,6 +118,8 @@ Example response:
 
 ```bash
 curl -X POST "http://localhost:8000/predict?conf=0.25&imgsz=640&device=cpu" \
+  -H "X-Request-ID: demo-request-001" \
+  -H "X-API-Key: your-secret" \
   -F "file=@sample.jpg"
 ```
 
@@ -323,6 +353,11 @@ Lists locally collected Bad Case metadata records.
 - Artifact download endpoints stream registered files from `artifact_paths` and
   do not allow arbitrary path downloads.
 - Bad Case endpoints store metadata only under ignored local output paths.
+- If API key auth is enabled, mutation/job/predict/bad-case/artifact endpoints
+  require `X-API-Key`.
+- Logs include `request_id`; video job logs include `job_id`, `video_id`,
+  `run_name`, and `status`; artifact download logs include `job_id` and
+  `artifact_name`; Bad Case logs include `case_id`, `module`, and `case_type`.
 - Error responses are short and point to the failed input or runtime condition.
 
 ## Out of Scope
@@ -335,6 +370,8 @@ The following remain outside the current API scope:
 - full reviewed Bad Case dataset collection
 - evaluation API endpoints
 - React frontend
+- OAuth/JWT or multi-user permissions
+- Prometheus/Grafana monitoring
 
 ## Tests
 

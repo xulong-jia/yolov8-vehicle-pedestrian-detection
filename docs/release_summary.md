@@ -3,7 +3,7 @@
 ## Release Identity
 
 - Original final release: v1.0.0-final-release-summary
-- Current latest documented state: v1.4.1-docker-v1-api-smoke-refresh
+- Current latest documented state: v1.5.0-api-key-and-structured-logging
 - Based on original final tag: v0.14.6-final-doc-consistency-pass
 - Project name: YOLOv8 Vehicle and Pedestrian Detection System
 - Repository: yolov8-vehicle-pedestrian-detection
@@ -11,7 +11,7 @@
 
 ## Post-Final Enhancements
 
-After the original `v1.0.0-final-release-summary`, the repository added six
+After the original `v1.0.0-final-release-summary`, the repository added seven
 bounded enhancements:
 
 - `v1.1.0-async-video-job`: FastAPI async video job execution and Streamlit
@@ -26,6 +26,8 @@ bounded enhancements:
   endpoints for files already registered in a job's `artifact_paths`.
 - `v1.4.1-docker-v1-api-smoke-refresh`: Docker runtime smoke refresh for the
   v1.1-v1.4 API additions.
+- `v1.5.0-api-key-and-structured-logging`: optional API key auth,
+  `X-Request-ID` request correlation, and standard-library structured logs.
 
 The SQLite index is unit-tested and has been verified with a real local FastAPI
 process restart smoke. Docker actual smoke was refreshed for the v1.1-v1.4 API
@@ -51,6 +53,7 @@ surface.
 - GT evaluation scaffold for tracking/counting/ROI/event artifacts
 - FastAPI artifact download endpoints for registered video job artifacts
 - Docker v1 API smoke refresh
+- Optional API key authentication and request/operation structured logs
 - Docker build/run smoke
 - mounted-weight Docker `/predict` smoke
 - final acceptance checklist
@@ -133,7 +136,7 @@ registered in job metadata; arbitrary path downloads are not supported.
 - reviewed real Bad Case labeling and curated GT dataset creation
 - full GT-based tracking/counting/ROI/event evaluation on reviewed labels
 - optional DeepSORT runtime
-- production hardening/security/observability
+- OAuth/JWT, multi-user permissions, and external monitoring
 - optional full-length production validation
 
 ## Suggested Evaluator Walkthrough

@@ -1153,9 +1153,11 @@ Pending after v1.0.0 release docs:
 - [x] SQLite real FastAPI process restart smoke / SQLite 真实 FastAPI 进程重启冒烟 — Target: v1.3.2 — Status: Completed — Output: `docs/sqlite_job_restart_smoke_result.md` — Commit: TBD
 - [x] Artifact download endpoints / artifact 下载端点 — Target: v1.4.0 — Status: Completed — Output: `src/api.py`, `tests/test_api_video_jobs.py`, `docs/api_usage.md` — Commit: TBD
 - [x] Docker smoke refresh for v1.1-v1.4 APIs / v1.1-v1.4 API Docker 冒烟刷新 — Target: v1.4.1 — Status: Completed — Output: `docs/docker_v1_api_smoke_result.md` — Commit: TBD
+- [x] API key auth + request ID + structured logging / API key 鉴权、请求 ID 与结构化日志 — Target: v1.5.0 — Status: Completed — Output: `src/core/security.py`, `src/core/logging_config.py`, `tests/test_api_security_logging.py` — Commit: TBD
 - [ ] Large reviewed Bad Case collection / 大规模人工审核 Bad Case 收集 — Target: Future — Status: Pending
 - [ ] Real GT quantitative evaluation / 真实 GT 定量评测 — Target: Future — Status: Pending
 - [ ] React frontend / React 前端 — Target: Future — Status: Pending
+- [ ] OAuth/JWT, multi-user permissions, Prometheus/Grafana / OAuth/JWT、多用户权限与外部监控 — Target: Future — Status: Pending
 - [ ] Optional DeepSORT runtime / 可选 DeepSORT 运行时 — Target: Future — Status: Pending
 - [ ] Optional full-length production validation / 可选全长生产验证 — Target: Future — Status: Pending
 

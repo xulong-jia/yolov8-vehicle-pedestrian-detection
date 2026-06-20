@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 from pathlib import Path
+import time
 from typing import Any
+from uuid import uuid4
 
-from fastapi import BackgroundTasks, FastAPI, File, HTTPException, Query, UploadFile, status
+from fastapi import BackgroundTasks, FastAPI, File, HTTPException, Query, Request, UploadFile, status
 from fastapi.responses import FileResponse
 
 from src.core.config import (
@@ -13,6 +15,7 @@ from src.core.config import (
     SUPPORTED_IMAGE_TYPES,
     get_default_config,
 )
+from src.core.logging_config import configure_logging, get_api_logger, log_event
 from src.core.model_loader import model_loader
 from src.core.schemas import (
     BadCaseRequest,
@@ -25,6 +28,7 @@ from src.core.schemas import (
     VideoArtifactResponse,
     VideoJobResponse,
 )
+from src.core.security import API_KEY_HEADER, api_key_is_valid, is_api_key_auth_enabled, is_public_path
 from src.services.bad_case_service import BadCaseService
 from src.services import image_inference_service
 from src.services.image_inference_service import decode_image_size, format_detections
@@ -33,6 +37,8 @@ from src.services.video_job_service import get_job_artifact, registry
 
 SERVICE_NAME = "yolov8-vehicle-pedestrian-api"
 bad_case_service = BadCaseService()
+configure_logging()
+api_logger = get_api_logger()
 
 
 def short_error(exc: Exception, max_length: int = 180) -> str:
@@ -164,6 +170,55 @@ def _artifact_download_path_or_404(job_id: str, artifact_name: str) -> Path:
 def create_app() -> FastAPI:
     app = FastAPI(title=PROJECT_NAME)
 
+    @app.middleware("http")
+    async def request_context_middleware(request, call_next):
+        request_id = request.headers.get("X-Request-ID") or uuid4().hex
+        request.state.request_id = request_id
+        start = time.perf_counter()
+        status_code = 500
+
+        if is_api_key_auth_enabled() and not is_public_path(request.url.path):
+            provided_key = request.headers.get(API_KEY_HEADER)
+            if not api_key_is_valid(provided_key):
+                from fastapi.responses import JSONResponse
+
+                response = JSONResponse(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    content={"detail": "Missing or invalid API key"},
+                )
+                response.headers["X-Request-ID"] = request_id
+                duration_ms = round((time.perf_counter() - start) * 1000, 2)
+                log_event(
+                    api_logger,
+                    "http_request",
+                    level="INFO",
+                    request_id=request_id,
+                    method=request.method,
+                    path=request.url.path,
+                    status_code=response.status_code,
+                    duration_ms=duration_ms,
+                )
+                return response
+
+        try:
+            response = await call_next(request)
+            status_code = response.status_code
+            return response
+        finally:
+            duration_ms = round((time.perf_counter() - start) * 1000, 2)
+            log_event(
+                api_logger,
+                "http_request",
+                level="INFO",
+                request_id=request_id,
+                method=request.method,
+                path=request.url.path,
+                status_code=status_code,
+                duration_ms=duration_ms,
+            )
+            if "response" in locals():
+                response.headers["X-Request-ID"] = request_id
+
     @app.get("/health", response_model=HealthResponse)
     def health() -> dict[str, str]:
         return {"status": "ok", "service": SERVICE_NAME}
@@ -187,9 +242,18 @@ def create_app() -> FastAPI:
         }
 
     @app.post("/api/bad-cases", response_model=BadCaseResponse)
-    def create_bad_case(request: BadCaseRequest) -> dict[str, str]:
+    def create_bad_case(request: BadCaseRequest, http_request: Request) -> dict[str, str]:
         payload = request.model_dump() if hasattr(request, "model_dump") else request.dict()
-        return bad_case_service.add_case(payload)
+        created = bad_case_service.add_case(payload)
+        log_event(
+            api_logger,
+            "bad_case_created",
+            request_id=getattr(http_request.state, "request_id", ""),
+            case_id=created.get("case_id"),
+            module=created.get("module"),
+            case_type=created.get("case_type"),
+        )
+        return created
 
     @app.get("/api/bad-cases", response_model=list[BadCaseResponse])
     def list_bad_cases() -> list[dict[str, str]]:
@@ -253,14 +317,25 @@ def create_app() -> FastAPI:
     def create_video_job(
         request: VideoAnalyzeRequest,
         background_tasks: BackgroundTasks,
+        http_request: Request,
     ) -> dict[str, Any]:
         effective_video_path = request.video_path or request.source
         if request.run_dir and not (request.model_path or effective_video_path):
-            return registry.create_job(
+            job = registry.create_job(
                 run_dir=request.run_dir,
                 video_id=request.video_id,
                 run_name=request.run_name,
             )
+            log_event(
+                api_logger,
+                "video_job_created",
+                request_id=getattr(http_request.state, "request_id", ""),
+                job_id=job.get("job_id"),
+                video_id=job.get("video_id"),
+                run_name=job.get("run_name"),
+                status=job.get("status"),
+            )
+            return job
 
         job = registry.create_execution_job(
             model_path=request.model_path,
@@ -270,6 +345,15 @@ def create_app() -> FastAPI:
             conf=request.conf,
             imgsz=request.imgsz,
             device=request.device,
+        )
+        log_event(
+            api_logger,
+            "video_job_created",
+            request_id=getattr(http_request.state, "request_id", ""),
+            job_id=job.get("job_id"),
+            video_id=job.get("video_id"),
+            run_name=job.get("run_name"),
+            status=job.get("status"),
         )
         background_tasks.add_task(registry.run_job, job["job_id"])
         return job
@@ -313,8 +397,20 @@ def create_app() -> FastAPI:
         return _artifact_or_404(job_id, "events", max_rows=max_rows)
 
     @app.get("/api/videos/jobs/{job_id}/artifacts/{artifact_name}/download")
-    def download_video_artifact(job_id: str, artifact_name: str) -> FileResponse:
+    def download_video_artifact(
+        job_id: str,
+        artifact_name: str,
+        request: Request,
+    ) -> FileResponse:
         path = _artifact_download_path_or_404(job_id, artifact_name)
+        log_event(
+            api_logger,
+            "artifact_download",
+            request_id=getattr(request.state, "request_id", ""),
+            job_id=job_id,
+            artifact_name=artifact_name,
+            path=str(path),
+        )
         return FileResponse(path, filename=path.name)
 
     return app

@@ -6,7 +6,7 @@ This project is a YOLOv8-based vehicle and pedestrian detection system. It cover
 
 Current final delivery state:
 
-- Current latest documented state: `v1.4.1-docker-v1-api-smoke-refresh`
+- Current latest documented state: `v1.5.0-api-key-and-structured-logging`
 - Original final release tag: `v1.0.0-final-release-summary`
 - Final status: `Go for final local/Docker acceptance`
 - Docker Actual Smoke: `Passed`
@@ -39,7 +39,7 @@ Completed system capabilities:
 - final acceptance checklist
 - release summary / delivery notes
 
-Future / optional work is non-blocking and includes reviewed real Bad Case labeling, reviewed GT dataset creation, optional DeepSORT production runtime, production hardening/observability, and full GT-based tracking/counting/ROI/event quantitative evaluation.
+Future / optional work is non-blocking and includes reviewed real Bad Case labeling, reviewed GT dataset creation, optional DeepSORT production runtime, OAuth/JWT or multi-user security, external monitoring, and full GT-based tracking/counting/ROI/event quantitative evaluation.
 
 ## Final Delivery Entry Points
 
@@ -235,7 +235,9 @@ Completed experiments and recorded results:
 
 `v1.4.1-docker-v1-api-smoke-refresh` refreshes Docker runtime smoke for the v1.1-v1.4 API surface. Docker build/run passed, mounted-weight `/predict` passed, attach-mode `/api/videos/analyze` passed, SQLite metadata was written on a mounted `/tmp` output volume, artifact summary download returned `200`, and `/api/bad-cases` POST/GET passed. See [Docker v1 API Smoke Result](docs/docker_v1_api_smoke_result.md).
 
-This phase does not include DeepSORT integration, ByteTrack production hardening, production database integration beyond the local SQLite metadata index, full-length tracked video validation, React frontend, API key/auth/logging, or real video benchmarks.
+`v1.5.0-api-key-and-structured-logging` adds optional API key authentication, `X-Request-ID` request correlation, and standard-library structured logs for FastAPI requests, video jobs, artifact downloads, and Bad Case creation. API key auth is disabled by default for local demo use and can be enabled with `API_KEY_AUTH_ENABLED=true API_KEY=your-secret`.
+
+This phase does not include DeepSORT integration, ByteTrack production hardening, production database integration beyond the local SQLite metadata index, full-length tracked video validation, React frontend, OAuth/JWT, multi-user authorization, Prometheus/Grafana, or real video benchmarks.
 
 Details: [Video analytics MVP](docs/video_analytics_mvp.md)
 
@@ -369,6 +371,13 @@ Run locally:
 uvicorn src.api:app --host 0.0.0.0 --port 8000
 ```
 
+Run locally with optional API key authentication:
+
+```bash
+API_KEY_AUTH_ENABLED=true API_KEY=your-secret \
+  uvicorn src.api:app --host 0.0.0.0 --port 8000
+```
+
 Current API scope:
 
 - `GET /health`
@@ -387,6 +396,9 @@ Current API scope:
 - The video job/result API can launch the existing four-step local video analysis flow and query status/results.
 - Video job metadata is persisted in `local_outputs/api_video_jobs/video_jobs.sqlite3`; artifact file contents remain on disk and are not stored in SQLite.
 - Artifact downloads are limited to registered `artifact_paths` keys such as `metadata`, `detections`, `tracks`, `count_events`, `roi_frame_counts`, `events`, `summary`, `detections_csv`, and `tracks_csv`.
+- API key authentication is off by default. When enabled, protected endpoints require `X-API-Key`; public endpoints remain `/health`, `/config`, `/model-status`, `/docs`, and `/openapi.json`.
+- Every response includes `X-Request-ID`; callers may provide that header and the API will echo it.
+- Structured logs include request id, method, path, status code, duration, and job/artifact/bad-case identifiers where applicable.
 - Uploaded images and prediction outputs are not saved to the repository.
 - No model is loaded at import time.
 
@@ -712,7 +724,7 @@ Policy:
 
 - Reviewed real Bad Case labeling and curated GT dataset creation.
 - Optional DeepSORT production runtime.
-- Production hardening, security, and observability.
+- OAuth/JWT, multi-user authorization, API key rotation, and external monitoring.
 - Full GT-based tracking/counting/ROI/event quantitative reports.
 - Optional full-length production validation.
 - Optional YOLOv8m PyTorch and ONNX Runtime speed benchmarking if model-family latency completeness is needed.

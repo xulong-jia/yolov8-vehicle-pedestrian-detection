@@ -104,6 +104,20 @@ jobs when the FastAPI service is running separately.
 uvicorn src.api:app --host 0.0.0.0 --port 8000
 ```
 
+Optional API key authentication can be enabled for local or containerized
+deployments:
+
+```bash
+API_KEY_AUTH_ENABLED=true API_KEY=your-secret \
+  uvicorn src.api:app --host 0.0.0.0 --port 8000
+```
+
+When enabled, protected endpoints require `X-API-Key: your-secret`; `/health`,
+`/config`, `/model-status`, `/docs`, and `/openapi.json` remain public. Each
+response includes `X-Request-ID`, either echoing the incoming header or a
+generated UUID. Structured logs include request id, method, path, status code,
+duration, and video job/artifact/bad-case identifiers where relevant.
+
 Useful smoke commands:
 
 ```bash
@@ -166,6 +180,7 @@ docker build -t yolov8-vehicle-pedestrian:latest .
 ```bash
 docker run --rm -p 8000:8000 \
   -e MODEL_PATH=/app/local_weights/best.pt \
+  -e API_KEY_AUTH_ENABLED=false \
   -v "$PWD/local_weights:/app/local_weights:ro" \
   yolov8-vehicle-pedestrian:latest \
   uvicorn src.api:app --host 0.0.0.0 --port 8000

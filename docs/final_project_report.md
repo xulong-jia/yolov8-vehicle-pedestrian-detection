@@ -712,6 +712,25 @@ The smoke used local `/tmp` runtime outputs and did not commit the SQLite DB,
 Bad Case CSV/JSONL, temporary image, response JSON, Docker image layers,
 weights, source videos, or run artifacts.
 
+## v1.5.0 API Key and Structured Logging
+
+`v1.5.0-api-key-and-structured-logging` adds minimal production-oriented
+FastAPI hardening:
+
+- API key authentication is disabled by default for local demo use.
+- `API_KEY_AUTH_ENABLED=true API_KEY=your-secret` enables `X-API-Key`
+  validation on protected endpoints.
+- `/health`, `/config`, `/model-status`, `/docs`, and `/openapi.json` remain
+  public.
+- Every response includes `X-Request-ID`, echoing the incoming header or using
+  a generated UUID.
+- Structured logs use Python standard-library `logging` and include request id,
+  method, path, status code, duration, and operation identifiers such as
+  `job_id`, `artifact_name`, and `case_id`.
+
+This stage does not add OAuth/JWT, users, roles, API key rotation, Prometheus,
+Grafana, or external monitoring.
+
 ## Current Post-Final Future Work
 
 - Large reviewed Bad Case collection.
@@ -719,5 +738,5 @@ weights, source videos, or run artifacts.
   evaluation.
 - Optional DeepSORT production runtime.
 - Optional React frontend.
-- Production hardening, authentication, structured logging, monitoring, and
-  multi-user job management.
+- OAuth/JWT, multi-user job management, external monitoring, and production
+  observability hardening.

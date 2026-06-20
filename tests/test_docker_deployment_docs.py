@@ -71,6 +71,7 @@ def test_docker_deployment_docs_cover_manual_acceptance_commands() -> None:
         "uvicorn src.api:app",
         "streamlit run app.py",
         "MODEL_PATH",
+        "API_KEY_AUTH_ENABLED",
         "local_weights",
         "volume mount",
         "/health",
@@ -107,6 +108,7 @@ def test_deployment_guide_mentions_local_and_docker_paths() -> None:
         "Actual Docker build/run smoke later passed",
         "mounted-weight container `/predict` passed",
         "Docker v1 API Smoke Result",
+        "API key authentication",
     ]
     for term in required_terms:
         assert term in text

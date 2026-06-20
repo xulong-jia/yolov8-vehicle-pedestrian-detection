@@ -6,7 +6,7 @@
 | --- | --- |
 | Project name | YOLOv8 Vehicle and Pedestrian Detection |
 | Repository name | yolov8-vehicle-pedestrian-detection |
-| Current checklist version | v1.4.1-docker-v1-api-smoke-refresh |
+| Current checklist version | v1.5.0-api-key-and-structured-logging |
 | Original final release tag | v1.0.0-final-release-summary |
 | Latest stable tag before this refresh | v1.3.1-final-doc-consistency-refresh |
 | Status date | 2026-06-20 |
@@ -49,6 +49,7 @@ and artifact download endpoints.
 | v1.3.2-sqlite-job-restart-smoke | SQLite job metadata verified through real local FastAPI process restart smoke. |
 | v1.4.0-artifact-download-endpoints | Registered video job artifact download endpoints accepted. |
 | v1.4.1-docker-v1-api-smoke-refresh | Docker runtime smoke refreshed for v1.1-v1.4 API surface. |
+| v1.5.0-api-key-and-structured-logging | Optional API key auth, request id middleware, and structured logs accepted. |
 
 ## Environment assumptions
 
@@ -145,8 +146,8 @@ DeepSORT is optional/future and is not required for this checklist status.
 
 | Field | Status |
 | --- | --- |
-| Status | Basic API, async video job execution, SQLite-backed job metadata with restart smoke, Bad Case metadata API, video result query endpoints, and registered artifact download endpoints tested. |
-| Evidence files | `src/api.py`, `src/core/config.py`, `src/core/model_loader.py`, `src/core/schemas.py`, `src/services/image_inference_service.py`, `src/services/video_job_service.py`, `src/services/job_store.py`, `src/services/bad_case_service.py`, `tests/test_api.py`, `tests/test_api_video_jobs.py`, `tests/test_bad_case_service.py`, `docs/api_usage.md` |
+| Status | Basic API, async video job execution, SQLite-backed job metadata with restart smoke, Bad Case metadata API, video result query endpoints, registered artifact download endpoints, optional API key auth, request id middleware, and structured logs tested. |
+| Evidence files | `src/api.py`, `src/core/config.py`, `src/core/model_loader.py`, `src/core/schemas.py`, `src/core/security.py`, `src/core/logging_config.py`, `src/services/image_inference_service.py`, `src/services/video_job_service.py`, `src/services/job_store.py`, `src/services/bad_case_service.py`, `tests/test_api.py`, `tests/test_api_video_jobs.py`, `tests/test_api_security_logging.py`, `tests/test_bad_case_service.py`, `docs/api_usage.md` |
 | Manual command | `uvicorn src.api:app --host 0.0.0.0 --port 8000` |
 | Limitations | Docker v1 API smoke passed for async jobs, SQLite metadata, artifact download, and Bad Case metadata. Full real video YOLO/ByteTrack execution inside Docker remains outside this smoke. |
 
@@ -164,6 +165,17 @@ Accepted endpoints:
 - `/events`
 - `/artifacts/{artifact_name}/download`
 - `/api/bad-cases`
+
+Security/logging scope:
+
+- API key authentication is disabled by default.
+- `API_KEY_AUTH_ENABLED=true API_KEY=...` enables `X-API-Key` checks for
+  protected endpoints.
+- `/health`, `/config`, `/model-status`, `/docs`, and `/openapi.json` remain
+  public.
+- Every response includes `X-Request-ID`.
+- Structured logs include request id, path, status code, duration, and
+  job/artifact/bad-case identifiers where applicable.
 
 ## Bad Case acceptance
 
@@ -199,6 +211,8 @@ Accepted endpoints:
 - optional DeepSORT runtime extension
 - optional full-length production validation
 - React frontend
+- OAuth/JWT, multi-user permission model, Prometheus/Grafana, and external
+  monitoring
 
 ## Asset safety checks
 

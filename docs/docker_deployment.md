@@ -69,10 +69,26 @@ Use Docker command override to start the FastAPI service:
 ```bash
 docker run --rm -p 8000:8000 \
   -e MODEL_PATH=/app/local_weights/best.pt \
+  -e API_KEY_AUTH_ENABLED=false \
   -v "$PWD/local_weights:/app/local_weights:ro" \
   yolov8-vehicle-pedestrian:latest \
   uvicorn src.api:app --host 0.0.0.0 --port 8000
 ```
+
+To enable simple API key authentication in Docker:
+
+```bash
+docker run --rm -p 8000:8000 \
+  -e MODEL_PATH=/app/local_weights/best.pt \
+  -e API_KEY_AUTH_ENABLED=true \
+  -e API_KEY=your-secret \
+  -v "$PWD/local_weights:/app/local_weights:ro" \
+  yolov8-vehicle-pedestrian:latest \
+  uvicorn src.api:app --host 0.0.0.0 --port 8000
+```
+
+Do not hard-code real API keys in the image or repository. Pass them as runtime
+environment variables or through the deployment platform's secret manager.
 
 The `local_weights` volume mount is read-only. Replace the mounted directory or
 `MODEL_PATH` value if your local weight file uses a different path.
@@ -231,6 +247,12 @@ Actual Docker build/run smoke has been run locally for `v0.14.4`:
   Bad Case metadata, and registered artifact download endpoints. The GT
   evaluation scaffold remains a Python/CLI scaffold rather than a Docker
   runtime smoke target.
+- API key authentication remains disabled by default. When enabled with
+  `API_KEY_AUTH_ENABLED=true`, protected endpoints require `X-API-Key`; health,
+  config, model-status, docs, and OpenAPI remain public.
+- FastAPI emits structured request logs with `X-Request-ID`, method, path,
+  status code, duration, and video job/artifact/bad-case identifiers where
+  applicable.
 
 See `docs/docker_actual_smoke_plan.md` for the current preflight result,
 manual prerequisites, success criteria, and failure handling.
