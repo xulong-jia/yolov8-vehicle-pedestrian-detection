@@ -731,9 +731,28 @@ FastAPI hardening:
 This stage does not add OAuth/JWT, users, roles, API key rotation, Prometheus,
 Grafana, or external monitoring.
 
+## v1.6.0 Reviewed Bad Case Collection
+
+`v1.6.0-reviewed-bad-case-collection` adds a small reviewed Bad Case sample
+collection in `docs/error_case_gallery/reviewed_bad_cases.csv`.
+
+The collection contains 24 metadata-only reviewed cases across detector,
+tracker, counter, ROI, and event modules. It covers representative case types
+including detector `false_positive`, detector `false_negative`, detector
+`class_confusion`, tracker `id_switch`, tracker `track_lost`, counter
+`count_error`, ROI `roi_membership_error`, ROI `roi_config_error`, event
+`rule_error`, and event `threshold_error`.
+
+The sample reuses existing lightweight gallery images under
+`docs/error_case_gallery/images/`. It does not add large images, videos, model
+weights, generated CSV/JSON/JSONL outputs, local run directories, or
+`local_outputs` artifacts. It is intended for demonstration, taxonomy review,
+root-cause explanation, and future GT/evaluation planning. It is not a large
+production Bad Case dataset.
+
 ## Current Post-Final Future Work
 
-- Large reviewed Bad Case collection.
+- Larger reviewed Bad Case collection beyond the 24-case sample.
 - Reviewed GT labels and full tracking/counting/ROI/event quantitative
   evaluation.
 - Optional DeepSORT production runtime.

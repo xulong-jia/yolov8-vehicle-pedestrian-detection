@@ -49,15 +49,42 @@ video and tracking fields empty.
 - `docs/error_case_gallery/README.md` describes selected lightweight examples.
 - `docs/error_case_gallery/cases.csv` is a small hand-written gallery sample
   aligned to the `bad_cases.csv` schema.
+- `docs/error_case_gallery/reviewed_bad_cases.csv` is a small reviewed sample
+  collection with 24 metadata-only cases across detector, tracker, counter,
+  ROI, and event modules.
 
 The gallery and hard examples are sources for review. They are not a complete
 `bad_cases.csv` dataset.
+
+## Reviewed Sample Collection
+
+`v1.6.0-reviewed-bad-case-collection` adds a small reviewed Bad Case sample
+collection for demonstration, report review, and later evaluation planning. It
+is deliberately bounded:
+
+- 24 reviewed records.
+- Modules covered: detector, tracker, counter, ROI, and event.
+- Case types covered include `false_positive`, `false_negative`,
+  `class_confusion`, `id_switch`, `track_lost`, `count_error`,
+  `roi_membership_error`, `roi_config_error`, `rule_error`, and
+  `threshold_error`.
+- Snapshot paths reuse existing lightweight files under
+  `docs/error_case_gallery/images/`.
+- No new large images, videos, weights, generated CSV/JSON/JSONL outputs, or
+  local run directories are committed.
+
+This reviewed sample is suitable for explaining taxonomy, schema fields,
+root-cause notes, reviewer notes, and how selected cases can be marked for a
+future evaluation set. It is not a large production Bad Case dataset and is not
+a substitute for a reviewed GT quantitative evaluation.
 
 ## Minimum Acceptance Criteria
 
 - Bad Case schema exists and documents required fields.
 - Bad Case taxonomy exists and is linked to the schema.
 - Gallery and hard examples link back to the schema/report.
+- Small reviewed Bad Case sample exists in
+  `docs/error_case_gallery/reviewed_bad_cases.csv`.
 - Root-cause analysis is represented by `root_cause`.
 - Regression intent is represented by `added_to_eval_set`.
 - Metadata-only collection can write local ignored CSV/JSONL records.
@@ -67,7 +94,8 @@ The gallery and hard examples are sources for review. They are not a complete
 
 ## Current Limitations
 
-- No full real Bad Case collection has been completed.
+- A small reviewed Bad Case sample exists, but no large production-scale Bad
+  Case collection has been completed.
 - `/api/bad-cases` is metadata-only and does not upload large files.
 - No evaluation API is implemented yet.
 - Existing gallery labels are qualitative and often count-based, not
@@ -77,8 +105,8 @@ The gallery and hard examples are sources for review. They are not a complete
 
 ## Follow-Up Work
 
-- Collect a reviewed real `bad_cases.csv` from detector, tracker, counter, ROI,
-  event, API, deployment, and documentation failures.
+- Expand the reviewed sample into a larger real `bad_cases.csv` from detector,
+  tracker, counter, ROI, event, API, deployment, and documentation failures.
 - Link Bad Cases to evaluation reports and Video Analysis Center summaries.
 - Build a regression set from selected confirmed hard cases.
 - Add evaluation API endpoints after the evaluation contract is fixed.

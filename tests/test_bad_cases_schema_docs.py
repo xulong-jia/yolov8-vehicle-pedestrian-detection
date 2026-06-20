@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = ROOT / "docs" / "bad_cases_schema.md"
 REPORT = ROOT / "docs" / "bad_case_report.md"
 GALLERY_CSV = ROOT / "docs" / "error_case_gallery" / "cases.csv"
+REVIEWED_CSV = ROOT / "docs" / "error_case_gallery" / "reviewed_bad_cases.csv"
 
 REQUIRED_FIELDS = [
     "case_id",
@@ -27,6 +28,11 @@ REQUIRED_FIELDS = [
     "snapshot_path",
     "added_to_eval_set",
     "created_at",
+]
+
+REVIEWED_EXTRA_FIELDS = [
+    "review_status",
+    "reviewer_note",
 ]
 
 ALLOWED_MODULES = [
@@ -49,12 +55,15 @@ ALLOWED_CASE_TYPES = [
     "localization_error",
     "duplicate_detection",
     "missed_track",
+    "track_lost",
     "id_switch",
     "fragmented_track",
     "count_error",
     "line_crossing_error",
+    "roi_membership_error",
     "roi_config_error",
     "rule_error",
+    "threshold_error",
     "api_contract_error",
     "data_quality_issue",
     "deployment_issue",
@@ -134,6 +143,59 @@ def test_gallery_cases_csv_uses_schema_header_and_stays_small():
             assert ".onnx" not in lowered
             assert "runs/" not in lowered
             assert "local_outputs/" not in lowered
+
+
+def test_reviewed_bad_cases_csv_is_small_reviewed_collection():
+    assert REVIEWED_CSV.is_file()
+    assert REVIEWED_CSV.stat().st_size < 75_000
+
+    with REVIEWED_CSV.open(newline="", encoding="utf-8") as file:
+        reader = csv.DictReader(file)
+        assert reader.fieldnames is not None
+        for field in REQUIRED_FIELDS + REVIEWED_EXTRA_FIELDS:
+            assert field in reader.fieldnames
+        rows = list(reader)
+
+    assert 20 <= len(rows) <= 50
+    case_ids = [row["case_id"] for row in rows]
+    assert len(case_ids) == len(set(case_ids))
+
+    modules = {row["module"] for row in rows}
+    assert {"detector", "tracker", "counter", "roi", "event"}.issubset(modules)
+
+    case_types = {row["case_type"] for row in rows}
+    assert {
+        "false_positive",
+        "false_negative",
+        "class_confusion",
+        "id_switch",
+        "track_lost",
+        "count_error",
+        "roi_membership_error",
+        "roi_config_error",
+        "rule_error",
+        "threshold_error",
+    }.issubset(case_types)
+
+    for row in rows:
+        assert row["review_status"] == "reviewed"
+        assert row["reviewer_note"]
+        snapshot_path = row["snapshot_path"]
+        assert snapshot_path.startswith("docs/error_case_gallery/images/")
+        assert not snapshot_path.startswith("/")
+        for value in row.values():
+            lowered = (value or "").lower()
+            assert ".mp4" not in lowered
+            assert ".avi" not in lowered
+            assert ".mov" not in lowered
+            assert ".mkv" not in lowered
+            assert ".pt" not in lowered
+            assert ".pth" not in lowered
+            assert ".onnx" not in lowered
+            assert ".zip" not in lowered
+            assert "runs/" not in lowered
+            assert "local_outputs/" not in lowered
+            assert "local_weights/" not in lowered
 
 
 def test_schema_and_report_do_not_reference_forbidden_generated_outputs():

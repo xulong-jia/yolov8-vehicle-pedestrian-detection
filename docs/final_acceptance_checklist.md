@@ -6,7 +6,7 @@
 | --- | --- |
 | Project name | YOLOv8 Vehicle and Pedestrian Detection |
 | Repository name | yolov8-vehicle-pedestrian-detection |
-| Current checklist version | v1.5.0-api-key-and-structured-logging |
+| Current checklist version | v1.6.0-reviewed-bad-case-collection |
 | Original final release tag | v1.0.0-final-release-summary |
 | Latest stable tag before this refresh | v1.3.1-final-doc-consistency-refresh |
 | Status date | 2026-06-20 |
@@ -19,7 +19,8 @@ smoke, Streamlit container smoke, and mounted-weight container `/predict`
 passed locally by `v0.14.5`; `v0.14.6` reconciled the original final
 documentation state. Post-final enhancements through `v1.4.0` add async video
 jobs, SQLite job metadata plus restart smoke, Bad Case/GT evaluation scaffolds,
-and artifact download endpoints.
+artifact download endpoints, optional API key logging hardening, and a small
+reviewed Bad Case sample collection.
 
 ## Version/tag history
 
@@ -50,6 +51,7 @@ and artifact download endpoints.
 | v1.4.0-artifact-download-endpoints | Registered video job artifact download endpoints accepted. |
 | v1.4.1-docker-v1-api-smoke-refresh | Docker runtime smoke refreshed for v1.1-v1.4 API surface. |
 | v1.5.0-api-key-and-structured-logging | Optional API key auth, request id middleware, and structured logs accepted. |
+| v1.6.0-reviewed-bad-case-collection | Small reviewed Bad Case sample collection accepted. |
 
 ## Environment assumptions
 
@@ -181,10 +183,10 @@ Security/logging scope:
 
 | Field | Status |
 | --- | --- |
-| Status | Schema/report foundation plus metadata collection scaffold accepted. |
-| Evidence files | `docs/bad_cases_schema.md`, `docs/bad_case_report.md`, `docs/error_taxonomy.md`, `docs/hard_examples.md`, `docs/error_case_gallery/README.md`, `docs/error_case_gallery/cases.csv`, `src/services/bad_case_service.py`, `tests/test_bad_case_service.py`, `tests/test_bad_cases_schema_docs.py` |
-| Tests/checks | Bad Case docs and service/API tests validate metadata-only collection. |
-| Limitations | Large reviewed Bad Case collection is future work. |
+| Status | Schema/report foundation, metadata collection scaffold, and small reviewed sample collection accepted. |
+| Evidence files | `docs/bad_cases_schema.md`, `docs/bad_case_report.md`, `docs/error_taxonomy.md`, `docs/hard_examples.md`, `docs/error_case_gallery/README.md`, `docs/error_case_gallery/cases.csv`, `docs/error_case_gallery/reviewed_bad_cases.csv`, `src/services/bad_case_service.py`, `tests/test_bad_case_service.py`, `tests/test_bad_cases_schema_docs.py` |
+| Tests/checks | Bad Case docs and service/API tests validate metadata-only collection and reviewed sample coverage. |
+| Limitations | The reviewed collection is a small 24-case sample, not a large production-scale Bad Case dataset. |
 
 ## GT evaluation scaffold acceptance
 
@@ -207,7 +209,7 @@ Security/logging scope:
 ## Manual pending acceptance
 
 - optional production deployment hardening
-- optional large reviewed Bad Case collection
+- optional large reviewed Bad Case collection beyond the small reviewed sample
 - optional DeepSORT runtime extension
 - optional full-length production validation
 - React frontend
@@ -276,7 +278,7 @@ make list-large-docs
 - Artifact downloads are limited to registered video job artifact paths and do not provide arbitrary path access.
 - Full production tracking hardening pending.
 - DeepSORT optional/future.
-- Large reviewed Bad Case collection pending.
+- Large reviewed Bad Case collection beyond the small reviewed sample pending.
 - GT evaluation scaffold exists; real reviewed GT quantitative evaluation pending.
 - Mounted-weight container inference passed in `v0.14.5`.
 

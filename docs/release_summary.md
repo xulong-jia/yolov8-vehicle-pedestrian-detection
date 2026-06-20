@@ -3,7 +3,7 @@
 ## Release Identity
 
 - Original final release: v1.0.0-final-release-summary
-- Current latest documented state: v1.5.0-api-key-and-structured-logging
+- Current latest documented state: v1.6.0-reviewed-bad-case-collection
 - Based on original final tag: v0.14.6-final-doc-consistency-pass
 - Project name: YOLOv8 Vehicle and Pedestrian Detection System
 - Repository: yolov8-vehicle-pedestrian-detection
@@ -11,7 +11,7 @@
 
 ## Post-Final Enhancements
 
-After the original `v1.0.0-final-release-summary`, the repository added seven
+After the original `v1.0.0-final-release-summary`, the repository added eight
 bounded enhancements:
 
 - `v1.1.0-async-video-job`: FastAPI async video job execution and Streamlit
@@ -28,6 +28,8 @@ bounded enhancements:
   v1.1-v1.4 API additions.
 - `v1.5.0-api-key-and-structured-logging`: optional API key auth,
   `X-Request-ID` request correlation, and standard-library structured logs.
+- `v1.6.0-reviewed-bad-case-collection`: small reviewed Bad Case sample
+  collection for detector, tracker, counter, ROI, and event examples.
 
 The SQLite index is unit-tested and has been verified with a real local FastAPI
 process restart smoke. Docker actual smoke was refreshed for the v1.1-v1.4 API
@@ -50,6 +52,7 @@ surface.
 - SQLite-backed video job/result metadata index
 - SQLite job metadata restart smoke result
 - Bad Case schema/report foundation and metadata collection scaffold
+- Small reviewed Bad Case sample collection
 - GT evaluation scaffold for tracking/counting/ROI/event artifacts
 - FastAPI artifact download endpoints for registered video job artifacts
 - Docker v1 API smoke refresh
@@ -94,6 +97,9 @@ registered in job metadata; arbitrary path downloads are not supported.
 - `POST /api/bad-cases` records lightweight Bad Case metadata.
 - `GET /api/bad-cases` lists collected Bad Case metadata.
 - Default local collection paths are under `local_outputs/bad_cases/`.
+- `docs/error_case_gallery/reviewed_bad_cases.csv` provides a small reviewed
+  metadata sample with 24 cases across detector, tracker, counter, ROI, and
+  event modules.
 - The evaluation scaffold can compare prediction CSV/JSONL artifacts against
   small reviewed GT templates for counting, ROI, events, and tracking
   engineering metrics.
@@ -133,7 +139,7 @@ registered in job metadata; arbitrary path downloads are not supported.
 
 ## Known Limitations / Future Work
 
-- reviewed real Bad Case labeling and curated GT dataset creation
+- large reviewed Bad Case labeling and curated GT dataset creation
 - full GT-based tracking/counting/ROI/event evaluation on reviewed labels
 - optional DeepSORT runtime
 - OAuth/JWT, multi-user permissions, and external monitoring

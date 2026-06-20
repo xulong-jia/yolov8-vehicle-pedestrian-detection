@@ -28,6 +28,22 @@ commit bulk prediction outputs as Bad Case data.
 | `added_to_eval_set` | yes | `yes` or `no`. |
 | `created_at` | yes | UTC creation timestamp. |
 
+## reviewed_bad_cases.csv Extension
+
+`docs/error_case_gallery/reviewed_bad_cases.csv` is a small reviewed sample
+collection for demonstration and manual review. It uses the same required
+fields as `bad_cases.csv` and adds:
+
+| Field | Required | Description |
+| --- | --- | --- |
+| `review_status` | yes | Manual review state. The current documented sample uses `reviewed`. |
+| `reviewer_note` | yes | Short reviewer note explaining why the case is useful. |
+
+The reviewed sample is intentionally small, metadata-only, and limited to
+existing lightweight gallery images. It is not a production-scale Bad Case
+dataset and does not include new large images, videos, generated outputs, or
+model artifacts.
+
 ## Local Collection Paths
 
 The runtime Bad Case service writes metadata-only records to ignored local
@@ -63,10 +79,13 @@ sample if needed.
 - `missed_track`
 - `id_switch`
 - `fragmented_track`
+- `track_lost`
 - `count_error`
 - `line_crossing_error`
+- `roi_membership_error`
 - `roi_config_error`
 - `rule_error`
+- `threshold_error`
 - `api_contract_error`
 - `data_quality_issue`
 - `deployment_issue`
@@ -119,3 +138,4 @@ BC-0001,detector,false_positive,sample.jpg,,,,,No extra Person,Extra Person box,
 - `docs/hard_examples.md`
 - `docs/error_case_gallery/README.md`
 - `docs/error_case_gallery/cases.csv`
+- `docs/error_case_gallery/reviewed_bad_cases.csv`

@@ -6,7 +6,7 @@ This project is a YOLOv8-based vehicle and pedestrian detection system. It cover
 
 Current final delivery state:
 
-- Current latest documented state: `v1.5.0-api-key-and-structured-logging`
+- Current latest documented state: `v1.6.0-reviewed-bad-case-collection`
 - Original final release tag: `v1.0.0-final-release-summary`
 - Final status: `Go for final local/Docker acceptance`
 - Docker Actual Smoke: `Passed`
@@ -32,14 +32,14 @@ Completed system capabilities:
 - Streamlit local demo
 - FastAPI basic endpoints
 - FastAPI async video execution and SQLite-backed job/result index
-- Bad Case schema/report foundation and metadata collection scaffold
+- Bad Case schema/report foundation, metadata collection scaffold, and small reviewed sample collection
 - GT evaluation scaffold for tracking/counting/ROI/event artifacts
 - Docker build/run smoke
 - mounted-weight Docker `/predict` smoke
 - final acceptance checklist
 - release summary / delivery notes
 
-Future / optional work is non-blocking and includes reviewed real Bad Case labeling, reviewed GT dataset creation, optional DeepSORT production runtime, OAuth/JWT or multi-user security, external monitoring, and full GT-based tracking/counting/ROI/event quantitative evaluation.
+Future / optional work is non-blocking and includes large reviewed Bad Case labeling, reviewed GT dataset creation, optional DeepSORT production runtime, OAuth/JWT or multi-user security, external monitoring, and full GT-based tracking/counting/ROI/event quantitative evaluation.
 
 ## Final Delivery Entry Points
 
@@ -236,6 +236,8 @@ Completed experiments and recorded results:
 `v1.4.1-docker-v1-api-smoke-refresh` refreshes Docker runtime smoke for the v1.1-v1.4 API surface. Docker build/run passed, mounted-weight `/predict` passed, attach-mode `/api/videos/analyze` passed, SQLite metadata was written on a mounted `/tmp` output volume, artifact summary download returned `200`, and `/api/bad-cases` POST/GET passed. See [Docker v1 API Smoke Result](docs/docker_v1_api_smoke_result.md).
 
 `v1.5.0-api-key-and-structured-logging` adds optional API key authentication, `X-Request-ID` request correlation, and standard-library structured logs for FastAPI requests, video jobs, artifact downloads, and Bad Case creation. API key auth is disabled by default for local demo use and can be enabled with `API_KEY_AUTH_ENABLED=true API_KEY=your-secret`.
+
+`v1.6.0-reviewed-bad-case-collection` adds a small reviewed Bad Case sample collection in [Reviewed Bad Cases](docs/error_case_gallery/reviewed_bad_cases.csv). It contains 24 metadata-only records across detector, tracker, counter, ROI, and event modules, reuses existing lightweight gallery images, and does not add new large images, videos, weights, local outputs, or generated result files. This is a reviewed showcase and evaluation-planning seed, not a large production Bad Case dataset.
 
 This phase does not include DeepSORT integration, ByteTrack production hardening, production database integration beyond the local SQLite metadata index, full-length tracked video validation, React frontend, OAuth/JWT, multi-user authorization, Prometheus/Grafana, or real video benchmarks.
 
@@ -722,7 +724,7 @@ Policy:
 
 ## Known Limitations / Future Work
 
-- Reviewed real Bad Case labeling and curated GT dataset creation.
+- Large reviewed Bad Case labeling and curated GT dataset creation.
 - Optional DeepSORT production runtime.
 - OAuth/JWT, multi-user authorization, API key rotation, and external monitoring.
 - Full GT-based tracking/counting/ROI/event quantitative reports.

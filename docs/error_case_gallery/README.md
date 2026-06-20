@@ -40,6 +40,11 @@ model weights, `runs/`, or `local_outputs/` as evidence. Use small
 documentation examples under `docs/error_case_gallery/images/` or external/local
 paths described in text.
 
+`reviewed_bad_cases.csv` extends the gallery with a 24-row reviewed
+metadata-only sample collection across detector, tracker, counter, ROI, and
+event modules. It reuses the lightweight images already present in this
+directory and is not a production-scale Bad Case dataset.
+
 ## Case Table
 
 | Case | Image | Category | Suggested Caption |
@@ -76,3 +81,4 @@ This gallery is qualitative analysis only. It is not official metric evaluation 
 - `docs/bad_case_report.md`
 - `docs/error_taxonomy.md`
 - `docs/hard_examples.md`
+- `docs/error_case_gallery/reviewed_bad_cases.csv`
