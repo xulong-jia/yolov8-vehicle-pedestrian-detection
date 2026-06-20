@@ -112,6 +112,106 @@ def test_public_endpoints_do_not_require_api_key_when_auth_enabled(monkeypatch):
     assert config.status_code == 200
 
 
+def test_cors_preflight_allows_local_react_origin(monkeypatch):
+    client = _client(monkeypatch)
+
+    response = client.options(
+        "/health",
+        headers={
+            "Origin": "http://localhost:5173",
+            "Access-Control-Request-Method": "GET",
+            "Access-Control-Request-Headers": "X-Request-ID",
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.headers["access-control-allow-origin"] == "http://localhost:5173"
+    assert "GET" in response.headers["access-control-allow-methods"]
+    allowed_headers = response.headers["access-control-allow-headers"].lower()
+    assert "x-request-id" in allowed_headers
+
+
+def test_cors_preflight_allows_api_headers(monkeypatch):
+    client = _client(monkeypatch)
+
+    response = client.options(
+        "/api/bad-cases",
+        headers={
+            "Origin": "http://localhost:5173",
+            "Access-Control-Request-Method": "POST",
+            "Access-Control-Request-Headers": "X-API-Key,X-Request-ID,Content-Type",
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.headers["access-control-allow-origin"] == "http://localhost:5173"
+    assert "POST" in response.headers["access-control-allow-methods"]
+    allowed_headers = response.headers["access-control-allow-headers"].lower()
+    assert "x-api-key" in allowed_headers
+    assert "x-request-id" in allowed_headers
+    assert "content-type" in allowed_headers
+
+
+def test_cors_simple_get_allows_local_react_origin(monkeypatch):
+    client = _client(monkeypatch)
+
+    response = client.get("/health", headers={"Origin": "http://localhost:5173"})
+
+    assert response.status_code == 200
+    assert response.headers["access-control-allow-origin"] == "http://localhost:5173"
+
+
+def test_exported_uvicorn_app_has_cors_middleware(monkeypatch):
+    from fastapi.testclient import TestClient
+    from src import api
+
+    monkeypatch.delenv("API_KEY_AUTH_ENABLED", raising=False)
+    monkeypatch.delenv("API_KEY", raising=False)
+    client = TestClient(api.app)
+
+    response = client.options(
+        "/health",
+        headers={
+            "Origin": "http://localhost:5173",
+            "Access-Control-Request-Method": "GET",
+            "Access-Control-Request-Headers": "X-Request-ID",
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.headers["access-control-allow-origin"] == "http://localhost:5173"
+
+
+def test_cors_preflight_is_not_blocked_by_api_key_auth(monkeypatch):
+    client = _client(monkeypatch, auth_enabled=True)
+
+    response = client.options(
+        "/api/bad-cases",
+        headers={
+            "Origin": "http://localhost:5173",
+            "Access-Control-Request-Method": "POST",
+            "Access-Control-Request-Headers": "X-API-Key,X-Request-ID,Content-Type",
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.headers["access-control-allow-origin"] == "http://localhost:5173"
+    allowed_headers = response.headers["access-control-allow-headers"].lower()
+    assert "x-api-key" in allowed_headers
+    assert "x-request-id" in allowed_headers
+
+
+def test_cors_origins_can_be_overridden_by_environment(monkeypatch):
+    monkeypatch.setenv("CORS_ALLOW_ORIGINS", "http://localhost:5173,http://example.test")
+    client = _client(monkeypatch)
+
+    allowed = client.get("/health", headers={"Origin": "http://example.test"})
+    not_allowed = client.get("/health", headers={"Origin": "http://127.0.0.1:8501"})
+
+    assert allowed.headers["access-control-allow-origin"] == "http://example.test"
+    assert "access-control-allow-origin" not in not_allowed.headers
+
+
 def test_request_id_is_generated_and_echoed(monkeypatch):
     client = _client(monkeypatch)
 

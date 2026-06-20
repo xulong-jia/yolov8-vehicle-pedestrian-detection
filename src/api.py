@@ -2,12 +2,14 @@
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
 import time
 from typing import Any
 from uuid import uuid4
 
 from fastapi import BackgroundTasks, FastAPI, File, HTTPException, Query, Request, UploadFile, status
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 
 from src.core.config import (
@@ -36,6 +38,14 @@ from src.services.video_job_service import get_job_artifact, registry
 
 
 SERVICE_NAME = "yolov8-vehicle-pedestrian-api"
+DEFAULT_CORS_ALLOW_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://localhost:8501",
+    "http://127.0.0.1:8501",
+    "http://localhost:8502",
+    "http://127.0.0.1:8502",
+]
 bad_case_service = BadCaseService()
 configure_logging()
 api_logger = get_api_logger()
@@ -167,6 +177,13 @@ def _artifact_download_path_or_404(job_id: str, artifact_name: str) -> Path:
     return path
 
 
+def get_cors_allow_origins() -> list[str]:
+    configured = os.environ.get("CORS_ALLOW_ORIGINS", "")
+    if configured.strip():
+        return [origin.strip() for origin in configured.split(",") if origin.strip()]
+    return DEFAULT_CORS_ALLOW_ORIGINS.copy()
+
+
 def create_app() -> FastAPI:
     app = FastAPI(title=PROJECT_NAME)
 
@@ -218,6 +235,14 @@ def create_app() -> FastAPI:
             )
             if "response" in locals():
                 response.headers["X-Request-ID"] = request_id
+
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=get_cors_allow_origins(),
+        allow_methods=["GET", "POST", "OPTIONS"],
+        allow_headers=["X-API-Key", "X-Request-ID", "Content-Type"],
+        expose_headers=["X-Request-ID"],
+    )
 
     @app.get("/health", response_model=HealthResponse)
     def health() -> dict[str, str]:

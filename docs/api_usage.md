@@ -46,6 +46,24 @@ The optional React frontend in `frontend/` can call these endpoints when the
 FastAPI service is running. It supports `VITE_API_BASE_URL`, optional
 `X-API-Key`, and `X-Request-ID` display.
 
+Local browser frontends need CORS permission when they call FastAPI from a
+different localhost port. By default the API allows:
+
+- `http://localhost:5173`
+- `http://127.0.0.1:5173`
+- `http://localhost:8501`
+- `http://127.0.0.1:8501`
+- `http://localhost:8502`
+- `http://127.0.0.1:8502`
+
+Override the allow-list with a comma-separated environment variable when using
+different frontend origins:
+
+```bash
+CORS_ALLOW_ORIGINS=http://localhost:5173,http://127.0.0.1:5173 \
+  .venv/bin/uvicorn src.api:app --host 0.0.0.0 --port 8000
+```
+
 ## Configuration
 
 Defaults come from `src/core/config.py` and can be overridden with environment
@@ -57,6 +75,7 @@ variables:
 - `YOLO_IMGSZ`
 - `API_KEY_AUTH_ENABLED`
 - `API_KEY`
+- `CORS_ALLOW_ORIGINS`
 
 Model weights must be local or mounted. They are not committed to Git.
 

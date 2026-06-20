@@ -6,7 +6,7 @@ This project is a YOLOv8-based vehicle and pedestrian detection system. It cover
 
 Current final delivery state:
 
-- Current latest documented state: `v1.8.2-non-technical-user-launcher`
+- Current latest documented state: `v1.8.4-react-cors-support`
 - Original final release tag: `v1.0.0-final-release-summary`
 - Final status: `Ready for final freeze / delivery`
 - Docker Actual Smoke: `Passed`
@@ -38,6 +38,7 @@ Completed system capabilities:
 - Docker build/run smoke
 - mounted-weight Docker `/predict` smoke
 - Minimal optional React frontend for FastAPI video jobs and Bad Cases
+- Local React/Streamlit CORS support for FastAPI development origins
 - macOS/Windows non-technical user launcher scripts
 - final acceptance checklist
 - release summary / delivery notes
@@ -270,6 +271,8 @@ Completed experiments and recorded results:
 
 `v1.8.2-non-technical-user-launcher` adds a non-technical user launch path with `scripts/start_app_macos.command`, `scripts/start_app_windows.bat`, and [Non-technical user guide](docs/non_technical_user_guide.md). It does not change YOLO, ByteTrack, DeepSORT, analytics, API behavior, or Docker behavior.
 
+`v1.8.4-react-cors-support` allows local browser frontends to call FastAPI from development origins such as `http://localhost:5173` without browser CORS failures. The default allow-list covers the React dev server plus common Streamlit local ports, and deployments can override it with `CORS_ALLOW_ORIGINS=http://localhost:5173,http://127.0.0.1:5173`.
+
 This phase does not include DeepSORT integration, ByteTrack production hardening, production database integration beyond the local SQLite metadata index, full-length tracked video validation, OAuth/JWT, multi-user authorization, Prometheus/Grafana, production React dashboard hardening, or real video benchmarks.
 
 Details: [Video analytics MVP](docs/video_analytics_mvp.md)
@@ -431,6 +434,7 @@ Current API scope:
 - Artifact downloads are limited to registered `artifact_paths` keys such as `metadata`, `detections`, `tracks`, `count_events`, `roi_frame_counts`, `events`, `summary`, `detections_csv`, and `tracks_csv`.
 - API key authentication is off by default. When enabled, protected endpoints require `X-API-Key`; public endpoints remain `/health`, `/config`, `/model-status`, `/docs`, and `/openapi.json`.
 - Every response includes `X-Request-ID`; callers may provide that header and the API will echo it.
+- Local browser frontends are allowed by default through CORS for `http://localhost:5173`, `http://127.0.0.1:5173`, `http://localhost:8501`, `http://127.0.0.1:8501`, `http://localhost:8502`, and `http://127.0.0.1:8502`. Override with `CORS_ALLOW_ORIGINS` as a comma-separated list.
 - Structured logs include request id, method, path, status code, duration, and job/artifact/bad-case identifiers where applicable.
 - Uploaded images and prediction outputs are not saved to the repository.
 - No model is loaded at import time.

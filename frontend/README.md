@@ -40,6 +40,21 @@ Optional environment override:
 VITE_API_BASE_URL=http://localhost:8000
 ```
 
+The FastAPI backend allows the local React dev server by default through CORS:
+
+```text
+http://localhost:5173
+http://127.0.0.1:5173
+```
+
+If the frontend runs from a different origin, start FastAPI with an explicit
+allow-list:
+
+```bash
+CORS_ALLOW_ORIGINS=http://localhost:5173,http://127.0.0.1:5173 \
+  uvicorn src.api:app --host 127.0.0.1 --port 8000
+```
+
 If FastAPI API key auth is enabled, enter the key in the UI. Requests then send:
 
 ```text
