@@ -1,286 +1,285 @@
-# YOLOv8 Vehicle and Pedestrian Detection
+# YOLOv8 Vehicle and Pedestrian Detection System
 
-## Overview
+A YOLOv8-based computer vision engineering project for vehicle and pedestrian detection, video tracking, lightweight traffic analytics, local visualization, API serving, and Docker-based deployment.
 
-This project is a YOLOv8-based vehicle and pedestrian detection system. It covers the full workflow from dataset preparation and label validation to model experiments, image/video inference, ByteTrack tracking, video analytics, qualitative error analysis, local application demos, FastAPI serving, and Docker deployment acceptance.
+This repository is not only a single-image detection demo. It documents and implements an end-to-end workflow from dataset preparation and model evaluation to image/video inference, ByteTrack tracking, line/ROI analytics, Bad Case review, FastAPI serving, and deployment acceptance.
 
-Current final delivery state:
+---
 
-- Current latest documented state: `v1.8.5-final-freeze-identity-cleanup`
-- Original final release tag: `v1.0.0-final-release-summary`
-- Final status: `Ready for final freeze / delivery`
-- Docker Actual Smoke: `Passed`
-- Mounted-weight Docker `/predict`: `Passed`
-- Streamlit container smoke: `Passed`
-- FastAPI container smoke: `Passed`
-- Recommended final model: `YOLOv8s`
-- Weights policy: `local_weights/best.pt` is local-only and ignored by Git
+## 1. Project Summary
 
-Completed system capabilities:
+| Item | Status |
+| --- | --- |
+| Project type | Detection model engineering system |
+| Main task | Vehicle and pedestrian detection + lightweight video analysis |
+| Recommended model | YOLOv8s |
+| Current final state | `v1.8.5-final-freeze-identity-cleanup` |
+| Baseline release tag | `v1.0.0-final-release-summary` |
+| Final delivery status | Ready for final freeze / delivery |
+| Docker build/run smoke | Passed |
+| Mounted-weight Docker `/predict` smoke | Passed |
+| Streamlit container smoke | Passed |
+| FastAPI container smoke | Passed |
+| Model weight policy | `local_weights/best.pt` is local-only and ignored by Git |
 
-- Dataset/data quality checks
-- YOLOv8 training/evaluation
-- Image prediction
-- Video prediction
-- ByteTrack tracking runtime
-- `tracks.csv`
-- Tracked video rendering
-- Line counter
-- ROI counter
-- Event rules
-- VideoAnalysisCenter
-- Streamlit local demo
-- FastAPI basic endpoints
-- FastAPI async video execution and SQLite-backed job/result index
-- Bad Case schema/report foundation, metadata collection scaffold, and small reviewed sample collection
-- GT evaluation scaffold for tracking/counting/ROI/event artifacts
-- Small reviewed GT quantitative evaluation sample pack
-- Docker build/run smoke
-- mounted-weight Docker `/predict` smoke
-- Minimal optional React frontend for FastAPI video jobs and Bad Cases
-- Local React/Streamlit CORS support for FastAPI development origins
-- Final freeze identity, ignore policy, and React badge cleanup
-- macOS/Windows non-technical user launcher scripts
-- final acceptance checklist
-- release summary / delivery notes
+---
 
-Future / optional work is non-blocking and includes large reviewed Bad Case labeling, larger reviewed GT dataset expansion, optional DeepSORT production runtime, OAuth/JWT or multi-user security, external monitoring, production React dashboard/video player hardening, and full GT-based tracking/counting/ROI/event quantitative evaluation.
+## 2. What This Project Does
 
-## Final Delivery Entry Points
+The system takes images or videos as input and produces structured detection, tracking, counting, ROI, and event outputs.
 
-For final review, read in this order:
-
-- [Release Summary](docs/release_summary.md)
-- [Delivery Notes](docs/delivery_notes.md)
-- [Final Acceptance Checklist](docs/final_acceptance_checklist.md)
-- [Final Project Report](docs/final_project_report.md)
-- [Docker Actual Smoke Result](docs/docker_actual_smoke_result.md)
-- [API Usage Guide](docs/api_usage.md)
-- [Bad Case Report](docs/bad_case_report.md)
-- [Video Analytics MVP](docs/video_analytics_mvp.md)
-
-Final status: Go for final local/Docker acceptance, subject to normal
-environment-specific deployment checks.
-
-## For non-technical users
-
-If the maintainer has already prepared `.venv` and `local_weights/best.pt`,
-ordinary users can start the local app without typing Python, Uvicorn,
-Streamlit, React, or Docker commands.
-
-- macOS: double-click `scripts/start_app_macos.command`
-- Windows: double-click `scripts/start_app_windows.bat`
-- User guide: [Non-technical user guide](docs/non_technical_user_guide.md)
-
-On macOS, if the script is not executable, run:
-
-```bash
-chmod +x scripts/start_app_macos.command
+```text
+image / video
+  -> YOLOv8 detector
+  -> detection boxes
+  -> ByteTrack tracking
+  -> tracks.csv
+  -> line counter / ROI counter / event rules
+  -> CSV / JSON / JSONL outputs
+  -> Streamlit / FastAPI / optional React frontend for video jobs and Bad Case review
 ```
 
-The launcher starts FastAPI at `http://localhost:8000`, Streamlit at
-`http://localhost:8501`, and optionally React at `http://localhost:5173` when
-frontend dependencies already exist.
-
-## Key Features
-
-### Dataset and Label Validation
-
-- Roboflow YOLOv8 dataset format.
-- Six target classes:
-  - `Bus`
-  - `Car`
-  - `Motorcycle`
-  - `Person`
-  - `Truck`
-  - `mini-truck`
-- Dataset config: `dataset/data.yaml`.
-- Label quality checks and dataset analysis utilities.
-- Invalid polygon-like labels were converted or fixed during dataset cleaning.
-- Full dataset split folders are local-only and not tracked in Git.
-
-### Training and Evaluation
-
-Completed experiments and recorded results:
+Core capabilities:
+
+- Detect six target classes: `Bus`, `Car`, `Motorcycle`, `Person`, `Truck`, and `mini-truck`.
+- Run single-image, batch-image, and video inference.
+- Generate detection CSV files and annotated visual outputs.
+- Track video targets with ByteTrack and export `tracks.csv`.
+- Count vehicle and pedestrian flow through configured crossing lines.
+- Count objects inside polygon ROI regions.
+- Generate lightweight rule-based events such as crowd warning, density warning, long stay, and wrong direction.
+- Review detector, tracker, counter, ROI, and event Bad Cases.
+- Serve image and video jobs through FastAPI.
+- Run local demos through Streamlit.
+- Package the runtime with Docker while keeping model weights and large datasets outside Git.
+
+---
+
+## 3. Development Roadmap
+
+This project was completed in eight engineering stages. Each stage produced stable artifacts, documentation, and acceptance checks.
+
+| Stage | Goal | Main Outputs |
+| --- | --- | --- |
+| 1. Project foundation | Build a safe and maintainable repo structure | `src/`, `configs/`, `tests/`, `Makefile`, `.gitignore`, `.dockerignore`, CI syntax check |
+| 2. Dataset and label quality | Prepare YOLOv8 dataset configuration and validation workflow | `dataset/data.yaml`, dataset analysis, label checks, dataset documentation |
+| 3. Training and evaluation | Train and compare YOLOv8 models on fixed splits | YOLOv8n / YOLOv8s / YOLOv8m reports, Precision, Recall, mAP50, mAP50-95 |
+| 4. Image and video inference | Build reusable inference scripts and CSV outputs | `predict_image.py`, `predict_video.py`, `batch_predict.py`, detection CSVs |
+| 5. Multi-object tracking | Convert frame-level detections into object trajectories | ByteTrack runtime, `track_video.py`, `tracks.csv`, tracked video rendering |
+| 6. Video analytics | Add counting, ROI statistics, and result organization | line counter, ROI counter, `VideoAnalysisCenter`, analytics CSV/JSON outputs |
+| 7. Bad Case and evaluation loop | Record errors and create lightweight GT evaluation samples | Bad Case schema/report, reviewed sample collection, GT evaluation scaffold |
+| 8. Serving and deployment | Package the project for local UI, API, and Docker use | Streamlit, FastAPI, SQLite job index, artifact download endpoints, Docker smoke results |
+
+---
+
+## 4. System Architecture
+
+```text
+User Interface Layer
+  ├── Streamlit local demo
+  └── Optional React frontend for video jobs and Bad Case review
+
+API Layer
+  ├── Health / config / model-status endpoints
+  ├── Image prediction endpoint
+  ├── Async video job endpoints
+  ├── Result query endpoints
+  └── Bad Case endpoints
+
+Service Layer
+  ├── Model loading
+  ├── Image inference
+  ├── Video job execution
+  ├── Result query
+  └── Bad Case handling
+
+Computer Vision Layer
+  ├── YOLOv8 detector
+  ├── ByteTrack tracker
+  ├── Geometry utilities
+  ├── Line counter
+  ├── ROI counter
+  └── Event rules
+
+Storage / Artifact Layer
+  ├── CSV / JSON / JSONL outputs
+  ├── SQLite video job index
+  ├── Local-only generated outputs
+  └── Local-only model weights and datasets
+```
+
+Design principles:
+
+- YOLOv8 handles object detection only.
+- Tracking converts independent frame detections into continuous object identities.
+- Analytics converts trajectories into counts, ROI statistics, and rule-based events.
+- Streamlit is used for local interaction and visualization.
+- FastAPI exposes model and result functionality as structured JSON endpoints.
+- Docker packages the environment but does not include model weights, full datasets, or generated large outputs.
+
+---
+
+## 5. Dataset
+
+The dataset follows the YOLOv8 detection format.
+
+```text
+dataset/
+  data.yaml
+  train/images/   # local-only, ignored
+  train/labels/   # local-only, ignored
+  valid/images/   # local-only, ignored
+  valid/labels/   # local-only, ignored
+  test/images/    # local-only, ignored
+  test/labels/    # local-only, ignored
+```
+
+Target classes:
+
+| Class ID | Class Name |
+| ---: | --- |
+| 0 | Bus |
+| 1 | Car |
+| 2 | Motorcycle |
+| 3 | Person |
+| 4 | Truck |
+| 5 | mini-truck |
 
-1. YOLOv8n 416x416 10 epochs smoke test
-   - mAP50: 0.797
-   - mAP50-95: 0.511
+Data quality work completed:
 
-2. YOLOv8n 640x640 50 epochs baseline
-   - Precision: 0.81981
-   - Recall: 0.82768
-   - mAP50: 0.86422
-   - mAP50-95: 0.59102
+- Dataset configuration review.
+- Label format validation.
+- Class distribution analysis.
+- Invalid polygon-like label cleanup or conversion.
+- Documentation of local-only dataset split policy.
 
-3. YOLOv8n official test split evaluation
-   - Precision: 0.841
-   - Recall: 0.816
-   - mAP50: 0.859
-   - mAP50-95: 0.582
+---
 
-4. YOLOv8s 640x640 50 epochs retrain validation
-   - Precision: 0.83909
-   - Recall: 0.84059
-   - mAP50: 0.87705
-   - mAP50-95: 0.60405
+## 6. Model Experiments and Results
 
-5. YOLOv8s official test split evaluation
-   - Precision: 0.865
-   - Recall: 0.838
-   - mAP50: 0.876
-   - mAP50-95: 0.601
+### 6.1 Main Detection Results
 
-6. Strict same-split YOLOv8n vs YOLOv8s comparison
-   - YOLOv8n official test: P 0.841, R 0.816, mAP50 0.859, mAP50-95 0.582
-   - YOLOv8s official test: P 0.865, R 0.838, mAP50 0.876, mAP50-95 0.601
-   - Delta: Precision +0.024, Recall +0.022, mAP50 +0.017, mAP50-95 +0.019
+| Experiment | Split | Image Size | Epochs | Precision | Recall | mAP50 | mAP50-95 | Notes |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| YOLOv8n smoke test | validation | 416 | 10 | 0.786 | 0.749 | 0.797 | 0.511 | Quick Colab smoke test |
+| YOLOv8n baseline | validation | 640 | 50 | 0.81981 | 0.82768 | 0.86422 | 0.59102 | Main lightweight baseline |
+| YOLOv8n official test | test | 640 | 50 | 0.841 | 0.816 | 0.859 | 0.582 | Official test split evaluation |
+| YOLOv8s retrain | validation | 640 | 50 | 0.83909 | 0.84059 | 0.87705 | 0.60405 | Recommended model candidate |
+| YOLOv8s official test | test | 640 | 50 | 0.865 | 0.838 | 0.876 | 0.601 | Recommended final model |
+| YOLOv8m training | validation | 640 | 50 | 0.837 | 0.817 | 0.870 | 0.594 | Model-scaling comparison |
+| YOLOv8m official test | test | 640 | 50 | 0.852 | 0.820 | 0.872 | 0.594 | Did not outperform YOLOv8s |
+
+### 6.2 Final Model Choice
 
-### Inference and Demo
-
-- Single-image prediction examples.
-- 50-sample image inference analysis.
-- Video inference demo with selected key frames.
-- Local Streamlit image detection demo.
-- Sample image selector from the error case gallery.
-- Image upload workflow.
-- Detection table with class, confidence, and bounding box coordinates.
-- Downloadable detection CSV.
-- Friendly error messages for missing weights, invalid images, model loading failures, and inference failures.
-
-### Error Analysis
-
-- Systematic qualitative error analysis.
-- Error case gallery with representative prediction images.
-- Error taxonomy for consistent review labels.
-- Hard examples list for future review.
-- Confidence threshold analysis.
-- Per-class failure analysis.
-- Confusion matrix interpretation.
-
-### Engineering Utilities
-
-- `configs/default.yaml` for default paths and inference settings.
-- `src/check_setup.py` for local setup checks.
-- `src/batch_predict.py` for batch image prediction CSV generation.
-- `Makefile` targets for common checks and commands.
-- GitHub Actions Python syntax check.
-- Pytest test scaffold for utility functions.
-- `requirements-dev.txt` for test/dev dependencies.
-- `requirements-api.txt` for FastAPI scaffold dependencies.
-
-### Deployment and Serving
-
-- Local deployment guide.
-- Model loading strategy.
-- FastAPI service with health/config/model-status endpoints, a real `/predict` image inference endpoint, async video execution, and SQLite-backed video job/result query endpoints.
-- API usage documentation.
-- Dockerfile without model weights.
-- `.dockerignore` excluding weights, dataset splits, local outputs, runs, and videos.
-- Docker image is designed to exclude model weights and the full dataset.
-- Docker build/run smoke, FastAPI container smoke, Streamlit container smoke, and mounted-weight `/predict` smoke passed locally.
-
-### Video Analytics MVP
-
-`v0.8.0-video-analytics-mvp` adds pure-Python video analytics MVP contracts and core testable logic. It includes geometry utilities, line counter, ROI counter, event rules, result writers, and a Video Analysis Center skeleton.
-
-`v0.8.1-video-analysis-synthetic-pipeline` adds a synthetic end-to-end video analysis pipeline. It validates that tracks can flow through counting, ROI, events, result writers, and the Video Analysis Center without using real video or YOLO inference.
-
-`v0.8.2-track-video-skeleton` adds a `track_video.py` skeleton CLI for synthetic detections-to-tracks conversion. It validates the CLI and `tracks.csv` contract without reading real video, running YOLO, or integrating ByteTrack/DeepSORT.
-
-`v0.8.3-real-video-reading-skeleton` adds a video reader skeleton for safe video path validation, metadata extraction, and frame-index construction. At that stage, it did not run YOLO, read frames for inference, or integrate ByteTrack/DeepSORT.
-
-`v0.8.4-video-reader-track-video-integration` connects the video reader skeleton to `track_video.py`. The CLI now supports metadata-only video mode and synthetic detections-to-tracks mode, but still does not run YOLO, perform real tracking, or render tracked video.
-
-`v0.8.5-cli-smoke-docs` documents safe smoke commands for the skeleton CLI. See [track_video.py CLI usage](docs/track_video_cli_usage.md) for synthetic detections-to-tracks mode and metadata-only video mode. The CLI remains a skeleton and does not run YOLO, ByteTrack/DeepSORT, or real tracking.
-
-`v0.9.0-real-video-detection-tracking-foundation` adds CSV-first `predict_video.py` video detection export and a tracking adapter interface skeleton. It defines the `detections.csv` contract and placeholder ByteTrack/DeepSORT adapters; real tracker dependencies, full `track_video.py` real tracking, and tracked video rendering came later.
-
-`v0.9.1-predict-to-track-synthetic-runtime` connects `track_video.py` detections-to-tracks mode to the tracking adapter factory. The synthetic tracker is available through the adapter interface; ByteTrack/DeepSORT remain placeholders. See [track_video.py CLI usage](docs/track_video_cli_usage.md) and [Video analytics MVP](docs/video_analytics_mvp.md).
-
-`v0.9.2-two-command-smoke-flow` documents and tests a two-command smoke flow from `predict_video.py` detections export to `track_video.py` synthetic tracking. It validates the file-contract chain without real ByteTrack or tracked video rendering. See [track_video.py CLI usage](docs/track_video_cli_usage.md) and [Video analytics MVP](docs/video_analytics_mvp.md).
-
-`v0.9.3-video-analysis-job-skeleton` adds a Video Analysis Center job skeleton that organizes existing `detections.csv` and `tracks.csv` into a run directory. It writes `metadata.json` and `video_analysis_summary.json`, but does not run YOLO, run a tracker, or render tracked video. See [Video analytics MVP](docs/video_analytics_mvp.md).
-
-`v0.9.4-three-step-video-analysis-job-flow` documents and tests the three-step video analysis job flow from `predict_video.py` to `track_video.py` to the Video Analysis Center. It validates the file-contract chain without real ByteTrack or tracked video rendering. See [track_video.py CLI usage](docs/track_video_cli_usage.md) and [Video analytics MVP](docs/video_analytics_mvp.md).
-
-`v0.9.5-analytics-on-tracks-job` adds analytics execution on existing tracks inside the Video Analysis Center job. Existing `tracks.csv` can now produce `count_events.csv`, `roi_frame_counts.csv`, `events.jsonl`, and an updated `video_analysis_summary.json`; it does not run YOLO, run a real tracker, or render tracked video. See [track_video.py CLI usage](docs/track_video_cli_usage.md) and [Video analytics MVP](docs/video_analytics_mvp.md).
-
-`v0.9.6-four-step-local-flow` documents and tests a four-step local flow from detection export to synthetic tracking to Video Analysis Center analytics. It validates the file-contract chain through analytics artifacts without real ByteTrack or tracked video rendering. See [track_video.py CLI usage](docs/track_video_cli_usage.md) and [Video analytics MVP](docs/video_analytics_mvp.md).
-
-`v0.9.7-four-step-smoke-runner` adds a unified four-step smoke runner. It orchestrates detection export, synthetic tracking, Video Analysis Center job creation, and analytics execution while still using the synthetic tracker and not rendering tracked video. See [track_video.py CLI usage](docs/track_video_cli_usage.md).
-
-`v0.9.9-real-local-smoke-result` documents the first real local smoke run. It validates real YOLO detection export, synthetic tracking, and Video Analysis Center artifacts on a local demo video, producing `21,988` detections and `34` synthetic tracks. Outputs remain local-only and are not committed. The retained summary now lives in [Video analytics MVP](docs/video_analytics_mvp.md), [track_video.py CLI usage](docs/track_video_cli_usage.md), and the final report.
-
-`v0.10.0-cli-module-invocation-ergonomics` documents and tests module-style CLI invocation for local smoke tools. Prefer `.venv/bin/python -m src.run_video_analysis_smoke ...` and `.venv/bin/python -m src.smoke_preflight ...` for local runs. See [track_video.py CLI usage](docs/track_video_cli_usage.md).
-
-`v0.10.1` through `v0.10.3` captured local analytics tuning lessons: real smoke tracks need reviewed line, ROI, and event-rule settings before counts are meaningful. The one-off tuning and overlay helpers have been pruned; the useful guidance is folded into the main analytics, Video Analysis Center, rendering, and Streamlit documentation.
-
-`v0.10.4-tracked-video-rendering` adds tracked video rendering from existing tracks. It renders local preview videos with bbox, track labels, line overlays, and ROI overlays without rerunning YOLO. See [Tracked Video Rendering](docs/tracked_video_rendering.md).
-
-`v0.11.0-bytetrack-discovery-spike` adds a ByteTrack integration discovery helper and plan. It did not run real ByteTrack; it defined how Ultralytics `model.track`-style outputs can be normalized into the existing `tracks.csv` contract. See [ByteTrack Integration Plan](docs/bytetrack_integration_plan.md).
-
-`v0.11.1-ultralytics-bytetrack-short-video-spike` adds `src/track_video_bytetrack_spike.py`, a max-frame-limited Ultralytics `model.track(..., tracker="bytetrack.yaml")` spike tool for exporting real ByteTrack-style `tracks.csv` under `/tmp`. The local attempt was blocked by missing `lap`; no generated CSV or preview video is committed. See [ByteTrack Integration Plan](docs/bytetrack_integration_plan.md).
-
-`v0.11.2-lap-dependency-and-bytetrack-rerun` documents the first successful local ByteTrack short-video spike after installing `lap==0.5.13` into the local `.venv`. The 300-frame run produced `746` ByteTrack track rows, `25` unique tracks, and a local 300-frame ByteTrack tracked preview. Outputs are local-only under `/tmp` and are not committed. See [ByteTrack Integration Plan](docs/bytetrack_integration_plan.md).
-
-`v0.11.3-bytetrack-runtime-integration-plan` prepares promotion of the ByteTrack spike into the standard `track_video.py` runtime. It adds a pure-Python runtime contract helper and folds the runtime contract into the retained [ByteTrack Integration Plan](docs/bytetrack_integration_plan.md). No real YOLO or ByteTrack rerun is performed in this step.
-
-`v0.11.4-track-video-bytetrack-runtime` promotes the ByteTrack spike into the standard `track_video.py` runtime. It supports `.venv/bin/python -m src.track_video --tracker bytetrack ...` and writes real ByteTrack `tracks.csv` to the requested output directory. Local 300-frame validation produced `746` track rows and `25` unique tracks under `/tmp`; outputs are not committed.
-
-`v0.12.0-streamlit-video-demo-page` adds a read-only Streamlit page for browsing existing ByteTrack, analytics, comparison, and tracked-preview artifacts. It does not run YOLO, run ByteTrack, rerun analytics, or render new videos. See [Streamlit Video Demo Page](docs/streamlit_video_demo.md).
-
-`v0.13.0-fastapi-basic-service-acceptance` completes the FastAPI basic service acceptance surface required by the execution manual: `GET /health`, `GET /config`, `GET /model-status`, and `POST /predict`. The API keeps YOLO loading lazy, routes model loading through `src/core/model_loader.py`, runs image inference through `src/services/image_inference_service.py`, and decodes uploads in memory without writing files. See [API usage guide](docs/api_usage.md).
-
-`v0.13.1-fastapi-video-job-results-skeleton` adds the execution-manual FastAPI video job/result query skeleton: `POST /api/videos/analyze`, `GET /api/videos/jobs/{job_id}`, and result readers for detections, tracks, analytics, and events. The API uses an in-memory job registry and can attach to existing VideoAnalysisCenter run directories; it does not run YOLO, run ByteTrack/DeepSORT, execute analytics, render videos, or write generated artifacts from API calls. See [API usage guide](docs/api_usage.md).
-
-`v0.14.0-bad-case-schema-report-foundation` adds the execution-manual Bad Case foundation. It defines the `bad_cases.csv` schema, adds a Bad Case report, and aligns the existing taxonomy, hard examples, and error gallery with a stable review contract. This does not collect a full real Bad Case dataset and does not add `/api/bad-cases`; those remain future work. See [Bad Case Schema](docs/bad_cases_schema.md) and [Bad Case Report](docs/bad_case_report.md).
-
-`v0.14.1-docker-deployment-static-acceptance` aligns the Docker and deployment documentation with the final execution manual's Stage 8 acceptance items. It documents FastAPI and Streamlit Docker run commands, `MODEL_PATH` weight mounting, large-asset exclusions, and static checks for `Dockerfile` and `.dockerignore`. It was the static acceptance step; actual Docker smoke was later closed by `v0.14.4` and `v0.14.5`. See [Docker deployment guide](docs/docker_deployment.md) and [Local deployment guide](docs/deployment_guide.md).
-
-`v0.14.2-final-acceptance-checklist` adds the final acceptance checklist for the execution manual's Stage 8 and Chapter 21 acceptance areas. It consolidates evidence files, test commands, version tags, manual follow-up items, asset-safety checks, and the initial documentation/static acceptance status. Docker build/run and mounted-weight container prediction were later closed by `v0.14.4` and `v0.14.5`. See [Final Acceptance Checklist](docs/final_acceptance_checklist.md).
-
-`v0.14.3-docker-actual-build-smoke-preflight` adds the Docker actual smoke preflight plan. That preflight recorded Docker CLI/daemon unavailable (`docker_info_exit=127`), so no Docker build/run was executed in that step. See [Docker Actual Smoke Plan](docs/docker_actual_smoke_plan.md).
-
-`v0.14.4-docker-actual-build-smoke` records the first actual Docker build/run smoke. The initial FastAPI container run failed because `fastapi` was missing inside the built image; the Dockerfile now installs `requirements-api.txt`, and the rerun passed `/health`, `/config`, `/model-status`, and `/api/videos/analyze`. Streamlit container smoke returned `HTTP/1.1 200 OK`. Mounted-weight `/predict` was still open at that point and was later closed by `v0.14.5`. See [Docker Actual Smoke Result](docs/docker_actual_smoke_result.md).
-
-`v0.14.5-mounted-weight-container-predict-smoke` closes the Docker deployment smoke loop. A local ignored `local_weights/best.pt` was mounted read-only into `/app/local_weights/best.pt`, `/predict` returned JSON with `image_name`, `image_size`, `model_path`, `num_detections`, and `detections`, and the final Docker actual smoke status is `Docker Actual Smoke Passed`. The temporary `/tmp` image and response were not committed. See [Docker Actual Smoke Result](docs/docker_actual_smoke_result.md).
-
-`v1.0.0-final-release-summary` prepares final delivery documentation. It adds [Release Summary](docs/release_summary.md) and [Delivery Notes](docs/delivery_notes.md) as the final handoff entry points. No code, weights, videos, generated outputs, Docker images, or runtime artifacts are included in this release-doc step.
-
-`v1.1.0-async-video-job` adds real async video execution through `POST /api/videos/analyze` and a Streamlit Video Job Launcher. Jobs write local artifacts under `local_outputs/api_video_jobs/<job_id>/`; outputs remain ignored and local-only.
-
-`v1.2.0-sqlite-video-job-index` adds a SQLite-backed job/result metadata index at `local_outputs/api_video_jobs/video_jobs.sqlite3`. It persists job status, summary path, and artifact paths across service restarts without storing artifact file contents.
-
-`v1.3.0-badcase-gt-eval-scaffold` adds metadata-only Bad Case collection and a lightweight GT evaluation scaffold. Bad Cases can be written locally under `local_outputs/bad_cases/` or through `/api/bad-cases`; GT templates are documented in [Video Analytics GT Templates](docs/evaluation/gt_templates.md). This does not add a full reviewed GT dataset or run real YOLO/ByteTrack validation.
-
-`v1.3.2-sqlite-job-restart-smoke` verifies the SQLite job metadata index with a real local FastAPI process restart using an attach-mode fake run. The same `job_id` remained queryable after restart; no YOLO, ByteTrack, Docker, model weights, source videos, or generated artifact contents were committed. See [SQLite Job Restart Smoke Result](docs/sqlite_job_restart_smoke_result.md).
-
-`v1.4.0-artifact-download-endpoints` adds safe FastAPI artifact download endpoints for files already registered in a job's `artifact_paths`. It complements the JSON preview endpoints and does not allow arbitrary path downloads.
-
-`v1.4.1-docker-v1-api-smoke-refresh` refreshes Docker runtime smoke for the v1.1-v1.4 API surface. Docker build/run passed, mounted-weight `/predict` passed, attach-mode `/api/videos/analyze` passed, SQLite metadata was written on a mounted `/tmp` output volume, artifact summary download returned `200`, and `/api/bad-cases` POST/GET passed. See [Docker v1 API Smoke Result](docs/docker_v1_api_smoke_result.md).
-
-`v1.5.0-api-key-and-structured-logging` adds optional API key authentication, `X-Request-ID` request correlation, and standard-library structured logs for FastAPI requests, video jobs, artifact downloads, and Bad Case creation. API key auth is disabled by default for local demo use and can be enabled with `API_KEY_AUTH_ENABLED=true API_KEY=your-secret`.
-
-`v1.6.0-reviewed-bad-case-collection` adds a small reviewed Bad Case sample collection in [Reviewed Bad Cases](docs/error_case_gallery/reviewed_bad_cases.csv). It contains 24 metadata-only records across detector, tracker, counter, ROI, and event modules, reuses existing lightweight gallery images, and does not add new large images, videos, weights, local outputs, or generated result files. This is a reviewed showcase and evaluation-planning seed, not a large production Bad Case dataset.
-
-`v1.7.0-gt-quantitative-evaluation` adds a small reviewed GT quantitative evaluation sample pack. It includes lightweight GT and prediction CSV samples under [Reviewed GT Samples](docs/evaluation/reviewed_gt_samples/) plus committed reviewed sample metrics under [Reviewed GT Evaluation Result](docs/evaluation/reviewed_gt_eval_result.md). The sample reports counting `MAE=1.0`, ROI `frame_count_mae=1.0`, event `precision=0.5` and `recall=0.6666666666666666`, and tracking engineering metrics with `gt_required_for_idf1=true`. This is not a production benchmark and does not include full MOT IDF1/MOTA.
-
-`v1.8.0-react-video-job-frontend` adds a minimal optional Vite + React + TypeScript frontend in [frontend](frontend/). It can call FastAPI health/model-status, create/query video jobs, show artifact download links, create/list Bad Cases, send optional `X-API-Key`, and display `X-Request-ID`. It depends on FastAPI running separately and does not include a video player, multi-user permissions, production auth, DeepSORT, or a production dashboard.
-
-`v1.8.1-final-polish-and-frontend-audit-note` is a final documentation polish pass. It corrects stale Streamlit/SQLite and GT evaluation status notes, records that Docker v1.4.1 smoke does not cover the React frontend runtime, and documents the frontend `npm audit` status without applying a forced major dependency upgrade.
-
-`v1.8.2-non-technical-user-launcher` adds a non-technical user launch path with `scripts/start_app_macos.command`, `scripts/start_app_windows.bat`, and [Non-technical user guide](docs/non_technical_user_guide.md). It does not change YOLO, ByteTrack, DeepSORT, analytics, API behavior, or Docker behavior.
-
-`v1.8.4-react-cors-support` allows local browser frontends to call FastAPI from development origins such as `http://localhost:5173` without browser CORS failures. The default allow-list covers the React dev server plus common Streamlit local ports, and deployments can override it with `CORS_ALLOW_ORIGINS=http://localhost:5173,http://127.0.0.1:5173`.
-
-`v1.8.5-final-freeze-identity-cleanup` reconciles final delivery identity documentation, ignore policy, and the React UI badge. It does not change YOLO, ByteTrack, DeepSORT, Docker, FastAPI runtime, analytics, training, or evaluation logic.
-
-This phase does not include DeepSORT integration, ByteTrack production hardening, production database integration beyond the local SQLite metadata index, full-length tracked video validation, OAuth/JWT, multi-user authorization, Prometheus/Grafana, production React dashboard/video player hardening, larger reviewed GT dataset expansion, or real video benchmarks.
-
-Details: [Video analytics MVP](docs/video_analytics_mvp.md)
-
-## Project Structure
+YOLOv8s is the recommended default model because it achieved the best current accuracy/latency trade-off.
+
+Compared with YOLOv8n on the same official test split, YOLOv8s improved:
+
+| Metric | YOLOv8n | YOLOv8s | Delta |
+| --- | ---: | ---: | ---: |
+| Precision | 0.841 | 0.865 | +0.024 |
+| Recall | 0.816 | 0.838 | +0.022 |
+| mAP50 | 0.859 | 0.876 | +0.017 |
+| mAP50-95 | 0.582 | 0.601 | +0.019 |
+
+### 6.3 Speed Benchmarks
+
+| Runtime | Model | Hardware | Image Size | Speed | FPS |
+| --- | --- | --- | ---: | ---: | ---: |
+| PyTorch | YOLOv8n | Colab Tesla T4 | 640 | 11.562 ms/image | 86.49 |
+| PyTorch | YOLOv8s | Colab Tesla T4 | 640 | 15.985 ms/image | 62.56 |
+| ONNX Runtime | YOLOv8n | Colab Tesla T4 | 640 | 10.994 ms/image | 90.96 |
+| ONNX Runtime | YOLOv8s | Colab Tesla T4 | 640 | 13.657 ms/image | 73.22 |
+
+No ONNX files are committed to the repository.
+
+---
+
+## 7. Main Features
+
+### 7.1 Image Detection
+
+- Upload or select an image.
+- Run YOLOv8 inference.
+- Display annotated detections.
+- Show class, confidence, and bounding box coordinates.
+- Export detection results as CSV.
+- Handle missing model weights, invalid images, model loading failures, and inference errors with clear messages.
+
+### 7.2 Video Detection and Tracking
+
+- Read local video metadata and frames.
+- Export frame-level detection results.
+- Run ByteTrack through the standard `track_video.py` runtime.
+- Export `tracks.csv` with `track_id`, class, confidence, bbox, center point, frame index, and timestamp.
+- Render tracked preview videos from existing track files.
+
+### 7.3 Video Analytics
+
+- Line crossing counter for vehicle and pedestrian flow.
+- Polygon ROI counter for area-level object statistics.
+- Rule-based event outputs.
+- `VideoAnalysisCenter` for organizing one video analysis run into stable artifacts.
+
+Typical artifacts:
+
+```text
+metadata.json
+detections.csv
+tracks.csv
+count_events.csv
+roi_frame_counts.csv
+events.jsonl
+video_analysis_summary.json
+```
+
+### 7.4 Bad Case and Evaluation
+
+- Bad Case schema for detector, tracker, counter, ROI, and event errors.
+- Reviewed Bad Case sample collection.
+- Lightweight GT evaluation sample pack.
+- Counting, ROI, event, and tracking engineering metric scaffolds.
+
+The reviewed GT sample reports:
+
+| Evaluation Area | Sample Metric |
+| --- | ---: |
+| Counting MAE | 1.0 |
+| ROI frame count MAE | 1.0 |
+| Event precision | 0.5 |
+| Event recall | 0.6666666666666666 |
+| Tracking identity metric status | `gt_required_for_idf1=true` |
+
+These samples are evaluation scaffolds and reviewed demonstrations, not a production-scale benchmark.
+
+### 7.5 Serving and Deployment
+
+FastAPI includes:
+
+- `GET /health`
+- `GET /config`
+- `GET /model-status`
+- `POST /predict`
+- `POST /api/videos/analyze`
+- `GET /api/videos/jobs/{job_id}`
+- `GET /api/videos/jobs/{job_id}/detections`
+- `GET /api/videos/jobs/{job_id}/tracks`
+- `GET /api/videos/jobs/{job_id}/analytics`
+- `GET /api/videos/jobs/{job_id}/events`
+- `GET /api/videos/jobs/{job_id}/artifacts/{artifact_name}/download`
+
+Engineering features:
+
+- Lazy model loading.
+- Optional API key authentication.
+- Request correlation through `X-Request-ID`.
+- SQLite-backed video job metadata index.
+- Safe artifact download endpoints limited to registered job artifacts.
+- Local CORS support for Streamlit and the optional React frontend.
+
+---
+
+## 8. Project Structure
 
 ```text
 yolov8-vehicle-pedestrian-detection/
@@ -295,16 +294,15 @@ yolov8-vehicle-pedestrian-detection/
     valid/                  # local-only, ignored
     test/                   # local-only, ignored
   docs/
-    colab_runs/
-    error_case_gallery/
-    predictions/
-    video_demos/
     api_usage.md
-    deployment_guide.md
+    bad_case_report.md
+    delivery_notes.md
     docker_deployment.md
-    model_loading_strategy.md
-    project_task_board.md
+    final_acceptance_checklist.md
+    final_project_report.md
+    release_summary.md
     video_analytics_mvp.md
+  frontend/                 # optional React frontend for video jobs and Bad Case review
   local_outputs/            # generated local outputs, ignored
   local_weights/            # local model weights, ignored
   src/
@@ -319,20 +317,11 @@ yolov8-vehicle-pedestrian-detection/
     evaluate.py
     predict_image.py
     predict_video.py
-    video_reader.py
     train.py
+    track_video.py
+    video_reader.py
     visualize_dataset.py
   tests/
-    __init__.py
-    test_event_rules.py
-    test_geometry.py
-    test_line_counter.py
-    test_roi_counter.py
-    test_track_writer.py
-    test_video_analysis_center.py
-    test_video_reader.py
-    test_batch_predict.py
-    test_check_setup.py
   .dockerignore
   .gitignore
   Dockerfile
@@ -343,34 +332,48 @@ yolov8-vehicle-pedestrian-detection/
   requirements-dev.txt
 ```
 
-## Quick Start
+---
 
-### 1. Install Runtime Dependencies
+## 9. Quick Start
+
+### 9.1 Install Dependencies
 
 ```bash
 pip install -r requirements.txt
+pip install -r requirements-api.txt
 ```
 
-### 2. Prepare Model Weights
+For tests and development tools:
 
-Model weights are not included in GitHub. For final local/Docker acceptance,
-place the recommended YOLOv8s weight locally at:
+```bash
+pip install -r requirements-dev.txt
+```
+
+### 9.2 Prepare Model Weights
+
+Model weights are not included in GitHub.
+
+Place the recommended YOLOv8s weight at:
 
 ```text
 local_weights/best.pt
 ```
 
-Historical experiment weights may also live under versioned local-only folders
-such as `local_weights/yolov8s_640_50epochs/best.pt`; do not commit either
-form.
+Historical experiment weights may also be stored in local-only versioned folders, for example:
 
-### 3. Run Setup Check
+```text
+local_weights/yolov8s_640_50epochs/best.pt
+```
+
+Do not commit model weights.
+
+### 9.3 Run Setup Check
 
 ```bash
 python3 src/check_setup.py
 ```
 
-### 4. Run Streamlit Demo
+### 9.4 Run Streamlit Demo
 
 ```bash
 streamlit run app.py
@@ -382,75 +385,40 @@ or:
 make streamlit
 ```
 
-### 5. Run Batch Prediction CLI
-
-Example command:
+### 9.5 Run Batch Image Prediction
 
 ```bash
-python3 src/batch_predict.py --model local_weights/best.pt --source docs/error_case_gallery/images --output-csv local_outputs/batch_predictions/detections.csv
+python3 src/batch_predict.py \
+  --model local_weights/best.pt \
+  --source docs/error_case_gallery/images \
+  --output-csv local_outputs/batch_predictions/detections.csv \
+  --imgsz 640 \
+  --conf 0.25 \
+  --device cpu
 ```
 
-Notes:
-
-- `local_outputs/` is ignored by Git.
-- Large batch inference may benefit from GPU.
-- Small local checks can use CPU.
-
-### 6. Run FastAPI Service
-
-Install API dependencies:
-
-```bash
-pip install -r requirements-api.txt
-```
-
-Run locally:
+### 9.6 Run FastAPI Locally
 
 ```bash
 uvicorn src.api:app --host 0.0.0.0 --port 8000
 ```
 
-Run locally with optional API key authentication:
+Run with optional API key authentication:
 
 ```bash
 API_KEY_AUTH_ENABLED=true API_KEY=your-secret \
   uvicorn src.api:app --host 0.0.0.0 --port 8000
 ```
 
-Current API scope:
+### 9.7 Run Docker
 
-- `GET /health`
-- `GET /config`
-- `GET /model-status`
-- `POST /predict`
-- `POST /api/videos/analyze`
-- `GET /api/videos/jobs/{job_id}`
-- `GET /api/videos/jobs/{job_id}/detections`
-- `GET /api/videos/jobs/{job_id}/tracks`
-- `GET /api/videos/jobs/{job_id}/analytics`
-- `GET /api/videos/jobs/{job_id}/events`
-- `GET /api/videos/jobs/{job_id}/artifacts/{artifact_name}/download`
-- `/predict` accepts multipart image upload and returns JSON detections.
-- YOLO is lazy-loaded from `MODEL_PATH` or the configured default model path on the first prediction request.
-- The video job/result API can launch the existing four-step local video analysis flow and query status/results.
-- Video job metadata is persisted in `local_outputs/api_video_jobs/video_jobs.sqlite3`; artifact file contents remain on disk and are not stored in SQLite.
-- Artifact downloads are limited to registered `artifact_paths` keys such as `metadata`, `detections`, `tracks`, `count_events`, `roi_frame_counts`, `events`, `summary`, `detections_csv`, and `tracks_csv`.
-- API key authentication is off by default. When enabled, protected endpoints require `X-API-Key`; public endpoints remain `/health`, `/config`, `/model-status`, `/docs`, and `/openapi.json`.
-- Every response includes `X-Request-ID`; callers may provide that header and the API will echo it.
-- Local browser frontends are allowed by default through CORS for `http://localhost:5173`, `http://127.0.0.1:5173`, `http://localhost:8501`, `http://127.0.0.1:8501`, `http://localhost:8502`, and `http://127.0.0.1:8502`. Override with `CORS_ALLOW_ORIGINS` as a comma-separated list.
-- Structured logs include request id, method, path, status code, duration, and job/artifact/bad-case identifiers where applicable.
-- Uploaded images and prediction outputs are not saved to the repository.
-- No model is loaded at import time.
-
-### 7. Docker / Deployment Acceptance
-
-Build example:
+Build image:
 
 ```bash
 docker build -t yolov8-vehicle-pedestrian:latest .
 ```
 
-Run FastAPI example:
+Run FastAPI with read-only mounted weights:
 
 ```bash
 docker run --rm -p 8000:8000 \
@@ -460,7 +428,7 @@ docker run --rm -p 8000:8000 \
   uvicorn src.api:app --host 0.0.0.0 --port 8000
 ```
 
-Run Streamlit example:
+Run Streamlit with read-only mounted weights:
 
 ```bash
 docker run --rm -p 8501:8501 \
@@ -470,271 +438,84 @@ docker run --rm -p 8501:8501 \
   streamlit run app.py --server.address 0.0.0.0 --server.port 8501
 ```
 
-Do not copy weights into the Docker image. Mount weights read-only at runtime.
-Docker build passed. FastAPI container smoke passed. Streamlit container smoke
-passed. Mounted-weight `/predict` passed with `local_weights/best.pt` mounted
-read-only at `/app/local_weights/best.pt`. The Docker image is local-only and is
-not committed. Full details are in
-[Docker Actual Smoke Result](docs/docker_actual_smoke_result.md).
-
-Mounted `/predict` curl example:
+Mounted `/predict` example:
 
 ```bash
 curl -X POST "http://localhost:8000/predict?conf=0.25&imgsz=640&device=cpu" \
   -F "file=@sample.jpg"
 ```
 
-## Makefile Commands
+---
 
-- `make check`: run Python syntax checks for the main app and scripts.
-- `make test`: run pytest tests under `tests/`.
-- `make api-check`: run syntax check for `src/api.py`.
-- `make streamlit`: start the local Streamlit demo.
-- `make status`: show short Git status.
-- `make danger-check`: check staged files for risky paths.
-- `make list-large-docs`: list large files under `docs/`.
+## 10. Non-Technical User Launchers
 
-If pytest is not installed:
+If `.venv` and `local_weights/best.pt` have already been prepared by the maintainer, ordinary users can start the local application without typing Python, Uvicorn, Streamlit, React, or Docker commands.
+
+- macOS: double-click `scripts/start_app_macos.command`
+- Windows: double-click `scripts/start_app_windows.bat`
+- Guide: `docs/non_technical_user_guide.md`
+
+On macOS, if the script is not executable, run:
 
 ```bash
-pip install -r requirements-dev.txt
+chmod +x scripts/start_app_macos.command
 ```
 
-## Results Summary
+The launcher starts:
 
-| Experiment | Split | Image Size | Epochs | Precision | Recall | mAP50 | mAP50-95 | Notes |
-| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| YOLOv8n smoke test | validation | 416 | 10 | 0.786 | 0.749 | 0.797 | 0.511 | Quick Colab smoke test |
-| YOLOv8n 640 baseline validation | validation | 640 | 50 | 0.81981 | 0.82768 | 0.86422 | 0.59102 | Main lightweight baseline |
-| YOLOv8n official test | test | 640 | 50 | 0.841 | 0.816 | 0.859 | 0.582 | Official test split evaluation |
-| YOLOv8s retrain validation | validation | 640 | 50 | 0.83909 | 0.84059 | 0.87705 | 0.60405 | Retrain validation result |
-| YOLOv8s official test | test | 640 | 50 | 0.865 | 0.838 | 0.876 | 0.601 | Official test split evaluation |
-| YOLOv8m training validation | validation | 640 | 50 | 0.837 | 0.817 | 0.870 | 0.594 | Model-scaling training validation |
-| YOLOv8m official test | test | 640 | 50 | 0.852 | 0.820 | 0.872 | 0.594 | Official test split evaluation; below YOLOv8s |
+- FastAPI: `http://localhost:8000`
+- Streamlit: `http://localhost:8501`
+- Optional React frontend for video jobs and Bad Case review: `http://localhost:5173` when frontend dependencies already exist
 
-Strict same-split result:
+---
 
-- YOLOv8s improves over YOLOv8n on the official test split by Precision `+0.024`, Recall `+0.022`, mAP50 `+0.017`, and mAP50-95 `+0.019`.
+## 11. Makefile Commands
 
-Model family comparison:
+| Command | Purpose |
+| --- | --- |
+| `make check` | Run Python syntax checks for the main app and scripts |
+| `make test` | Run pytest tests under `tests/` |
+| `make api-check` | Run syntax check for `src/api.py` |
+| `make streamlit` | Start the local Streamlit demo |
+| `make status` | Show short Git status |
+| `make danger-check` | Check staged files for risky paths |
+| `make list-large-docs` | List large files under `docs/` |
 
-- YOLOv8s remains the recommended default model and best current accuracy/latency trade-off.
-- YOLOv8m completed training and official test evaluation, but did not outperform YOLOv8s on official test mAP50-95.
-- YOLOv8m vs YOLOv8s official test delta: Precision `-0.013`, Recall `-0.018`, mAP50 `-0.004`, mAP50-95 `-0.007`.
-- YOLOv8n remains the fastest measured model.
-- YOLOv8m PyTorch speed benchmark is optional and was not run.
-- YOLOv8m ONNX Runtime benchmark is optional and was not run.
-- Details: [YOLOv8 model family comparison](docs/model_family_comparison.md)
+---
 
-Image size ablation:
+## 12. Final Review Entry Points
 
-- Type: validation-only, no training.
-- Model: YOLOv8n 640 50 epochs custom weight.
-- Split: official test.
-- Image sizes: 416, 512, 640.
-- 416: Precision `0.834`, Recall `0.792`, mAP50 `0.855`, mAP50-95 `0.576`.
-- 512: Precision `0.825`, Recall `0.830`, mAP50 `0.863`, mAP50-95 `0.582`.
-- 640: Precision `0.841`, Recall `0.816`, mAP50 `0.859`, mAP50-95 `0.582`.
-- 512 slightly leads on mAP50/mAP50-95; 640 has the highest precision.
-- Details: [Image size ablation](docs/image_size_ablation.md)
+For final review, read these documents in order:
 
-Inference speed benchmark:
+1. `docs/release_summary.md`
+2. `docs/delivery_notes.md`
+3. `docs/final_acceptance_checklist.md`
+4. `docs/final_project_report.md`
+5. `docs/docker_actual_smoke_result.md`
+6. `docs/api_usage.md`
+7. `docs/bad_case_report.md`
+8. `docs/video_analytics_mvp.md`
 
-- Hardware: Google Colab Tesla T4, `cuda:0`
-- Image size: 640
-- Protocol: 100 measured images, 10 warmup images
-- YOLOv8n 640 50 epochs: `11.562 ms/image`, `86.49 FPS`
-- YOLOv8s 640 50 epochs retrain: `15.985 ms/image`, `62.56 FPS`
-- YOLOv8s latency ratio vs YOLOv8n: `1.383x`
-- Details: [Inference speed benchmark](docs/inference_speed_benchmark.md)
+---
 
-ONNX Runtime benchmark/check:
+## 13. Known Limitations and Future Work
 
-- Runtime: ONNX Runtime `1.26.0`
-- Provider: `CUDAExecutionProvider,CPUExecutionProvider`
-- Hardware: Google Colab Tesla T4
-- Image size: 640
-- Protocol: 100 measured images, 10 warmup images
-- YOLOv8n ONNX Runtime: `10.994 ms/image`, `90.96 FPS`
-- YOLOv8s ONNX Runtime: `13.657 ms/image`, `73.22 FPS`
-- Output check: shape `[[1, 10, 8400]]`, finite `True`, non-empty `True`
-- Details: [ONNX Runtime benchmark](docs/onnx_runtime_benchmark.md)
-- No ONNX files are committed, and this is not ONNX Runtime mAP/NMS evaluation.
+Non-blocking future work:
 
-## Timeline by Date
+- Expand the reviewed Bad Case dataset.
+- Expand the reviewed GT evaluation dataset.
+- Add optional DeepSORT production runtime.
+- Harden ByteTrack for production-scale full-length validation.
+- Add OAuth/JWT, multi-user authorization, API key rotation, and external monitoring.
+- Add Prometheus/Grafana or other production observability.
+- Harden the optional React frontend into a production dashboard and video player.
+- Run larger GT-based tracking, counting, ROI, and event quantitative evaluations.
+- Add optional full YOLOv8m PyTorch and ONNX Runtime speed benchmarks.
+- Add ONNX Runtime mAP/NMS evaluation if a separate protocol is defined.
 
-### 2026-06-11
+---
 
-- Initialized project structure.
-- Added dataset YAML.
-- Validated and cleaned labels.
-- Added YOLOv8n smoke test results.
-
-### 2026-06-12
-
-- Added YOLOv8n 640 baseline results.
-- Cleaned project references.
-- Improved model weight path documentation.
-
-### 2026-06-13
-
-- Added image inference and error analysis.
-- Added video demo documentation and key frames.
-- Added YOLOv8s supplementary experiment summary.
-- Added experiment comparison.
-- Added error case gallery.
-- Added Streamlit demo.
-- Added project task board and governance docs.
-
-### 2026-06-14
-
-- Added P0/P1/P2 engineering documentation.
-- Added Streamlit CSV and sample image improvements.
-- Added error taxonomy, hard examples, and threshold analysis.
-- Added config file, setup check, and batch prediction CLI.
-- Added unit test scaffold and dependency split.
-- Added model loading strategy and local deployment guide.
-- Added Docker scaffold without model weights.
-- Added FastAPI scaffold and API documentation.
-- Implemented real FastAPI `/predict` image inference endpoint.
-- Added YOLOv8s retrain validation and official test split evaluation docs.
-- Added strict same-split YOLOv8n vs YOLOv8s comparison.
-- Added Colab T4 inference speed benchmark.
-- Added ONNX Runtime benchmark/check documentation.
-- Added YOLOv8n image size ablation documentation.
-- Added YOLOv8m training and official test lightweight docs.
-- Added YOLOv8 model family comparison.
-- Added real video reading and `track_video.py` integration.
-- Added CLI smoke documentation.
-- Added real video detection/tracking foundation.
-- Added predict-to-track smoke flow.
-- Added video analysis job skeleton and three/four-step local flow.
-- Added local smoke preflight and result documentation.
-
-### 2026-06-15
-
-- Added CLI module invocation ergonomics.
-- Added analytics config tuning and tracked video rendering.
-- Added ByteTrack discovery and runtime integration planning.
-
-### 2026-06-16
-
-- Integrated ByteTrack runtime into `track_video.py`.
-- Validated ByteTrack analytics and rendering pipeline.
-- Added synthetic vs ByteTrack comparison.
-- Added Streamlit video demo page.
-- Began pruning non-manual helper tools and historical documents.
-
-### 2026-06-17
-
-- Pruned non-manual helper tools.
-- Pruned ByteTrack validation history docs.
-- Added FastAPI basic service endpoints.
-- Added FastAPI video job/result query skeleton.
-
-### 2026-06-18
-
-- Added Bad Case schema/report foundation.
-- Added Bad Case metadata collection and GT evaluation scaffold.
-- Added Docker deployment static acceptance.
-- Added final acceptance checklist.
-- Added Docker actual build smoke preflight.
-
-### 2026-06-19
-
-- Performed Docker actual smoke.
-- Fixed Docker FastAPI dependency installation.
-- Recorded partial Docker actual smoke with mounted predict still open at that point.
-- Prepared local YOLOv8s `best.pt` for mounted-weight smoke.
-
-### 2026-06-20
-
-- Ran mounted-weight Docker `/predict` smoke successfully.
-- Updated final documentation consistency after Docker smoke.
-- Added final release summary and delivery notes.
-- Published final tag `v1.0.0-final-release-summary`.
-
-## Version / Tag History
-
-- `v0.13.0-fastapi-basic-service-acceptance`
-- `v0.13.1-fastapi-video-job-results-skeleton`
-- `v0.14.0-bad-case-schema-report-foundation`
-- `v0.14.1-docker-deployment-static-acceptance`
-- `v0.14.2-final-acceptance-checklist`
-- `v0.14.3-docker-actual-build-smoke-preflight`
-- `v0.14.4-docker-actual-build-smoke`
-- `v0.14.5-mounted-weight-container-predict-smoke`
-- `v0.14.6-final-doc-consistency-pass`
-- `v1.0.0-final-release-summary`
-
-## Documentation Index
-
-- [Model card](docs/model_card.md)
-- [Dataset card](docs/dataset_card.md)
-- [Model weight policy](docs/model_weight_policy.md)
-- [Project roadmap](docs/project_roadmap.md)
-- [Report assets index](docs/report_assets.md)
-- [Per-class failure analysis](docs/per_class_failure_analysis.md)
-- [Confusion matrix interpretation](docs/confusion_matrix_interpretation.md)
-- [Error taxonomy](docs/error_taxonomy.md)
-- [Hard examples](docs/hard_examples.md)
-- [Threshold analysis](docs/threshold_analysis.md)
-- [Streamlit demo guide](docs/streamlit_demo.md)
-- [Model loading strategy](docs/model_loading_strategy.md)
-- [Local deployment guide](docs/deployment_guide.md)
-- [Docker deployment guide](docs/docker_deployment.md)
-- [Docker Actual Smoke Plan](docs/docker_actual_smoke_plan.md)
-- [Docker Actual Smoke Result](docs/docker_actual_smoke_result.md)
-- [API usage guide](docs/api_usage.md)
-- [YOLOv8s retrain summary](docs/experiments/yolov8s_640_50epochs_retrain/summary.md)
-- [YOLOv8s official test summary](docs/evaluation/yolov8s_640_50epochs_official/summary.md)
-- [YOLOv8m training summary](docs/experiments/yolov8m_640_50epochs/summary.md)
-- [YOLOv8m official test summary](docs/evaluation/yolov8m_640_50epochs_official/summary.md)
-- [Strict model comparison](docs/strict_model_comparison.md)
-- [YOLOv8 model family comparison](docs/model_family_comparison.md)
-- [Image size ablation](docs/image_size_ablation.md)
-- [Inference speed benchmark](docs/inference_speed_benchmark.md)
-- [ONNX Runtime benchmark](docs/onnx_runtime_benchmark.md)
-- [Video analytics MVP](docs/video_analytics_mvp.md)
-- [ByteTrack integration plan](docs/bytetrack_integration_plan.md)
-- [Tracked Video Rendering](docs/tracked_video_rendering.md)
-- [Streamlit Video Demo Page](docs/streamlit_video_demo.md)
-- [Bad Case Schema](docs/bad_cases_schema.md)
-- [Bad Case Report](docs/bad_case_report.md)
-- [Video Analytics GT Templates](docs/evaluation/gt_templates.md)
-- [Final Acceptance Checklist](docs/final_acceptance_checklist.md)
-- [Final Project Report](docs/final_project_report.md)
-- [Release Summary](docs/release_summary.md)
-- [Delivery Notes](docs/delivery_notes.md)
-- [Project task board](docs/project_task_board.md)
-
-## v0.11.5 ByteTrack Pipeline Validation
-
-`v0.11.5` validates that standard `track_video.py --tracker bytetrack` output
-can flow into analytics-only rerun and tracked-video rendering without rerunning
-YOLO or the tracker. The local 300-frame validation used `746` ByteTrack rows,
-`25` unique tracks, and generated local-only analytics artifacts plus a readable
-300-frame preview under `/tmp`. The retained summary now lives in
-[ByteTrack integration plan](docs/bytetrack_integration_plan.md),
-[Video analytics MVP](docs/video_analytics_mvp.md), and the final report.
-
-## v0.11.6 Synthetic vs ByteTrack Comparison
-
-`v0.11.6` compares synthetic and ByteTrack tracking outputs. The comparison
-shows that ByteTrack tracks are much sparser but carry real MOT semantics, so
-ByteTrack should be used for runtime/demo while synthetic tracking remains the
-deterministic fallback/test path.
-
-## v0.12.0 Streamlit Video Demo Page
-
-`v0.12.0` adds a read-only Streamlit video artifact browser. It can display an
-existing Video Analysis Center run, ByteTrack `tracks.csv` summaries, analytics
-CSV/JSONL previews, an existing tracked preview video, and optional
-synthetic-vs-ByteTrack comparison JSON. It does not run YOLO, ByteTrack,
-analytics, or video rendering. See
-[Streamlit Video Demo Page](docs/streamlit_video_demo.md).
-
-## Safety and Git Policy
+## 14. Safety and Git Policy
 
 Do not commit:
 
@@ -754,31 +535,22 @@ Do not commit:
 - `runs/`
 - `local_outputs/`
 - `local_videos/source/`
-- new large videos
 - `.venv/`
+- new large videos or generated outputs
 
-Policy:
+Repository policy:
 
+- GitHub stores code, configs, tests, documentation, summaries, and selected lightweight demo assets.
 - Model weights are local-only.
 - Full dataset splits are local-only.
 - Generated outputs are local-only.
-- Docker images/layers are local-only and are not committed.
-- Video demo outputs are treated as local/generated assets unless explicitly reviewed as lightweight documentation.
-- GitHub contains code, docs, configs, summaries, and selected lightweight demo assets only.
+- Docker images and layers are local-only.
+- Large videos and bulk inference outputs should be managed through local paths, external storage, or deployment volumes.
 
-## Known Limitations / Future Work
+---
 
-- Large reviewed Bad Case labeling and larger reviewed GT dataset expansion.
-- Optional DeepSORT production runtime.
-- OAuth/JWT, multi-user authorization, API key rotation, and external monitoring.
-- Large-scale GT-based tracking/counting/ROI/event quantitative reports beyond the small reviewed sample.
-- Optional full-length production validation.
-- Optional YOLOv8m PyTorch and ONNX Runtime speed benchmarking if model-family latency completeness is needed.
-- Optional ONNX Runtime mAP/NMS evaluation if a separate evaluation protocol is defined.
+## 15. Final Status
 
-## Next Steps
+The project has completed the full engineering path from dataset validation and YOLOv8 model evaluation to image/video inference, ByteTrack tracking, video analytics, Bad Case review, FastAPI serving, Streamlit demo, Docker smoke testing, and final delivery documentation.
 
-- Add README badges if needed.
-- Update presentation or portfolio summary materials.
-- Use [Release Summary](docs/release_summary.md), [Delivery Notes](docs/delivery_notes.md), and [Final Acceptance Checklist](docs/final_acceptance_checklist.md) as the final handoff entry points.
-- Keep future work separated from the accepted v1.0.0 delivery package.
+Final status: **ready for final freeze and delivery**, subject to normal environment-specific deployment checks.
