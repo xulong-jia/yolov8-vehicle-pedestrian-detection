@@ -41,14 +41,14 @@ serving, Streamlit demo, and Docker acceptance.
 | Project type | Detection model engineering system |
 | Main task | Vehicle and pedestrian detection + lightweight video analysis |
 | Recommended model | YOLOv8s |
-| Current final state | `v1.8.5-final-freeze-identity-cleanup` |
+| Current final state | `v1.8.6-final-local-demo-report` |
 | Baseline release tag | `v1.0.0-final-release-summary` |
-| Final delivery status | Ready for final freeze / delivery |
+| Final delivery status | React dashboard, Streamlit demo, FastAPI local API, and final report prepared |
 | Docker build/run smoke | Passed |
 | Mounted-weight Docker `/predict` smoke | Passed |
 | Streamlit container smoke | Passed |
 | FastAPI container smoke | Passed |
-| Boundary | Local/demo engineering project, not production traffic enforcement |
+| Boundary | Local/demo engineering project, not a production safety or deployment system |
 
 ## 🧠 What Problem It Solves
 
@@ -73,7 +73,7 @@ image / video
   -> line counter / ROI counter / event rules
   -> VideoAnalysisCenter
   -> CSV / JSON / JSONL artifacts
-  -> Streamlit / FastAPI / Docker local delivery
+  -> React dashboard / Streamlit / FastAPI / Docker local delivery
 ```
 
 ## ⚙️ Key Features
@@ -155,13 +155,18 @@ production-scale benchmark.
 - SQLite-backed video job metadata index.
 - Registered artifact download endpoints limited to job artifacts.
 
-### 🖥️ Streamlit and Non-Technical Launchers
+### 🖥️ React Dashboard, Streamlit, and Non-Technical Launchers
 
+- `frontend/` provides the React dashboard with five pages: Overview, Image
+  Detection, Video Detection, Results View, and Project Information.
 - `app.py` provides the local Streamlit demo surface.
 - Users with prepared `.venv` and `local_weights/best.pt` can start the app
   through `scripts/start_app_macos.command` or `scripts/start_app_windows.bat`.
-- The optional React frontend is minimal and scoped to video jobs and Bad Case
-  review.
+- The macOS launcher uses local ports that avoid common conflicts with other
+  projects: FastAPI `http://localhost:8010`, React `http://localhost:5178`,
+  and Streamlit `http://localhost:8511`.
+- Local launcher ports and Docker example ports are intentionally different:
+  Docker examples below keep their container mappings on `8000` and `8501`.
 
 ### 🐳 Docker Delivery
 
@@ -177,7 +182,7 @@ production-scale benchmark.
 ```text
 UI Layer
   Streamlit local demo
-  Optional React frontend for video jobs and Bad Case review
+  React dashboard for overview, image detection, video detection, results, and project information
   Non-technical macOS / Windows launchers
 
 API Layer
@@ -291,13 +296,28 @@ local_weights/best.pt
 python3 src/check_setup.py
 ```
 
-### Run Streamlit Demo
+### Run Local Demo Launcher on macOS
 
 ```bash
-streamlit run app.py
+./scripts/start_app_macos.command
 ```
 
-or:
+The local launcher starts the three demo services on ports selected to avoid
+common `8000` and `5173` conflicts with other projects:
+
+| Service | Local launcher URL |
+| --- | --- |
+| FastAPI | `http://localhost:8010` |
+| React dashboard | `http://localhost:5178` |
+| Streamlit | `http://localhost:8511` |
+
+### Run Streamlit Demo Manually
+
+```bash
+streamlit run app.py --server.port 8511
+```
+
+The Makefile target still uses Streamlit's default local port:
 
 ```bash
 make streamlit
@@ -318,17 +338,20 @@ python3 src/batch_predict.py \
 ### Run FastAPI Locally
 
 ```bash
-uvicorn src.api:app --host 0.0.0.0 --port 8000
+uvicorn src.api:app --host 0.0.0.0 --port 8010
 ```
 
 Run with optional API key authentication:
 
 ```bash
 API_KEY_AUTH_ENABLED=true API_KEY=your-secret \
-  uvicorn src.api:app --host 0.0.0.0 --port 8000
+  uvicorn src.api:app --host 0.0.0.0 --port 8010
 ```
 
 ### Run Docker With Mounted Weights
+
+These Docker examples keep the container mapping ports `8000` and `8501`.
+They are separate from the local launcher ports `8010`, `5178`, and `8511`.
 
 Build image:
 
@@ -375,6 +398,7 @@ curl -X POST "http://localhost:8000/predict?conf=0.25&imgsz=640&device=cpu" \
 | SQLite job restart smoke | Passed | `docs/sqlite_job_restart_smoke_result.md` |
 | Bad Case sample collection | Completed | `docs/bad_case_report.md` |
 | Reviewed GT sample pack | Completed | `docs/evaluation/reviewed_gt_eval_result.md` |
+| Final local report | Prepared locally | `docs/final_report/` local-only, not committed |
 
 ## 🏁 Milestones
 
@@ -384,8 +408,9 @@ curl -X POST "http://localhost:8000/predict?conf=0.25&imgsz=640&device=cpu" \
 | `v0.14.5-mounted-weight-container-predict-smoke` | Mounted-weight container `/predict` smoke passed |
 | `v1.0.0-final-release-summary` | Final release summary and delivery notes prepared |
 | `v1.4.1-docker-v1-api-smoke-refresh` | Docker runtime smoke refreshed for v1.1-v1.4 API surface |
-| `v1.8.0-react-video-job-frontend` | Minimal optional React frontend accepted |
+| `v1.8.0-react-video-job-frontend` | Initial React video job frontend accepted |
 | `v1.8.5-final-freeze-identity-cleanup` | Final identity docs, ignore policy, and delivery cleanup accepted |
+| `v1.8.6-final-local-demo-report` | React dashboard, local launcher ports, and final report package prepared |
 
 ## 🔒 Safety and Data Policy
 
@@ -403,31 +428,44 @@ Do not commit:
 - `runs/`
 - `local_outputs/`
 - `local_videos/source/`
+- `docs/final_report/`
 - `.venv/`
 - new large videos or generated outputs
+- generated report PDFs/DOCX files and screenshot PDFs
 
 GitHub only stores code, configs, docs, tests, summaries, and selected
 lightweight demo assets. Model weights, full datasets, SQLite databases, Docker
-images, and generated outputs are local-only.
+images, generated outputs, and local final report packages are local-only.
+
+The final report package has been generated locally under `docs/final_report/`.
+Those report files and screenshot/PDF artifacts can remain on the local
+machine, but they are not part of the GitHub delivery.
 
 ## ⚠️ Known Boundaries
 
-- Not a production traffic enforcement system.
+- Not a production safety or deployment system.
 - Not an autonomous driving decision system.
 - Not a formal COCO, MOT, or TrackEval benchmark.
 - Reviewed GT samples are small demonstration/evaluation scaffolds, not a
   production-scale benchmark.
-- React frontend is optional and minimal.
+- The React dashboard is a local demo/report UI with Overview, Image Detection,
+  Video Detection, Results View, and Project Information pages.
+- The current demo video task produces detections, tracks, metadata, and
+  summary artifacts for local inspection.
+- The current demo run does not claim effective line count, ROI statistics, or
+  event results.
+- The tracking artifact used in the report demo uses a `synthetic` tracker and
+  should not be presented as production DeepSORT or ByteTrack tracking results.
 - Model weights and full datasets are local-only.
 - Docker smoke results are local acceptance evidence, not environment-agnostic
   production certification.
 
 ## 🧾 Final Status
 
-The project has completed the full engineering path from dataset validation and
-YOLOv8 model evaluation to image/video inference, ByteTrack tracking, video
-analytics, Bad Case review, FastAPI serving, Streamlit demo, Docker smoke
-testing, and final delivery documentation.
+The project has completed the local engineering path from dataset validation and
+YOLOv8 model evaluation to image/video inference, tracking artifacts, video
+analytics scaffolds, Bad Case review, FastAPI serving, the React dashboard,
+Streamlit demo, Docker smoke testing, and final report preparation.
 
-Final status: **ready for final freeze and delivery**, subject to normal
-environment-specific deployment checks.
+Final status: **final local demo/report state**, subject to normal
+environment-specific checks.
