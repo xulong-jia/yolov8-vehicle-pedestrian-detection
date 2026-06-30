@@ -33,6 +33,11 @@ export interface VideoJobResponse {
   updated_at?: string | null;
   started_at?: string | null;
   finished_at?: string | null;
+  model_path?: string | null;
+  video_path?: string | null;
+  conf?: number | null;
+  imgsz?: number | null;
+  device?: string | null;
 }
 
 export interface VideoAnalyzePayload {
@@ -67,4 +72,27 @@ export interface BadCaseRecord extends BadCasePayload {
   track_id?: string;
   snapshot_path?: string;
   added_to_eval_set?: string;
+}
+
+export interface DetectionResult {
+  class_id: number;
+  class_name: string;
+  confidence: number;
+  bbox: {
+    xmin: number;
+    ymin: number;
+    xmax: number;
+    ymax: number;
+  };
+}
+
+export interface PredictResponse {
+  image_name: string;
+  image_size: Record<string, number>;
+  model_path: string;
+  confidence_threshold: number;
+  image_size_requested: number;
+  device: string;
+  num_detections: number;
+  detections: DetectionResult[];
 }

@@ -1,15 +1,17 @@
 import { FormEvent, useState } from "react";
 import { apiRequest, artifactDownloadUrl } from "../api";
 import type { ApiClientConfig, VideoAnalyzePayload, VideoJobResponse } from "../types";
+import { Panel, StatusBadge, TextField } from "./DashboardUi";
 
 interface VideoJobPanelProps {
   config: ApiClientConfig;
   onRequestId: (requestId: string) => void;
+  onJobChange?: (job: VideoJobResponse | null) => void;
 }
 
 const initialForm: VideoAnalyzePayload = {
-  video_id: "demo",
-  run_name: "demo_run",
+  video_id: "演示视频",
+  run_name: "演示任务",
   source: "",
   video_path: "",
   model_path: "",
@@ -19,7 +21,7 @@ const initialForm: VideoAnalyzePayload = {
   run_dir: ""
 };
 
-export default function VideoJobPanel({ config, onRequestId }: VideoJobPanelProps) {
+export default function VideoJobPanel({ config, onRequestId, onJobChange }: VideoJobPanelProps) {
   const [form, setForm] = useState<VideoAnalyzePayload>(initialForm);
   const [jobIdQuery, setJobIdQuery] = useState("");
   const [job, setJob] = useState<VideoJobResponse | null>(null);
@@ -37,10 +39,11 @@ export default function VideoJobPanel({ config, onRequestId }: VideoJobPanelProp
         body: JSON.stringify(payload)
       });
       setJob(result.data);
+      onJobChange?.(result.data);
       setJobIdQuery(result.data.job_id);
       onRequestId(result.requestId);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Unable to create video job");
+      setError(err instanceof Error ? err.message : "无法创建视频检测任务");
     } finally {
       setLoading(false);
     }
@@ -59,6 +62,7 @@ export default function VideoJobPanel({ config, onRequestId }: VideoJobPanelProp
         `/api/videos/jobs/${encodeURIComponent(jobIdQuery.trim())}`
       );
       setJob(result.data);
+      onJobChange?.(result.data);
       onRequestId(result.requestId);
     } catch (err) {
       setError(err instanceof Error ? err.message : "无法查询任务状态");
@@ -68,36 +72,38 @@ export default function VideoJobPanel({ config, onRequestId }: VideoJobPanelProp
   }
 
   return (
-    <section className="panel panel-wide">
-      <div className="panel-header">
-        <div>
-          <p className="eyebrow">视频</p>
-          <h2>视频分析任务</h2>
-        </div>
-      </div>
+    <Panel title="视频分析任务" eyebrow="视频检测" wide>
       <p className="helper-text">
-        普通使用：只需要填写“视频路径”和“模型路径”，然后点击“提交视频分析任务”。
-        “已有结果目录”是高级选项，通常不用填写。
+        当前后端支持本地视频路径任务。填写视频路径、模型路径和基础参数后创建任务，
+        再用任务编号查询最近状态和输出路径。
       </p>
+      <div className="form-section-title">
+        <strong>视频输入与参数</strong>
+        <span>不支持在线流或摄像头接入，只处理本地路径。</span>
+      </div>
       <form className="form-grid" onSubmit={submitJob}>
-        <Field label="视频ID" fieldKey="video_id" value={form.video_id} onChange={(value) => setForm({ ...form, video_id: value })} />
-        <Field label="任务名称" fieldKey="run_name" value={form.run_name} onChange={(value) => setForm({ ...form, run_name: value })} />
-        <Field label="视频路径" fieldKey="source" value={form.source || ""} onChange={(value) => setForm({ ...form, source: value })} />
-        <Field label="视频路径（备用）" fieldKey="video_path" value={form.video_path || ""} onChange={(value) => setForm({ ...form, video_path: value })} />
-        <Field label="模型路径" fieldKey="model_path" value={form.model_path || ""} onChange={(value) => setForm({ ...form, model_path: value })} />
-        <Field label="已有结果目录（高级选项，可不填）" fieldKey="run_dir attach-mode" value={form.run_dir || ""} onChange={(value) => setForm({ ...form, run_dir: value })} />
-        <Field label="置信度阈值" fieldKey="conf" value={String(form.conf)} onChange={(value) => setForm({ ...form, conf: Number(value) })} type="number" step="0.01" />
-        <Field label="推理尺寸" fieldKey="imgsz" value={String(form.imgsz)} onChange={(value) => setForm({ ...form, imgsz: Number(value) })} type="number" />
-        <Field label="运行设备" fieldKey="device" value={form.device} onChange={(value) => setForm({ ...form, device: value })} />
+        <TextField label="视频ID" value={form.video_id} onChange={(value) => setForm({ ...form, video_id: value })} />
+        <TextField label="任务名称" value={form.run_name} onChange={(value) => setForm({ ...form, run_name: value })} />
+        <TextField label="视频路径" value={form.source || ""} onChange={(value) => setForm({ ...form, source: value })} placeholder="填写本地视频文件路径" />
+        <TextField label="视频路径（备用）" value={form.video_path || ""} onChange={(value) => setForm({ ...form, video_path: value })} placeholder="可选" />
+        <TextField label="模型路径" value={form.model_path || ""} onChange={(value) => setForm({ ...form, model_path: value })} placeholder="可选，留空使用默认模型" />
+        <TextField label="已有结果目录" value={form.run_dir || ""} onChange={(value) => setForm({ ...form, run_dir: value })} placeholder="高级选项，可不填" />
+        <TextField label="置信度阈值" value={String(form.conf)} onChange={(value) => setForm({ ...form, conf: Number(value) })} type="number" step="0.01" />
+        <TextField label="推理尺寸" value={String(form.imgsz)} onChange={(value) => setForm({ ...form, imgsz: Number(value) })} type="number" />
+        <TextField label="运行设备" value={form.device} onChange={(value) => setForm({ ...form, device: value })} />
         <div className="form-actions">
           <button type="submit" disabled={loading}>
-            {loading ? "提交中" : "提交视频分析任务"}
+            {loading ? "提交中" : "创建检测任务"}
           </button>
         </div>
       </form>
+      <div className="form-section-title">
+        <strong>最近视频任务</strong>
+        <span>提交任务后会自动填入任务编号，也可以手动查询已有任务。</span>
+      </div>
       <div className="query-row">
         <label>
-          任务编号 <span className="field-key">job_id</span>
+          任务编号
           <input value={jobIdQuery} onChange={(event) => setJobIdQuery(event.target.value)} />
         </label>
         <button type="button" onClick={queryJob} disabled={loading}>
@@ -106,7 +112,11 @@ export default function VideoJobPanel({ config, onRequestId }: VideoJobPanelProp
       </div>
       {error ? <p className="error-text">{error}</p> : null}
       {job ? <JobResult config={config} job={job} /> : <p className="muted">暂无任务结果</p>}
-    </section>
+      <div className="task-note">
+        <StatusBadge status={job?.status || "等待中"} />
+        <span>任务可能需要一点时间完成；状态和输出文件以 FastAPI 返回为准。</span>
+      </div>
+    </Panel>
   );
 }
 
@@ -115,18 +125,18 @@ function JobResult({ config, job }: { config: ApiClientConfig; job: VideoJobResp
   return (
     <div className="result-stack">
       <div className="summary-grid">
-        <span>job_id</span>
+        <span>任务编号</span>
         <strong>{job.job_id}</strong>
-        <span>status</span>
-        <strong>{job.status}</strong>
-        <span>output_dir</span>
+        <span>状态</span>
+        <StatusBadge status={job.status} />
+        <span>输出目录</span>
         <code>{job.output_dir || ""}</code>
-        <span>run_dir</span>
+        <span>运行目录</span>
         <code>{job.run_dir}</code>
-        <span>summary_path</span>
+        <span>摘要路径</span>
         <code>{job.summary_path || ""}</code>
       </div>
-      <h3>结果文件 <span className="field-key">artifact_paths</span></h3>
+      <h3>结果文件</h3>
       {Object.keys(artifacts).length ? (
         <ul className="artifact-list">
           {Object.entries(artifacts).map(([name, path]) => (
@@ -142,29 +152,6 @@ function JobResult({ config, job }: { config: ApiClientConfig; job: VideoJobResp
         <p className="muted">暂无已登记结果文件。</p>
       )}
     </div>
-  );
-}
-
-function Field({
-  label,
-  fieldKey,
-  value,
-  onChange,
-  type = "text",
-  step
-}: {
-  label: string;
-  fieldKey: string;
-  value: string;
-  onChange: (value: string) => void;
-  type?: string;
-  step?: string;
-}) {
-  return (
-    <label>
-      {label} <span className="field-key">{fieldKey}</span>
-      <input type={type} step={step} value={value} onChange={(event) => onChange(event.target.value)} />
-    </label>
   );
 }
 

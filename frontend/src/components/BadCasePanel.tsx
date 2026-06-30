@@ -1,15 +1,17 @@
 import { FormEvent, useState } from "react";
 import { apiRequest } from "../api";
 import type { ApiClientConfig, BadCasePayload, BadCaseRecord } from "../types";
+import { Panel, StatusBadge } from "./DashboardUi";
 
 interface BadCasePanelProps {
   config: ApiClientConfig;
   onRequestId: (requestId: string) => void;
+  onRecordsChange?: (records: BadCaseRecord[]) => void;
 }
 
 const initialBadCase: BadCasePayload = {
-  module: "detector",
-  case_type: "false_positive",
+  module: "检测模块",
+  case_type: "误检",
   video_id: "",
   image_name: "",
   frame_index: "",
@@ -20,7 +22,7 @@ const initialBadCase: BadCasePayload = {
   reviewer_note: ""
 };
 
-export default function BadCasePanel({ config, onRequestId }: BadCasePanelProps) {
+export default function BadCasePanel({ config, onRequestId, onRecordsChange }: BadCasePanelProps) {
   const [form, setForm] = useState<BadCasePayload>(initialBadCase);
   const [records, setRecords] = useState<BadCaseRecord[]>([]);
   const [error, setError] = useState("");
@@ -35,7 +37,11 @@ export default function BadCasePanel({ config, onRequestId }: BadCasePanelProps)
         method: "POST",
         body: JSON.stringify(form)
       });
-      setRecords((current) => [result.data, ...current]);
+      setRecords((current) => {
+        const next = [result.data, ...current];
+        onRecordsChange?.(next);
+        return next;
+      });
       onRequestId(result.requestId);
     } catch (err) {
       setError(err instanceof Error ? err.message : "无法记录问题样例");
@@ -50,6 +56,7 @@ export default function BadCasePanel({ config, onRequestId }: BadCasePanelProps)
     try {
       const result = await apiRequest<BadCaseRecord[]>(config, "/api/bad-cases");
       setRecords(result.data);
+      onRecordsChange?.(result.data);
       onRequestId(result.requestId);
     } catch (err) {
       setError(err instanceof Error ? err.message : "无法加载问题样例列表");
@@ -59,20 +66,21 @@ export default function BadCasePanel({ config, onRequestId }: BadCasePanelProps)
   }
 
   return (
-    <section className="panel panel-wide">
-      <div className="panel-header">
-        <div>
-          <p className="eyebrow">复核</p>
-          <h2>问题样例记录（高级/复核用）</h2>
-        </div>
+    <Panel
+      title="问题样例记录"
+      eyebrow="问题样例"
+      className="bad-case-panel"
+      actions={
         <button type="button" onClick={loadBadCases} disabled={loading}>
           加载列表
         </button>
-      </div>
+      }
+      wide
+    >
       <form className="form-grid" onSubmit={submitBadCase}>
         {Object.entries(form).map(([field, value]) => (
           <label key={field}>
-            {badCaseFieldLabels[field] || field} <span className="field-key">{field}</span>
+            {badCaseFieldLabels[field] || field}
             <input
               value={value}
               onChange={(event) => setForm({ ...form, [field]: event.target.value })}
@@ -91,20 +99,22 @@ export default function BadCasePanel({ config, onRequestId }: BadCasePanelProps)
           <table>
             <thead>
               <tr>
-                <th>样例编号 case_id</th>
-                <th>模块 module</th>
-                <th>问题类型 case_type</th>
-                <th>视频ID video_id</th>
-                <th>期望 expected</th>
-                <th>实际 actual</th>
+                <th>样例编号</th>
+                <th>模块</th>
+                <th>问题类型</th>
+                <th>状态</th>
+                <th>视频ID</th>
+                <th>期望结果</th>
+                <th>实际结果</th>
               </tr>
             </thead>
             <tbody>
               {records.map((record) => (
                 <tr key={record.case_id}>
                   <td>{record.case_id}</td>
-                  <td>{record.module}</td>
-                  <td>{record.case_type}</td>
+                  <td>{formatBadCaseValue(record.module)}</td>
+                  <td>{formatBadCaseValue(record.case_type)}</td>
+                  <td><StatusBadge status="已上传" /></td>
                   <td>{record.video_id}</td>
                   <td>{record.expected_result}</td>
                   <td>{record.actual_result}</td>
@@ -116,7 +126,7 @@ export default function BadCasePanel({ config, onRequestId }: BadCasePanelProps)
       ) : (
         <p className="muted">暂无问题样例</p>
       )}
-    </section>
+    </Panel>
   );
 }
 
@@ -130,5 +140,13 @@ const badCaseFieldLabels: Record<string, string> = {
   actual_result: "实际结果",
   root_cause: "原因分析",
   tags: "标签",
-  reviewer_note: "复核备注"
+  reviewer_note: "问题备注"
 };
+
+function formatBadCaseValue(value: string) {
+  const labels: Record<string, string> = {
+    detector: "检测模块",
+    false_positive: "误检"
+  };
+  return labels[value] || value;
+}

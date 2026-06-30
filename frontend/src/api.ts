@@ -1,6 +1,6 @@
 import type { ApiClientConfig, ApiResult, JsonValue } from "./types";
 
-const defaultBaseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+const defaultBaseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:8010";
 
 export function getDefaultApiBaseUrl(): string {
   return defaultBaseUrl;
@@ -20,7 +20,7 @@ export async function apiRequest<T>(
 ): Promise<ApiResult<T>> {
   const headers = new Headers(options.headers);
   headers.set("Accept", "application/json");
-  if (options.body && !headers.has("Content-Type")) {
+  if (options.body && !(options.body instanceof FormData) && !headers.has("Content-Type")) {
     headers.set("Content-Type", "application/json");
   }
   if (config.apiKey.trim()) {

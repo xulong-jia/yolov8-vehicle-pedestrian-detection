@@ -41,10 +41,14 @@ SERVICE_NAME = "yolov8-vehicle-pedestrian-api"
 DEFAULT_CORS_ALLOW_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "http://localhost:5178",
+    "http://127.0.0.1:5178",
     "http://localhost:8501",
     "http://127.0.0.1:8501",
     "http://localhost:8502",
     "http://127.0.0.1:8502",
+    "http://localhost:8511",
+    "http://127.0.0.1:8511",
 ]
 bad_case_service = BadCaseService()
 configure_logging()
